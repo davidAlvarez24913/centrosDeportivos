@@ -1,0 +1,101 @@
+enum Sport {
+    Futbol
+    Voley
+  }
+type User {
+    userId: ID!
+    name: String!
+    age: Int!
+    phone: String!
+    email: String!
+    avatarUrl: String
+}
+type SportCenter {
+    sportCenterId: ID!
+    name: String!
+    phone: String!
+    ubication: String!
+    services: [Service]
+}
+
+type Service {
+    serviceId: ID!
+    name: String!
+    sport: String!
+    price: Float!
+    description: String!
+    sportCenterId: ID!
+    reservations: [Reservation]
+}
+
+type Reservation {
+    reservationId: ID!
+    state: String!
+    date: String!
+    paymetId: String!
+    reservationPrice: Float!
+    userId: ID!
+    serviceId: ID!
+}
+
+input CreateUserInput {
+    name: String!
+    age: Int!
+    phone: String!
+    email: String!
+    avatarUrl: String
+}
+
+input CreateSportCenterInput {
+    name: String!
+    phone: String!
+    ubication: String!
+}
+
+input CreateServiceInput {
+    name: String!
+    sport: String! #Enum
+    price: Float!
+    description: String!
+    sportCenterId: ID!
+}
+
+input CreateReservationInput {
+    state: String!
+    date: String!
+    paymetId: String!
+    reservationPrice: Float!
+    userId: ID!
+    serviceId: ID!
+}
+
+input UpdateUserInput {
+    userId: ID!
+    name: String!
+    age: Int!
+    phone: String!
+    email: String!
+    avatarUrl: String
+}
+
+type Query {
+    usersCount: Int!
+    allUsers: [User]
+    findUser(userId: ID!): User
+    listSportCenters: [SportCenter]
+    listServices: [Service]
+    listServicesBySportCenterId(sportCenterId: ID!): [Service]
+    reservationCount: Int!
+    allReservations: [Reservation]
+    findReservation(id: ID!): Reservation
+}
+
+type Mutation {
+    createUser(input: CreateUserInput!): User
+    deleteUser(userId: ID!): Boolean
+    updateUser(input: UpdateUserInput): User
+    createSportCenter(input: CreateSportCenterInput): SportCenter
+    createService(input: CreateServiceInput): Service
+    createReservation(input: CreateReservationInput!): Reservation
+    deleteReservation(id: ID!): Boolean
+}
