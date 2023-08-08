@@ -23,6 +23,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import { client } from "schema";
 import { ApolloProvider } from "@apollo/client";
+import TesPage from "./pages/TestPage";
 
 setupIonicReact();
 
@@ -36,6 +37,10 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/">
             <Redirect to="/home" />
+          </Route>
+          <Route exact path="/test">
+            <TesPage />
+            <Redirect to="/test" />
           </Route>
         </ApolloProvider>
       </IonRouterOutlet>
