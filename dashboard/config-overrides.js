@@ -9,22 +9,8 @@ module.exports = function (config, env) {
       babelInclude([
         /* transpile (converting to es5) code in src/ and packages/schema */
         path.resolve("src"),
-        path.resolve("../../packages/schema"),
+        path.resolve("../packages/schema"),
       ]),
-      // {
-      //   module: {
-      //     rules: [
-      //       {
-      //         test: /\.tsx?$/,
-      //         use: [
-      //           {
-      //             loader: "typescript-loader",
-      //           },
-      //         ],
-      //       },
-      //     ],
-      //   },
-      // },
     )(config, env)
   );
 };
