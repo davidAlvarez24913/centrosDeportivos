@@ -1,19 +1,19 @@
 import React from "react";
 import "./App.css";
-import { useAllUSersQuery } from "schema";
+import { client } from "schema";
+import { ApolloProvider } from "@apollo/client";
+import TestPage from "./pages/test";
 function App() {
-  const { data, loading, error } = useAllUSersQuery();
-  if (loading) return <span> Loading</span>;
-  if (error) return <span> Error</span>;
   return (
-    <div className="App">
-      RESERVAS TASTAS
-      <div>
-        {data?.allUsers?.map((user) => {
-          return JSON.stringify(user);
-        })}
+    <ApolloProvider client={client}>
+      <div className="App">
+        RESERVAS TASTAS
+        <div>
+          Test Dashboard
+          <TestPage />
+        </div>
       </div>
-    </div>
+    </ApolloProvider>
   );
 }
 
