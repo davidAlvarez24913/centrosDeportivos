@@ -16,6 +16,7 @@ type SportCenter {
     phone: String!
     ubication: String!
     services: [Service]
+    images: [String!]
 }
 
 type Service {
@@ -38,6 +39,11 @@ type Reservation {
     serviceId: ID!
 }
 
+type Comment{
+    commentId: ID!
+    comment: String!
+}
+
 input CreateUserInput {
     name: String!
     age: Int!
@@ -45,16 +51,20 @@ input CreateUserInput {
     email: String!
     avatarUrl: String
 }
+input CommentInput{
+    comment: String!
+}
 
 input CreateSportCenterInput {
     name: String!
     phone: String!
     ubication: String!
+    images: [String!]
 }
 
 input CreateServiceInput {
     name: String!
-    sport: String! #Enum
+    sport: Sport! #Enum
     price: Float!
     description: String!
     sportCenterId: ID!
@@ -82,7 +92,7 @@ type Query {
     usersCount: Int!
     allUsers: [User]
     findUser(userId: ID!): User
-    listSportCenters: [SportCenter]
+    listSportCenters: [SportCenter!]
     listServices: [Service]
     listServicesBySportCenterId(sportCenterId: ID!): [Service]
     reservationCount: Int!
