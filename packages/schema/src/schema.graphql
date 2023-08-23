@@ -2,6 +2,14 @@ enum Sport {
     Futbol
     Voley
   }
+enum Status{
+    Ok
+    Failed
+}
+type OperationResponse{
+    status: Status!
+    message: String!
+}
 type User {
     userId: ID!
     name: String!
@@ -17,6 +25,7 @@ type SportCenter {
     ubication: String!
     services: [Service]
     images: [String!]
+    calification: Int
 }
 
 type Service {
@@ -60,6 +69,7 @@ input CreateSportCenterInput {
     phone: String!
     ubication: String!
     images: [String!]
+    calification: Int
 }
 
 input CreateServiceInput {
@@ -87,6 +97,14 @@ input UpdateUserInput {
     email: String!
     avatarUrl: String
 }
+input UpdateSportCenterInput{
+    sportCenterId: ID!
+    name: String
+    phone: String
+    ubication: String
+    images: [String!]
+    calification: Int
+}
 
 type Query {
     usersCount: Int!
@@ -105,6 +123,7 @@ type Mutation {
     deleteUser(userId: ID!): Boolean
     updateUser(input: UpdateUserInput): User
     createSportCenter(input: CreateSportCenterInput): SportCenter
+    updateSportCenter(input: UpdateSportCenterInput): OperationResponse
     createService(input: CreateServiceInput): Service
     createReservation(input: CreateReservationInput!): Reservation
     deleteReservation(id: ID!): Boolean
