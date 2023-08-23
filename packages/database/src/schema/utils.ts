@@ -11,12 +11,14 @@ export const mergeUsers = (sqlUser: User[], firestoreUser: FireStoreUser[]) => {
 
 export const mergeSportCenter = (
   sqlSportCenter: SportCenter[],
-  firestoreSPortCenter: FireStoreSportCenter[]
+  firestoreSportCenter: FireStoreSportCenter[]
 ) => {
   return sqlSportCenter.map((obj1) => {
-    const obj2 = firestoreSPortCenter.find(
-      (obj2) => obj1.sportCenterId === obj2.sportCenterId
+    const obj2 = firestoreSportCenter.find(
+      (obj2) => obj1.sportCenterId == obj2.sportCenterId
     );
-    return { ...obj1, ...obj2 };
+    // console.log(firestoreSportCenter.find((x) => x.sportCenterId === 18));
+    console.log(obj2);
+    return { ...obj1, calification: obj2?.calification, images: obj2?.images };
   });
 };
