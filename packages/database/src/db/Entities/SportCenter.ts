@@ -21,7 +21,9 @@ class SportCenter extends BaseEntity {
   @Column()
   ubication: string;
 
-  @OneToMany(() => Service, (service) => service.sportCenter)
+  @OneToMany(() => Service, (service) => service.sportCenter, {
+    onDelete: "CASCADE",
+  })
   services: Service[];
 }
 export default SportCenter;

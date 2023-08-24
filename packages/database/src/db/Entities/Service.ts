@@ -30,6 +30,7 @@ class Service extends BaseEntity {
   // buscar forma de renombrar
   @ManyToOne(() => SportCenter, (sportCenter) => sportCenter.services, {
     nullable: false,
+    onDelete: "CASCADE",
   })
   @JoinColumn({ name: "sportCenterId" })
   sportCenter: SportCenter;
