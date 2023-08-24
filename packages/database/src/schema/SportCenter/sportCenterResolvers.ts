@@ -3,6 +3,7 @@ import { GraphQLError } from "graphql";
 import {
   FireStoreSportCenter,
   createFirestoreSportCenter,
+  deleteFirestoreSportCenter,
   findSportCenter,
   listSportCenters,
   updateFirestoreSportCenter,
@@ -89,6 +90,31 @@ export const sportCenterResolvers = {
       } catch (error) {
         console.log(error);
         return { status: "Failed", message: "No se pudo actualizar" };
+      }
+    },
+    deleteSportCenter: async (
+      root: any,
+      { sportCenterId }: { sportCenterId: string }
+    ) => {
+      try {
+        const existsId = await SportCenter.findOne({
+          where: { sportCenterId: Number(sportCenterId) },
+        });
+        if (existsId) {
+          await SportCenter.delete(sportCenterId);
+          await deleteFirestoreSportCenter(sportCenterId);
+          return {
+            status: "Ok",
+            message: "Centro deportivo eliminado",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe el centro deportivo con el id ${sportCenterId}`,
+          };
+        }
+      } catch (error) {
+        return { status: "Failed", message: "No se puede eliminar" };
       }
     },
   },
