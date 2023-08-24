@@ -116,15 +116,17 @@ type Query {
     reservationCount: Int!
     allReservations: [Reservation]
     findReservation(id: ID!): Reservation
+    findSportCenter(sportCenterId: ID! ): SportCenter
 }
 
 type Mutation {
     createUser(input: CreateUserInput!): User
     deleteUser(userId: ID!): Boolean
-    updateUser(input: UpdateUserInput): User
-    createSportCenter(input: CreateSportCenterInput): SportCenter
-    updateSportCenter(input: UpdateSportCenterInput): OperationResponse
-    createService(input: CreateServiceInput): Service
+    updateUser(input: UpdateUserInput!): User
+    createSportCenter(input: CreateSportCenterInput!): SportCenter
+    updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
+    deleteSportCenter(sportCenterId: ID! ): OperationResponse
+    createService(input: CreateServiceInput!): Service
     createReservation(input: CreateReservationInput!): Reservation
     deleteReservation(id: ID!): Boolean
 }
