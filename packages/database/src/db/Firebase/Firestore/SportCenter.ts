@@ -33,5 +33,5 @@ export const updateFirestoreSportCenter = async (sc: FireStoreSportCenter) => {
   await updateDoc(docRef, sc);
 };
 
-export const deleteFirestoreSportCEnter = async (sportCenterId: string) =>
+export const deleteFirestoreSportCenter = async (sportCenterId: string) =>
   await deleteDoc(doc(db, document, sportCenterId));
