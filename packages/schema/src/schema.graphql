@@ -50,6 +50,9 @@ type Reservation {
 
 type Comment{
     commentId: ID!
+    sportCenterId: ID
+    serviceId: ID
+    userId: ID!
     comment: String!
 }
 
@@ -60,7 +63,10 @@ input CreateUserInput {
     email: String!
     avatarUrl: String
 }
-input CommentInput{
+input CreateCommentInput{
+    sportCenterId: ID!
+    serviceId: ID
+    userId: ID!
     comment: String!
 }
 
@@ -117,16 +123,26 @@ type Query {
     allReservations: [Reservation]
     findReservation(id: ID!): Reservation
     findSportCenter(sportCenterId: ID! ): SportCenter
+    
+    listCommentsByService(sportCenterId:ID!,serviceId:ID!): [Comment!]
+    listCommentsBySportCenter(sportCenterId:ID!): [Comment!]
+    allComments: [Comment!]
 }
 
 type Mutation {
     createUser(input: CreateUserInput!): User
     deleteUser(userId: ID!): Boolean
     updateUser(input: UpdateUserInput!): User
+    
     createSportCenter(input: CreateSportCenterInput!): SportCenter
     updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
     deleteSportCenter(sportCenterId: ID! ): OperationResponse
+    
     createService(input: CreateServiceInput!): Service
     createReservation(input: CreateReservationInput!): Reservation
     deleteReservation(id: ID!): Boolean
+
+    createComment(input: CreateCommentInput!): Comment
+    updateComment(id: ID!): Comment
+    deleteComment(id: ID!): OperationResponse
 }
