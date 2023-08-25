@@ -86,6 +86,8 @@ input CreateServiceInput {
     price: Float!
     description: String!
     sportCenterId: ID!
+    image:String
+    calification: Int
 }
 
 input CreateReservationInput {
@@ -113,7 +115,15 @@ input UpdateSportCenterInput{
     images: [String!]
     calification: Int
 }
-
+input UpdateServiceInput{
+    serviceId: ID!
+    name: String
+    description: String
+    price: Float
+    sport: Sport
+    image: String
+    calification: Int
+}
 type Query {
     usersCount: Int!
     allUsers: [User]
@@ -141,6 +151,8 @@ type Mutation {
     deleteSportCenter(sportCenterId: ID! ): OperationResponse
     
     createService(input: CreateServiceInput!): Service
+    updateService(input: UpdateServiceInput!):OperationResponse
+
     createReservation(input: CreateReservationInput!): Reservation
     deleteReservation(id: ID!): Boolean
 
