@@ -34,8 +34,10 @@ type Service {
     sport: String!
     price: Float!
     description: String!
+    image: String
+    calification: Int
     sportCenterId: ID!
-    reservations: [Reservation]
+    reservations: [Reservation!]
 }
 
 type Reservation {
