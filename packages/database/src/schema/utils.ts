@@ -31,7 +31,7 @@ export const mergeServices = (
     const obj2 = firestoreService.find(
       (obj2) => obj1.serviceId == obj2.serviceId
     );
-    return { ...obj1, calification: obj2?.calification, image: obj2?.image };
+    return { ...obj1, ...obj2 };
   });
 };
 
@@ -46,7 +46,33 @@ export const mergeReservations = (
     return {
       ...obj1,
       paymentPhoto: obj2?.paymentPhoto,
-      timeReservation: obj2?.timeReservation,
     };
   });
+};
+
+export const getWeekday = (date: string) => {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const numberDay = new Date(date).getDay();
+  return days[numberDay];
+};
+
+export const generateSchedule = (startHour: string, endHour: string) => {
+  const start = Number(startHour.split(":")[0]);
+  const end = Number(endHour.split(":")[0]);
+  var dayDisponibility = [];
+
+  for (let index = start; index <= end - 1; index++) {
+    const auxRangeHour =
+      index.toString() + ":00-" + (index + 1).toString() + ":00";
+    dayDisponibility.push(auxRangeHour);
+  }
+  return dayDisponibility;
 };
