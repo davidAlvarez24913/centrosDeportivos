@@ -1,19 +1,34 @@
 import { Reservation, Service, User } from "../../db/Entities";
+import {
+  FireStoreReservation,
+  createFirestoreReservation,
+  deleteFirestoreReservation,
+  listReservations,
+} from "../../db/Firebase/Firestore/Reservation";
+import { mergeReservations } from "../utils";
+import { GraphQLError } from "graphql";
+
 export const reservationResolvers = {
   Query: {
     reservationCount: async () => (await Reservation.find()).length,
     allReservations: async () => {
-      const reservations = await Reservation.find({
+      const reservationsNoSQL =
+        (await listReservations()) as FireStoreReservation[];
+      const reservationsSQL = await Reservation.find({
         relations: { user: true, service: true },
       });
-      const result = reservations.map((reservation) => {
+
+      const mergedReservations = mergeReservations(
+        reservationsSQL,
+        reservationsNoSQL
+      );
+      const result = mergedReservations.map((reservation) => {
         return {
           ...reservation,
           userId: reservation.user.userId,
           serviceId: reservation.service.serviceId,
         };
       });
-      console.log(result);
       return result;
     },
     findReservation: async (root: any, args: any) => {
@@ -24,37 +39,76 @@ export const reservationResolvers = {
 
   Mutation: {
     createReservation: async (root: any, { input }: any) => {
+      const {
+        state,
+        date,
+        reservationPrice,
+        userId,
+        paymentId,
+        serviceId,
+        paymentPhoto,
+        rangeHour,
+      } = input;
       const user = await User.findOneBy({
-        userId: input.userId,
+        userId: Number(userId),
       });
       const service = await Service.findOneBy({
-        serviceId: input.serviceId,
+        serviceId: Number(serviceId),
       });
-      console.log(input);
       if (user && service) {
-        const result = await Reservation.insert({
-          ...input,
-          user: input.userId,
-          service: input.serviceId,
+        const reservationSQL = await Reservation.insert({
+          state,
+          date,
+          paymentId,
+          reservationPrice,
+          user: userId,
+          service: serviceId,
         });
-        return { ...input, reservationId: result.identifiers[0].reservationId };
+        const reservationNoSQL = await createFirestoreReservation({
+          reservationId: reservationSQL.identifiers[0].reservationId,
+          paymentPhoto: paymentPhoto,
+          rangeHour: rangeHour,
+        });
+        return {
+          ...input,
+          reservationId: reservationSQL.identifiers[0].reservationId,
+        };
+      } else {
+        throw new GraphQLError("Id de usuario/servico es erròneo!", {
+          extensions: {
+            code: "ERROR_ID",
+            argumentName: "id",
+          },
+        });
       }
-      return null;
     },
-    deleteReservation: async (root: any, args: any) => {
-      const result = await Reservation.delete(args.id);
-      if (result.affected === 1) return true;
-      return false;
+    deleteReservation: async (
+      root: any,
+      { reservationId }: { reservationId: string }
+    ) => {
+      try {
+        const existsId = await Reservation.findOneBy({
+          reservationId: Number(reservationId),
+        });
+        if (existsId) {
+          await Reservation.delete(Number(reservationId));
+          await deleteFirestoreReservation(reservationId);
+          return {
+            status: "Ok",
+            message: "Reservacion eliminada/cancelada",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe la reservacion con el id ${reservationId}`,
+          };
+        }
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: `No se puede eliminar: ${JSON.stringify(error)}`,
+        };
+      }
     },
-    // updateUser: async (root: any, { input }: any) => {
-    //   const result = await Reservation.update(
-    //     { reservationId: input.id },
-    //     {
-    //       name: input.name,
-    //     }
-    //   );
-    //   if (result.affected === 1) return { ...input };
-    //   return false;
-    // },
   },
 };
