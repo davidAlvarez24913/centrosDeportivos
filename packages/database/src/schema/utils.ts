@@ -1,4 +1,5 @@
-import { Service, SportCenter, User } from "../db/Entities";
+import { Reservation, Service, SportCenter, User } from "../db/Entities";
+import { FireStoreReservation } from "../db/Firebase/Firestore/Reservation";
 import { FireStoreService } from "../db/Firebase/Firestore/Service";
 import { FireStoreSportCenter } from "../db/Firebase/Firestore/SportCenter";
 import { FireStoreUser } from "../db/Firebase/Firestore/User";
@@ -31,5 +32,21 @@ export const mergeServices = (
       (obj2) => obj1.serviceId == obj2.serviceId
     );
     return { ...obj1, calification: obj2?.calification, image: obj2?.image };
+  });
+};
+
+export const mergeReservations = (
+  sqlServices: Reservation[],
+  firestoreService: FireStoreReservation[]
+) => {
+  return sqlServices.map((obj1) => {
+    const obj2 = firestoreService.find(
+      (obj2) => obj1.reservationId === Number(obj2.reservationId)
+    );
+    return {
+      ...obj1,
+      paymentPhoto: obj2?.paymentPhoto,
+      timeReservation: obj2?.timeReservation,
+    };
   });
 };
