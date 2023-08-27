@@ -16,13 +16,13 @@ class Reservation extends BaseEntity {
   reservationId: number;
 
   @Column()
-  state: string;
+  state: boolean;
 
   @Column()
   date: string;
 
   @Column()
-  paymetId: string;
+  paymentId: string;
 
   @Column({ type: "double", nullable: false })
   reservationPrice: number;
