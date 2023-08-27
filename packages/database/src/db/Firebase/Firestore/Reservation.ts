@@ -12,7 +12,7 @@ import { db } from "../config";
 export type FireStoreReservation = {
   reservationId: string;
   paymentPhoto?: string;
-  timeReservation: string; //range and date
+  rangeHour: string;
 };
 const document = "reservations";
 
