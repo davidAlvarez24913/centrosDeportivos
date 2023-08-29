@@ -22,9 +22,6 @@ class Service extends BaseEntity {
   @Column()
   sport: string;
 
-  @Column({ type: "double" })
-  price: number;
-
   @Column()
   description: string;
   // buscar forma de renombrar
