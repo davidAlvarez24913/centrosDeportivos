@@ -6,6 +6,15 @@ enum Status{
     Ok
     Failed
 }
+enum Weekday{
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
+}
 type OperationResponse{
     status: Status!
     message: String!
@@ -18,6 +27,23 @@ type User {
     email: String!
     avatarUrl: String
 }
+
+type RangeHour{
+    startHour: String!
+    endHour:String!
+    price: Float!
+}
+
+type Disponibility {
+    Sunday:[RangeHour!]
+    Monday:[RangeHour!]
+    Tuesday: [RangeHour!]
+    Wednesday: [RangeHour!]
+    Thursday: [RangeHour!]
+    Friday: [RangeHour!]
+    Saturday: [RangeHour!]
+}
+
 type SportCenter {
     sportCenterId: ID!
     name: String!
@@ -25,29 +51,31 @@ type SportCenter {
     ubication: String!
     services: [Service]
     images: [String!]
-    calification: Int
+    calification: Int # will be likes
 }
 
 type Service {
     serviceId: ID!
     name: String!
     sport: String!
-    price: Float!
     description: String!
     image: String
-    calification: Int
+    calification: Int # will be likes
     sportCenterId: ID!
+    disponibility: Disponibility
     reservations: [Reservation!]
 }
 
 type Reservation {
     reservationId: ID!
-    state: String!
-    date: String!
-    paymetId: String!
+    state: Boolean!
+    paymentId: String
     reservationPrice: Float!
     userId: ID!
     serviceId: ID!
+    paymentPhoto: String # Should optional?
+    date: String!
+    rangeHour: String!
 }
 
 type Comment{
@@ -88,15 +116,24 @@ input CreateServiceInput {
     sportCenterId: ID!
     image:String
     calification: Int
+    disponibility: [CreateScheduleInput!]
+}
+input CreateScheduleInput{
+    startHour: String!
+    endHour: String!
+    weekday: Weekday!
+    price: Float!
 }
 
 input CreateReservationInput {
-    state: String!
+    state: Boolean!
     date: String!
-    paymetId: String!
+    paymentId: String!
     reservationPrice: Float!
     userId: ID!
     serviceId: ID!
+    paymentPhoto: String
+    rangeHour: String!
 }
 
 input UpdateUserInput {
@@ -113,17 +150,32 @@ input UpdateSportCenterInput{
     phone: String
     ubication: String
     images: [String!]
-    calification: Int
+    calification: Int # will be likes
 }
 input UpdateServiceInput{
     serviceId: ID!
     name: String
     description: String
-    price: Float
     sport: Sport
     image: String
-    calification: Int
+    calification: Int # will be likes
+    disponibility: UpdateDisponibilityInput
 }
+input UpdateRangeHourInput{
+    startHour: String!
+    endHour:String!
+    price: Float!
+}
+input UpdateDisponibilityInput{
+    Sunday:[UpdateRangeHourInput!]
+    Monday:[UpdateRangeHourInput!]
+    Tuesday: [UpdateRangeHourInput!]
+    Wednesday: [UpdateRangeHourInput!]
+    Thursday: [UpdateRangeHourInput!]
+    Friday: [UpdateRangeHourInput!]
+    Saturday: [UpdateRangeHourInput!]
+}
+
 type Query {
     usersCount: Int!
     allUsers: [User]
@@ -132,13 +184,14 @@ type Query {
     listServices: [Service]
     listServicesBySportCenterId(sportCenterId: ID!): [Service]
     reservationCount: Int!
-    allReservations: [Reservation]
+    allReservations: [Reservation!]
     findReservation(id: ID!): Reservation
     findSportCenter(sportCenterId: ID! ): SportCenter
     
     listCommentsByService(sportCenterId:ID!,serviceId:ID!): [Comment!]
     listCommentsBySportCenter(sportCenterId:ID!): [Comment!]
     allComments: [Comment!]
+    # disponibility will be query get all reservationsByServiceByDate and schedule
 }
 
 type Mutation {
@@ -152,11 +205,14 @@ type Mutation {
     
     createService(input: CreateServiceInput!): Service
     updateService(input: UpdateServiceInput!):OperationResponse
+    deleteService(serviceId: ID!):OperationResponse
 
     createReservation(input: CreateReservationInput!): Reservation
-    deleteReservation(id: ID!): Boolean
+    deleteReservation(id: ID!): OperationResponse
 
     createComment(input: CreateCommentInput!): Comment
     updateComment(id: ID!): Comment
     deleteComment(id: ID!): OperationResponse
+
+    # TODO mutation to plus and less like
 }
