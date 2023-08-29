@@ -43,13 +43,16 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "autoprefixer": "^10.4.15",
     "customize-cra": "^1.0.0",
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
     "path": "^0.12.7",
+    "postcss": "^8.4.29",
     "process": "^0.11.10",
     "react-app-alias": "^2.2.2",
     "react-app-rewired": "^2.2.1",
+    "tailwindcss": "^3.3.3",
     "ts-loader": "^9.4.4"
   },
   "scripts": {
