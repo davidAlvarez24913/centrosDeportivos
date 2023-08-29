@@ -76,3 +76,38 @@ export const generateSchedule = (startHour: string, endHour: string) => {
   }
   return dayDisponibility;
 };
+type schedule = {
+  startHour: String;
+  endHour: String;
+  weekday:
+    | "Sunday"
+    | "Monday"
+    | "Tuesday"
+    | "Wednesday"
+    | "Thursday"
+    | "Friday"
+    | "Saturday";
+  price: number;
+};
+export const schedule = (data: schedule[]) => {
+  let aux = {
+    Sunday: [] as { startHour: String; endHour: String; price: number }[],
+    Monday: [] as { startHour: String; endHour: String; price: number }[],
+    Tuesday: [] as { startHour: String; endHour: String; price: number }[],
+    Wednesday: [] as { startHour: String; endHour: String; price: number }[],
+    Thursday: [] as { startHour: String; endHour: String; price: number }[],
+    Friday: [] as { startHour: String; endHour: String; price: number }[],
+    Saturday: [] as { startHour: String; endHour: String; price: number }[],
+  };
+  data.map((d) => {
+    const { weekday, ...schedule } = d;
+    if (weekday === "Monday") aux.Monday.push({ ...schedule });
+    if (weekday === "Friday") aux.Friday.push({ ...schedule });
+    if (weekday === "Saturday") aux.Saturday.push({ ...schedule });
+    if (weekday === "Sunday") aux.Sunday.push({ ...schedule });
+    if (weekday === "Thursday") aux.Thursday.push({ ...schedule });
+    if (weekday === "Tuesday") aux.Tuesday.push({ ...schedule });
+    if (weekday === "Wednesday") aux.Wednesday.push({ ...schedule });
+  });
+  return aux;
+};
