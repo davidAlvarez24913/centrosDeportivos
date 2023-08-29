@@ -6,7 +6,7 @@ import TestPage from "./pages/test";
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="App">
+      <div className="App text-3xl font-bold text-red-600 underline ">
         RESERVAS TASTAS
         <div>
           Test Dashboard
