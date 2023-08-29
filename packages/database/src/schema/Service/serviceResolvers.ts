@@ -2,11 +2,14 @@ import { SportCenter, Service } from "../../db/Entities";
 import {
   FireStoreService,
   createFirestoreService,
+  deleteFirestoreService,
   findService,
   listServices,
   updateFirestoreService,
 } from "../../db/Firebase/Firestore/Service";
-import { mergeServices } from "../utils";
+import { GraphQLError } from "graphql";
+import { reservationResolvers } from "../Reservation/reservationResolver";
+import { mergeServices, schedule } from "../utils";
 export const serviceResolvers = {
   Query: {
     listServices: async () => {
@@ -16,13 +19,15 @@ export const serviceResolvers = {
       });
       const servicesNoSQL = (await listServices()) as FireStoreService[];
       const mergeService = mergeServices(servicesSQL, servicesNoSQL);
+      const allReservations =
+        await reservationResolvers.Query.allReservations();
       const result = mergeService.map((service) => {
         return {
           ...service,
           sportCenterId: service.sportCenter.sportCenterId,
-          reservations: service.reservations.map((reservation) => {
-            return { ...reservation };
-          }),
+          reservations: allReservations.filter(
+            (reservation) => reservation.serviceId === service.serviceId
+          ),
         };
       });
       return result;
@@ -33,13 +38,15 @@ export const serviceResolvers = {
       });
       const servicesNoSQL = (await listServices()) as FireStoreService[];
       const mergeService = mergeServices(servicesSQL, servicesNoSQL);
+      const allReservations =
+        await reservationResolvers.Query.allReservations();
       const result = mergeService.map((service) => {
         return {
           ...service,
           sportCenterId: service.sportCenter.sportCenterId,
-          reservations: service.reservations.map((reservation) => {
-            return { ...reservation };
-          }),
+          reservations: allReservations.filter(
+            (reservation) => reservation.serviceId === service.serviceId
+          ),
         };
       });
       return result.filter(
@@ -54,22 +61,37 @@ export const serviceResolvers = {
         sportCenterId: input.sportCenterId,
       });
       if (sportCenter) {
-        const result = await Service.insert({
-          ...input,
-          sportCenter: input.sportCenterId,
-        });
-        // inser firestore
-        await createFirestoreService({
-          serviceId: result.identifiers[0].serviceId,
-          image: input.image,
-          calification: input.calification,
-        });
-        return {
-          ...input,
-          serviceId: result.identifiers[0].serviceId,
-        };
+        try {
+          const result = await Service.insert({
+            ...input,
+            sportCenter: input.sportCenterId,
+          });
+
+          const auxDisponibility = schedule(input.disponibility);
+          // insert firestore
+          await createFirestoreService({
+            serviceId: result.identifiers[0].serviceId,
+            image: input.image,
+            calification: input.calification,
+            disponibility: auxDisponibility,
+          });
+          return {
+            ...input,
+            serviceId: result.identifiers[0].serviceId,
+          };
+        } catch (error) {
+          // return null;
+          throw new GraphQLError(
+            `No se pudo crear el servicio ${JSON.stringify(error)}`,
+            {
+              extensions: {
+                code: "ERROR_CREATE_SERVICE",
+                argumentName: "error",
+              },
+            }
+          );
+        }
       }
-      return null;
     },
     updateService: async (root: any, { input }: any) => {
       try {
@@ -81,6 +103,7 @@ export const serviceResolvers = {
           serviceId: input.serviceId,
           image: input.image ?? currentServiceNoSQL?.image,
           calification: input.calification ?? currentServiceNoSQL?.calification,
+          disponibility: { ...input.disponibility },
         });
         await Service.update(
           {
@@ -89,7 +112,6 @@ export const serviceResolvers = {
           {
             name: input.name ?? currentServiceSQL?.name,
             description: input.description ?? currentServiceSQL?.description,
-            price: input.price ?? currentServiceSQL?.price,
             sport: input.sport ?? currentServiceSQL?.sport,
           }
         );
@@ -102,6 +124,25 @@ export const serviceResolvers = {
           status: "Failed",
           message: "No se pudo actualizar" + JSON.stringify(error),
         };
+      }
+    },
+    deleteService: async (root: any, { serviceId }: { serviceId: string }) => {
+      const flagNoSQL = await findService(serviceId);
+      const flagSQL = await Service.findOneBy({ serviceId: Number(serviceId) });
+
+      if (flagNoSQL && flagSQL) {
+        const deleteSQL = await Service.delete({
+          serviceId: Number(serviceId),
+        });
+        const deletNoSQL = await deleteFirestoreService(serviceId);
+        const result = await Promise.all([deletNoSQL, deleteSQL]);
+        if (result[1].affected === 1 && !flagNoSQL) {
+          return { status: "Ok", message: "Servicio eliminado correctmente" };
+        } else {
+          return { status: "Failed", message: "Servicio no se elimino ;)" };
+        }
+      } else {
+        return { status: "Failed", message: "Servicio no se elimino" };
       }
     },
   },
