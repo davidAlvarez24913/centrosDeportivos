@@ -25,7 +25,7 @@ const TesPage = () => {
           <div style={{ color: "white" }}>
             {data?.allUsers?.map((user, index) => {
               return (
-                <div key={index}>
+                <div key={index} className="text-3xl text-red-600">
                   <p>{user?.email}</p>
                 </div>
               );
