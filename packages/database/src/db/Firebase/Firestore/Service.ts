@@ -9,10 +9,25 @@ import {
 } from "firebase/firestore/lite";
 import { db } from "../config";
 
+type RangeHour = {
+  startHour: String;
+  endHour: String;
+  price: number;
+};
+export type Disponibility = {
+  Monday: RangeHour[];
+  Tuesday: RangeHour[];
+  Wednesday: RangeHour[];
+  Thursday: RangeHour[];
+  Friday: RangeHour[];
+  Saturday: RangeHour[];
+  Sunday: RangeHour[];
+};
 export type FireStoreService = {
   serviceId: number;
   image: string;
   calification?: number;
+  disponibility?: Disponibility;
 };
 const document = "services";
 
