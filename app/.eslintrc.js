@@ -27,6 +27,7 @@ module.exports = {
     }
   },
   rules: {
+    "no-undef": "off",
     "space-before-function-paren": "off",
     "react/prop-types": "off",
     "no-use-before-define": "off",
