@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input,
+textarea,
+select {
+  color: #757575;
+}
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  li,
+  button {
+    @apply text-customText;
+  }
+}
+/* Style ALerts */
+.alert-sub-title.sc-ion-alert-md {
+  color: rgb(247, 254, 254);
+  font-size: 16px;
+
+  /* md -- android */
+}
+.alert-wrapper.sc-ion-alert-md {
+  background: #141414;
+  border-radius: 4px;
+  box-shadow: 0 11px 15px -7px rgba(54, 50, 50, 0.2),
+    0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+.alert-title.sc-ion-alert-md {
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+.alert-button.sc-ion-alert-md:nth-child(2n + 1) {
+  color: rgb(43, 43, 43);
+  background: white;
+  border-right: 0;
+  margin: 0.2rem 1rem;
+  border-radius: 24px;
+}
+.alert-button.sc-ion-alert-md:nth-child(2n) {
+  color: white;
+  background: red;
+  border-right: 0;
+  margin: 0.2rem 1rem;
+  border-radius: 24px;
+}
+.alert-input.sc-ion-alert-md {
+  color: white;
+}
+.alert-message.sc-ion-alert-md {
+  max-height: 240px;
+  color: white;
+}
+/*--------------- ios------- */
+.alert-sub-title.sc-ion-alert-ios {
+  color: white;
+  font-size: 14px;
+}
+
+.alert-wrapper.sc-ion-alert-ios {
+  background: #141414;
+  border-radius: 4px;
+  box-shadow: 0 11px 15px -7px rgba(54, 50, 50, 0.2),
+    0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+.alert-title.sc-ion-alert-ios {
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.alert-button.sc-ion-alert-ios:nth-child(2n + 1) {
+  background: white;
+  color: rgb(43, 43, 43);
+  margin: 1rem;
+  border-radius: 24px;
+}
+.alert-button.sc-ion-alert-ios:nth-child(2n) {
+  background: red;
+  color: white;
+  margin: 1rem;
+  border-radius: 24px;
+}
+.alert-message.sc-ion-alert-ios {
+  max-height: 240px;
+  color: white;
+}
+
+/* to remove white space appearing */
+
+ion-content {
+  --keyboard-offset: 0 !important;
+}
+
+/* offset for iOS status Bar*/
+.toolbar-ios {
+  padding-top: env(safe-area-inset-top);
+}
+
+.header-ios {
+  padding-top: env(safe-area-inset-top);
+}
+
+#hs-mainBlack {
+  padding-top: env(safe-area-inset-top);
+  background: #141414;
+}
+
+#hs-mainGrey {
+  padding-top: env(safe-area-inset-top);
+  background: #2b2d31;
+}
+
+#menu-header {
+  background: #141414;
+}
+
+#menu-header-grey {
+  background: #2b2d31;
+}
+.react-tel-input .country-list .country.highlight {
+  font-weight: bold;
+}
+.react-tel-input .country-list .country .dial-code {
+  color: black;
+}
+.react-tel-input .country-list .country {
+  color: black;
+}
+.country-list{
+  position: relative;
+  top: -240px;
+}

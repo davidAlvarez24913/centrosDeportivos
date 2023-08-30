@@ -21,9 +21,9 @@ import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
+import "./theme/ionicOverwrites.css";
 import { client } from "schema";
 import { ApolloProvider } from "@apollo/client";
-import TesPage from "./pages/TestPage";
 
 setupIonicReact();
 
@@ -32,15 +32,8 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <ApolloProvider client={client}>
-          <Route exact path="/home">
-            <Home />
-          </Route>
           <Route exact path="/">
             <Redirect to="/home" />
-          </Route>
-          <Route exact path="/test">
-            <TesPage />
-            <Redirect to="/test" />
           </Route>
         </ApolloProvider>
       </IonRouterOutlet>
