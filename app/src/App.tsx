@@ -32,6 +32,9 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <ApolloProvider client={client}>
+          <Route exact path="/home">
+            <Home />
+          </Route>
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
