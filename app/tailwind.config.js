@@ -10,6 +10,7 @@ module.exports = {
         primary: "#98CE00",
         background: "#12111F",
         customText: "#F9FAFB",
+        error: "#E62314",
       },
     },
   },
