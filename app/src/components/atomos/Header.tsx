@@ -1,13 +1,25 @@
 import React from "react";
-import { IonHeader } from "@ionic/react";
+import { IonButton, IonHeader, useIonRouter } from "@ionic/react";
 
-export const Header = (title: string) => {
+const Header = ({ title, path }: { title: string; path: string }) => {
+  const ionRouter = useIonRouter();
+  const goBack = (path: string) => {
+    ionRouter.push(path);
+  };
   return (
-    <IonHeader className="text-white">
-      <div>
-        <div></div>
-        <div>{title}</div>
+    <IonHeader>
+      <div className="flex">
+        <IonButton
+          type="button"
+          className="text-white"
+          fill="clear"
+          onClick={() => goBack(path)}
+        >
+          goback
+        </IonButton>
+        <h1>{title}</h1>
       </div>
     </IonHeader>
   );
 };
+export default Header;

@@ -1,12 +1,7 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import React from "react";
 import { useAllUSersQuery } from "schema";
+import { Header } from "src/components/atomos";
 const TesPage = () => {
   const { data, loading, error } = useAllUSersQuery();
   console.log("data:", data?.allUsers);
@@ -15,11 +10,7 @@ const TesPage = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Test</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title={"Iniciar Sesión"} path="/"></Header>
       <IonContent>
         <div>
           <div style={{ color: "white" }}>
