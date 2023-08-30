@@ -1,0 +1,65 @@
+.swiper-pagination-bullet {
+  width: 15% !important;
+  height: 4px !important;
+  border-radius: 0px !important;
+  background: #fff !important;
+}
+.swiper-pagination-bullet-active {
+  background: #ffffff !important;
+}
+.swiper-pagination {
+  top: 10px;
+  height: 10px;
+}
+
+ion-popover {
+  --width: 90%;
+}
+ion-range {
+  --bar-background-active: #50188f;
+  --bar-height: 4px;
+  --knob-background: #50188f;
+  --knob-size: 10px;
+  --pin-background: #ffafcc;
+  --pin-color: #fff;
+  height: 24px;
+}
+
+ion-content {
+  --ion-background-color: transparent;
+}
+ion-searchbar .searchbar-search-icon {
+  display: none !important;
+}
+ion-searchbar input {
+  padding-left: 0 !important;
+}
+
+ion-segment-button {
+  --indicator-color: #f79328;
+}
+ion-segment-button.md {
+  --color: #fff;
+  --color-checked: #f79328;
+  --border-radius: 4px;
+}
+ion-segment-button.ios {
+  --color: #f79328;
+  --color-checked: #fff;
+  --border-radius: 20px;
+}
+ion-radio {
+  --inner-border-radius: 4px;
+  --color: #f9fafb;
+}
+ion-radio.ios::part(container) {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f9fafb;
+  border-radius: 100%;
+  margin-top: 3px;
+  margin-right: 2px;
+}
+.radio-checked.ios::part(container) {
+  border-color: #f79328;
+}
