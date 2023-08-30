@@ -8,16 +8,16 @@ const Header = ({ title, path }: { title: string; path: string }) => {
   };
   return (
     <IonHeader>
-      <div className="flex">
+      <div className="flex items-center">
         <IonButton
           type="button"
-          className="text-white"
           fill="clear"
           onClick={() => goBack(path)}
+          className="text-customText font-extrabold"
         >
-          goback
+          <img src="assets/icon/back-arrow.svg" alt="goback arrow" />
         </IonButton>
-        <h1>{title}</h1>
+        <h1 className="text-2xl">{title}</h1>
       </div>
     </IonHeader>
   );

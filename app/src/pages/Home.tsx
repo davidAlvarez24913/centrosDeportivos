@@ -1,12 +1,11 @@
 import React from "react";
-import { IonContent, IonHeader, IonPage } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
+import { Header } from "src/components/atomos";
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <h1>Title</h1>
-      </IonHeader>
+      <Header title="TasTas" path="/"></Header>
       <IonContent>
         <h1>Content</h1>
       </IonContent>
