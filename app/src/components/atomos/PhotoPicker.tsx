@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Camera, CameraResultType } from "@capacitor/camera";
 
 type PropsPhotPicker = {
-  // Remenber this props will be ook useSate
+  // Remenber this props will be hook useSate
   photo: string | undefined;
   setPhoto: (img: string | undefined) => void;
 };
