@@ -8,7 +8,7 @@ const Header = ({ title, path }: { title: string; path: string }) => {
   };
   return (
     <IonHeader>
-      <div className="flex items-center">
+      <div className="flex items-center bg-background">
         <IonButton
           type="button"
           fill="clear"
