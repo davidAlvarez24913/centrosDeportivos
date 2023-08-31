@@ -7,7 +7,7 @@ type BackgroundProps = {
 const Background = ({ background, children }: BackgroundProps) => {
   if (!background) background = "bg-background";
   return (
-    <div className={`${background} w-full h-full overflow-auto relative`}>
+    <div className={`${background} w-full h-full overflow-auto relative px-4`}>
       <>{children}</>
     </div>
   );
