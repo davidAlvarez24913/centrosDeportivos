@@ -15,7 +15,7 @@ function CustomButton({ title, onClick, color }: ProsCustomButton) {
       onClick={onClick}
       fill="clear"
       type="button"
-      className={`rounded-xl w-full ${styleColor}`}
+      className={`rounded-xl w-full text-xl font-medium py-1 ${styleColor}`}
     >
       {title}
     </IonButton>

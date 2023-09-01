@@ -7,7 +7,7 @@ type PropsCustomInput = {
   errorMessage?: string;
   typeInput: React.HTMLInputTypeAttribute | undefined;
 };
-const CustomInpiut = ({
+const CustomInput = ({
   placeholder,
   pathSVG,
   onClickIcon,
@@ -19,11 +19,11 @@ const CustomInpiut = ({
   return (
     <div>
       <div className=" flex w-full flex-col rounded-xl border border-customText">
-        <div className="flex px-2 py-1 w-full text-customText">
+        <div className="flex p-2 w-full text-customText">
           <input
             type={typeInput}
             placeholder={placeholder}
-            className="w-full text-customText bg-transparent px-1"
+            className="w-full text-customText font-light border-none bg-transparent px-1 placeholder:text-customText placeholder:font-light"
           />
           {flagIcon && <img src={pathSVG} alt={pathSVG} />}
           {typeInput === "password" && <img src={auxIcon} alt={auxIcon} />}
@@ -36,4 +36,4 @@ const CustomInpiut = ({
   );
 };
 
-export default CustomInpiut;
+export default CustomInput;

@@ -17,24 +17,54 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type CreateReservationInput = {
-  date: Scalars['String']['input'];
-  paymetId: Scalars['String']['input'];
-  reservationPrice: Scalars['Float']['input'];
-  serviceId: Scalars['ID']['input'];
-  state: Scalars['String']['input'];
+export type Comment = {
+  __typename?: 'Comment';
+  comment: Scalars['String']['output'];
+  commentId: Scalars['ID']['output'];
+  serviceId?: Maybe<Scalars['ID']['output']>;
+  sportCenterId?: Maybe<Scalars['ID']['output']>;
+  userId: Scalars['ID']['output'];
+};
+
+export type CreateCommentInput = {
+  comment: Scalars['String']['input'];
+  serviceId?: InputMaybe<Scalars['ID']['input']>;
+  sportCenterId: Scalars['ID']['input'];
   userId: Scalars['ID']['input'];
 };
 
+export type CreateReservationInput = {
+  date: Scalars['String']['input'];
+  paymentId: Scalars['String']['input'];
+  paymentPhoto?: InputMaybe<Scalars['String']['input']>;
+  rangeHour: Scalars['String']['input'];
+  reservationPrice: Scalars['Float']['input'];
+  serviceId: Scalars['ID']['input'];
+  state: Scalars['Boolean']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+export type CreateScheduleInput = {
+  endHour: Scalars['String']['input'];
+  price: Scalars['Float']['input'];
+  startHour: Scalars['String']['input'];
+  weekday: Weekday;
+};
+
 export type CreateServiceInput = {
+  calification?: InputMaybe<Scalars['Int']['input']>;
   description: Scalars['String']['input'];
+  disponibility?: InputMaybe<Array<CreateScheduleInput>>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];
-  sport: Scalars['String']['input'];
+  sport: Sport;
   sportCenterId: Scalars['ID']['input'];
 };
 
 export type CreateSportCenterInput = {
+  calification?: InputMaybe<Scalars['Int']['input']>;
+  images?: InputMaybe<Array<Scalars['String']['input']>>;
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
   ubication: Scalars['String']['input'];
@@ -48,15 +78,38 @@ export type CreateUserInput = {
   phone: Scalars['String']['input'];
 };
 
+export type Disponibility = {
+  __typename?: 'Disponibility';
+  Friday?: Maybe<Array<RangeHour>>;
+  Monday?: Maybe<Array<RangeHour>>;
+  Saturday?: Maybe<Array<RangeHour>>;
+  Sunday?: Maybe<Array<RangeHour>>;
+  Thursday?: Maybe<Array<RangeHour>>;
+  Tuesday?: Maybe<Array<RangeHour>>;
+  Wednesday?: Maybe<Array<RangeHour>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createComment?: Maybe<Comment>;
   createReservation?: Maybe<Reservation>;
   createService?: Maybe<Service>;
   createSportCenter?: Maybe<SportCenter>;
   createUser?: Maybe<User>;
-  deleteReservation?: Maybe<Scalars['Boolean']['output']>;
+  deleteComment?: Maybe<OperationResponse>;
+  deleteReservation?: Maybe<OperationResponse>;
+  deleteService?: Maybe<OperationResponse>;
+  deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<Scalars['Boolean']['output']>;
+  updateComment?: Maybe<Comment>;
+  updateService?: Maybe<OperationResponse>;
+  updateSportCenter?: Maybe<OperationResponse>;
   updateUser?: Maybe<User>;
+};
+
+
+export type MutationCreateCommentArgs = {
+  input: CreateCommentInput;
 };
 
 
@@ -66,12 +119,12 @@ export type MutationCreateReservationArgs = {
 
 
 export type MutationCreateServiceArgs = {
-  input?: InputMaybe<CreateServiceInput>;
+  input: CreateServiceInput;
 };
 
 
 export type MutationCreateSportCenterArgs = {
-  input?: InputMaybe<CreateSportCenterInput>;
+  input: CreateSportCenterInput;
 };
 
 
@@ -80,8 +133,23 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationDeleteCommentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteReservationArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteServiceArgs = {
+  serviceId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteSportCenterArgs = {
+  sportCenterId: Scalars['ID']['input'];
 };
 
 
@@ -90,19 +158,44 @@ export type MutationDeleteUserArgs = {
 };
 
 
+export type MutationUpdateCommentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateServiceArgs = {
+  input: UpdateServiceInput;
+};
+
+
+export type MutationUpdateSportCenterArgs = {
+  input: UpdateSportCenterInput;
+};
+
+
 export type MutationUpdateUserArgs = {
-  input?: InputMaybe<UpdateUserInput>;
+  input: UpdateUserInput;
+};
+
+export type OperationResponse = {
+  __typename?: 'OperationResponse';
+  message: Scalars['String']['output'];
+  status: Status;
 };
 
 export type Query = {
   __typename?: 'Query';
-  allReservations?: Maybe<Array<Maybe<Reservation>>>;
+  allComments?: Maybe<Array<Comment>>;
+  allReservations?: Maybe<Array<Reservation>>;
   allUsers?: Maybe<Array<Maybe<User>>>;
   findReservation?: Maybe<Reservation>;
+  findSportCenter?: Maybe<SportCenter>;
   findUser?: Maybe<User>;
+  listCommentsByService?: Maybe<Array<Comment>>;
+  listCommentsBySportCenter?: Maybe<Array<Comment>>;
   listServices?: Maybe<Array<Maybe<Service>>>;
   listServicesBySportCenterId?: Maybe<Array<Maybe<Service>>>;
-  listSportCenters?: Maybe<Array<Maybe<SportCenter>>>;
+  listSportCenters?: Maybe<Array<SportCenter>>;
   reservationCount: Scalars['Int']['output'];
   usersCount: Scalars['Int']['output'];
 };
@@ -113,8 +206,24 @@ export type QueryFindReservationArgs = {
 };
 
 
+export type QueryFindSportCenterArgs = {
+  sportCenterId: Scalars['ID']['input'];
+};
+
+
 export type QueryFindUserArgs = {
   userId: Scalars['ID']['input'];
+};
+
+
+export type QueryListCommentsByServiceArgs = {
+  serviceId: Scalars['ID']['input'];
+  sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryListCommentsBySportCenterArgs = {
+  sportCenterId: Scalars['ID']['input'];
 };
 
 
@@ -122,40 +231,95 @@ export type QueryListServicesBySportCenterIdArgs = {
   sportCenterId: Scalars['ID']['input'];
 };
 
+export type RangeHour = {
+  __typename?: 'RangeHour';
+  endHour: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  startHour: Scalars['String']['output'];
+};
+
 export type Reservation = {
   __typename?: 'Reservation';
   date: Scalars['String']['output'];
-  paymetId: Scalars['String']['output'];
+  paymentId?: Maybe<Scalars['String']['output']>;
+  paymentPhoto?: Maybe<Scalars['String']['output']>;
+  rangeHour: Scalars['String']['output'];
   reservationId: Scalars['ID']['output'];
   reservationPrice: Scalars['Float']['output'];
   serviceId: Scalars['ID']['output'];
-  state: Scalars['String']['output'];
+  state: Scalars['Boolean']['output'];
   userId: Scalars['ID']['output'];
 };
 
 export type Service = {
   __typename?: 'Service';
+  calification?: Maybe<Scalars['Int']['output']>;
   description: Scalars['String']['output'];
+  disponibility?: Maybe<Disponibility>;
+  image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
-  price: Scalars['Float']['output'];
-  reservations?: Maybe<Array<Maybe<Reservation>>>;
+  reservations?: Maybe<Array<Reservation>>;
   serviceId: Scalars['ID']['output'];
   sport: Scalars['String']['output'];
   sportCenterId: Scalars['ID']['output'];
 };
 
 export enum Sport {
+  Baloncesto = 'Baloncesto',
   Futbol = 'Futbol',
+  Tenis = 'Tenis',
   Voley = 'Voley'
 }
 
 export type SportCenter = {
   __typename?: 'SportCenter';
+  calification?: Maybe<Scalars['Int']['output']>;
+  images?: Maybe<Array<Scalars['String']['output']>>;
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
   ubication: Scalars['String']['output'];
+};
+
+export enum Status {
+  Failed = 'Failed',
+  Ok = 'Ok'
+}
+
+export type UpdateDisponibilityInput = {
+  Friday?: InputMaybe<Array<UpdateRangeHourInput>>;
+  Monday?: InputMaybe<Array<UpdateRangeHourInput>>;
+  Saturday?: InputMaybe<Array<UpdateRangeHourInput>>;
+  Sunday?: InputMaybe<Array<UpdateRangeHourInput>>;
+  Thursday?: InputMaybe<Array<UpdateRangeHourInput>>;
+  Tuesday?: InputMaybe<Array<UpdateRangeHourInput>>;
+  Wednesday?: InputMaybe<Array<UpdateRangeHourInput>>;
+};
+
+export type UpdateRangeHourInput = {
+  endHour: Scalars['String']['input'];
+  price: Scalars['Float']['input'];
+  startHour: Scalars['String']['input'];
+};
+
+export type UpdateServiceInput = {
+  calification?: InputMaybe<Scalars['Int']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  disponibility?: InputMaybe<UpdateDisponibilityInput>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  serviceId: Scalars['ID']['input'];
+  sport?: InputMaybe<Sport>;
+};
+
+export type UpdateSportCenterInput = {
+  calification?: InputMaybe<Scalars['Int']['input']>;
+  images?: InputMaybe<Array<Scalars['String']['input']>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  sportCenterId: Scalars['ID']['input'];
+  ubication?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {
@@ -176,6 +340,16 @@ export type User = {
   phone: Scalars['String']['output'];
   userId: Scalars['ID']['output'];
 };
+
+export enum Weekday {
+  Friday = 'Friday',
+  Monday = 'Monday',
+  Saturday = 'Saturday',
+  Sunday = 'Sunday',
+  Thursday = 'Thursday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday'
+}
 
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 

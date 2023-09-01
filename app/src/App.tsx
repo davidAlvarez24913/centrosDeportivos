@@ -2,7 +2,6 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Home from "./pages/Home";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -24,6 +23,9 @@ import "./theme/variables.css";
 import "./theme/ionicOverwrites.css";
 import { client } from "schema";
 import { ApolloProvider } from "@apollo/client";
+import HomePage from "./pages/HomePage";
+import SportsPage from "./pages/SportsPage";
+import ServicesPage from "./pages/ServicesPage";
 
 setupIonicReact();
 
@@ -32,12 +34,12 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <ApolloProvider client={client}>
-          <Route exact path="/home">
-            <Home />
-          </Route>
           <Route exact path="/">
-            <Redirect to="/home" />
+            <Redirect to="home" />
           </Route>
+          <Route exact path="/home" component={HomePage} />
+          <Route exact path="/sports" component={SportsPage} />
+          <Route exact path="/services/:sport" component={ServicesPage} />
         </ApolloProvider>
       </IonRouterOutlet>
     </IonReactRouter>

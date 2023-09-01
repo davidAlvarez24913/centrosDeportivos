@@ -64,7 +64,9 @@ ion-radio.ios::part(container) {
   border-color: #f79328;
 }
 
-
+ion-header {
+  border-bottom: 1px solid #98CE00;
+}
 ion-accordion.accordion-collapsing ion-item[slot='header'],
 ion-accordion.accordion-collapsed ion-item[slot='header'] {
   --background: #12111F;

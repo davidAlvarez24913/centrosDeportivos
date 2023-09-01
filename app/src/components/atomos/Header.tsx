@@ -1,23 +1,27 @@
 import React from "react";
 import { IonButton, IonHeader, useIonRouter } from "@ionic/react";
-
-const Header = ({ title, path }: { title: string; path: string }) => {
+type FullServiceProps = {
+  title: string;
+  path?: string;
+  dismiss?: () => void;
+};
+const Header = ({ title, path, dismiss }: FullServiceProps) => {
   const ionRouter = useIonRouter();
-  const goBack = (path: string) => {
-    ionRouter.push(path);
-  };
   return (
     <IonHeader>
-      <div className="flex items-center bg-background">
+      <div className="flex items-center bg-background border-b-primary py-1 ">
         <IonButton
           type="button"
           fill="clear"
-          onClick={() => goBack(path)}
+          onClick={() => {
+            path && ionRouter.push(path);
+            dismiss && dismiss();
+          }}
           className="text-customText font-extrabold"
         >
-          <img src="assets/icon/back-arrow.svg" alt="goback arrow" />
+          <img src="assets/icon/back-arrow.svg" alt="goback arrow" width={24} />
         </IonButton>
-        <h1 className="text-2xl">{title}</h1>
+        <h1 className="text-xl font-bold">{title}</h1>
       </div>
     </IonHeader>
   );

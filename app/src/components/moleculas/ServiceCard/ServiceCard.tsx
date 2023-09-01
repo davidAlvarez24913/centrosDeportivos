@@ -1,25 +1,47 @@
 import React from "react";
 import { MainCard } from "src/components/atomos";
-
+import FullService from "./FullServiceModal";
 type ServiceCardProps = {
-  title: string;
+  serviceId: string;
+  name: string;
   description: string;
-  imagePath: string;
+  image: string;
+  calification: number;
+  sportCenter: string;
+  sport: string;
+  showSportCenter?: boolean;
 };
-const ServiceCard = ({ title, description, imagePath }: ServiceCardProps) => {
+const ServiceCard = (service: ServiceCardProps) => {
+  const {
+    name,
+    description,
+    image,
+    serviceId,
+    sportCenter,
+    showSportCenter = false,
+  } = service;
   return (
     <MainCard>
-      <div className="flex flex-row justify-between cursor-pointer">
+      <div
+        className="flex flex-row justify-between cursor-pointer"
+        id={`open-service-${serviceId}-modal`}
+      >
         <div className="flex flex-col gap-2 px-4 py-2">
-          <h1 className="text-2xl font-bold">{title}</h1>
+          <h2 className="text-2xl font-bold">{name}</h2>
+          {showSportCenter && (
+            <h2 className="text-xl font-semibold leading-3 mb-1">
+              {sportCenter}
+            </h2>
+          )}
           <p className="font-light text-xs leading-4">{description}</p>
         </div>
         <img
-          src={imagePath}
+          src={image}
           alt="sportIcon"
-          className="max-w-[180px] min-w-[180px] max-h-32 object-contain rounded-r-2xl"
+          className="max-w-[180px] min-w-[180px] max-h-32 object-cover rounded-r-2xl"
         />
       </div>
+      <FullService {...service} />
     </MainCard>
   );
 };

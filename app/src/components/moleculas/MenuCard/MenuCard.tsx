@@ -5,11 +5,15 @@ type MenuCardProps = {
   title: string;
   description?: string;
   iconPath: string;
+  onClick: () => void;
 };
-const MenuCard = ({ title, description, iconPath }: MenuCardProps) => {
+const MenuCard = ({ title, description, iconPath, onClick }: MenuCardProps) => {
   return (
     <MainCard>
-      <div className="flex flex-row justify-between cursor-pointer items-center p-4">
+      <div
+        className="flex flex-row justify-between cursor-pointer items-center p-4"
+        onClick={() => onClick()}
+      >
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-bold">{title}</h1>
           {description && (
