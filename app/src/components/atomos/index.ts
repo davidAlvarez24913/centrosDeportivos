@@ -6,3 +6,4 @@ export { default as SegmentButton } from "./SegmentButton";
 export { default as DayCard } from "./DayCard";
 export { default as TagHour } from "./TagHour";
 export { default as Star } from "./Star";
+export { default as CustomButton } from "./CustomButton";
