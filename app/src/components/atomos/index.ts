@@ -4,3 +4,4 @@ export { default as MainCard } from "./MainCard";
 export { default as PhotoPicker } from "./PhotoPicker";
 export { default as SegmentButton } from "./SegmentButton";
 export { default as DayCard } from "./DayCard";
+export { default as TagHour } from "./TagHour";
