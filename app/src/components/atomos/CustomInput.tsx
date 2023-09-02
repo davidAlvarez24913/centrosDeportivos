@@ -16,6 +16,7 @@ const CustomInput = ({
 }: PropsCustomInput) => {
   const auxIcon = "assets/icon/eye-outline.svg";
   const flagIcon = !(typeInput === "password") && pathSVG !== undefined;
+  const onClick = () => {};
   return (
     <div>
       <div className=" flex w-full flex-col rounded-xl border border-customText">
@@ -23,10 +24,12 @@ const CustomInput = ({
           <input
             type={typeInput}
             placeholder={placeholder}
-            className="w-full text-customText font-light border-none bg-transparent px-1 placeholder:text-customText placeholder:font-light"
+            className="w-full text-customText font-light border-none bg-transparent px-1 placeholder:text-customText placeholder:font-light outline-none"
           />
           {flagIcon && <img src={pathSVG} alt={pathSVG} />}
-          {typeInput === "password" && <img src={auxIcon} alt={auxIcon} />}
+          {typeInput === "password" && (
+            <img src={auxIcon} alt={auxIcon} onClick={onClickIcon ?? onClick} />
+          )}
         </div>
       </div>
       {errorMessage && (
