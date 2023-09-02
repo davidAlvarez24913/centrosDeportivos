@@ -55,3 +55,34 @@ export const services = [
     calification: 5,
   },
 ];
+
+export const myReservations = [
+  {
+    paymentStatus: false,
+    rangeHour: "23:00-02:00",
+    nameService: "Cancha futbol",
+    titleSportCenter: "Planeta Futbol",
+    key: 0,
+  },
+  {
+    paymentStatus: false,
+    rangeHour: "22:00:23:00",
+    nameService: "Cancha de futbol",
+    titleSportCenter: "La Sede",
+    key: 1,
+  },
+  {
+    paymentStatus: false,
+    rangeHour: "23:00-02:00",
+    nameService: "Baloncesto",
+    titleSportCenter: "Calva & calva",
+    key: 2,
+  },
+  {
+    paymentStatus: false,
+    rangeHour: "23:00-02:00",
+    nameService: "Cacncha de voly",
+    titleSportCenter: "El fortin",
+    key: 3,
+  },
+];
