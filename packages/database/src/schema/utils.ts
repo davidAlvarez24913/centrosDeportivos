@@ -19,7 +19,7 @@ export const mergeSportCenter = (
     const obj2 = firestoreSportCenter.find(
       (obj2) => obj1.sportCenterId == obj2.sportCenterId
     );
-    return { ...obj1, calification: obj2?.calification, images: obj2?.images };
+    return { ...obj1, ...obj2 };
   });
 };
 
