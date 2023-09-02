@@ -45,7 +45,7 @@ export const sportCenterResolvers = {
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
           images: input.images,
-          calification: input.calification ?? 0,
+          ranking: input.calification ?? 0,
         });
         return { ...input, id: result.identifiers[0].id };
       } else {
@@ -70,8 +70,7 @@ export const sportCenterResolvers = {
         await updateFirestoreSportCenter({
           sportCenterId: input.sportCenterId,
           images: input.images ?? currentSportCenterNoSQL?.images,
-          calification:
-            input.calification ?? currentSportCenterNoSQL?.calification,
+          ranking: input.ranking ?? currentSportCenterNoSQL?.ranking,
         });
         await SportCenter.update(
           {

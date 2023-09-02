@@ -72,7 +72,7 @@ export const serviceResolvers = {
           await createFirestoreService({
             serviceId: result.identifiers[0].serviceId,
             image: input.image,
-            calification: input.calification,
+            ranking: input.ranking,
             disponibility: auxDisponibility,
           });
           return {
@@ -102,7 +102,7 @@ export const serviceResolvers = {
         await updateFirestoreService({
           serviceId: input.serviceId,
           image: input.image ?? currentServiceNoSQL?.image,
-          calification: input.calification ?? currentServiceNoSQL?.calification,
+          ranking: input.ranking ?? currentServiceNoSQL?.ranking,
           disponibility: { ...input.disponibility },
         });
         await Service.update(
