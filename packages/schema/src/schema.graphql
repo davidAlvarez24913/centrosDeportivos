@@ -51,18 +51,19 @@ type SportCenter {
   name: String!
   phone: String!
   ubication: String!
+  hoursOperarion : String! # Hours attention
   services: [Service]
   images: [String!]
-  calification: Int # will be likes
+  ranking: Int 
 }
 
 type Service {
   serviceId: ID!
   name: String!
-  sport: String!
+  sport: Sport!
   description: String!
   image: String
-  calification: Int # will be likes
+  ranking: Int 
   sportCenterId: ID!
   disponibility: Disponibility
   reservations: [Reservation!]
@@ -106,8 +107,9 @@ input CreateSportCenterInput {
   name: String!
   phone: String!
   ubication: String!
+  hoursOperarion: String!
   images: [String!]
-  calification: Int
+  ranking: Int
 }
 
 input CreateServiceInput {
@@ -117,7 +119,7 @@ input CreateServiceInput {
   description: String!
   sportCenterId: ID!
   image: String
-  calification: Int
+  ranking: Int
   disponibility: [CreateScheduleInput!]
 }
 input CreateScheduleInput {
@@ -152,7 +154,8 @@ input UpdateSportCenterInput {
   phone: String
   ubication: String
   images: [String!]
-  calification: Int # will be likes
+  ranking: Int 
+  hoursOperarion: String
 }
 input UpdateServiceInput {
   serviceId: ID!
@@ -160,7 +163,7 @@ input UpdateServiceInput {
   description: String
   sport: Sport
   image: String
-  calification: Int # will be likes
+  ranking: Int 
   disponibility: UpdateDisponibilityInput
 }
 input UpdateRangeHourInput {
@@ -219,5 +222,6 @@ type Mutation {
   # TODO
   # mutation to plus and less like
   # query filter by sport all sportcenter
-  # add phone, ubication, schedule(atencion) in Service
+
+  # Add query Myreservations with : nameSportCenter , nameService, rangeHour stateReservation
 }
