@@ -35,19 +35,20 @@ export const sportCenterResolvers = {
   },
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
+      const { images, ranking, ...dataSQL } = input;
       const searchedByName = await SportCenter.find({
-        where: { name: input.name },
+        where: { name: dataSQL.name },
       });
       // Validation to not create with same name
       if (searchedByName.length === 0) {
-        const result = await SportCenter.insert(input);
+        const result = await SportCenter.insert(dataSQL);
         const sportCenterId = result.identifiers[0].sportCenterId;
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
           images: input.images,
-          ranking: input.calification ?? 0,
+          ranking: input.ranking,
         });
-        return { ...input, id: result.identifiers[0].id };
+        return { ...input, sportCenterId };
       } else {
         throw new GraphQLError("Nombre del centro deportivo ya existe", {
           extensions: {
@@ -80,6 +81,7 @@ export const sportCenterResolvers = {
             name: input.name ?? currentSportCenterSQL[0].name,
             phone: input.phone ?? currentSportCenterSQL[0].phone,
             ubication: input.ubication ?? currentSportCenterSQL[0].ubication,
+            hoursOperarion: input.hoursOperarion,
           }
         );
         return {
@@ -87,8 +89,10 @@ export const sportCenterResolvers = {
           message: "Centro deportivo se actualizo exitosamente",
         };
       } catch (error) {
-        console.log(error);
-        return { status: "Failed", message: "No se pudo actualizar" };
+        return {
+          status: "Failed",
+          message: "No se pudo actualizar" + JSON.stringify(error),
+        };
       }
     },
     deleteSportCenter: async (
@@ -113,7 +117,10 @@ export const sportCenterResolvers = {
           };
         }
       } catch (error) {
-        return { status: "Failed", message: "No se puede eliminar" };
+        return {
+          status: "Failed",
+          message: "No se puede eliminar" + JSON.stringify(error),
+        };
       }
     },
   },
