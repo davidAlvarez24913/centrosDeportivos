@@ -57,6 +57,7 @@ const HomePage = () => {
                       console.log("logout");
                     }}
                     color="cancel"
+                    type="button"
                   />
                 </>
               ) : (
@@ -66,6 +67,7 @@ const HomePage = () => {
                     ionRouter.push("/login");
                   }}
                   color="sucessfull"
+                  type="button"
                 />
               )}
             </div>

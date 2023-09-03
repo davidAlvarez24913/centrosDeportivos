@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import { IonContent, IonHeader, IonModal } from "@ionic/react";
+import { IonContent, IonModal } from "@ionic/react";
 import { Background, CustomButton, Header } from "src/components/atomos";
 type FullServiceProps = {
   serviceId: string;
@@ -71,6 +71,7 @@ const FullService = ({
               title="Seleccionar horarios"
               color="sucessfull"
               onClick={() => {}}
+              type="button"
             />
           </div>
         </Background>

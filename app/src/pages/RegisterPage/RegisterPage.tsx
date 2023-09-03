@@ -27,6 +27,7 @@ const RegisterPage = () => {
               color="sucessfull"
               title="REGISTRARSE"
               onClick={() => {}}
+              type="button"
             />
           </div>
         </Background>
