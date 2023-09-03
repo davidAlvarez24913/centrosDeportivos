@@ -10,6 +10,7 @@ import {
 import { GraphQLError } from "graphql";
 import { reservationResolvers } from "../Reservation/reservationResolver";
 import { mergeServices, schedule } from "../utils";
+import { FirebaseError } from "firebase/app";
 export const serviceResolvers = {
   Query: {
     listServices: async () => {
@@ -60,27 +61,37 @@ export const serviceResolvers = {
       const sportCenter = await SportCenter.findOneBy({
         sportCenterId: input.sportCenterId,
       });
+      let serviceId;
+      const { image, disponibility, ranking, ...dataSQL } = input;
       if (sportCenter) {
         try {
           const result = await Service.insert({
-            ...input,
-            sportCenter: input.sportCenterId,
+            ...dataSQL,
+            sportCenter: dataSQL.sportCenterId,
           });
+          serviceId = result.identifiers[0].serviceId;
+          const auxDisponibility =
+            input.disponibility === undefined || input.disponibility === null
+              ? undefined
+              : schedule(input.disponibility);
 
-          const auxDisponibility = schedule(input.disponibility);
           // insert firestore
           await createFirestoreService({
-            serviceId: result.identifiers[0].serviceId,
+            serviceId,
             image: input.image,
             ranking: input.ranking,
             disponibility: auxDisponibility,
           });
           return {
             ...input,
-            serviceId: result.identifiers[0].serviceId,
+            disponibility: auxDisponibility,
+            serviceId,
           };
         } catch (error) {
-          // return null;
+          if (serviceId) {
+            await Service.delete({ serviceId: Number(serviceId) });
+          }
+          console.log(typeof error);
           throw new GraphQLError(
             `No se pudo crear el servicio ${JSON.stringify(error)}`,
             {
@@ -136,7 +147,7 @@ export const serviceResolvers = {
         });
         const deletNoSQL = await deleteFirestoreService(serviceId);
         const result = await Promise.all([deletNoSQL, deleteSQL]);
-        if (result[1].affected === 1 && !flagNoSQL) {
+        if (result[1].affected === 1) {
           return { status: "Ok", message: "Servicio eliminado correctmente" };
         } else {
           return { status: "Failed", message: "Servicio no se elimino ;)" };
