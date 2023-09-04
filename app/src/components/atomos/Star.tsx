@@ -7,9 +7,9 @@ const Star = ({
   onClick?: () => void;
 }) => {
   const star = pushed ? (
-    <img src="assets/icon/star-yellow.svg" alt="star" width={14} height={14} />
+    <img src="assets/icon/star-yellow.svg" alt="star" width={16} height={16} />
   ) : (
-    <img src="assets/icon/star.svg" alt="star" width={14} height={14} />
+    <img src="assets/icon/star.svg" alt="star" width={16} height={16} />
   );
   return (
     <button
