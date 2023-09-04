@@ -6,12 +6,12 @@ type PropsTagHour = {
 };
 const TagHour = ({ rangeHour, available }: PropsTagHour) => {
   const styles = available
-    ? " bg-primary text-background"
-    : " bg-background text-customText";
+    ? " w-14 text-center bg-primary text-background"
+    : " w-14 text-center bg-background text-customText";
   return (
     <div
       className={
-        "flex flex-col items-center w-18 h-8 p-2 text-xs gap-1 rounded-2xl border-2 border-primary" +
+        "flex flex-col items-center w-min h-7 p-2 text-[8px] gap-1 rounded-2xl border-2 border-primary" +
         styles
       }
     >
