@@ -3,8 +3,9 @@ import React from "react";
 type PropsDaycard = {
   date: string;
   available: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
-const DayCard = ({ date, available }: PropsDaycard) => {
+const DayCard = ({ date, available, onClick }: PropsDaycard) => {
   const weekday = [
     "Domingo",
     "Lunes",
@@ -38,6 +39,7 @@ const DayCard = ({ date, available }: PropsDaycard) => {
         "flex flex-col items-center w-18 h-18 p-2 text-xs gap-1 rounded-2xl border-2 border-primary " +
         styles
       }
+      onClick={onClick}
     >
       <h4 className={styles + " w-14 text-center"}>
         {weekday[auxdate.getDay()]}
