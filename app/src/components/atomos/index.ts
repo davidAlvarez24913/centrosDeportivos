@@ -8,3 +8,4 @@ export { default as TagHour } from "./TagHour";
 export { default as Star } from "./Star";
 export { default as CustomButton } from "./CustomButton";
 export { default as CustomInput } from "./CustomInput";
+export { default as CommonTag } from "./CommonTag";
