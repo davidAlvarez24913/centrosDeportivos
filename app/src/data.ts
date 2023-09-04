@@ -94,3 +94,27 @@ export const ExampleInfoBookings = {
   price: 20.0,
   paymentStatus: true,
 };
+
+export const accounts = [
+  {
+    bankName: "Banco de Loja",
+    id: "001",
+    accountType: "Cuenta de Ahorro",
+    accountNumber: "20222022",
+    email: "correo@gmail.com",
+  },
+  {
+    bankName: "Banco de Pichincha",
+    id: "001",
+    accountType: "Cuenta de Ahorro",
+    accountNumber: "20222022",
+    email: "correo@gmail.com",
+  },
+  {
+    bankName: "Banco del Austro",
+    id: "001",
+    accountType: "Cuenta de Ahorro",
+    accountNumber: "20222022",
+    email: "correo@gmail.com",
+  },
+];
