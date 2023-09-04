@@ -40,7 +40,7 @@ const HomePage = () => {
                     description="Mira tus reservaciones"
                     iconPath="assets/icon/register-book.svg"
                     onClick={() => {
-                      ionRouter.push("/reservactions");
+                      ionRouter.push("/myreservations");
                     }}
                   ></MenuCard>
                   <MenuCard
