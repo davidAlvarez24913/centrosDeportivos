@@ -47,7 +47,7 @@ const App: React.FC = () => (
           <Route exact path="/myreservations" component={MyReservationsPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/infoBookings" component={InfoBookingsPage} />
+          <Route exact path="/info-bookings" component={InfoBookingsPage} />
         </ApolloProvider>
       </IonRouterOutlet>
     </IonReactRouter>
