@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import { IonContent, IonModal } from "@ionic/react";
+import { IonContent, IonModal, useIonRouter } from "@ionic/react";
 import { Background, CustomButton, Header } from "src/components/atomos";
 type FullServiceProps = {
   serviceId: string;
@@ -21,6 +21,7 @@ const FullService = ({
   sport,
 }: FullServiceProps) => {
   const ref = useRef<HTMLIonModalElement>(null);
+  const ionRouter = useIonRouter();
   return (
     <IonModal ref={ref} trigger={`open-service-${serviceId}-modal`}>
       <Header
@@ -70,7 +71,9 @@ const FullService = ({
             <CustomButton
               title="Seleccionar horarios"
               color="sucessfull"
-              onClick={() => {}}
+              onClick={() => {
+                ionRouter.push("/disponibility");
+              }}
               type="button"
             />
           </div>
