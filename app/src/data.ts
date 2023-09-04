@@ -1,3 +1,5 @@
+import { RangeHour } from "schema";
+
 export const services = [
   {
     serviceId: "1",
@@ -94,3 +96,41 @@ export const ExampleInfoBookings = {
   price: 20.0,
   paymentStatus: true,
 };
+
+export const disponibility: RangeHour[] = [
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+  {
+    startHour: "11:00",
+    endHour: "12:00",
+    price: 23.5,
+  },
+];
