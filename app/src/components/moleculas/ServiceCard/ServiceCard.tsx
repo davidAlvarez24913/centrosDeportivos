@@ -6,7 +6,6 @@ type ServiceCardProps = {
   name: string;
   description: string;
   image: string;
-  calification: number;
   sportCenter: string;
   sport: string;
   showSportCenter?: boolean;
@@ -33,7 +32,9 @@ const ServiceCard = (service: ServiceCardProps) => {
               {sportCenter}
             </h2>
           )}
-          <p className="font-light text-xs leading-4">{description}</p>
+          <p className="font-light text-xs leading-4 max-h-12 overflow-hidden">
+            {description}
+          </p>
         </div>
         <img
           src={image}

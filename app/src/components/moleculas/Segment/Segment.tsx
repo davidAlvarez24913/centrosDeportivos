@@ -12,7 +12,7 @@ type SegmentProps = {
 const Segment = ({ segmentList, segment, setSegment }: SegmentProps) => {
   return (
     <IonSegment
-      className="bg-transparent"
+      className="bg-background"
       value={segment}
       onIonChange={(e) => {
         setSegment(e.detail.value! as string);

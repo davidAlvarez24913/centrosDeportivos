@@ -6,3 +6,4 @@ export { default as Modal } from "./Modal";
 export { default as Accordion } from "./Accordion";
 export { default as Segment } from "./Segment";
 export { default as StarRank } from "./StarRank";
+export { default as SportCenterInformation } from "./SportCenterInformation";

@@ -30,7 +30,7 @@ const HomePage = () => {
                 description="Reserva según tu centro deportivo favorito"
                 iconPath="assets/icon/round-place.svg"
                 onClick={() => {
-                  ionRouter.push("/sportCenter");
+                  ionRouter.push("/sportsCenters");
                 }}
               ></MenuCard>
               {loggedIn ? (

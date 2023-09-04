@@ -1,13 +1,17 @@
 import React, { useRef } from "react";
 
 import { IonContent, IonModal } from "@ionic/react";
-import { Background, CustomButton, Header } from "src/components/atomos";
+import {
+  Background,
+  CustomButton,
+  Header,
+  InformationSection,
+} from "src/components/atomos";
 type FullServiceProps = {
   serviceId: string;
   name: string;
   description: string;
   image: string;
-  calification: number;
   sportCenter: string;
   sport: string;
 };
@@ -15,7 +19,6 @@ const FullService = ({
   name,
   description,
   image,
-  calification,
   sportCenter,
   serviceId,
   sport,
@@ -43,30 +46,11 @@ const FullService = ({
               />
               <p className="font-light text-base leading-4 ">{sport}</p>
             </div>
-            <div className="flex flex-row items-center gap-2 ">
-              <img
-                src="assets/icon/schedule.svg"
-                alt="sportIcon"
-                className="w-6 rounded-r-2xl"
-              />
-              <p className="font-light text-base leading-4 ">{calification}</p>
-            </div>
-            <div className="flex flex-row items-center gap-2 ">
-              <img
-                src="assets/icon/round-place.svg"
-                alt="sportIcon"
-                className="w-6 rounded-r-2xl"
-              />
-              <p className="font-light text-base leading-4 ">{calification}</p>
-            </div>
-            <div className="flex flex-row items-center gap-2 ">
-              <img
-                src="assets/icon/phone.svg"
-                alt="sportIcon"
-                className="w-6 rounded-r-2xl"
-              />
-              <p className="font-light text-base leading-4 ">{calification}</p>
-            </div>
+            <InformationSection
+              phone={sport}
+              ubication={sport}
+              schedule={sport}
+            />
             <CustomButton
               title="Seleccionar horarios"
               color="sucessfull"
