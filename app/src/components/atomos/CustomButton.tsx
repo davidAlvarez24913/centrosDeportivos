@@ -6,8 +6,9 @@ type ProsCustomButton = {
   onClick?: React.MouseEventHandler<HTMLIonButtonElement> | undefined;
   color: "sucessfull" | "cancel" | "outline";
   type: "button" | "submit" | "reset";
+  id?: string;
 };
-function CustomButton({ title, onClick, color, type }: ProsCustomButton) {
+function CustomButton({ title, onClick, color, type, id }: ProsCustomButton) {
   let styleColor = "";
   if (color === "cancel") styleColor = "bg-[#E62314] text-customText";
   if (color === "sucessfull") styleColor = "bg-primary text-background";
@@ -15,6 +16,7 @@ function CustomButton({ title, onClick, color, type }: ProsCustomButton) {
     styleColor = "bg-transparent border-2 border-primary  text-primary ";
   return (
     <IonButton
+      id={id}
       onClick={onClick}
       fill="clear"
       type={type}
