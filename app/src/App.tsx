@@ -30,6 +30,7 @@ import MyReservationsPage from "./pages/MyReservationsPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import InfoBookingsPage from "./pages/InfoBookingsPage";
+import DisponibilityPage from "./pages/DisponibilityPage";
 
 setupIonicReact();
 
@@ -48,6 +49,7 @@ const App: React.FC = () => (
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/info-bookings" component={InfoBookingsPage} />
+          <Route exact path="/disponibility" component={DisponibilityPage} />
         </ApolloProvider>
       </IonRouterOutlet>
     </IonReactRouter>
