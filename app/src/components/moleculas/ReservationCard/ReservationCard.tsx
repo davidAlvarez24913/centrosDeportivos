@@ -31,9 +31,9 @@ const ReservationCard = ({
         <div className="w-1/3">
           <h2 className="text-xl font-bold">Pago</h2>
           {paymentStatus ? (
-            <h3 className="text-base font-semibold text-error">Pendiente</h3>
-          ) : (
             <h3 className="text-base font-semibold text-primary">Pagado</h3>
+          ) : (
+            <h3 className="text-base font-semibold text-error">Pendiente</h3>
           )}
         </div>
       </div>
