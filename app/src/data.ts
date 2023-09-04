@@ -72,7 +72,7 @@ export const myReservations = [
     key: 1,
   },
   {
-    paymentStatus: false,
+    paymentStatus: true,
     rangeHour: "23:00-02:00",
     nameService: "Baloncesto",
     titleSportCenter: "Calva & calva",
@@ -86,3 +86,11 @@ export const myReservations = [
     key: 3,
   },
 ];
+export const ExampleInfoBookings = {
+  nameSportCenter: "La Pampita",
+  nameService: "Cancha de Futbol",
+  date: "Miercoles 9 Ago. 2023",
+  rangeHour: "10:00 -11:00",
+  price: 20.0,
+  paymentStatus: true,
+};
