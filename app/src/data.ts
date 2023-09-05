@@ -97,40 +97,31 @@ export const ExampleInfoBookings = {
   paymentStatus: true,
 };
 
-export const disponibility: RangeHour[] = [
+export const disponibility = [
   {
-    startHour: "11:00",
-    endHour: "12:00",
+    rangeHour: "11:00 - 12:00",
     price: 23.5,
   },
   {
-    startHour: "11:00",
-    endHour: "12:00",
+    rangeHour: "12:00 - 13:00",
     price: 23.5,
   },
   {
-    startHour: "11:00",
-    endHour: "12:00",
+    rangeHour: "13:00 - 14:00",
     price: 23.5,
   },
   {
-    startHour: "11:00",
-    endHour: "12:00",
+    rangeHour: "15:00 - 16:00",
     price: 23.5,
   },
   {
-    startHour: "11:00",
-    endHour: "12:00",
+    rangeHour: "16:00 - 17:00",
     price: 23.5,
   },
   {
-    startHour: "11:00",
-    endHour: "12:00",
-    price: 23.5,
-  },
-  {
-    startHour: "11:00",
-    endHour: "12:00",
+    rangeHour: "17:00 - 18:00",
     price: 23.5,
   },
 ];
+
+export const exampleRervations = ["11:00 - 12:00"];
