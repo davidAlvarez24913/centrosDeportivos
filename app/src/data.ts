@@ -64,7 +64,7 @@ export const sportsCenters = [
     ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
     schedule: "Lunes a Sábado de 10h00 a 23h00",
     image: "/assets/image 8.png",
-    ranking: 5,
+    ranking: 3,
   },
   {
     sportCenterId: "2",
@@ -75,7 +75,7 @@ export const sportsCenters = [
     ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
     schedule: "Lunes a Sábado de 10h00 a 23h00",
     image: "/assets/image 10.png",
-    ranking: 5,
+    ranking: 4,
   },
   {
     sportCenterId: "3",
@@ -86,7 +86,7 @@ export const sportsCenters = [
     ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
     schedule: "Lunes a Sábado de 10h00 a 23h00",
     image: "/assets/image 10.png",
-    ranking: 5,
+    ranking: 3,
   },
 ];
 export const myReservations = [

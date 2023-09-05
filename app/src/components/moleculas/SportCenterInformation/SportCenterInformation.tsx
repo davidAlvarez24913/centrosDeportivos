@@ -24,7 +24,7 @@ const SportCenterInformation = ({
     <div>
       <div className="flex flex-col gap-3 mt-5">
         <img src={image} alt="service image" />
-        {/* <StarRank stars={ranking}></StarRank> */}
+        <StarRank stars={ranking} setStars={() => {}}></StarRank>
         <p className="text-sm font-normal">{description}</p>
         <InformationSection
           phone={phone}
@@ -32,9 +32,9 @@ const SportCenterInformation = ({
           schedule={schedule}
         />
         <h2 className="text-xl font-bold">Reseñas</h2>
-        {reviews.map((review) => {
+        {reviews.map((review, index) => {
           return (
-            <MainCard key={1}>
+            <MainCard key={index}>
               <p className="py-2 px-3 text-justify font-light">{review}</p>
             </MainCard>
           );
