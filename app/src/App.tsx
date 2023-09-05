@@ -30,6 +30,9 @@ import MyReservationsPage from "./pages/MyReservationsPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import InfoBookingsPage from "./pages/InfoBookingsPage";
+import PaymentPage from "./pages/PaymentPage";
+import SportsCentersPage from "./pages/SportsCentersPage";
+import SportCenterPage from "./pages/SportCenterPage";
 import DisponibilityPage from "./pages/DisponibilityPage";
 
 setupIonicReact();
@@ -45,7 +48,10 @@ const App: React.FC = () => (
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/sports" component={SportsPage} />
           <Route exact path="/services/:sport" component={ServicesPage} />
+          <Route exact path="/sportsCenters" component={SportsCentersPage} />
+          <Route exact path="/sportCenter/:id" component={SportCenterPage} />
           <Route exact path="/myreservations" component={MyReservationsPage} />
+          <Route exact path="/payment/:info" component={PaymentPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/info-bookings" component={InfoBookingsPage} />

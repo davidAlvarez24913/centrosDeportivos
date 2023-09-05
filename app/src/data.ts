@@ -21,7 +21,6 @@ export const services = [
     description:
       "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
     image: "/assets/image 8.png",
-    calification: 5,
   },
   {
     serviceId: "3",
@@ -32,7 +31,6 @@ export const services = [
     description:
       "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
     image: "/assets/image 8.png",
-    calification: 5,
   },
   {
     serviceId: "4",
@@ -43,7 +41,6 @@ export const services = [
     description:
       "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
     image: "/assets/image 8.png",
-    calification: 5,
   },
   {
     serviceId: "5",
@@ -52,12 +49,46 @@ export const services = [
     sportCenterId: "1",
     sport: "Futbol",
     description:
-      "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
+      "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
     image: "/assets/image 8.png",
-    calification: 5,
   },
 ];
 
+export const sportsCenters = [
+  {
+    sportCenterId: "1",
+    name: "El Fortin",
+    description:
+      "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
+    phone: "09999999",
+    ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
+    schedule: "Lunes a Sábado de 10h00 a 23h00",
+    image: "/assets/image 8.png",
+    ranking: 5,
+  },
+  {
+    sportCenterId: "2",
+    name: "El Fortin",
+    phone: "09999999",
+    description:
+      "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
+    ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
+    schedule: "Lunes a Sábado de 10h00 a 23h00",
+    image: "/assets/image 10.png",
+    ranking: 5,
+  },
+  {
+    sportCenterId: "3",
+    name: "El Fortin",
+    phone: "09999999",
+    description:
+      "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
+    ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
+    schedule: "Lunes a Sábado de 10h00 a 23h00",
+    image: "/assets/image 10.png",
+    ranking: 5,
+  },
+];
 export const myReservations = [
   {
     paymentStatus: false,
@@ -96,6 +127,35 @@ export const ExampleInfoBookings = {
   price: 20.0,
   paymentStatus: true,
 };
+
+export const accounts = [
+  {
+    bankName: "Banco de Loja",
+    id: "001",
+    accountType: "Cuenta de Ahorro",
+    accountNumber: "20222022",
+    email: "correo@gmail.com",
+  },
+  {
+    bankName: "Banco de Pichincha",
+    id: "001",
+    accountType: "Cuenta de Ahorro",
+    accountNumber: "20222022",
+    email: "correo@gmail.com",
+  },
+  {
+    bankName: "Banco del Austro",
+    id: "001",
+    accountType: "Cuenta de Ahorro",
+    accountNumber: "20222022",
+    email: "correo@gmail.com",
+  },
+];
+export const reviews = [
+  "Lorem ipsum dolor sit amet consectetur. Sed est consequ at enim eget vestibulum sit amet. Orci felis gravida odio iaculis sit",
+  "Lorem ipsum dolor sit amet consectetur. Sed est consequ at enim eget vestibulum sit amet. Orci felis gravida odio iaculis sit",
+  "Lorem ipsum dolor sit amet consectetur. Sed est consequ at enim eget vestibulum sit amet. Orci felis gravida odio iaculis sit",
+];
 
 export const disponibility = [
   {

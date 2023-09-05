@@ -17,7 +17,7 @@ const Accordion = ({ accounts }: AccordionProps) => {
         return (
           <IonAccordion key={account.accountNumber}>
             <IonItem slot="header">
-              <h2>{account.bankName}</h2>
+              <h2 className="font-bold text-xl">{account.bankName}</h2>
             </IonItem>
             <div slot="content">
               <h3 className="text-primary text-lg font-semibold">

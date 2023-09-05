@@ -1,25 +1,35 @@
+import { useIonRouter } from "@ionic/react";
 import React from "react";
 import { MainCard } from "src/components/atomos";
 
 type SportCenterProps = {
-  title: string;
+  sportCenterId: string;
+  name: string;
   schedule: string;
   ubication: string;
-  contact: string;
-  imagePath: string;
+  phone: string;
+  image: string;
 };
 const SportCenterCard = ({
-  title,
+  name,
   schedule,
-  contact,
   ubication,
-  imagePath,
+  image,
+  phone,
+  sportCenterId,
 }: SportCenterProps) => {
+  const ionRouter = useIonRouter();
+
   return (
     <MainCard>
-      <div className="flex flex-row justify-between cursor-pointer">
+      <div
+        className="flex flex-row justify-between cursor-pointer"
+        onClick={() => {
+          ionRouter.push(`sportCenter/:${sportCenterId}`);
+        }}
+      >
         <div className="flex flex-col gap-2 px-4 py-3">
-          <h1 className="text-2xl font-bold">{title}</h1>
+          <h1 className="text-2xl font-bold">{name}</h1>
           <div className="flex flex-row items-center gap-2 ">
             <img
               src="assets/icon/schedule.svg"
@@ -34,7 +44,7 @@ const SportCenterCard = ({
               alt="sportIcon"
               className="w-5 rounded-r-2xl"
             />
-            <p className="font-light text-xs leading-4 ">{contact}</p>
+            <p className="font-light text-xs leading-4 ">{ubication}</p>
           </div>
           <div className="flex flex-row items-center gap-2 ">
             <img
@@ -42,13 +52,13 @@ const SportCenterCard = ({
               alt="sportIcon"
               className="w-5 rounded-r-2xl"
             />
-            <p className="font-light text-xs leading-4 ">{ubication}</p>
+            <p className="font-light text-xs leading-4 ">{phone}</p>
           </div>
         </div>
         <img
-          src={imagePath}
+          src={image}
           alt="sportIcon"
-          className="max-w-[180px] min-w-[180px] max-h-32 rounded-r-2xl object-contain"
+          className="w-[180px] rounded-r-2xl object-cover"
         />
       </div>
     </MainCard>
