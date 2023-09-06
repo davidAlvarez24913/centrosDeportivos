@@ -25,7 +25,7 @@ const SportCenterCard = ({
       <div
         className="flex flex-row justify-between cursor-pointer"
         onClick={() => {
-          ionRouter.push(`sportCenter/:${sportCenterId}`);
+          ionRouter.push(`sportCenter/${sportCenterId}`);
         }}
       >
         <div className="flex flex-col gap-2 px-4 py-3">

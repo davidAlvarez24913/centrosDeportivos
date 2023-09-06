@@ -56,7 +56,7 @@ const FullService = ({
               title="Seleccionar horarios"
               color="sucessfull"
               onClick={() => {
-                ionRouter.push("/disponibility");
+                ionRouter.push(`/disponibility/${serviceId}`);
               }}
               type="button"
             />

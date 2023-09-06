@@ -10,8 +10,7 @@ import {
 import { services, sportsCenters, reviews } from "src/data";
 
 const SportCenterPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const sportCenterId = id.slice(1);
+  const { sportCenterId } = useParams<{ sportCenterId: string }>();
   const [segment, setSegment] = useState<"servicios" | "informacion">(
     "servicios"
   );

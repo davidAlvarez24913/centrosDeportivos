@@ -20,7 +20,7 @@ const SportsPage = () => {
                     title={sport}
                     iconPath={`assets/icon/${sport}.svg`}
                     onClick={() => {
-                      ionRouter.push(`/services/:${sport}`);
+                      ionRouter.push(`/services/${sport}`);
                     }}
                   ></MenuCard>
                 );

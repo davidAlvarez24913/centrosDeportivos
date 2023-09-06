@@ -4,6 +4,7 @@ import { Background, CustomButton, Header } from "src/components/atomos";
 import { BodyDisponibility } from "src/components/organismos";
 import ModalInfoBooking from "./ModalInfoBooking";
 import { disponibility } from "src/data";
+import { useParams } from "react-router";
 
 const daysDisponibility = () => {
   let dateAux = new Date();
@@ -19,6 +20,8 @@ const daysDisponibility = () => {
 };
 
 const DisponibilityPage = () => {
+  const { serviceId } = useParams<{ serviceId: string }>();
+
   const [price, setPrice] = useState(0.0);
   const [days, setDays] = useState(daysDisponibility());
   const [hours, setHours] = useState<

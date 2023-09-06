@@ -49,13 +49,21 @@ const App: React.FC = () => (
           <Route exact path="/sports" component={SportsPage} />
           <Route exact path="/services/:sport" component={ServicesPage} />
           <Route exact path="/sportsCenters" component={SportsCentersPage} />
-          <Route exact path="/sportCenter/:id" component={SportCenterPage} />
+          <Route
+            exact
+            path="/sportCenter/:sportCenterId"
+            component={SportCenterPage}
+          />
           <Route exact path="/myreservations" component={MyReservationsPage} />
           <Route exact path="/payment/:info" component={PaymentPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/info-bookings" component={InfoBookingsPage} />
-          <Route exact path="/disponibility" component={DisponibilityPage} />
+          <Route
+            exact
+            path="/disponibility/:serviceId"
+            component={DisponibilityPage}
+          />
         </ApolloProvider>
       </IonRouterOutlet>
     </IonReactRouter>

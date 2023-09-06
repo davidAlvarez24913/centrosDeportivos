@@ -9,7 +9,7 @@ const ServicesPage = () => {
 
   return (
     <IonPage>
-      <Header title={`Servicios de: ${sport.slice(1)}`} path="/sports" />
+      <Header title={`Servicios de: ${sport}`} path="/sports" />
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 mt-5 justify-center">
