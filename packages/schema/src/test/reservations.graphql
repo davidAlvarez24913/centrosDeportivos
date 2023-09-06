@@ -1,0 +1,13 @@
+mutation CreateReservationInput($input: CreateReservationInput!){
+    createReservation(input: $input){
+        reservationId
+        state
+        paymentId
+        reservationPrice
+        userId
+        serviceId
+        paymentPhoto
+        date
+        rangeHour
+    }
+}

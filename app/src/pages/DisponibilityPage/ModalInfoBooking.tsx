@@ -1,5 +1,9 @@
-import { IonContent, IonModal } from "@ionic/react";
-import React from "react";
+import { IonContent, IonModal, useIonToast } from "@ionic/react";
+import React, { useRef } from "react";
+import {
+  CreateReservationInput,
+  useCreateReservationInputMutation,
+} from "schema";
 import {
   Background,
   CommonTag,
@@ -7,12 +11,18 @@ import {
   Header,
 } from "src/components/atomos";
 import { ExampleInfoBookings } from "src/data";
-import ModalPayment from "./ModalPayment";
 
 const ModalInfoBooking = () => {
+  const ref = useRef<HTMLIonModalElement>(null);
+  const [present] = useIonToast();
+  const [createReservationInputMutation, { data, loading }] =
+    useCreateReservationInputMutation();
   return (
-    <IonModal trigger="modal-info-booking">
-      <Header title="Datos de la Reservacion" />
+    <IonModal trigger="modal-info-booking" ref={ref}>
+      <Header
+        title="Datos de la Reservacion"
+        dismiss={() => ref.current?.dismiss()}
+      />
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 py-4">
@@ -38,20 +48,67 @@ const ModalInfoBooking = () => {
                   : "Pendiente"
               }
             />
-
-            <CustomButton
-              title="CONFIRMAR RESERVACION"
-              color="sucessfull"
-              type="button"
-              id="modal-payment"
-              onClick={() => {
-                //TODO create reservation
-              }}
-            />
+            {data === undefined ? (
+              <CustomButton
+                title="CONFIRMAR RESERVACION"
+                color="sucessfull"
+                type="button"
+                id="modal-payment"
+                disable={loading}
+                loading={loading}
+                onClick={() => {
+                  //TODO create reservation
+                  const input = {
+                    date: "",
+                    paymentId: "",
+                    paymentPhoto: "",
+                    rangeHour: "",
+                    reservationPrice: 22,
+                    serviceId: "",
+                    state: false,
+                    userId: "",
+                  } as CreateReservationInput;
+                  createReservationInputMutation({
+                    variables: { input },
+                    onCompleted: () => {
+                      present({
+                        message: "Reservacion realizada exitosamente",
+                        duration: 1500,
+                        color: "success",
+                        position: "top",
+                      });
+                    },
+                    onError: (error) => {
+                      present({
+                        message:
+                          "No se pudo realizar la reservacion " + error.message,
+                        duration: 1500,
+                        color: "danger",
+                        position: "top",
+                      });
+                    },
+                  });
+                }}
+              />
+            ) : (
+              <div className="flex flex-col gap-4">
+                <CustomButton
+                  color="sucessfull"
+                  title="Realizar pago"
+                  type="button"
+                  onClick={() => {}}
+                />
+                <CustomButton
+                  color="sucessfull"
+                  title="pagar despues"
+                  type="button"
+                  onClick={() => {}}
+                />
+              </div>
+            )}
           </div>
         </Background>
       </IonContent>
-      <ModalPayment />
     </IonModal>
   );
 };

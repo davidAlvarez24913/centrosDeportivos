@@ -1,5 +1,6 @@
-import { IonButton } from "@ionic/react";
+import { IonButton, IonSpinner } from "@ionic/react";
 import React from "react";
+import { disable } from "workbox-navigation-preload";
 
 type ProsCustomButton = {
   title: string;
@@ -7,8 +8,18 @@ type ProsCustomButton = {
   color: "sucessfull" | "cancel" | "outline";
   type: "button" | "submit" | "reset";
   id?: string;
+  disable?: boolean;
+  loading?: boolean;
 };
-function CustomButton({ title, onClick, color, type, id }: ProsCustomButton) {
+function CustomButton({
+  title,
+  onClick,
+  color,
+  type,
+  id,
+  disable,
+  loading,
+}: ProsCustomButton) {
   let styleColor = "";
   if (color === "cancel") styleColor = "bg-[#E62314] text-customText";
   if (color === "sucessfull") styleColor = "bg-primary text-background";
@@ -21,9 +32,13 @@ function CustomButton({ title, onClick, color, type, id }: ProsCustomButton) {
       fill="clear"
       type={type}
       size="small"
+      disabled={disable}
       className={`rounded-xl w-full text-xl font-medium h-10 ${styleColor}`}
     >
       {title}
+      {loading && (
+        <IonSpinner name="crescent" className="text-primary text-xs" />
+      )}
     </IonButton>
   );
 }

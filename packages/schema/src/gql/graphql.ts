@@ -52,21 +52,21 @@ export type CreateScheduleInput = {
 };
 
 export type CreateServiceInput = {
-  calification?: InputMaybe<Scalars['Int']['input']>;
   description: Scalars['String']['input'];
   disponibility?: InputMaybe<Array<CreateScheduleInput>>;
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
-  price: Scalars['Float']['input'];
+  ranking?: InputMaybe<Scalars['Int']['input']>;
   sport: Sport;
   sportCenterId: Scalars['ID']['input'];
 };
 
 export type CreateSportCenterInput = {
-  calification?: InputMaybe<Scalars['Int']['input']>;
+  hoursOperarion: Scalars['String']['input'];
   images?: InputMaybe<Array<Scalars['String']['input']>>;
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
+  ranking?: InputMaybe<Scalars['Int']['input']>;
   ubication: Scalars['String']['input'];
 };
 
@@ -253,14 +253,14 @@ export type Reservation = {
 
 export type Service = {
   __typename?: 'Service';
-  calification?: Maybe<Scalars['Int']['output']>;
   description: Scalars['String']['output'];
   disponibility?: Maybe<Disponibility>;
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
+  ranking?: Maybe<Scalars['Int']['output']>;
   reservations?: Maybe<Array<Reservation>>;
   serviceId: Scalars['ID']['output'];
-  sport: Scalars['String']['output'];
+  sport: Sport;
   sportCenterId: Scalars['ID']['output'];
 };
 
@@ -273,10 +273,11 @@ export enum Sport {
 
 export type SportCenter = {
   __typename?: 'SportCenter';
-  calification?: Maybe<Scalars['Int']['output']>;
+  hoursOperarion: Scalars['String']['output'];
   images?: Maybe<Array<Scalars['String']['output']>>;
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
+  ranking?: Maybe<Scalars['Int']['output']>;
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
   ubication: Scalars['String']['output'];
@@ -304,20 +305,21 @@ export type UpdateRangeHourInput = {
 };
 
 export type UpdateServiceInput = {
-  calification?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   disponibility?: InputMaybe<UpdateDisponibilityInput>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  ranking?: InputMaybe<Scalars['Int']['input']>;
   serviceId: Scalars['ID']['input'];
   sport?: InputMaybe<Sport>;
 };
 
 export type UpdateSportCenterInput = {
-  calification?: InputMaybe<Scalars['Int']['input']>;
+  hoursOperarion?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<Array<Scalars['String']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+  ranking?: InputMaybe<Scalars['Int']['input']>;
   sportCenterId: Scalars['ID']['input'];
   ubication?: InputMaybe<Scalars['String']['input']>;
 };
@@ -351,12 +353,60 @@ export enum Weekday {
   Wednesday = 'Wednesday'
 }
 
+export type CreateReservationInputMutationVariables = Exact<{
+  input: CreateReservationInput;
+}>;
+
+
+export type CreateReservationInputMutation = { __typename?: 'Mutation', createReservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, paymentPhoto?: string | null, date: string, rangeHour: string } | null };
+
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllUSersQuery = { __typename?: 'Query', allUsers?: Array<{ __typename?: 'User', email: string } | null> | null };
 
 
+export const CreateReservationInputDocument = gql`
+    mutation CreateReservationInput($input: CreateReservationInput!) {
+  createReservation(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    paymentPhoto
+    date
+    rangeHour
+  }
+}
+    `;
+export type CreateReservationInputMutationFn = Apollo.MutationFunction<CreateReservationInputMutation, CreateReservationInputMutationVariables>;
+
+/**
+ * __useCreateReservationInputMutation__
+ *
+ * To run a mutation, you first call `useCreateReservationInputMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReservationInputMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createReservationInputMutation, { data, loading, error }] = useCreateReservationInputMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateReservationInputMutation(baseOptions?: Apollo.MutationHookOptions<CreateReservationInputMutation, CreateReservationInputMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateReservationInputMutation, CreateReservationInputMutationVariables>(CreateReservationInputDocument, options);
+      }
+export type CreateReservationInputMutationHookResult = ReturnType<typeof useCreateReservationInputMutation>;
+export type CreateReservationInputMutationResult = Apollo.MutationResult<CreateReservationInputMutation>;
+export type CreateReservationInputMutationOptions = Apollo.BaseMutationOptions<CreateReservationInputMutation, CreateReservationInputMutationVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {

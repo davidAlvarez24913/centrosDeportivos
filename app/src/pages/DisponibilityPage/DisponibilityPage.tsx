@@ -1,9 +1,8 @@
 import { IonContent, IonPage } from "@ionic/react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Background, CustomButton, Header } from "src/components/atomos";
 import { BodyDisponibility } from "src/components/organismos";
 import ModalInfoBooking from "./ModalInfoBooking";
-import ModalPayment from "./ModalPayment";
 import { disponibility } from "src/data";
 
 const daysDisponibility = () => {

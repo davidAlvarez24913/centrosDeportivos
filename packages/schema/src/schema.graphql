@@ -136,7 +136,7 @@ input CreateReservationInput {
   userId: ID!
   serviceId: ID!
   paymentPhoto: String
-  rangeHour: String!
+  rangeHour: [String!]
 }
 
 input UpdateUserInput {
