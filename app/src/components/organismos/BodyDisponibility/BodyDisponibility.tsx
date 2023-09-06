@@ -2,36 +2,49 @@ import React, { useEffect, useState } from "react";
 import { DayCard, TagHour } from "src/components/atomos";
 import { disponibility, exampleRervations } from "src/data";
 
-// type PropsBodyDisponibility = {
-//   date: Date;
-// };
-const daysDisponibility = () => {
-  let dateAux = new Date();
-  // eslint-disable-next-line prefer-const
-  let arrayDay = [{ date: dateAux.toUTCString(), available: true }];
-  for (let i = 1; i < 7; i++) {
-    const element = new Date(dateAux.setDate(dateAux.getDate() + i));
-    arrayDay.push({ date: element.toUTCString(), available: false });
-    dateAux = new Date();
-  }
-
-  return arrayDay;
+type PropsBodyDisponibility = {
+  days: {
+    date: string;
+    available: boolean;
+  }[];
+  hours: {
+    rangeHour: string;
+    available: boolean;
+    price: number;
+  }[];
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  setDays: React.Dispatch<
+    React.SetStateAction<
+      {
+        date: string;
+        available: boolean;
+      }[]
+    >
+  >;
+  setHours: React.Dispatch<
+    React.SetStateAction<
+      {
+        rangeHour: string;
+        available: boolean;
+        price: number;
+      }[]
+    >
+  >;
 };
-const BodyDisponibility = () => {
-  const [days, setDays] = useState(daysDisponibility());
-  const [hours, setHours] =
-    useState<{ rangeHour: string; available?: boolean; price: number }[]>(
-      disponibility
-    );
-  const [hourSelected, setHourSelected] = useState<string[]>([]);
 
+const BodyDisponibility = ({
+  days,
+  hours,
+  setPrice,
+  setHours,
+  setDays,
+}: PropsBodyDisponibility) => {
   useEffect(() => {
-    setHours(
-      disponibility.filter(
-        ({ rangeHour }) => !exampleRervations.includes(rangeHour)
-      )
-    );
-  }, [days, setHourSelected]);
+    const prices = hours
+      .filter((hour) => hour.available === true)
+      .map((_) => _.price);
+    setPrice(prices.reduce((a, b) => a + b, 0));
+  }, [hours]);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-4 overflow-scroll">
@@ -63,21 +76,24 @@ const BodyDisponibility = () => {
               rangeHour={hour.rangeHour}
               key={index}
               onClick={() => {
-                if (hourSelected.includes(hour.rangeHour)) {
-                  setHourSelected(
-                    hourSelected.filter((_) => _ !== hour.rangeHour)
-                  );
-                  setHours([
-                    ...hours.filter((_) => _.rangeHour !== hour.rangeHour),
-                    { ...hour, available: false },
-                  ]);
+                if (hour.available === true) {
+                  const aux = hours.map((h) => {
+                    if (h.rangeHour === hour.rangeHour) {
+                      return { ...hour, available: false };
+                    } else {
+                      return h;
+                    }
+                  });
+                  setHours(aux);
                 } else {
-                  setHourSelected([...hourSelected, hour.rangeHour]);
-                  const auxx = hours.filter(
-                    (_) => _.rangeHour !== hour.rangeHour
-                  );
-
-                  setHours([...auxx, { ...hour, available: true }]);
+                  const aux = hours.map((h) => {
+                    if (h.rangeHour === hour.rangeHour) {
+                      return { ...hour, available: true };
+                    } else {
+                      return h;
+                    }
+                  });
+                  setHours(aux);
                 }
               }}
             />
