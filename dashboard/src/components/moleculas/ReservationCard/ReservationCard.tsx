@@ -22,9 +22,8 @@ const ReservationCard = ({
 }: ReservationCardProps) => {
   return (
     <div>
-      <div className="flex flex-row justify-between p-4">
+      <div className="flex flex-row justify-between py-4">
         <div className="flex flex-col gap-2">
-          <h2 className="text-xl font-bold">Reserva N: {reservationId}</h2>
           <h2 className="text-lg font-bold">Servicio:</h2>
           <p className="text-base">{serviceName}</p>
           <h2 className="text-lg font-bold">Fecha:</h2>

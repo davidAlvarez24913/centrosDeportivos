@@ -39,6 +39,7 @@ const ReservationsRow = (reservation: ReservationsRowProps) => {
         </th>
       </tr>
       <Modal
+        title={`Reserva N: ${reservationId}`}
         modalState={modal}
         closeModal={() => {
           setModal(false);
