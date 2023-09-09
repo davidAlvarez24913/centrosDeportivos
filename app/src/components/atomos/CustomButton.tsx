@@ -1,6 +1,5 @@
 import { IonButton, IonSpinner } from "@ionic/react";
 import React from "react";
-import { disable } from "workbox-navigation-preload";
 
 type ProsCustomButton = {
   title: string;
