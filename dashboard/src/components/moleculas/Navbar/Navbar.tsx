@@ -23,10 +23,10 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             alt="logo"
             width={52}
             height={56}
-            className="text-customText pt-10"
+            className="text-customText pt-10 pb-1"
           />
           <p className=" text-customText -left-1 font-semibold text-2xl">
-            as Tas
+            asTas
           </p>
         </a>
       </div>
