@@ -9,7 +9,7 @@ const ReservacionesPage = () => {
       {data?.allUsers?.map((user, index) => (
         <p key={index}>{user?.email}</p>
       ))}
-      <Navbar />
+      <Navbar nameSportCenter="La Pampita" />
     </>
   );
 };

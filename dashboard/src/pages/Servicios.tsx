@@ -4,7 +4,7 @@ import Navbar from "../components/moleculas";
 const ServiciosPage = () => {
   return (
     <>
-      <Navbar />
+      <Navbar nameSportCenter="La Pampita" />
     </>
   );
 };
