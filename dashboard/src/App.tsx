@@ -2,10 +2,10 @@ import React from "react";
 import "./App.css";
 import { client } from "schema";
 import { ApolloProvider } from "@apollo/client";
-import ReservacionesPage from "./pages/Reservaciones";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ServiciosPage from "./pages/Servicios";
-import PerfilPage from "./pages/Perfil";
+import ReservationsPage from "./pages/Reservations";
+import ServicesPage from "./pages/Services";
+import ProfilePage from "./pages/Profile";
 import LoginPage from "./pages/Login";
 
 function App() {
@@ -14,9 +14,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/reservaciones" element={<ReservacionesPage />} />
-          <Route path="/servicios" element={<ServiciosPage />} />
-          <Route path="/perfil" element={<PerfilPage />} />
+          <Route path="/reservaciones" element={<ReservationsPage />} />
+          <Route path="/servicios" element={<ServicesPage />} />
+          <Route path="/perfil" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>

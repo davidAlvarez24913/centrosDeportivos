@@ -17,7 +17,7 @@ function CustomButton({
   loading,
 }: ProsCustomButton) {
   let styleColor = "";
-  if (color === "cancel") styleColor = "bg-cancel text-customText";
+  if (color === "cancel") styleColor = "bg-error text-customText";
   if (color === "sucessfull") styleColor = "bg-primary text-background";
   if (color === "outline")
     styleColor = "bg-transparent border-2 border-primary  text-primary ";

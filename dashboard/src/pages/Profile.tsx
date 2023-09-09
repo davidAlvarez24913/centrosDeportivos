@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../components/moleculas";
-const PerfilPage = () => {
+import { Navbar } from "../components/moleculas";
+const ProfilePage = () => {
   return (
     <>
       <Navbar nameSportCenter="La Pampita" />
     </>
   );
 };
-export default PerfilPage;
+export default ProfilePage;
