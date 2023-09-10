@@ -36,40 +36,46 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
         />
         {!isOpen && <LinkLogo />}
       </div>
-      <div
-        className={`bg-background flex flex-col right-0 h-screen md:w-72 ${
-          isOpen ? "" : "hidden"
-        }`}
-      >
-        <LinkLogo />
-        <h2 className="text-customText font-semibold text-3xl mx-auto">
-          {nameSportCenter}
-        </h2>
-        <nav className="flex flex-col px-3 gap-4 pt-8">
-          {navLinks.map((link, index) => {
-            const currentPath = location.pathname === link.href;
-            return (
-              <CustomLink
-                href={link.href}
-                srcImage={`${link.icon}${currentPath ? "-blue.svg" : ".svg"}`}
-                width={40}
-                height={40}
-                label={link.label}
-                isActive={currentPath}
-                key={index}
-              />
-            );
-          })}
-        </nav>
-        <CustomButton
-          color="cancel"
-          title="salir"
-          type="button"
-          onClick={() => {
-            signOut(auth);
-            navigate("/login");
-          }}
-        />
+      <div className="bg-background flex flex-col right-0 h-screen md:w-72 justify-between">
+        <div className={`${isOpen ? "" : "hidden"}`}>
+          <div className="flex flex-col  items-center">
+            <LinkLogo />
+            <h2 className="text-customText font-semibold text-3xl mx-auto">
+              {nameSportCenter}
+            </h2>
+          </div>
+          <div className="flex flex-col">
+            <nav className="flex flex-col px-3 gap-4 pt-8">
+              {navLinks.map((link, index) => {
+                const currentPath = location.pathname === link.href;
+                return (
+                  <CustomLink
+                    href={link.href}
+                    srcImage={`${link.icon}${
+                      currentPath ? "-blue.svg" : ".svg"
+                    }`}
+                    width={40}
+                    height={40}
+                    label={link.label}
+                    isActive={currentPath}
+                    key={index}
+                  />
+                );
+              })}
+            </nav>
+          </div>
+        </div>
+        <div className="px-3 pb-10">
+          <CustomButton
+            color="cancel"
+            title="salir"
+            type="button"
+            onClick={() => {
+              signOut(auth);
+              navigate("/login");
+            }}
+          />
+        </div>
       </div>
     </div>
   );
