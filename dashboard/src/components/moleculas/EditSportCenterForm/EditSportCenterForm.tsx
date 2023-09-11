@@ -1,0 +1,80 @@
+import React from "react";
+import { CustomButton, CustomInput } from "../../atomos";
+import CustomTextarea from "../../atomos/CustomTextarea";
+export type ProfileProps = {
+  name: string;
+  description: string;
+  ubication: string;
+  phone: string;
+  email: string;
+  image: string;
+};
+type EditSportCenterFormProps = {
+  onSubmit: () => void;
+  sportCenter: ProfileProps;
+  setSportCenter: React.Dispatch<React.SetStateAction<ProfileProps>>;
+};
+
+const EditSportCenterForm = ({
+  onSubmit,
+  sportCenter,
+  setSportCenter,
+}: EditSportCenterFormProps) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onSubmit();
+  };
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    console.log(event.target.value);
+  };
+  return (
+    <form
+      className="flex flex-col gap-3 py-4"
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      <CustomTextarea
+        color="blue"
+        label="Descripción"
+        onChange={handleChange}
+      />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="ubication"
+        label="Ubicación"
+        placeholder="Ubicación"
+        required
+        onChange={handleChange}
+      />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="phone"
+        label="Telefono"
+        placeholder="Telefono"
+        required
+        onChange={handleChange}
+      />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="email"
+        label="Correo Electrónico"
+        placeholder="Correo Electrónico"
+        required
+        onChange={handleChange}
+      />
+      <CustomButton
+        title="Editar Centro Deportivo"
+        color="sucessfull"
+        type="submit"
+      />
+    </form>
+  );
+};
+
+export default EditSportCenterForm;

@@ -44,7 +44,7 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/" element={<Navigate to="/login" />} />;
+              <Route path="/home" element={<Navigate to="/login" />} />;
               <Route path="/login" element={<LoginPage setUser={setUser} />} />
             </>
           )}

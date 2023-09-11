@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CustomButton } from "../../atomos";
 import { Modal, ServiceForm } from "../../moleculas";
 
-const AccountSection = () => {
+const CreateServiceButton = () => {
   const [modal, setModal] = useState(false);
 
   return (
@@ -33,4 +33,4 @@ const AccountSection = () => {
   );
 };
 
-export default AccountSection;
+export default CreateServiceButton;
