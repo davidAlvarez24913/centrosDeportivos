@@ -5,3 +5,4 @@ export { default as ReservationCard } from "./ReservationCard";
 export { default as BankAccountContent } from "./BankAccountContent";
 export { default as BankAccountForm } from "./BankAccountForm";
 export { default as ServiceForm } from "./ServiceForm";
+export { default as SportCenterForm } from "./SportCenterForm";

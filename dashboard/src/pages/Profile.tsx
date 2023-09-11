@@ -1,8 +1,11 @@
-import React from "react";
-import { Navbar } from "../components/moleculas";
+import React, { useState } from "react";
+import { Modal, Navbar, SportCenterForm } from "../components/moleculas";
 import { accounts } from "../data";
 import { AccountSection } from "../components/organismos";
 const ProfilePage = () => {
+  const newUser = true;
+  const [modal, setModal] = useState(newUser);
+
   return (
     <div className="flex flex-row justify-between">
       <Navbar nameSportCenter="La Pampita" />
@@ -12,6 +15,20 @@ const ProfilePage = () => {
           <AccountSection accounts={accounts} />
         </div>
       </div>
+      {newUser && (
+        <Modal
+          title={"Crear Centro Deportivo"}
+          modalState={modal}
+          closeModal={() => {}}
+          cantClose
+        >
+          <SportCenterForm
+            onSubmit={() => {
+              setModal(false);
+            }}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

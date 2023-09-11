@@ -37,7 +37,7 @@ const CustomInput = ({
         className={`${styleBlue}  ${styleWhite} flex w-full rounded-xl border-2 py-1 px-3`}
       >
         <input
-          className={`bg-transparent outline-none ${styleBlue}  ${styleWhite} ${placeholderBlue}  ${placeholderWhite}  `}
+          className={`bg-transparent outline-none w-full ${styleBlue}  ${styleWhite} ${placeholderBlue}  ${placeholderWhite}  `}
           {...rest}
           name={label?.replaceAll(" ", "_")}
           placeholder={rest.placeholder}

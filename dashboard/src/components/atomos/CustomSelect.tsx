@@ -1,12 +1,12 @@
 import { Sport } from "schema";
 
-type PropsCustomInput = {
+type PropsCustomSelect = {
   label?: string;
   color: "white" | "blue";
   sports: Sport[];
 } & React.ComponentProps<"select">;
 
-const CustomInput = ({ label, color, sports, ...rest }: PropsCustomInput) => {
+const CustomSelect = ({ label, color, sports, ...rest }: PropsCustomSelect) => {
   const styleBlue = color === "blue" && " border-background";
   const styleWhite = color === "white" && " border-customText";
   return (
@@ -38,4 +38,4 @@ const CustomInput = ({ label, color, sports, ...rest }: PropsCustomInput) => {
   );
 };
 
-export default CustomInput;
+export default CustomSelect;

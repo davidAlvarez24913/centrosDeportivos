@@ -1,13 +1,26 @@
 import React from "react";
-import { CustomButton, CustomInput, CustomSelect } from "../../atomos";
+import {
+  CustomButton,
+  CustomInput,
+  CustomSelect,
+  CustomTextarea,
+} from "../../atomos";
 import { Sport } from "schema";
-type BanckAccountFormProps = {
+type ServiceFormProps = {
   onSubmit: () => void;
 };
 const sports = Object.values(Sport);
-const BanckAccountForm = ({ onSubmit }: BanckAccountFormProps) => {
+const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onSubmit();
+  };
+
   return (
-    <form className="flex flex-col gap-3 py-4" action="">
+    <form
+      className="flex flex-col gap-3 py-4"
+      onSubmit={(e) => handleSubmit(e)}
+    >
       <CustomInput
         type="text"
         color="blue"
@@ -15,24 +28,11 @@ const BanckAccountForm = ({ onSubmit }: BanckAccountFormProps) => {
         label="Nombre del Servicio"
         placeholder="Nombre del Servicio"
       />
-      <CustomInput
-        type="text"
-        color="blue"
-        name="description"
-        label="Descripcion"
-        placeholder="Descripcion"
-      />
+      <CustomTextarea color="blue" label="Descripción" />
       <CustomSelect color="blue" sports={sports} name="sport" label="Deporte" />
-      <CustomButton
-        title="crear servicio"
-        color="sucessfull"
-        type="submit"
-        onClick={() => {
-          onSubmit();
-        }}
-      />
+      <CustomButton title="crear servicio" color="sucessfull" type="submit" />
     </form>
   );
 };
 
-export default BanckAccountForm;
+export default ServiceForm;
