@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar } from "../components/moleculas";
 import { accounts } from "../data";
-import AccountSection from "../components/organismos/AccountSection";
+import { AccountSection } from "../components/organismos";
 const ProfilePage = () => {
   return (
     <div className="flex flex-row justify-between">

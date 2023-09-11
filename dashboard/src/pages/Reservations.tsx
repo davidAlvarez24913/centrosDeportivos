@@ -6,7 +6,7 @@ const ReservationsPage = () => {
   const data = [
     {
       reservationId: "001",
-      serviceName: "La Pampita",
+      serviceName: "Cancha 1",
       schedule: "10:00 - 11:00",
       price: "20.00",
       state: true,
@@ -15,7 +15,7 @@ const ReservationsPage = () => {
     },
     {
       reservationId: "001",
-      serviceName: "La Pampita",
+      serviceName: "Cancha 2",
       schedule: "10:00 - 11:00",
       price: "20.00",
       state: false,

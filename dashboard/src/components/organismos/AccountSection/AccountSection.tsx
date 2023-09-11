@@ -31,7 +31,7 @@ const AccountSection = ({ accounts }: AccountSectionProps) => {
           setModal(false);
         }}
       >
-        <BanckAccountForm closeModal={() => setModal(false)} />
+        <BanckAccountForm onSubmit={() => setModal(false)} />
       </Modal>
     </div>
   );

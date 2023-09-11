@@ -1,8 +1,10 @@
 import React from "react";
-import { CustomButton, CustomInput } from "../../atomos";
+import { CustomButton, CustomInput, CustomSelect } from "../../atomos";
+import { Sport } from "schema";
 type BanckAccountFormProps = {
   onSubmit: () => void;
 };
+const sports = Object.values(Sport);
 const BanckAccountForm = ({ onSubmit }: BanckAccountFormProps) => {
   return (
     <form className="flex flex-col gap-3 py-4" action="">
@@ -10,29 +12,19 @@ const BanckAccountForm = ({ onSubmit }: BanckAccountFormProps) => {
         type="text"
         color="blue"
         name="name"
-        label="Nombre del Banco"
-      />
-      <CustomInput type="text" color="blue" name="id" label="Identificacion" />
-      <CustomInput
-        type="text"
-        color="blue"
-        name="accountType"
-        label="Tipo de Cuenta"
+        label="Nombre del Servicio"
+        placeholder="Nombre del Servicio"
       />
       <CustomInput
         type="text"
         color="blue"
-        name="accountNumber"
-        label="Nro. Cuenta"
+        name="description"
+        label="Descripcion"
+        placeholder="Descripcion"
       />
-      <CustomInput
-        type="text"
-        color="blue"
-        name="email"
-        label="Correo Electronico"
-      />
+      <CustomSelect color="blue" sports={sports} name="sport" label="Deporte" />
       <CustomButton
-        title="crear cuenta bancaria"
+        title="crear servicio"
         color="sucessfull"
         type="submit"
         onClick={() => {
