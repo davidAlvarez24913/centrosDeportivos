@@ -3,17 +3,10 @@ import { CustomButton } from "../../atomos";
 import { EditSportCenterForm, Modal } from "../../moleculas";
 import { ProfileProps } from "../../moleculas/EditSportCenterForm/EditSportCenterForm";
 
-const EditSportCenterButton = () => {
+const EditSportCenterButton = (sportCenterData: ProfileProps) => {
   const [modal, setModal] = useState(false);
-  const [sportCenter, setSportCenter] = useState<ProfileProps>({
-    name: "string",
-    description: "string",
-    ubication: "string",
-    phone: "string",
-    email: "string",
-    image: "string",
-  });
-
+  const [sportCenter, setSportCenter] = useState<ProfileProps>(sportCenterData);
+  console.log(sportCenter);
   return (
     <div className="w-fit">
       <CustomButton

@@ -19,8 +19,8 @@ const ProfilePage = () => {
       <Navbar nameSportCenter="La Pampita" />
       <div className="flex flex-row w-4/5 mt-20 mx-10 justify-between">
         <div className="w-2/3 flex flex-col ">
-          <EditSportCenterButton />
-          <Profile {...sportsCenters[2]} />
+          <EditSportCenterButton {...sportsCenters[0]} />
+          <Profile {...sportsCenters[0]} />
         </div>
         <div className="w-1/3">
           <AccountSection accounts={accounts} />

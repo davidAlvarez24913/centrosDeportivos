@@ -40,14 +40,15 @@ const EditSportCenterForm = ({
         color="blue"
         label="Descripción"
         onChange={handleChange}
+        defaultValue={sportCenter.description}
       />
       <CustomInput
         type="text"
         color="blue"
         name="ubication"
         label="Ubicación"
-        placeholder="Ubicación"
         required
+        defaultValue={sportCenter.ubication}
         onChange={handleChange}
       />
       <CustomInput
@@ -55,17 +56,19 @@ const EditSportCenterForm = ({
         color="blue"
         name="phone"
         label="Telefono"
-        placeholder="Telefono"
+        minLength={10}
+        maxLength={10}
         required
+        defaultValue={sportCenter.phone}
         onChange={handleChange}
       />
       <CustomInput
-        type="text"
+        type="email"
         color="blue"
         name="email"
         label="Correo Electrónico"
-        placeholder="Correo Electrónico"
         required
+        defaultValue={sportCenter.email}
         onChange={handleChange}
       />
       <CustomButton
