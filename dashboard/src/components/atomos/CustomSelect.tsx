@@ -25,12 +25,17 @@ const CustomSelect = ({ label, color, sports, ...rest }: PropsCustomSelect) => {
         <select
           className="w-full  bg-transparent border-0 appearance-none  focus:outline-none focus:ring-0  px-3 peer "
           {...rest}
+          id={label?.replaceAll(" ", "_")}
         >
           <option selected disabled>
             Seleccione un deporte
           </option>
-          {sports.map((sport) => {
-            return <option value={sport}>{sport}</option>;
+          {sports.map((sport, index) => {
+            return (
+              <option value={sport} key={index}>
+                {sport}
+              </option>
+            );
           })}
         </select>
       </div>

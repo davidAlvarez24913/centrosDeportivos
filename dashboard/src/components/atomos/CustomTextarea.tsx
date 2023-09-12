@@ -26,6 +26,7 @@ const CustomTextarea = ({ label, color, ...rest }: PropsCustomTextarea) => {
         <textarea
           className={`bg-transparent outline-none w-full h-full  px-3 ${styleBlue}  ${styleWhite} ${placeholderBlue}  ${placeholderWhite}  `}
           {...rest}
+          id={label?.replaceAll(" ", "_")}
           name={label?.replaceAll(" ", "_")}
           placeholder={rest.placeholder}
           maxLength={500}
