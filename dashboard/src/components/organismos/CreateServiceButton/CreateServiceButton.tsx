@@ -17,7 +17,7 @@ const CreateServiceButton = () => {
         }}
       />
       <Modal
-        title={"Crear Cuenta Bancaria"}
+        title={"Crear Servicio"}
         modalState={modal}
         closeModal={() => {
           setModal(false);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CustomButton,
   CustomInput,
@@ -6,11 +6,13 @@ import {
   CustomTextarea,
 } from "../../atomos";
 import { Sport } from "schema";
+import ImageInput from "../ImageInput";
 type ServiceFormProps = {
   onSubmit: () => void;
 };
 const sports = Object.values(Sport);
 const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
+  const [FileBlob, setFileBlob] = useState<string>();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit();
@@ -30,6 +32,11 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
       />
       <CustomTextarea color="blue" label="Descripción" />
       <CustomSelect color="blue" sports={sports} name="sport" label="Deporte" />
+      <ImageInput
+        label="agregar imagen del servicio"
+        fileBlob={FileBlob}
+        setFileBlob={setFileBlob}
+      ></ImageInput>
       <CustomButton title="crear servicio" color="sucessfull" type="submit" />
     </form>
   );
