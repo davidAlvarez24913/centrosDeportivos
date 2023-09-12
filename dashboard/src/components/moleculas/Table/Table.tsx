@@ -21,8 +21,10 @@ const Table = ({ headers, data }: TableProps) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => {
-            return item;
+          {data.map((item, index) => {
+            // this line is temporarily because index is same
+            // return item;
+            return { ...item, key: item.key?.toString() + index.toString() };
           })}
         </tbody>
       </table>
