@@ -61,8 +61,9 @@ export const sportsCenters = [
     phone: "09999999",
     ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
     schedule: "Lunes a Sábado de 10h00 a 23h00",
-    image: "/assets/image 8.png",
+    image: "/image 10.png",
     ranking: 3,
+    email: "correo@hotmail.com",
   },
   {
     sportCenterId: "2",
@@ -72,8 +73,9 @@ export const sportsCenters = [
       "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
     ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
     schedule: "Lunes a Sábado de 10h00 a 23h00",
-    image: "/assets/image 10.png",
+    image: "image 8.png",
     ranking: 4,
+    email: "correo@hotmail.com",
   },
   {
     sportCenterId: "3",
@@ -83,8 +85,9 @@ export const sportsCenters = [
       "Cancha sintética de futbol, cuenta con luces potentes para jugar en la noche...",
     ubication: "La Pampita, Avenida Orillas del Zamora, Loja",
     schedule: "Lunes a Sábado de 10h00 a 23h00",
-    image: "/assets/image 10.png",
+    image: "image 10.png",
     ranking: 3,
+    email: "correo@hotmail.com",
   },
 ];
 export const myReservations = [

@@ -4,9 +4,16 @@ type ModalPorps = {
   title: string;
   modalState: boolean;
   closeModal: () => void;
+  cantClose?: boolean;
 } & PropsWithChildren;
 
-const Modal = ({ title, modalState, closeModal, children }: ModalPorps) => {
+const Modal = ({
+  title,
+  modalState,
+  closeModal,
+  cantClose,
+  children,
+}: ModalPorps) => {
   return (
     <>
       {modalState && (
@@ -21,11 +28,13 @@ const Modal = ({ title, modalState, closeModal, children }: ModalPorps) => {
                   closeModal();
                 }}
               >
-                <img
-                  src="/icons/close.svg"
-                  alt="close button"
-                  className="w-6"
-                />
+                {!cantClose && (
+                  <img
+                    src="/icons/close.svg"
+                    alt="close button"
+                    className="w-6"
+                  />
+                )}
               </button>
             </div>
             {children}

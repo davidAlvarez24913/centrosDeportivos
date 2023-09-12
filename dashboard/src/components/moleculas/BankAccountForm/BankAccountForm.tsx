@@ -1,22 +1,42 @@
 import React from "react";
 import { CustomButton, CustomInput } from "../../atomos";
 type BanckAccountFormProps = {
-  closeModal: () => void;
+  onSubmit: () => void;
 };
-const BanckAccountForm = ({ closeModal }: BanckAccountFormProps) => {
+const BanckAccountForm = ({ onSubmit }: BanckAccountFormProps) => {
   return (
     <form className="flex flex-col gap-3 py-4" action="">
-      <CustomInput type="text" color="blue" label="Nombre del Banco" />
-      <CustomInput type="text" color="blue" label="Identificacion" />
-      <CustomInput type="text" color="blue" label="Tipo de Cuenta" />
-      <CustomInput type="text" color="blue" label="Nro. Cuenta" />
-      <CustomInput type="text" color="blue" label="Correo Electronico" />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="name"
+        label="Nombre del Banco"
+      />
+      <CustomInput type="text" color="blue" name="id" label="Identificacion" />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="accountType"
+        label="Tipo de Cuenta"
+      />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="accountNumber"
+        label="Nro. Cuenta"
+      />
+      <CustomInput
+        type="text"
+        color="blue"
+        name="email"
+        label="Correo Electronico"
+      />
       <CustomButton
         title="crear cuenta bancaria"
         color="sucessfull"
-        type="button"
+        type="submit"
         onClick={() => {
-          closeModal();
+          onSubmit();
         }}
       />
     </form>

@@ -4,4 +4,8 @@ export { default as Modal } from "./Modal";
 export { default as ReservationCard } from "./ReservationCard";
 export { default as BankAccountContent } from "./BankAccountContent";
 export { default as BankAccountForm } from "./BankAccountForm";
+export { default as ServiceForm } from "./ServiceForm";
+export { default as SportCenterForm } from "./SportCenterForm";
+export { default as Profile } from "./Profile";
+export { default as EditSportCenterForm } from "./EditSportCenterForm";
 export { default as ImageInput } from "./ImageInput";
