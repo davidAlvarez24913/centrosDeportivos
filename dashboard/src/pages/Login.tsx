@@ -3,13 +3,13 @@ import { CustomButton, CustomInput } from "../components/atomos";
 import { SignIn } from "../components/Firebase";
 import { FirebaseError } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
-import { User } from "@firebase/auth";
 
-const LoginPage = ({
-  setUser,
-}: {
-  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
-}) => {
+// const LoginPage = ({
+//   setUser,
+// }: {
+//   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+// }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [error, setError] = useState("");
