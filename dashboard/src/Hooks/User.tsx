@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { User } from "@firebase/auth";
 
 const useUser = () => {
   const { user, setUser } = useContext(UserContext);
-  const setUserFunction = () => setUser(user);
-  return { user, setUserFunction };
+  const handleSetUser = (user: User | undefined) => {
+    setUser(user);
+  };
+  return [user, handleSetUser] as const;
 };
 
 export default useUser;

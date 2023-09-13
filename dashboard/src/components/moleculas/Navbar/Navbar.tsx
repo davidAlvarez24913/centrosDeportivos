@@ -72,7 +72,7 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             type="button"
             onClick={() => {
               signOut(auth);
-              navigate("");
+              navigate("/login");
             }}
           />
         </div>
