@@ -196,6 +196,7 @@ type Query {
   listCommentsBySportCenter(sportCenterId: ID!): [Comment!]
   allComments: [Comment!]
   # disponibility will be query get all reservationsByServiceByDate and schedule
+  # Create resolver get Service By Id
 }
 
 type Mutation {
