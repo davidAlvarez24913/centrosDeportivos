@@ -39,9 +39,9 @@ const ServicesPage = () => {
             const { __typename, ...auxService } = service as Service;
             return <CardService service={auxService} />;
           })} */}
-          {servicess?.map((service) => {
+          {servicess?.map((service, index) => {
             const { __typename, ...auxService } = service as Service;
-            return <CardService service={auxService} />;
+            return <CardService service={auxService} key={index} />;
           })}
         </div>
       </div>

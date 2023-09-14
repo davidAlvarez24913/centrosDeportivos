@@ -1,6 +1,7 @@
 import React from "react";
-import { Service } from "schema";
+import { Service, Weekday } from "schema";
 import { CustomButton } from "../../atomos";
+import ScheduleContent from "../ScheduleContent";
 
 type ServiceFormProps = {
   onClose: () => void;
@@ -27,14 +28,34 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         <p>{service.sport}</p>
       </div>
       <p className="font-semibold">Horarios</p>
-      <CustomButton
-        color="blue"
-        title="Agregar horario"
-        type="button"
-        addIcon
-      />
 
-      <br />
+      <ScheduleContent
+        rangeHourList={[{ startHour: "09-00", endHour: "10:00", price: 20.0 }]}
+        scheduelId="11"
+        day="Lunes"
+      />
+      <ScheduleContent
+        rangeHourList={[{ startHour: "09-00", endHour: "10:00", price: 20.0 }]}
+        scheduelId="11"
+        day="Martes"
+      />
+      <ScheduleContent
+        rangeHourList={[{ startHour: "09-00", endHour: "10:00", price: 20.0 }]}
+        scheduelId="11"
+        day="Miercoles"
+      />
+      <ScheduleContent
+        rangeHourList={[{ startHour: "09-00", endHour: "10:00", price: 20.0 }]}
+        scheduelId="11"
+        day="Jueves"
+      />
+      <ScheduleContent rangeHourList={[]} scheduelId="11" day="Viernes" />
+      <ScheduleContent rangeHourList={[]} scheduelId="11" day="Sabado" />
+      <ScheduleContent
+        rangeHourList={[{ startHour: "09-00", endHour: "10:00", price: 20.0 }]}
+        scheduelId="11"
+        day="Domingo"
+      />
     </div>
   );
 };
