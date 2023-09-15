@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/client";
 import {
   BrowserRouter,
   Navigate,
+  Outlet,
   Route,
   Routes,
   redirect,
@@ -17,6 +18,7 @@ import { onAuthStateChanged, User } from "@firebase/auth";
 import { auth } from "./components/Firebase";
 
 function App() {
+  // const [user, setUser] = useState<User>();
   const [user, setUser] = useState<User>();
 
   console.log("usercontext APP", user);
@@ -43,26 +45,25 @@ function App() {
         <Routes>
           {user !== undefined ? (
             <>
-              <Route
-                path="/login"
-                element={<Navigate to="/reservaciones" replace />}
-              />
               <Route path="/reservaciones" element={<ReservationsPage />} />
               <Route path="/servicios" element={<ServicesPage />} />
               <Route path="/perfil" element={<ProfilePage />} />
-            </>
-          ) : (
-            <>
-              {pathsToRedirectFrom.map((path) => {
+              {/* {pathsToRedirectFrom.map((path) => {
                 return (
                   <Route
                     path={path}
                     element={<Navigate to="/login" replace />}
                   />
                 );
-              })}
-
-              <Route path="/login" element={<LoginPage />} />
+              })} */}
+              {/* <Route
+                path="/login"
+                element={<Navigate to="/reservaciones" replace />}
+              /> */}
+            </>
+          ) : (
+            <>
+              <Route index path="/login" element={<LoginPage />} />
             </>
           )}
         </Routes>

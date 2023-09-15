@@ -71,8 +71,13 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             title="salir"
             type="button"
             onClick={() => {
-              signOut(auth);
-              navigate("/login");
+              signOut(auth)
+                .then(() => {
+                  navigate("/login");
+                })
+                .catch(() => {
+                  console.log("no se puedo cerrar cesion");
+                });
             }}
           />
         </div>

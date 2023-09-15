@@ -7,7 +7,7 @@ const useUser = () => {
   const handleSetUser = (user: User | undefined) => {
     setUser(user);
   };
-  return [user, handleSetUser] as const;
+  return { user, handleSetUser };
 };
 
 export default useUser;
