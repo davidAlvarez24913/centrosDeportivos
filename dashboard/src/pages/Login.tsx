@@ -2,21 +2,13 @@ import { useState } from "react";
 import { CustomButton, CustomInput } from "../components/atomos";
 import { SignIn } from "../components/Firebase";
 import { FirebaseError } from "@firebase/util";
-import { User } from "@firebase/auth";
 import { useNavigate } from "react-router-dom";
-import useUser from "../Hooks/User";
 
-// const LoginPage = ({
-//   setUser,
-// }: {
-//   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
-// }) => {
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [error, setError] = useState("");
   const [visible, setVisible] = useState<"text" | "password">("password");
-  const { handleSetUser } = useUser();
   const navigate = useNavigate();
 
   return (
@@ -77,7 +69,7 @@ const LoginPage = () => {
             try {
               const response = await SignIn(email, password);
               console.log(response.user);
-              handleSetUser(response.user);
+              // context?.SetUser(response.user);
               navigate("/reservaciones");
             } catch (error) {
               console.log(error);
