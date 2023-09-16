@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { CustomButton, CustomLink, LinkLogo } from "../../atomos";
-import { useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { auth } from "../../Firebase";
-import { signOut } from "@firebase/auth";
+import { UserContext } from "../../../context/UserContext";
 
 type PropsNavbar = {
   nameSportCenter: string;
@@ -14,12 +14,16 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
     { href: "/servicios", label: "Servicios", icon: "/icons/service_icon" },
     { href: "/perfil", label: "Perfil", icon: "/icons/profile" },
   ];
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     window.screen.width > 768 && setIsOpen(true);
     window.innerWidth > 768 && setIsOpen(true);
   }, []);
+  const aux = useContext(UserContext);
+
   return (
     <div>
       <div
@@ -71,13 +75,9 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             title="salir"
             type="button"
             onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  navigate("/login");
-                })
-                .catch(() => {
-                  console.log("no se puedo cerrar cesion");
-                });
+              aux?.handleSignOut(auth).then(() => {
+                navigate("/login");
+              });
             }}
           />
         </div>
@@ -86,4 +86,4 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);
