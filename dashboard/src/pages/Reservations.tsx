@@ -1,7 +1,6 @@
 import React from "react";
 import { Navbar, Table } from "../components/moleculas";
 import { ReservationsRow } from "../components/organismos";
-import useUser from "../Hooks/User";
 
 const ReservationsPage = () => {
   const data = [
@@ -27,8 +26,6 @@ const ReservationsPage = () => {
   const rows = data.map((reservation) => (
     <ReservationsRow {...reservation} key={reservation.reservationId} />
   ));
-  const { user } = useUser();
-  console.log("user context", user);
   return (
     <div className="flex flex-row gap-20">
       <Navbar nameSportCenter="La Pampita" />
