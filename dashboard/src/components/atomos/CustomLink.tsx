@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 type PropsCustomLink = {
   label: string;
   srcImage: string;
@@ -42,4 +44,4 @@ const CustomLink = ({
   );
 };
 
-export default CustomLink;
+export default memo(CustomLink);
