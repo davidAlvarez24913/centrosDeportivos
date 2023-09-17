@@ -67,7 +67,8 @@ const ModalInfoBooking = () => {
                     serviceId: "",
                     state: false,
                     userId: "",
-                  } as CreateReservationInput;
+                  } as unknown as CreateReservationInput;
+                  // verify type to send mutation
                   createReservationInputMutation({
                     variables: { input },
                     onCompleted: () => {
