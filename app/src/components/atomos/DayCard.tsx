@@ -36,12 +36,12 @@ const DayCard = ({ date, available, onClick }: PropsDaycard) => {
   return (
     <div
       className={
-        "flex flex-col items-center w-18 h-18 p-2 text-xs gap-1 rounded-2xl border-2 border-primary " +
+        "flex flex-col items-center w-24 h-24 p-2 text-md gap-1 rounded-2xl border-2 border-primary " +
         styles
       }
       onClick={onClick}
     >
-      <h4 className={styles + " w-14 text-center"}>
+      <h4 className={styles + " w-20 text-center"}>
         {weekday[auxdate.getDay()]}
       </h4>
       <h4 className={styles}>{auxdate.getDate()}</h4>
