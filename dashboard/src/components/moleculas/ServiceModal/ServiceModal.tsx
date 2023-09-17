@@ -1,7 +1,9 @@
-import React from "react";
-import { Service, Weekday } from "schema";
+import React, { useState } from "react";
+import { Service } from "schema";
 import { CustomButton } from "../../atomos";
 import ScheduleContent from "../ScheduleContent";
+import Modal from "../Modal";
+import ModalNewBook from "../ModalNewBook";
 
 type ServiceFormProps = {
   onClose: () => void;
@@ -12,6 +14,7 @@ type ServiceFormProps = {
 };
 
 const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
+  const [modal, setModal] = useState(false);
   return (
     <div>
       <div className="py-2">
@@ -56,6 +59,30 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         scheduelId="11"
         day="Domingo"
       />
+      <div className="mt-2">
+        <CustomButton
+          title="Crear Reservacion"
+          addIcon
+          color="blue"
+          onClick={() => {
+            setModal(true);
+          }}
+          type="button"
+        />
+        <Modal
+          title={service.name ?? "Cancha1"}
+          modalState={modal}
+          closeModal={() => {
+            setModal(false);
+          }}
+        >
+          <ModalNewBook
+            onClose={() => {
+              setModal(false);
+            }}
+          />
+        </Modal>
+      </div>
     </div>
   );
 };
