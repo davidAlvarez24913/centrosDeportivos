@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserContext";
 const useUser = () => {
   const context = useContext(UserContext);
 
-  return context;
+  return { ...context };
 };
 
 export default useUser;

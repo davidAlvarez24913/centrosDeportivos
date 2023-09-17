@@ -8,6 +8,7 @@ import ServicesPage from "./pages/Services";
 import ProfilePage from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import { UserContextProvider } from "./context/UserContext";
+import { ProtectedRoute } from "./components/atomos";
 
 function App() {
   return (
@@ -16,9 +17,38 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index path="/login" element={<LoginPage />} />
-            <Route path="/reservaciones" element={<ReservationsPage />} />
-            <Route path="/servicios" element={<ServicesPage />} />
-            <Route path="/perfil" element={<ProfilePage />} />
+            <Route
+              path="/reservaciones"
+              element={
+                <ProtectedRoute redirectTo="/login">
+                  <ReservationsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/servicios"
+              element={
+                <ProtectedRoute>
+                  <ServicesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/perfil"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <ProtectedRoute redirectTo="/login">
+                  <LoginPage />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

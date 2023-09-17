@@ -7,7 +7,8 @@ import { signOut } from "@firebase/auth";
 interface UserContextProps {
   user: User | undefined;
   handleSignIn: (email: string, password: string) => Promise<void>;
-  handleSignOut: (auth: Auth) => Promise<void>;
+  handleSignOut: () => Promise<void>;
+  loadingUser: boolean;
 }
 export const UserContext = React.createContext<UserContextProps | undefined>(
   {} as UserContextProps
@@ -18,13 +19,16 @@ export const UserContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState<User>();
+  const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
+        setLoadingUser(false);
       } else {
         setUser(undefined);
+        setLoadingUser(false);
       }
     });
 
@@ -41,7 +45,7 @@ export const UserContextProvider = ({
       console.error("Error al iniciar sesión:", error);
     }
   };
-  const handleSignOut = async (auth: Auth) => {
+  const handleSignOut = async () => {
     try {
       await signOut(auth);
     } catch (error) {
@@ -49,7 +53,9 @@ export const UserContextProvider = ({
     }
   };
   return (
-    <UserContext.Provider value={{ user, handleSignIn, handleSignOut }}>
+    <UserContext.Provider
+      value={{ user, handleSignIn, handleSignOut, loadingUser }}
+    >
       {children}
     </UserContext.Provider>
   );

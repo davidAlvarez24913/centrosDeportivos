@@ -75,9 +75,7 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             title="salir"
             type="button"
             onClick={() => {
-              aux?.handleSignOut(auth).then(() => {
-                navigate("/login");
-              });
+              aux?.handleSignOut();
             }}
           />
         </div>

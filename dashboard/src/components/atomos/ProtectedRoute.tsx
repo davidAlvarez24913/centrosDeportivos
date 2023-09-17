@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "@firebase/auth";
-import { auth } from "../Firebase";
 import { Navigate, Outlet } from "react-router-dom";
+import useUser from "../../Hooks/useUser";
 
 const ProtectedRoute = ({
   children,
@@ -10,26 +8,15 @@ const ProtectedRoute = ({
   children?: React.ReactNode;
   redirectTo?: string;
 }) => {
-  const [user, setUser] = useState<User>();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      if (authUser) {
-        setUser(authUser);
-      } else {
-        setUser(undefined);
-      }
-    });
-
-    return () => {
-      // Desinscribirse de la detección de cambios en la autenticación al desmontar el componente
-      unsubscribe();
-    };
-  }, []);
-  console.log("usercontext APP", user);
-
-  if (user === undefined) return <Navigate to={redirectTo} />;
-  return children ? children : <Outlet />;
+  const { user, loadingUser } = useUser();
+  if (loadingUser)
+    return (
+      <div className="w-screen h-screen bg-background text-background">
+        Loading ...
+      </div>
+    );
+  if (!user) return <Navigate to={redirectTo} replace />;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
