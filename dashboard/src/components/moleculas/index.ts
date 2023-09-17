@@ -14,3 +14,6 @@ export { default as ServiceModal } from "./ServiceModal";
 export { default as ScheduleContent } from "./ScheduleContent";
 export { default as NewSchedule } from "./NewSchedule";
 export { default as LayoutPage } from "./LayoutPage";
+export { default as ModalNewBook } from "./ModalNewBook";
+export { default as BodyDisponibility } from "./BodyDisponibility";
+export { default as DayCard } from "./DayCard";
