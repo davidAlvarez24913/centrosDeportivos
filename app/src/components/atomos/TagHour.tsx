@@ -7,17 +7,17 @@ type PropsTagHour = {
 };
 const TagHour = ({ rangeHour, available, onClick }: PropsTagHour) => {
   const styles = available
-    ? " w-14 text-center bg-primary text-background"
-    : " w-14 text-center bg-background text-customText";
+    ? " bg-primary text-background"
+    : " bg-background text-customText";
   return (
     <div
       className={
-        "flex flex-col items-center w-min h-7 p-2 text-[8px] gap-1 rounded-2xl border-2 border-primary" +
+        "flex flex-col w-34 h-9 p-2 text-sm gap-1 rounded-2xl border-2 border-primary" +
         styles
       }
       onClick={onClick}
     >
-      <h4 className={styles}>{rangeHour}</h4>
+      <h4 className={"w-34" + styles}>{rangeHour}</h4>
     </div>
   );
 };
