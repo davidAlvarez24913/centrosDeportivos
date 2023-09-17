@@ -1,5 +1,5 @@
 import React from "react";
-import { CardService, Navbar } from "../components/moleculas";
+import { CardService, LayoutPage } from "../components/moleculas";
 import { CreateServiceButton } from "../components/organismos";
 import { Service, useListServicesBySportCenterIdQuery } from "schema";
 
@@ -27,9 +27,8 @@ const ServicesPage = () => {
     },
   ];
   return (
-    <div className="flex flex-row gap-20">
-      <Navbar nameSportCenter="La Pampita" />
-      <div className="flex flex-col w-2/3 mt-16 px-4">
+    <LayoutPage nameSportCenter="">
+      <div>
         <div className="flex flex-row justify-between">
           <h2 className="text-2xl font-bold">Servicios</h2>
           <CreateServiceButton />
@@ -45,7 +44,7 @@ const ServicesPage = () => {
           })}
         </div>
       </div>
-    </div>
+    </LayoutPage>
   );
 };
 export default ServicesPage;

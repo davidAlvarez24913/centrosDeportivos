@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Table } from "../components/moleculas";
+import { LayoutPage, Table } from "../components/moleculas";
 import { ReservationsRow } from "../components/organismos";
 
 const ReservationsPage = () => {
@@ -27,9 +27,8 @@ const ReservationsPage = () => {
     <ReservationsRow {...reservation} key={reservation.reservationId} />
   ));
   return (
-    <div className="flex flex-row gap-20">
-      <Navbar nameSportCenter="La Pampita" />
-      <div className="flex flex-col w-2/3 mt-20 px-4">
+    <LayoutPage nameSportCenter="">
+      <div>
         <h2 className="text-xl font-bold">Por Pagar</h2>
         <Table
           headers={["ID", "servicios", "horario", "precio", "ver mas"]}
@@ -41,7 +40,7 @@ const ReservationsPage = () => {
           data={rows}
         />
       </div>
-    </div>
+    </LayoutPage>
   );
 };
 export default ReservationsPage;

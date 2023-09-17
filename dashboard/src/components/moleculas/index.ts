@@ -13,3 +13,4 @@ export { default as CardService } from "./CardService";
 export { default as ServiceModal } from "./ServiceModal";
 export { default as ScheduleContent } from "./ScheduleContent";
 export { default as NewSchedule } from "./NewSchedule";
+export { default as LayoutPage } from "./LayoutPage";
