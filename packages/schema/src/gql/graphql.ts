@@ -62,8 +62,9 @@ export type CreateServiceInput = {
 };
 
 export type CreateSportCenterInput = {
-  hoursOperarion: Scalars['String']['input'];
-  images?: InputMaybe<Array<Scalars['String']['input']>>;
+  access: Scalars['Boolean']['input'];
+  hoursOperation?: InputMaybe<Scalars['String']['input']>;
+  image: Scalars['String']['input'];
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
   ranking?: InputMaybe<Scalars['Int']['input']>;
@@ -191,6 +192,7 @@ export type Query = {
   findReservation?: Maybe<Reservation>;
   findSportCenter?: Maybe<SportCenter>;
   findUser?: Maybe<User>;
+  getAccess?: Maybe<Scalars['Boolean']['output']>;
   listCommentsByService?: Maybe<Array<Comment>>;
   listCommentsBySportCenter?: Maybe<Array<Comment>>;
   listServices?: Maybe<Array<Maybe<Service>>>;
@@ -213,6 +215,11 @@ export type QueryFindSportCenterArgs = {
 
 export type QueryFindUserArgs = {
   userId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetAccessArgs = {
+  sportCenterId: Scalars['ID']['input'];
 };
 
 
@@ -273,8 +280,9 @@ export enum Sport {
 
 export type SportCenter = {
   __typename?: 'SportCenter';
-  hoursOperarion: Scalars['String']['output'];
-  images?: Maybe<Array<Scalars['String']['output']>>;
+  access?: Maybe<Scalars['Boolean']['output']>;
+  hoursOperation: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
   ranking?: Maybe<Scalars['Int']['output']>;
@@ -316,7 +324,7 @@ export type UpdateServiceInput = {
 
 export type UpdateSportCenterInput = {
   hoursOperarion?: InputMaybe<Scalars['String']['input']>;
-  images?: InputMaybe<Array<Scalars['String']['input']>>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   ranking?: InputMaybe<Scalars['Int']['input']>;
@@ -366,6 +374,13 @@ export type ListServicesBySportCenterIdQueryVariables = Exact<{
 
 
 export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image?: string | null, disponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null } | null } | null> | null };
+
+export type GetAccessQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type GetAccessQuery = { __typename?: 'Query', getAccess?: boolean | null };
 
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -490,6 +505,39 @@ export function useListServicesBySportCenterIdLazyQuery(baseOptions?: Apollo.Laz
 export type ListServicesBySportCenterIdQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdQuery>;
 export type ListServicesBySportCenterIdLazyQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdLazyQuery>;
 export type ListServicesBySportCenterIdQueryResult = Apollo.QueryResult<ListServicesBySportCenterIdQuery, ListServicesBySportCenterIdQueryVariables>;
+export const GetAccessDocument = gql`
+    query GetAccess($sportCenterId: ID!) {
+  getAccess(sportCenterId: $sportCenterId)
+}
+    `;
+
+/**
+ * __useGetAccessQuery__
+ *
+ * To run a query within a React component, call `useGetAccessQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAccessQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAccessQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useGetAccessQuery(baseOptions: Apollo.QueryHookOptions<GetAccessQuery, GetAccessQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAccessQuery, GetAccessQueryVariables>(GetAccessDocument, options);
+      }
+export function useGetAccessLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAccessQuery, GetAccessQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAccessQuery, GetAccessQueryVariables>(GetAccessDocument, options);
+        }
+export type GetAccessQueryHookResult = ReturnType<typeof useGetAccessQuery>;
+export type GetAccessLazyQueryHookResult = ReturnType<typeof useGetAccessLazyQuery>;
+export type GetAccessQueryResult = Apollo.QueryResult<GetAccessQuery, GetAccessQueryVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {
