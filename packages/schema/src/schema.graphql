@@ -51,10 +51,11 @@ type SportCenter {
   name: String!
   phone: String!
   ubication: String!
-  hoursOperarion: String! # Hours attention
+  hoursOperation: String! # Hours attention
   services: [Service]
-  images: [String!]
+  image: String
   ranking: Int
+  access: Boolean
 }
 
 type Service {
@@ -107,9 +108,10 @@ input CreateSportCenterInput {
   name: String!
   phone: String!
   ubication: String!
-  hoursOperarion: String!
-  images: [String!]
+  hoursOperation: String
+  image: String!
   ranking: Int
+  access: Boolean!
 }
 
 input CreateServiceInput {
@@ -152,7 +154,7 @@ input UpdateSportCenterInput {
   name: String
   phone: String
   ubication: String
-  images: [String!]
+  image: String
   ranking: Int
   hoursOperarion: String
 }
@@ -197,6 +199,7 @@ type Query {
   allComments: [Comment!]
   # disponibility will be query get all reservationsByServiceByDate and schedule
   # Create resolver get Service By Id
+  getAccess(sportCenterId: ID!):Boolean
 }
 
 type Mutation {
