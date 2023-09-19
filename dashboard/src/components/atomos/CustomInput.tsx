@@ -14,7 +14,8 @@ const CustomInput = ({
   onClickIcon,
   ...rest
 }: PropsCustomInput) => {
-  const auxIcon = "/icons/eye-outline.svg";
+  const auxIcon = "icons/eye-closed-outline.svg";
+  const auxIcon2 = "icons/eye-outline.svg";
   const flagIcon = !(rest.type === "password") && pathSVG !== undefined;
 
   const styleBlue = color === "blue" && " border-background";
@@ -43,9 +44,12 @@ const CustomInput = ({
           name={label?.replaceAll(" ", "_")}
           placeholder={rest.placeholder}
         />
-        {flagIcon && <img src={pathSVG} alt={pathSVG} />}
-        {(rest.type === "password" || rest.type === "text") && (
+        {!flagIcon && <img src={pathSVG} alt={pathSVG} />}
+        {rest.type === "password" && (
           <img src={auxIcon} alt={auxIcon} onClick={onClickIcon} />
+        )}
+        {rest.type === "text" && (
+          <img src={auxIcon2} alt={auxIcon2} onClick={onClickIcon} />
         )}
       </div>
       {errorMessage && (
