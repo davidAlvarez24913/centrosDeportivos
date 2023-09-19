@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import DayCard from "../DayCard";
+import DayCard from "../../moleculas/DayCard";
 import { TagHour } from "../../atomos";
 
 type PropsBodyDisponibility = {

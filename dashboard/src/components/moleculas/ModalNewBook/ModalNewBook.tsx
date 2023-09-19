@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { CustomButton } from "../../atomos";
-import BodyDisponibility from "../BodyDisponibility";
+import BodyDisponibility from "../../organismos/BodyDisponibility";
 import { disponibility } from "../../../data";
+import Modal from "../Modal/Modal";
+import ModalConfirmBooking from "../ModalConfirmBooking";
 type NewBookProps = {
   onClose: () => void;
 };
@@ -20,6 +22,7 @@ const daysDisponibility = () => {
 
 const ModalNewBook = ({ onClose }: NewBookProps) => {
   const [price, setPrice] = useState(0.0);
+  const [modalConfirm, setModalConfirm] = useState(false);
   const [days, setDays] = useState(daysDisponibility());
   const [hours, setHours] = useState<
     { rangeHour: string; available: boolean; price: number }[]
@@ -42,12 +45,32 @@ const ModalNewBook = ({ onClose }: NewBookProps) => {
           setPrice={setPrice}
         ></BodyDisponibility>
       </div>
-      <CustomButton
-        title="Reservar"
-        color="blue"
-        type="button"
-        onClick={onClose}
-      />
+      <div className="flex content-end mt-20">
+        <CustomButton
+          title="Reservar"
+          color="blue"
+          type="button"
+          onClick={() => {
+            setModalConfirm(true);
+          }}
+        />
+      </div>
+      <Modal
+        title={"name sportcenter"}
+        modalState={modalConfirm}
+        closeModal={() => {
+          setModalConfirm(false);
+        }}
+      >
+        <ModalConfirmBooking
+          price={20.5}
+          onCreateRervation={() => {}}
+          hours={["11:00 - 12:00", "11:00 - 12:00"]}
+          onClose={() => {
+            setModalConfirm(false);
+          }}
+        />
+      </Modal>
     </div>
   );
 };
