@@ -1,0 +1,3 @@
+query GetAccess($sportCenterId: ID!){
+    getAccess(sportCenterId: $sportCenterId)
+}
