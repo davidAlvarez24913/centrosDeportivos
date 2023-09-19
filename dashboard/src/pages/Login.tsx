@@ -36,7 +36,7 @@ const LoginPage = () => {
           }}
           errorMessage={
             error === "auth/user-not-found"
-              ? "Usiario incorrecto, intenta de nuevo!"
+              ? "Usuario incorrecto, intenta de nuevo!"
               : error === "auth/invalid-email"
               ? "Email invalido"
               : ""
