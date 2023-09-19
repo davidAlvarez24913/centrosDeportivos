@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { onAuthStateChanged, User, Auth } from "@firebase/auth";
+import { onAuthStateChanged, User } from "@firebase/auth";
 import { auth } from "../components/Firebase";
 import { SignIn } from "../components/Firebase";
 import { signOut } from "@firebase/auth";
 
-interface UserContextProps {
+export interface UserContextProps {
   user: User | undefined;
   handleSignIn: (email: string, password: string) => Promise<void>;
   handleSignOut: () => Promise<void>;
@@ -30,6 +30,7 @@ export const UserContextProvider = ({
         setUser(undefined);
         setLoadingUser(false);
       }
+      console.log("fun unsubscribe,user: ", user);
     });
 
     return () => {

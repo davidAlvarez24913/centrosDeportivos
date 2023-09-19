@@ -3,6 +3,8 @@ import { CustomButton, CustomInput } from "../components/atomos";
 import { SignIn } from "../components/Firebase";
 import { FirebaseError } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
+import { useGetAccessLazyQuery } from "schema";
+import useUser from "../Hooks/useUser";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +12,8 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [visible, setVisible] = useState<"text" | "password">("password");
   const navigate = useNavigate();
-
+  const { user, handleSignOut } = useUser();
+  const [getAccess, { ...status }] = useGetAccessLazyQuery();
   return (
     <div className="w-screen h-screen bg-background fixed m-auto flex items-center justify-center">
       <div className="flex flex-col border-2 rounded-2xl border-primary gap-5 p-6 items-center justify-center">
@@ -64,13 +67,28 @@ const LoginPage = () => {
           color="sucessfull"
           title="Iniciar Sesion"
           type="button"
+          disable={status.loading}
           onClick={async () => {
             console.log("click");
             try {
               const response = await SignIn(email, password);
               console.log(response.user);
-              // context?.SetUser(response.user);
-              navigate("/reservaciones");
+              getAccess({
+                variables: { sportCenterId: response.user.uid },
+                onCompleted: (data) => {
+                  if (data.getAccess?.valueOf) {
+                    navigate("/reservaciones");
+                  } else {
+                    handleSignOut();
+
+                    alert("No eres admin PUTO" + JSON.stringify(data));
+                    console.log(user);
+                  }
+                },
+                onError: (error) => {
+                  alert(error);
+                },
+              });
             } catch (error) {
               console.log(error);
               setError((error as FirebaseError).code);

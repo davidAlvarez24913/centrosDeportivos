@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext, UserContextProps } from "../context/UserContext";
 
 const useUser = () => {
   const context = useContext(UserContext);
 
-  return { ...context };
+  return { ...context } as UserContextProps;
 };
 
 export default useUser;
