@@ -32,6 +32,12 @@ export const sportCenterResolvers = {
       });
       return result;
     },
+    getAccess: async (_root: any, { sportCenterId }: any) => {
+      const sportCenter = await SportCenter.findOne({
+        where: { sportCenterId: sportCenterId },
+      });
+      return sportCenter?.access;
+    },
   },
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
@@ -45,7 +51,7 @@ export const sportCenterResolvers = {
         const sportCenterId = result.identifiers[0].sportCenterId;
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
-          images: input.images,
+          image: input.image,
           ranking: input.ranking,
         });
         return { ...input, sportCenterId };
@@ -70,7 +76,7 @@ export const sportCenterResolvers = {
       try {
         await updateFirestoreSportCenter({
           sportCenterId: input.sportCenterId,
-          images: input.images ?? currentSportCenterNoSQL?.images,
+          image: input.image ?? currentSportCenterNoSQL?.images,
           ranking: input.ranking ?? currentSportCenterNoSQL?.ranking,
         });
         await SportCenter.update(
@@ -81,7 +87,7 @@ export const sportCenterResolvers = {
             name: input.name ?? currentSportCenterSQL[0].name,
             phone: input.phone ?? currentSportCenterSQL[0].phone,
             ubication: input.ubication ?? currentSportCenterSQL[0].ubication,
-            hoursOperarion: input.hoursOperarion,
+            hoursOperation: input.hoursOperation,
           }
         );
         return {

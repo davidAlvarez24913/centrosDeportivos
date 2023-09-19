@@ -11,7 +11,7 @@ import { db } from "../config";
 
 export type FireStoreSportCenter = {
   sportCenterId: number;
-  images?: string[];
+  image?: string;
   ranking?: number;
 };
 const document = "sportscenter";
