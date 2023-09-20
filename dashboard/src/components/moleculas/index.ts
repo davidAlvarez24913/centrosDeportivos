@@ -16,3 +16,4 @@ export { default as NewSchedule } from "./NewSchedule";
 export { default as LayoutPage } from "./LayoutPage";
 export { default as ModalNewBook } from "./ModalNewBook";
 export { default as DayCard } from "./DayCard";
+export { default as LinkNav } from "./LinkNav";

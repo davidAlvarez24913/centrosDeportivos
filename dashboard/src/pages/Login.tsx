@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CustomButton, CustomInput } from "../components/atomos";
-import { SignIn } from "../components/Firebase";
+import { SignIn } from "../Firebase";
 import { FirebaseError } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
 import { useGetAccessLazyQuery } from "schema";

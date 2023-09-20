@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "@firebase/auth";
-import { auth } from "../components/Firebase";
-import { SignIn } from "../components/Firebase";
+import { auth } from "../Firebase";
+import { SignIn } from "../Firebase";
 import { signOut } from "@firebase/auth";
 
 export interface UserContextProps {
