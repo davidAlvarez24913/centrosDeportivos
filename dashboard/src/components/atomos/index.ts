@@ -6,3 +6,5 @@ export { default as CustomTextarea } from "./CustomTextarea";
 export { default as LinkLogo } from "./LinkLogo";
 export { default as ProtectedRoute } from "./ProtectedRoute";
 export { default as TagHour } from "./TagHour";
+export { default as MenuBar } from "./MenuBar";
+export { default as LogoutButton } from "./LogoutButton";

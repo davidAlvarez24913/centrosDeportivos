@@ -1,46 +1,37 @@
 import { memo } from "react";
+import { Link } from "react-router-dom";
 
 type PropsCustomLink = {
   label: string;
   srcImage: string;
-  width: string | number;
-  height: string | number;
   isActive: boolean;
-} & React.ComponentProps<"a">;
-const CustomLink = ({
-  label,
-  srcImage,
-  width,
-  height,
-  isActive,
-  ...rest
-}: PropsCustomLink) => {
+  to: string;
+};
+const CustomLink = ({ label, srcImage, isActive, to }: PropsCustomLink) => {
   const styleByRoute = isActive
-    ? "text-background bg-primary"
-    : "text-customText";
+    ? " text-background bg-primary"
+    : " text-customText";
   return (
-    <a
+    <Link
       className={
         "flex rounded-xl gap-5 items-center px-3 py-2  no-underline left-0" +
         styleByRoute
       }
-      {...rest}
+      to={to}
     >
       <img
         src={srcImage}
         alt={label}
-        width={width}
-        height={height}
-        className={styleByRoute}
+        className={"w-5 md:w-10" + styleByRoute}
       />
       <p
         className={`${
           isActive ? "text-background" : "text-customText"
-        } font-normal text-2xl`}
+        } font-normal md:text-2xl`}
       >
         {label}
       </p>
-    </a>
+    </Link>
   );
 };
 
