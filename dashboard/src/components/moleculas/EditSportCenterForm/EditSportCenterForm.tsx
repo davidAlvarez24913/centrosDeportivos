@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { CustomButton, CustomInput } from "../../atomos";
 import CustomTextarea from "../../atomos/CustomTextarea";
+import ImageInput from "../ImageInput";
 export type ProfileProps = {
   name: string;
   description: string;
@@ -20,6 +21,8 @@ const EditSportCenterForm = ({
   sportCenter,
   setSportCenter,
 }: EditSportCenterFormProps) => {
+  const [image, setImage] = useState<string>();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit();
@@ -36,6 +39,11 @@ const EditSportCenterForm = ({
       className="flex flex-col gap-3 py-4"
       onSubmit={(e) => handleSubmit(e)}
     >
+      <ImageInput
+        fileBlob={image}
+        label="Agregar Imagen del Centro Deportivo"
+        setFileBlob={setImage}
+      />
       <CustomTextarea
         color="blue"
         label="Descripción"
