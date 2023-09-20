@@ -1,4 +1,4 @@
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import React, { useState } from "react";
 import { Background, CustomButton, Header } from "src/components/atomos";
 import { BodyDisponibility } from "src/components/organismos";
@@ -31,9 +31,15 @@ const DisponibilityPage = () => {
       return { ...d, available: false };
     })
   );
+  const router = useIonRouter();
   return (
     <IonPage>
-      <Header title="xxx" />
+      <Header
+        title="xxx"
+        dismiss={() => {
+          router.goBack();
+        }}
+      />
       <IonContent>
         <Background>
           <div className="flex flex-col gap-4 py-4">
