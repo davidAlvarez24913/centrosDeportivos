@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CustomButton, CustomInput } from "../components/atomos";
 import { SignIn } from "../Firebase";
 import { FirebaseError } from "@firebase/util";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useGetAccessLazyQuery } from "schema";
 import useUser from "../Hooks/useUser";
 
@@ -14,6 +14,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { user, handleSignOut } = useUser();
   const [getAccess, { ...status }] = useGetAccessLazyQuery();
+  console.log("user login", user);
+
+  if (user && status.data?.getAccess?.valueOf)
+    return <Navigate to={"/reservaciones"} replace />;
+
   return (
     <div className="w-screen h-screen bg-background fixed m-auto flex items-center justify-center">
       <div className="flex flex-col border-2 rounded-2xl border-primary gap-5 p-6 items-center justify-center">
@@ -72,7 +77,6 @@ const LoginPage = () => {
             console.log("click");
             try {
               const response = await SignIn(email, password);
-              console.log(response.user);
               getAccess({
                 variables: { sportCenterId: response.user.uid },
                 onCompleted: (data) => {
@@ -81,7 +85,7 @@ const LoginPage = () => {
                   } else {
                     handleSignOut();
 
-                    alert("No eres admin PUTO" + JSON.stringify(data));
+                    alert("No eres admin" + JSON.stringify(data));
                     console.log(user);
                   }
                 },
