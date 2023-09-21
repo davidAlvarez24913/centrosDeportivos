@@ -9,6 +9,7 @@ import ProfilePage from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import { UserContextProvider } from "./context/UserContext";
 import { ProtectedRoute } from "./components/atomos";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<Register />} />
             <Route
               path="/reservaciones"
               element={
