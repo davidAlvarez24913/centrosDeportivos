@@ -34,6 +34,7 @@ import PaymentPage from "./pages/PaymentPage";
 import SportsCentersPage from "./pages/SportsCentersPage";
 import SportCenterPage from "./pages/SportCenterPage";
 import DisponibilityPage from "./pages/DisponibilityPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 setupIonicReact();
 
@@ -64,6 +65,7 @@ const App: React.FC = () => (
             path="/disponibility/:serviceId"
             component={DisponibilityPage}
           />
+          <Route exact path="/profile" component={ProfilePage} />
         </ApolloProvider>
       </IonRouterOutlet>
     </IonReactRouter>
