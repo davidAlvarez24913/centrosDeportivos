@@ -1,3 +1,16 @@
-query GetAccess($sportCenterId: ID!){
-    getAccess(sportCenterId: $sportCenterId)
+query GetAccess($sportCenterId: ID!) {
+  getAccess(sportCenterId: $sportCenterId)
+}
+
+mutation CreateSportCenter($input: CreateSportCenterInput!) {
+  createSportCenter(input: $input) {
+    sportCenterId
+    name
+    phone
+    ubication
+    hoursOperation
+    image
+    ranking
+    access
+  }
 }

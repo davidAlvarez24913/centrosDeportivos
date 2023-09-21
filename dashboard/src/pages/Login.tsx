@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { CustomButton, CustomInput } from "../components/atomos";
+import {
+  CustomButton,
+  CustomInput,
+  CustomInputWithIcon,
+} from "../components/atomos";
 import { SignIn } from "../Firebase";
 import { FirebaseError } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +14,12 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [error, setError] = useState("");
-  const [visible, setVisible] = useState<"text" | "password">("password");
   const navigate = useNavigate();
   const { user, handleSignOut } = useUser();
   const [getAccess, { ...status }] = useGetAccessLazyQuery();
   return (
     <div className="w-screen h-screen bg-background fixed m-auto flex items-center justify-center">
-      <div className="flex flex-col border-2 rounded-2xl border-primary gap-5 p-6 items-center justify-center">
+      <div className="flex flex-col border-2 rounded-2xl max-w-xl w-full h-96 border-primary gap-5 p-6 items-center justify-center">
         <div className="flex items-end ">
           <img
             src="/icons/logo.svg"
@@ -45,10 +48,10 @@ const LoginPage = () => {
               : ""
           }
         />
-        <CustomInput
+        <CustomInputWithIcon
+          isPassword
           placeholder="Contraseña"
           color="white"
-          type={visible}
           name="password"
           onChange={(e) => {
             setPass(e.currentTarget.value);
@@ -58,10 +61,6 @@ const LoginPage = () => {
               ? "Contraseña incorrecta, intenta de nuevo!"
               : ""
           }
-          onClickIcon={() => {
-            visible === "password" && setVisible("text");
-            visible === "text" && setVisible("password");
-          }}
         />
         <CustomButton
           color="sucessfull"
@@ -95,6 +94,9 @@ const LoginPage = () => {
             }
           }}
         />
+        <a href="/register" className="text-white">
+          Registrarse
+        </a>
       </div>
     </div>
   );

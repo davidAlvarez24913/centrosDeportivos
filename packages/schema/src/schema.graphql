@@ -105,6 +105,7 @@ input CreateCommentInput {
 }
 
 input CreateSportCenterInput {
+  sportCenterId: ID!
   name: String!
   phone: String!
   ubication: String!
@@ -199,7 +200,7 @@ type Query {
   allComments: [Comment!]
   # disponibility will be query get all reservationsByServiceByDate and schedule
   # Create resolver get Service By Id
-  getAccess(sportCenterId: ID!):Boolean
+  getAccess(sportCenterId: ID!): Boolean
 }
 
 type Mutation {

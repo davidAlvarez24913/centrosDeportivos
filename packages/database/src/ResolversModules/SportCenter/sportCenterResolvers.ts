@@ -107,7 +107,7 @@ export const sportCenterResolvers = {
     ) => {
       try {
         const existsId = await SportCenter.findOne({
-          where: { sportCenterId: Number(sportCenterId) },
+          where: { sportCenterId: sportCenterId },
         });
         if (existsId) {
           await SportCenter.delete(sportCenterId);

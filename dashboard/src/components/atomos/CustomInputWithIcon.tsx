@@ -45,7 +45,6 @@ const CustomInputWithIcon = ({
           type={visible}
           {...rest}
           id={label?.replaceAll(" ", "_")}
-          name={label?.replaceAll(" ", "_")}
           placeholder={rest.placeholder}
         />
         {!flagIcon && <img src={pathSVG} alt={pathSVG} />}

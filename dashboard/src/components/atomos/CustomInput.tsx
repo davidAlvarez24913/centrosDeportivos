@@ -35,7 +35,6 @@ const CustomInput = ({
           className={`bg-transparent outline-none w-full ${styleBlue}  ${styleWhite} ${placeholderBlue}  ${placeholderWhite}  `}
           {...rest}
           id={label?.replaceAll(" ", "_")}
-          name={label?.replaceAll(" ", "_")}
           placeholder={rest.placeholder}
         />
       </div>
