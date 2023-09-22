@@ -23,7 +23,8 @@ const Register = () => {
         const sportCenter = {
           sportCenterId: userId,
           name: registData.name,
-          access: true,
+          email: registData.email,
+          access: false,
           image: "",
           phone: "",
           ubication: "",
@@ -32,6 +33,12 @@ const Register = () => {
         };
         createSportCenterMutation({
           variables: { input: sportCenter },
+        }).then((data) => {
+          alert(
+            "Centro deportivo '" +
+              data.data?.createSportCenter?.name +
+              "' creado correctamente"
+          );
         });
       })
       .catch((error) => {
@@ -39,7 +46,6 @@ const Register = () => {
         error.code === "auth/email-already-in-use" &&
           alert("Correo electronico ya registrado");
       });
-    console.log(registData);
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRegistData({ ...registData, [event.target.name]: event.target.value });

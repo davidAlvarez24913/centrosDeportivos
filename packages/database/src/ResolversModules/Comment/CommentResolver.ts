@@ -52,7 +52,7 @@ export const commentResolvers = {
       try {
         const listSP = await sportCenterResolvers.Query.listSportCenters();
         const flagSP = listSP.filter(
-          (sp) => sp.sportCenterId === Number(sportCenterId)
+          (sp) => sp.sportCenterId === sportCenterId
         );
         const listService = flagSP[0].services.filter(
           (service) => service.serviceId === Number(serviceId)

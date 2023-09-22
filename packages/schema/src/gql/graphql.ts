@@ -63,6 +63,7 @@ export type CreateServiceInput = {
 
 export type CreateSportCenterInput = {
   access: Scalars['Boolean']['input'];
+  email: Scalars['String']['input'];
   hoursOperation?: InputMaybe<Scalars['String']['input']>;
   image: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -103,6 +104,7 @@ export type Mutation = {
   deleteService?: Maybe<OperationResponse>;
   deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<Scalars['Boolean']['output']>;
+  giveAccess?: Maybe<OperationResponse>;
   updateComment?: Maybe<Comment>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
@@ -157,6 +159,11 @@ export type MutationDeleteSportCenterArgs = {
 
 export type MutationDeleteUserArgs = {
   userId: Scalars['ID']['input'];
+};
+
+
+export type MutationGiveAccessArgs = {
+  sportCenterId: Scalars['String']['input'];
 };
 
 
@@ -282,6 +289,7 @@ export enum Sport {
 export type SportCenter = {
   __typename?: 'SportCenter';
   access?: Maybe<Scalars['Boolean']['output']>;
+  email: Scalars['String']['output'];
   hoursOperation: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
@@ -324,6 +332,7 @@ export type UpdateServiceInput = {
 };
 
 export type UpdateSportCenterInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
   hoursOperarion?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;

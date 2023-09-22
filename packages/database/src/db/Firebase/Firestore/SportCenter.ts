@@ -10,7 +10,7 @@ import {
 import { db } from "../config";
 
 export type FireStoreSportCenter = {
-  sportCenterId: number;
+  sportCenterId: string;
   image?: string;
   ranking?: number;
 };
