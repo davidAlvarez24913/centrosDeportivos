@@ -79,19 +79,19 @@ export const serviceResolvers = {
           await createFirestoreService({
             serviceId,
             image: input.image,
-            ranking: input.ranking,
-            disponibility: auxDisponibility,
+            // ranking: input.ranking,
+            // disponibility: auxDisponibility,
           });
           return {
             ...input,
-            disponibility: auxDisponibility,
+            // disponibility: auxDisponibility,
             serviceId,
           };
         } catch (error) {
           if (serviceId) {
             await Service.delete({ serviceId: Number(serviceId) });
           }
-          console.log(typeof error);
+          console.log(typeof error, "error: ", error);
           throw new GraphQLError(
             `No se pudo crear el servicio ${JSON.stringify(error)}`,
             {

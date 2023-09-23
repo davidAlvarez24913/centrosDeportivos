@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { CustomButton, CustomInput } from "../../atomos";
 import CustomTextarea from "../../atomos/CustomTextarea";
+import ImageInput from "../ImageInput";
 type SportCenterFormProps = {
   onSubmit: () => void;
 };
 const SportCenterForm = ({ onSubmit }: SportCenterFormProps) => {
+  const [image, setImage] = useState<File>();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit();
@@ -21,6 +23,11 @@ const SportCenterForm = ({ onSubmit }: SportCenterFormProps) => {
       className="flex flex-col gap-3 py-4"
       onSubmit={(e) => handleSubmit(e)}
     >
+      <ImageInput
+        fileBlob={image}
+        label="Agregar Imagen del Centro Deportivo"
+        setFileBlob={setImage}
+      />
       <CustomInput
         type="text"
         color="blue"

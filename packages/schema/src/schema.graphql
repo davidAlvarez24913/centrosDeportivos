@@ -123,8 +123,6 @@ input CreateServiceInput {
   description: String!
   sportCenterId: ID!
   image: String
-  ranking: Int
-  disponibility: [CreateScheduleInput!]
 }
 input CreateScheduleInput {
   startHour: String!

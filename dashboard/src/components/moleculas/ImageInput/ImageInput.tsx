@@ -1,11 +1,10 @@
 type PropsImageInput = {
   label: string;
-  fileBlob: string | undefined;
-  setFileBlob: React.Dispatch<React.SetStateAction<string | undefined>>;
+  fileBlob: File | undefined;
+  setFileBlob: React.Dispatch<React.SetStateAction<File | undefined>>;
 };
 
 const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
-  console.log(fileBlob);
   return (
     <div className="flex flex-col relative bg-background h-64 rounded-2xl justify-center items-center cursor-pointer">
       {!fileBlob ? (
@@ -31,8 +30,7 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
             onChange={(e) => {
               const files = e.target.files;
               if (files) {
-                const image = URL.createObjectURL(files[0]);
-                setFileBlob(image);
+                setFileBlob(files[0]);
               }
             }}
           />
@@ -40,7 +38,7 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
       ) : (
         <div className="flex flex-col w-36 h-36">
           <img
-            src={fileBlob}
+            src={URL.createObjectURL(fileBlob)}
             alt="image_service"
             className=" border border-green-300 opacity-95 rounded-lg"
           />
