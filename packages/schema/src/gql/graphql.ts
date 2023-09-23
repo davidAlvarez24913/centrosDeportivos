@@ -68,6 +68,7 @@ export type CreateSportCenterInput = {
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
   ranking?: InputMaybe<Scalars['Int']['input']>;
+  sportCenterId: Scalars['ID']['input'];
   ubication: Scalars['String']['input'];
 };
 
@@ -382,6 +383,13 @@ export type GetAccessQueryVariables = Exact<{
 
 export type GetAccessQuery = { __typename?: 'Query', getAccess?: boolean | null };
 
+export type CreateSportCenterMutationVariables = Exact<{
+  input: CreateSportCenterInput;
+}>;
+
+
+export type CreateSportCenterMutation = { __typename?: 'Mutation', createSportCenter?: { __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, hoursOperation: string, image?: string | null, ranking?: number | null, access?: boolean | null } | null };
+
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -538,6 +546,46 @@ export function useGetAccessLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetAccessQueryHookResult = ReturnType<typeof useGetAccessQuery>;
 export type GetAccessLazyQueryHookResult = ReturnType<typeof useGetAccessLazyQuery>;
 export type GetAccessQueryResult = Apollo.QueryResult<GetAccessQuery, GetAccessQueryVariables>;
+export const CreateSportCenterDocument = gql`
+    mutation CreateSportCenter($input: CreateSportCenterInput!) {
+  createSportCenter(input: $input) {
+    sportCenterId
+    name
+    phone
+    ubication
+    hoursOperation
+    image
+    ranking
+    access
+  }
+}
+    `;
+export type CreateSportCenterMutationFn = Apollo.MutationFunction<CreateSportCenterMutation, CreateSportCenterMutationVariables>;
+
+/**
+ * __useCreateSportCenterMutation__
+ *
+ * To run a mutation, you first call `useCreateSportCenterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSportCenterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSportCenterMutation, { data, loading, error }] = useCreateSportCenterMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateSportCenterMutation(baseOptions?: Apollo.MutationHookOptions<CreateSportCenterMutation, CreateSportCenterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSportCenterMutation, CreateSportCenterMutationVariables>(CreateSportCenterDocument, options);
+      }
+export type CreateSportCenterMutationHookResult = ReturnType<typeof useCreateSportCenterMutation>;
+export type CreateSportCenterMutationResult = Apollo.MutationResult<CreateSportCenterMutation>;
+export type CreateSportCenterMutationOptions = Apollo.BaseMutationOptions<CreateSportCenterMutation, CreateSportCenterMutationVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {

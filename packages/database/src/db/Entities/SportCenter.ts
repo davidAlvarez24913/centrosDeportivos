@@ -1,16 +1,10 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, BaseEntity, OneToMany, PrimaryColumn } from "typeorm";
 import Service from "./Service";
 
 @Entity()
 class SportCenter extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  sportCenterId: number;
+  @PrimaryColumn()
+  sportCenterId: string;
 
   @Column()
   name: string;
