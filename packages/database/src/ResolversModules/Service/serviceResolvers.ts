@@ -51,7 +51,7 @@ export const serviceResolvers = {
         };
       });
       return result.filter(
-        (service) => service.sportCenterId === Number(sportCenterId)
+        (service) => service.sportCenterId === sportCenterId
       );
     },
   },
