@@ -9,3 +9,4 @@ export { default as ProtectedRoute } from "./ProtectedRoute";
 export { default as TagHour } from "./TagHour";
 export { default as MenuBar } from "./MenuBar";
 export { default as LogoutButton } from "./LogoutButton";
+export { default as Loading } from "./Loading";
