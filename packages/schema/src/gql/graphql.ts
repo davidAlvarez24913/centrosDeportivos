@@ -53,10 +53,8 @@ export type CreateScheduleInput = {
 
 export type CreateServiceInput = {
   description: Scalars['String']['input'];
-  disponibility?: InputMaybe<Array<CreateScheduleInput>>;
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
-  ranking?: InputMaybe<Scalars['Int']['input']>;
   sport: Sport;
   sportCenterId: Scalars['ID']['input'];
 };
@@ -376,6 +374,13 @@ export type ListServicesBySportCenterIdQueryVariables = Exact<{
 
 export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image?: string | null, disponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null } | null } | null> | null };
 
+export type CreateServiceMutationVariables = Exact<{
+  input: CreateServiceInput;
+}>;
+
+
+export type CreateServiceMutation = { __typename?: 'Mutation', createService?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image?: string | null, sportCenterId: string } | null };
+
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
 }>;
@@ -513,6 +518,44 @@ export function useListServicesBySportCenterIdLazyQuery(baseOptions?: Apollo.Laz
 export type ListServicesBySportCenterIdQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdQuery>;
 export type ListServicesBySportCenterIdLazyQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdLazyQuery>;
 export type ListServicesBySportCenterIdQueryResult = Apollo.QueryResult<ListServicesBySportCenterIdQuery, ListServicesBySportCenterIdQueryVariables>;
+export const CreateServiceDocument = gql`
+    mutation createService($input: CreateServiceInput!) {
+  createService(input: $input) {
+    serviceId
+    name
+    sport
+    description
+    image
+    sportCenterId
+  }
+}
+    `;
+export type CreateServiceMutationFn = Apollo.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>;
+
+/**
+ * __useCreateServiceMutation__
+ *
+ * To run a mutation, you first call `useCreateServiceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateServiceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createServiceMutation, { data, loading, error }] = useCreateServiceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateServiceMutation(baseOptions?: Apollo.MutationHookOptions<CreateServiceMutation, CreateServiceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateServiceMutation, CreateServiceMutationVariables>(CreateServiceDocument, options);
+      }
+export type CreateServiceMutationHookResult = ReturnType<typeof useCreateServiceMutation>;
+export type CreateServiceMutationResult = Apollo.MutationResult<CreateServiceMutation>;
+export type CreateServiceMutationOptions = Apollo.BaseMutationOptions<CreateServiceMutation, CreateServiceMutationVariables>;
 export const GetAccessDocument = gql`
     query GetAccess($sportCenterId: ID!) {
   getAccess(sportCenterId: $sportCenterId)

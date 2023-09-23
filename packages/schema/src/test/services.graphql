@@ -52,3 +52,14 @@ query ListServicesBySportCenterId( $sportCenterId: ID!){
         }
     }
 }
+mutation createService($input: CreateServiceInput!){
+    createService(input: $input){
+      serviceId
+        name
+        sport
+        description
+        image
+        sportCenterId
+    }
+
+}
