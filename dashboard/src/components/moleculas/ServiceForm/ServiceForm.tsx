@@ -5,26 +5,47 @@ import {
   CustomSelect,
   CustomTextarea,
 } from "../../atomos";
-import { Sport } from "schema";
+import { CreateServiceInput, Sport, useCreateServiceMutation } from "schema";
 import ImageInput from "../ImageInput";
 import useUser from "../../../Hooks/useUser";
+import { uploadFile } from "../../../Firebase";
 type ServiceFormProps = {
   onSubmit: () => void;
 };
 const sports = Object.values(Sport);
 const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
   const { user } = useUser();
-  const [FileBlob, setFileBlob] = useState<string>();
+  const [fileBlob, setFileBlob] = useState<File>();
   const [newService, setNewService] = useState({
     name: "",
     sport: "",
     description: "",
     sportCenterId: user?.uid,
-    image: "name image of bucket",
+    image: "",
   });
+  const [createServiceMutation, status] = useCreateServiceMutation();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit();
+    const nameImage = "services/" + fileBlob?.name;
+    const inputAux = {
+      ...newService,
+      image: nameImage,
+    } as CreateServiceInput;
+    createServiceMutation({
+      variables: { input: inputAux },
+      onCompleted: async (data) => {
+        try {
+          await uploadFile(fileBlob!, data.createService?.image!);
+        } catch (error) {
+          console.log("error upload: ", error);
+        }
+        // onSubmit(); // fucn to close
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
   };
 
   return (
@@ -60,13 +81,14 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
       />
       <ImageInput
         label="agregar imagen del servicio"
-        fileBlob={FileBlob}
+        fileBlob={fileBlob}
         setFileBlob={setFileBlob}
       ></ImageInput>
       <CustomButton
         title="crear servicio"
         color="sucessfull"
         type="submit"
+        disable={status.loading}
         onClick={() => console.log(newService)}
       />
     </form>
