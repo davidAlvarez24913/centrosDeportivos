@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import { CustomButton } from "../../atomos";
 import Modal from "../../moleculas/Modal";
 import { BankAccountContent } from "../../moleculas";
+import { BankAccountContentProps } from "../../moleculas/BankAccountContent/BankAccountContent";
 
-export type AccountProps = {
-  bankAccountId: string;
-  name: string;
-  id: string;
-  accountType: string;
-  accountNumber: string;
-  email: string;
-};
-const Account = (account: AccountProps) => {
+const Account = (account: BankAccountContentProps) => {
   const [modal, setModal] = useState(false);
 
   const { name } = account;
@@ -32,7 +25,7 @@ const Account = (account: AccountProps) => {
           setModal(false);
         }}
       >
-        <BankAccountContent {...account} />
+        <BankAccountContent {...account} closeModal={() => setModal(false)} />
       </Modal>
     </div>
   );

@@ -1,58 +1,111 @@
 import React, { useState } from "react";
 import { CustomButton, CustomInput } from "../../atomos";
-type BankAccountContentProps = {
+import { UpdateBankAccountInput } from "schema";
+import { eventNames } from "process";
+export type BankAccountContentProps = {
+  bankAccountId: string;
+  name: string;
   id: string;
   accountType: string;
   accountNumber: string;
   email: string;
+  onUpdate: (input: UpdateBankAccountInput) => void;
+  onDelete: () => void;
+  closeModal?: () => void;
 };
 const BankAccountContent = ({
+  name,
   id,
   accountNumber,
   accountType,
   email,
+  bankAccountId,
+  onUpdate,
+  onDelete,
+  closeModal,
 }: BankAccountContentProps) => {
   const [edit, setEdit] = useState(false);
+  const [bankAccount, setbankAccount] = useState<UpdateBankAccountInput>({
+    bankAccountId,
+    name,
+    id,
+    accountNumber,
+    accountType,
+    email,
+  });
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onUpdate(bankAccount);
+    setEdit(false);
+  };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setbankAccount({ ...bankAccount, [event.target.name]: event.target.value });
+  };
   return (
-    <form className="flex flex-col gap-2 py-4" action="">
+    <form
+      id="bankAccountForm"
+      className="flex flex-col gap-4 py-4"
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
+    >
       <CustomInput
         type="text"
         color="blue"
         label="Identificacion"
-        placeholder={id}
+        name="id"
+        defaultValue={bankAccount.id!}
         disabled={!edit}
+        onChange={handleChange}
       />
       <CustomInput
+        name="accountType"
         type="text"
         color="blue"
         label="Tipo de Cuenta"
-        placeholder={accountType}
+        defaultValue={bankAccount.accountType!}
         disabled={!edit}
+        onChange={handleChange}
       />
       <CustomInput
+        name="accountNumber"
         type="text"
         color="blue"
         label="Nro. Cuenta"
-        placeholder={accountNumber}
+        defaultValue={bankAccount.accountNumber!}
         disabled={!edit}
+        onChange={handleChange}
       />
       <CustomInput
-        type="text"
+        name="email"
+        type="email"
         color="blue"
         label="Correo Electronico"
-        placeholder={email}
+        defaultValue={bankAccount.email!}
         disabled={!edit}
+        onChange={handleChange}
       />
       {!edit ? (
-        <CustomButton
-          title="editar cuenta bancaria"
-          color="sucessfull"
-          type="button"
-          onClick={() => {
-            setEdit(true);
-          }}
-        />
+        <>
+          <CustomButton
+            title="editar cuenta bancaria"
+            color="sucessfull"
+            type="button"
+            onClick={() => {
+              setEdit(true);
+            }}
+          />
+          <CustomButton
+            title="eliminar cuenta bancaria"
+            color="cancel"
+            type="button"
+            onClick={() => {
+              onDelete();
+              closeModal!();
+            }}
+          />
+        </>
       ) : (
         <div className="flex flex-row gap-2 pt-4">
           <CustomButton
@@ -63,14 +116,7 @@ const BankAccountContent = ({
               setEdit(false);
             }}
           />
-          <CustomButton
-            title="editar"
-            color="sucessfull"
-            type="submit"
-            onClick={() => {
-              setEdit(false);
-            }}
-          />
+          <CustomButton title="editar" color="sucessfull" type="submit" />
         </div>
       )}
     </form>
