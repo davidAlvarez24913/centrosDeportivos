@@ -1,6 +1,5 @@
 import React from "react";
 import { LayoutPage, Profile } from "../components/moleculas";
-import { accounts } from "../data";
 import {
   AccountSection,
   EditSportCenterButton,
@@ -9,6 +8,7 @@ import useUser from "../Hooks/useUser";
 import {
   UpdateSportCenterInput,
   useGetSportCenterQuery,
+  useListBankAccountsBySportCenterIdQuery,
   useUpdateSportCenterMutation,
 } from "schema";
 
@@ -17,12 +17,25 @@ const ProfilePage = () => {
   const { data, loading, refetch } = useGetSportCenterQuery({
     variables: { sportCenterId: sportCenterId },
   });
+  const bankAccountsData = useListBankAccountsBySportCenterIdQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
   const [updateSportCenterMutation] = useUpdateSportCenterMutation();
   const sportCenter = data?.getSportCenter!;
-  const onUpdate = (input: UpdateSportCenterInput) => {
+
+  const onUpdateSportCenter = (input: UpdateSportCenterInput) => {
     updateSportCenterMutation({ variables: { input } }).then(() => refetch());
   };
-  return loading ? (
+  const bankAccounts =
+    bankAccountsData.data?.listBankAccountsBySportCenterId?.map(
+      (bankAccount) => {
+        return {
+          ...bankAccount!,
+        };
+      }
+    ) || [];
+
+  return loading && bankAccountsData.loading ? (
     <div></div>
   ) : (
     <LayoutPage nameSportCenter={sportCenter.name}>
@@ -31,7 +44,7 @@ const ProfilePage = () => {
           <EditSportCenterButton
             sportCenterId={sportCenterId}
             {...sportCenter}
-            updateSportCenter={onUpdate}
+            updateSportCenter={onUpdateSportCenter}
           />
           <Profile
             {...sportCenter}
@@ -39,7 +52,7 @@ const ProfilePage = () => {
           />
         </div>
         <div className="w-1/3">
-          <AccountSection accounts={accounts} />
+          <AccountSection accounts={bankAccounts} />
         </div>
       </div>
     </LayoutPage>

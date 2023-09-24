@@ -4,7 +4,8 @@ import Modal from "../../moleculas/Modal";
 import { BankAccountContent } from "../../moleculas";
 
 export type AccountProps = {
-  bankName: string;
+  bankAccountId: string;
+  name: string;
   id: string;
   accountType: string;
   accountNumber: string;
@@ -13,19 +14,19 @@ export type AccountProps = {
 const Account = (account: AccountProps) => {
   const [modal, setModal] = useState(false);
 
-  const { bankName } = account;
+  const { name } = account;
   return (
     <div>
       <CustomButton
         color="outline"
-        title={bankName}
+        title={name}
         type="button"
         onClick={() => {
           setModal(true);
         }}
       />
       <Modal
-        title={bankName}
+        title={name}
         modalState={modal}
         closeModal={() => {
           setModal(false);

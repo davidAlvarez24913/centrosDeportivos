@@ -21,8 +21,8 @@ const AccountSection = ({ accounts }: AccountSectionProps) => {
           setModal(true);
         }}
       />
-      {accounts.map((account, index) => {
-        return <Account {...account} key={index} />;
+      {accounts.map((account) => {
+        return <Account {...account} key={account.bankAccountId} />;
       })}
       <Modal
         title={"Crear Cuenta Bancaria"}
