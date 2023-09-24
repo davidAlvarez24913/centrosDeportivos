@@ -1,10 +1,25 @@
 type PropsImageInput = {
   label: string;
-  fileBlob: File | undefined;
-  setFileBlob: React.Dispatch<React.SetStateAction<File | undefined>>;
+  fileBlob: string | undefined;
+  setFileBlob: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
+  function fileToDataURL(file: File, callback: (dataURL: string) => void) {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const dataURL = event.target?.result as string;
+      callback(dataURL);
+    };
+
+    reader.onerror = (error) => {
+      console.error("Error al leer el archivo:", error);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   return (
     <div className="flex flex-col relative bg-background h-64 rounded-2xl justify-center items-center cursor-pointer">
       {!fileBlob ? (
@@ -30,7 +45,10 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
             onChange={(e) => {
               const files = e.target.files;
               if (files) {
-                setFileBlob(files[0]);
+                fileToDataURL(files[0], (dataURL) => {
+                  setFileBlob(dataURL);
+                  // console.log("Data URL:", dataURL);
+                });
               }
             }}
           />
@@ -38,7 +56,7 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
       ) : (
         <div className="flex flex-col w-36 h-36">
           <img
-            src={URL.createObjectURL(fileBlob)}
+            src={fileBlob}
             alt="image_service"
             className=" border border-green-300 opacity-95 rounded-lg"
           />

@@ -21,7 +21,7 @@ const EditSportCenterForm = ({
   sportCenter,
   setSportCenter,
 }: EditSportCenterFormProps) => {
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState<string>();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
