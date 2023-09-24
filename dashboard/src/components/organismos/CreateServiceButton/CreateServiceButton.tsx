@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CustomButton } from "../../atomos";
 import { Modal, ServiceForm } from "../../moleculas";
 
-const CreateServiceButton = () => {
+const CreateServiceButton = ({ onRefetch }: { onRefetch: () => void }) => {
   const [modal, setModal] = useState(false);
 
   return (
@@ -25,6 +25,7 @@ const CreateServiceButton = () => {
       >
         <ServiceForm
           onSubmit={() => {
+            onRefetch();
             setModal(false);
           }}
         />

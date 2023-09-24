@@ -8,14 +8,14 @@ import {
 import { CreateServiceInput, Sport, useCreateServiceMutation } from "schema";
 import ImageInput from "../ImageInput";
 import useUser from "../../../Hooks/useUser";
-import { uploadFile } from "../../../Firebase";
+
 type ServiceFormProps = {
   onSubmit: () => void;
 };
 const sports = Object.values(Sport);
 const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
   const { user } = useUser();
-  const [fileBlob, setFileBlob] = useState<File>();
+  const [fileBlob, setFileBlob] = useState<string>();
   const [newService, setNewService] = useState({
     name: "",
     sport: "",
@@ -25,25 +25,20 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
   });
   const [createServiceMutation, status] = useCreateServiceMutation();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nameImage = "services/" + fileBlob?.name;
-    const inputAux = {
+    let inputAux = {
       ...newService,
-      image: nameImage,
+      image: fileBlob,
     } as CreateServiceInput;
     createServiceMutation({
       variables: { input: inputAux },
-      onCompleted: async (data) => {
-        try {
-          await uploadFile(fileBlob!, data.createService?.image!);
-        } catch (error) {
-          console.log("error upload: ", error);
-        }
-        // onSubmit(); // fucn to close
+      onCompleted: () => {
+        alert("servicio creado");
+        onSubmit();
       },
       onError: (err) => {
-        console.log(err);
+        alert("Error al crear servicio" + err);
       },
     });
   };
