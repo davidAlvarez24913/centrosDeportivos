@@ -10,3 +10,7 @@ export const changeLanguageDay = (day: string) => {
   if ("Saturday" === day) dia = "Sabado";
   return dia;
 };
+
+export const getStringUrl = (fieldImage: string) => {
+  return fieldImage.split("#")[1];
+};

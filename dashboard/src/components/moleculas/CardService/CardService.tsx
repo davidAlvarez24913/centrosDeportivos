@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "../Modal";
 import ServiceModal from "../ServiceModal";
 import { Service } from "schema";
+import { getStringUrl } from "../../../utils";
 
 type PropsCardService = {
   service: Omit<
@@ -12,6 +13,7 @@ type PropsCardService = {
 
 const CardService = ({ service }: PropsCardService) => {
   const [modal, setModal] = useState(false);
+
   return (
     <div>
       <div
@@ -22,7 +24,7 @@ const CardService = ({ service }: PropsCardService) => {
         role="button"
       >
         <img
-          src={service.image ?? "/image 9 .png"}
+          src={getStringUrl(service.image!) ?? "/image 9 .png"}
           alt={service.name}
           className="rounded-lg w-full"
         />
