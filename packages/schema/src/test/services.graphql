@@ -63,3 +63,9 @@ mutation createService($input: CreateServiceInput!){
     }
 
 }
+mutation UpdateService($input: UpdateServiceInput){
+    updateService(input : $input){
+        status
+        message
+    }
+}

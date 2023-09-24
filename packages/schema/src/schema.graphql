@@ -37,13 +37,13 @@ type RangeHour {
 }
 
 type Disponibility {
-  Sunday: [RangeHour!]
-  Monday: [RangeHour!]
-  Tuesday: [RangeHour!]
-  Wednesday: [RangeHour!]
-  Thursday: [RangeHour!]
-  Friday: [RangeHour!]
-  Saturday: [RangeHour!]
+  Sunday: [RangeHour]
+  Monday: [RangeHour]
+  Tuesday: [RangeHour]
+  Wednesday: [RangeHour]
+  Thursday: [RangeHour]
+  Friday: [RangeHour]
+  Saturday: [RangeHour]
 }
 
 type SportCenter {
@@ -217,7 +217,7 @@ type Mutation {
   giveAccess(sportCenterId: String!): OperationResponse
 
   createService(input: CreateServiceInput!): Service
-  updateService(input: UpdateServiceInput!): OperationResponse
+  updateService(input: UpdateServiceInput): OperationResponse
   deleteService(serviceId: ID!): OperationResponse
 
   createReservation(input: CreateReservationInput!): Reservation

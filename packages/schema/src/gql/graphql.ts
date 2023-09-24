@@ -82,13 +82,13 @@ export type CreateUserInput = {
 
 export type Disponibility = {
   __typename?: 'Disponibility';
-  Friday?: Maybe<Array<RangeHour>>;
-  Monday?: Maybe<Array<RangeHour>>;
-  Saturday?: Maybe<Array<RangeHour>>;
-  Sunday?: Maybe<Array<RangeHour>>;
-  Thursday?: Maybe<Array<RangeHour>>;
-  Tuesday?: Maybe<Array<RangeHour>>;
-  Wednesday?: Maybe<Array<RangeHour>>;
+  Friday?: Maybe<Array<Maybe<RangeHour>>>;
+  Monday?: Maybe<Array<Maybe<RangeHour>>>;
+  Saturday?: Maybe<Array<Maybe<RangeHour>>>;
+  Sunday?: Maybe<Array<Maybe<RangeHour>>>;
+  Thursday?: Maybe<Array<Maybe<RangeHour>>>;
+  Tuesday?: Maybe<Array<Maybe<RangeHour>>>;
+  Wednesday?: Maybe<Array<Maybe<RangeHour>>>;
 };
 
 export type Mutation = {
@@ -172,7 +172,7 @@ export type MutationUpdateCommentArgs = {
 
 
 export type MutationUpdateServiceArgs = {
-  input: UpdateServiceInput;
+  input?: InputMaybe<UpdateServiceInput>;
 };
 
 
@@ -383,7 +383,7 @@ export type ListServicesBySportCenterIdQueryVariables = Exact<{
 }>;
 
 
-export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image?: string | null, disponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number }> | null } | null } | null> | null };
+export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image?: string | null, disponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null } | null> | null };
 
 export type CreateServiceMutationVariables = Exact<{
   input: CreateServiceInput;
@@ -391,6 +391,13 @@ export type CreateServiceMutationVariables = Exact<{
 
 
 export type CreateServiceMutation = { __typename?: 'Mutation', createService?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image?: string | null, sportCenterId: string } | null };
+
+export type UpdateServiceMutationVariables = Exact<{
+  input?: InputMaybe<UpdateServiceInput>;
+}>;
+
+
+export type UpdateServiceMutation = { __typename?: 'Mutation', updateService?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -581,6 +588,40 @@ export function useCreateServiceMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateServiceMutationHookResult = ReturnType<typeof useCreateServiceMutation>;
 export type CreateServiceMutationResult = Apollo.MutationResult<CreateServiceMutation>;
 export type CreateServiceMutationOptions = Apollo.BaseMutationOptions<CreateServiceMutation, CreateServiceMutationVariables>;
+export const UpdateServiceDocument = gql`
+    mutation UpdateService($input: UpdateServiceInput) {
+  updateService(input: $input) {
+    status
+    message
+  }
+}
+    `;
+export type UpdateServiceMutationFn = Apollo.MutationFunction<UpdateServiceMutation, UpdateServiceMutationVariables>;
+
+/**
+ * __useUpdateServiceMutation__
+ *
+ * To run a mutation, you first call `useUpdateServiceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateServiceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateServiceMutation, { data, loading, error }] = useUpdateServiceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateServiceMutation(baseOptions?: Apollo.MutationHookOptions<UpdateServiceMutation, UpdateServiceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateServiceMutation, UpdateServiceMutationVariables>(UpdateServiceDocument, options);
+      }
+export type UpdateServiceMutationHookResult = ReturnType<typeof useUpdateServiceMutation>;
+export type UpdateServiceMutationResult = Apollo.MutationResult<UpdateServiceMutation>;
+export type UpdateServiceMutationOptions = Apollo.BaseMutationOptions<UpdateServiceMutation, UpdateServiceMutationVariables>;
 export const GetAccessDocument = gql`
     query GetAccess($sportCenterId: ID!) {
   getAccess(sportCenterId: $sportCenterId)
