@@ -1,11 +1,30 @@
-import { RangeHour } from "schema";
+import {
+  RangeHour,
+  Service,
+  UpdateDisponibilityInput,
+  UpdateServiceInput,
+  Weekday,
+} from "schema";
 import { CustomButton, CustomInput } from "../../atomos";
+import { buildRangeHour, changeLanguageDayES } from "../../../utils";
 
 type PropsNewSchedule = {
   onClose: () => void;
   rangeHour: RangeHour[];
+  day: string;
+  service: Omit<
+    Service,
+    "ranking" | "reservations" | "sportCenterId" | "__typename"
+  >;
+  addSchedule: (input: UpdateServiceInput) => void;
 };
-const NewSchedule = ({ rangeHour, onClose }: PropsNewSchedule) => {
+const NewSchedule = ({
+  rangeHour,
+  onClose,
+  service,
+  addSchedule,
+  day,
+}: PropsNewSchedule) => {
   let rangeHourAux: RangeHour;
   return (
     <div>
@@ -16,7 +35,6 @@ const NewSchedule = ({ rangeHour, onClose }: PropsNewSchedule) => {
           label="Hora inicio"
           required
           onChange={(e) => {
-            console.log(e.target.value);
             rangeHourAux = { startHour: e.target.value, endHour: "", price: 0 };
           }}
         />
@@ -26,7 +44,6 @@ const NewSchedule = ({ rangeHour, onClose }: PropsNewSchedule) => {
           label="Hora fin"
           required
           onChange={(e) => {
-            console.log(e.target.value);
             rangeHourAux = { ...rangeHourAux, endHour: e.target.value };
           }}
         />
@@ -56,9 +73,12 @@ const NewSchedule = ({ rangeHour, onClose }: PropsNewSchedule) => {
           title="Crear Horario"
           type="button"
           onClick={() => {
-            rangeHour.push(rangeHourAux);
-            console.log(rangeHour);
-            // onClose();
+            const result = buildRangeHour(day, rangeHourAux, service);
+            addSchedule({
+              ...service,
+              disponibility: result as UpdateDisponibilityInput,
+            });
+            onClose();
           }}
         />
       </div>

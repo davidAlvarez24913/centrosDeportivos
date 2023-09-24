@@ -1,4 +1,4 @@
-import { RangeHour } from "schema";
+import { RangeHour, Service, UpdateServiceInput } from "schema";
 import { useState } from "react";
 import Modal from "../Modal";
 import NewSchedule from "../NewSchedule";
@@ -8,11 +8,18 @@ type PropsSchdeuleContent = {
   scheduelId: string;
   rangeHourList: RangeHour[];
   day: string;
+  service: Omit<
+    Service,
+    "ranking" | "reservations" | "sportCenterId" | "__typename"
+  >;
+  mutationSchedule?: (input: UpdateServiceInput) => void;
 };
 const ScheduleContent = ({
   scheduelId,
   rangeHourList,
   day,
+  service,
+  mutationSchedule,
 }: PropsSchdeuleContent) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalNewSchedule, setModalNewSchedule] = useState(false);
@@ -66,10 +73,13 @@ const ScheduleContent = ({
         }}
       >
         <NewSchedule
+          day={day}
+          service={service}
           onClose={() => {
             setModalNewSchedule(false);
           }}
           rangeHour={[]}
+          addSchedule={mutationSchedule!}
         />
       </Modal>
     </div>
