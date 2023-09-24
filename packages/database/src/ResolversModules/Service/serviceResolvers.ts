@@ -11,6 +11,8 @@ import { GraphQLError } from "graphql";
 import { reservationResolvers } from "../Reservation/reservationResolver";
 import { mergeServices, schedule } from "../utils";
 import { FirebaseError } from "firebase/app";
+import { uploadFile } from "../../db/Firebase/Bucket";
+
 export const serviceResolvers = {
   Query: {
     listServices: async () => {
@@ -74,11 +76,15 @@ export const serviceResolvers = {
             input.disponibility === undefined || input.disponibility === null
               ? undefined
               : schedule(input.disponibility);
+          // here logic upload image
+          const auxNameImage =
+            "services/" + input.sportCenterId + "-" + serviceId;
+          const imageUrl = await uploadFile(input.image, auxNameImage);
 
           // insert firestore
           await createFirestoreService({
             serviceId,
-            image: input.image,
+            image: auxNameImage + "#" + imageUrl,
             // ranking: input.ranking,
             // disponibility: auxDisponibility,
           });
