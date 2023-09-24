@@ -72,6 +72,16 @@ type Service {
   reservations: [Reservation!]
 }
 
+type BankAccount {
+  bankAccountId: ID!
+  name: String!
+  id: String!
+  accountType: String!
+  accountNumber: String!
+  email: String!
+  sportCenterId: ID!
+}
+
 type Reservation {
   reservationId: ID!
   state: Boolean!
@@ -126,6 +136,14 @@ input CreateServiceInput {
   sportCenterId: ID!
   image: String
 }
+input CreateBankAccountInput {
+  name: String!
+  id: String!
+  accountType: String!
+  accountNumber: String!
+  email: String!
+  sportCenterId: ID!
+}
 input CreateScheduleInput {
   startHour: String!
   endHour: String!
@@ -171,6 +189,14 @@ input UpdateServiceInput {
   ranking: Int
   disponibility: UpdateDisponibilityInput
 }
+input UpdateBankAccountInput {
+  bankAccountId: ID!
+  name: String
+  id: String
+  accountType: String
+  accountNumber: String
+  email: String
+}
 input UpdateRangeHourInput {
   startHour: String!
   endHour: String!
@@ -187,42 +213,64 @@ input UpdateDisponibilityInput {
 }
 
 type Query {
+  #users
   usersCount: Int!
   allUsers: [User]
   findUser(userId: ID!): User
+
+  #sportcenters
   listSportCenters: [SportCenter!]
+  getSportCenter(sportCenterId: ID!): SportCenter
+
+  #services
   listServices: [Service]
   listServicesBySportCenterId(sportCenterId: ID!): [Service]
+  getAccess(sportCenterId: ID!): Boolean
+
+  #bankAccounts
+  listBankAccountsBySportCenterId(sportCenterId: ID!): [BankAccount]
+
+  #reservations
   reservationCount: Int!
   allReservations: [Reservation!]
   findReservation(id: ID!): Reservation
-  getSportCenter(sportCenterId: ID!): SportCenter
 
+  #comments
   listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]
   listCommentsBySportCenter(sportCenterId: ID!): [Comment!]
   allComments: [Comment!]
+
   # disponibility will be query get all reservationsByServiceByDate and schedule
   # Create resolver get Service By Id
-  getAccess(sportCenterId: ID!): Boolean
 }
 
 type Mutation {
+  #users
   createUser(input: CreateUserInput!): User
   deleteUser(userId: ID!): Boolean
   updateUser(input: UpdateUserInput!): User
 
+  #sportcenters
   createSportCenter(input: CreateSportCenterInput!): SportCenter
   updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
   deleteSportCenter(sportCenterId: ID!): OperationResponse
   giveAccess(sportCenterId: String!): OperationResponse
 
+  #services
   createService(input: CreateServiceInput!): Service
   updateService(input: UpdateServiceInput): OperationResponse
   deleteService(serviceId: ID!): OperationResponse
 
+  #bankAccounts
+  createBankAccount(input: CreateBankAccountInput!): BankAccount
+  updateBankAccount(input: UpdateBankAccountInput!): OperationResponse
+  deleteBankAccount(bankAccountId: ID!): OperationResponse
+
+  #reservations
   createReservation(input: CreateReservationInput!): Reservation
   deleteReservation(id: ID!): OperationResponse
 
+  #comments
   createComment(input: CreateCommentInput!): Comment
   updateComment(id: ID!): Comment
   deleteComment(id: ID!): OperationResponse
