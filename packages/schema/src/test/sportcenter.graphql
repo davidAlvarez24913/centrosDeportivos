@@ -19,3 +19,9 @@ mutation CreateSportCenter($input: CreateSportCenterInput!) {
     sportCenterId
   }
 }
+mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
+  updateSportCenter(input: $input) {
+    status
+    message
+  }
+}

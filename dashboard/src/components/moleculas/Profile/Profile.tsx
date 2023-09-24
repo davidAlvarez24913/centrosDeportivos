@@ -1,6 +1,13 @@
 import React from "react";
-import { ProfileProps } from "../EditSportCenterForm/EditSportCenterForm";
 
+export type ProfileProps = {
+  name: string;
+  description: string;
+  ubication: string;
+  phone: string;
+  email: string;
+  image?: string | null;
+};
 const Profile = ({
   name,
   description,

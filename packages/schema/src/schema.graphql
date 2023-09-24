@@ -156,11 +156,11 @@ input UpdateSportCenterInput {
   sportCenterId: ID!
   name: String
   email: String
+  description: String
   phone: String
   ubication: String
   image: String
-  ranking: Int
-  hoursOperarion: String
+  hoursOperation: String
 }
 input UpdateServiceInput {
   serviceId: ID!

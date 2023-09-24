@@ -96,6 +96,9 @@ export const sportCenterResolvers = {
           {
             name: input.name ?? currentSportCenterSQL[0].name,
             phone: input.phone ?? currentSportCenterSQL[0].phone,
+            email: input.email ?? currentSportCenterSQL[0].email,
+            description:
+              input.description ?? currentSportCenterSQL[0].description,
             ubication: input.ubication ?? currentSportCenterSQL[0].ubication,
             hoursOperation: input.hoursOperation,
           }

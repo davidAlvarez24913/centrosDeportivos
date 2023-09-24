@@ -332,12 +332,12 @@ export type UpdateServiceInput = {
 };
 
 export type UpdateSportCenterInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  hoursOperarion?: InputMaybe<Scalars['String']['input']>;
+  hoursOperation?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
-  ranking?: InputMaybe<Scalars['Int']['input']>;
   sportCenterId: Scalars['ID']['input'];
   ubication?: InputMaybe<Scalars['String']['input']>;
 };
@@ -412,6 +412,13 @@ export type CreateSportCenterMutationVariables = Exact<{
 
 
 export type CreateSportCenterMutation = { __typename?: 'Mutation', createSportCenter?: { __typename?: 'SportCenter', sportCenterId: string } | null };
+
+export type UpdateSportCenterMutationVariables = Exact<{
+  input: UpdateSportCenterInput;
+}>;
+
+
+export type UpdateSportCenterMutation = { __typename?: 'Mutation', updateSportCenter?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -682,6 +689,40 @@ export function useCreateSportCenterMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateSportCenterMutationHookResult = ReturnType<typeof useCreateSportCenterMutation>;
 export type CreateSportCenterMutationResult = Apollo.MutationResult<CreateSportCenterMutation>;
 export type CreateSportCenterMutationOptions = Apollo.BaseMutationOptions<CreateSportCenterMutation, CreateSportCenterMutationVariables>;
+export const UpdateSportCenterDocument = gql`
+    mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
+  updateSportCenter(input: $input) {
+    status
+    message
+  }
+}
+    `;
+export type UpdateSportCenterMutationFn = Apollo.MutationFunction<UpdateSportCenterMutation, UpdateSportCenterMutationVariables>;
+
+/**
+ * __useUpdateSportCenterMutation__
+ *
+ * To run a mutation, you first call `useUpdateSportCenterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSportCenterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSportCenterMutation, { data, loading, error }] = useUpdateSportCenterMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateSportCenterMutation(baseOptions?: Apollo.MutationHookOptions<UpdateSportCenterMutation, UpdateSportCenterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateSportCenterMutation, UpdateSportCenterMutationVariables>(UpdateSportCenterDocument, options);
+      }
+export type UpdateSportCenterMutationHookResult = ReturnType<typeof useUpdateSportCenterMutation>;
+export type UpdateSportCenterMutationResult = Apollo.MutationResult<UpdateSportCenterMutation>;
+export type UpdateSportCenterMutationOptions = Apollo.BaseMutationOptions<UpdateSportCenterMutation, UpdateSportCenterMutationVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { LayoutPage, Profile } from "../components/moleculas";
 import { accounts } from "../data";
 import {
@@ -6,22 +6,33 @@ import {
   EditSportCenterButton,
 } from "../components/organismos";
 import useUser from "../Hooks/useUser";
-import { useGetSportCenterLazyQuery, useGetSportCenterQuery } from "schema";
+import {
+  UpdateSportCenterInput,
+  useGetSportCenterQuery,
+  useUpdateSportCenterMutation,
+} from "schema";
 
 const ProfilePage = () => {
-  const sportCenterId = useUser().user?.uid;
-  const { data, loading } = useGetSportCenterQuery({
-    variables: { sportCenterId: sportCenterId! },
+  const sportCenterId = useUser().user?.uid!;
+  const { data, loading, refetch } = useGetSportCenterQuery({
+    variables: { sportCenterId: sportCenterId },
   });
+  const [updateSportCenterMutation] = useUpdateSportCenterMutation();
   const sportCenter = data?.getSportCenter!;
-
+  const onUpdate = (input: UpdateSportCenterInput) => {
+    updateSportCenterMutation({ variables: { input } }).then(() => refetch());
+  };
   return loading ? (
     <div></div>
   ) : (
     <LayoutPage nameSportCenter={sportCenter.name}>
       <div className="flex ">
         <div className="w-2/3 flex flex-col ">
-          <EditSportCenterButton {...sportCenter} />
+          <EditSportCenterButton
+            sportCenterId={sportCenterId}
+            {...sportCenter}
+            updateSportCenter={onUpdate}
+          />
           <Profile
             {...sportCenter}
             image={sportCenter.image ? sportCenter.image : ""}
