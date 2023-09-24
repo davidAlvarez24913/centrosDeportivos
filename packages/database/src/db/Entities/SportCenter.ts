@@ -10,6 +10,9 @@ class SportCenter extends BaseEntity {
   name: string;
 
   @Column()
+  description: string;
+
+  @Column()
   email: string;
 
   @Column()

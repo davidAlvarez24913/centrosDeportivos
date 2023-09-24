@@ -8,7 +8,7 @@ export type ProfileProps = {
   ubication: string;
   phone: string;
   email: string;
-  image: string;
+  image?: string | null;
 };
 type EditSportCenterFormProps = {
   onSubmit: () => void;

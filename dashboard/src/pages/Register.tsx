@@ -4,7 +4,11 @@ import {
   CustomInput,
   CustomInputWithIcon,
 } from "../components/atomos";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  deleteUser,
+} from "firebase/auth";
 import { useCreateSportCenterMutation } from "schema";
 const Register = () => {
   const [createSportCenterMutation] = useCreateSportCenterMutation();
@@ -24,6 +28,7 @@ const Register = () => {
           sportCenterId: userId,
           name: registData.name,
           email: registData.email,
+          description: "",
           access: false,
           image: "",
           phone: "",
@@ -33,13 +38,14 @@ const Register = () => {
         };
         createSportCenterMutation({
           variables: { input: sportCenter },
-        }).then((data) => {
-          alert(
-            "Centro deportivo '" +
-              data.data?.createSportCenter?.name +
-              "' creado correctamente"
-          );
-        });
+        })
+          .then((data) => {
+            alert("Centro deportivo creado correctamente");
+          })
+          .catch((error) => {
+            alert(error);
+            deleteUser(auth.currentUser!);
+          });
       })
       .catch((error) => {
         console.log(error.code);

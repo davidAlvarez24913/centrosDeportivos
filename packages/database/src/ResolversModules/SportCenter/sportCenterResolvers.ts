@@ -32,6 +32,16 @@ export const sportCenterResolvers = {
       });
       return result;
     },
+    getSportCenter: async (
+      _root: any,
+      { sportCenterId }: { sportCenterId: string }
+    ) => {
+      const sqlSportCenter = await SportCenter.findOne({
+        where: { sportCenterId: sportCenterId },
+      });
+      const firestoreSportCenter = await findSportCenter(sportCenterId);
+      return { ...sqlSportCenter, ...firestoreSportCenter };
+    },
     getAccess: async (_root: any, { sportCenterId }: any) => {
       const sportCenter = await SportCenter.findOne({
         where: { sportCenterId: sportCenterId },

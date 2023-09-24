@@ -26,7 +26,10 @@ export const findSportCenter = async (aportCenerId: string) => {
   return docSnap.data();
 };
 export const createFirestoreSportCenter = async (sc: FireStoreSportCenter) =>
-  await setDoc(doc(db, document, `${sc.sportCenterId}`), sc);
+  await setDoc(doc(db, document, `${sc.sportCenterId}`), {
+    image: sc.image,
+    ranking: sc.ranking,
+  });
 
 export const updateFirestoreSportCenter = async (sc: FireStoreSportCenter) => {
   const docRef = doc(db, document, `${sc.sportCenterId}`);

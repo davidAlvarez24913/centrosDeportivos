@@ -6,7 +6,6 @@ import { ProfileProps } from "../../moleculas/EditSportCenterForm/EditSportCente
 const EditSportCenterButton = (sportCenterData: ProfileProps) => {
   const [modal, setModal] = useState(false);
   const [sportCenter, setSportCenter] = useState<ProfileProps>(sportCenterData);
-  console.log(sportCenter);
   return (
     <div className="w-fit">
       <CustomButton

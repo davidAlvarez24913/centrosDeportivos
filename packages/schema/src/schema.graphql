@@ -49,14 +49,15 @@ type Disponibility {
 type SportCenter {
   sportCenterId: ID!
   name: String!
+  description: String!
   email: String!
   phone: String!
   ubication: String!
   hoursOperation: String! # Hours attention
   services: [Service]
   image: String
-  ranking: Int
-  access: Boolean
+  ranking: Int!
+  access: Boolean!
 }
 
 type Service {
@@ -109,6 +110,7 @@ input CreateSportCenterInput {
   sportCenterId: ID!
   name: String!
   email: String!
+  description: String!
   phone: String!
   ubication: String!
   hoursOperation: String
@@ -194,7 +196,7 @@ type Query {
   reservationCount: Int!
   allReservations: [Reservation!]
   findReservation(id: ID!): Reservation
-  findSportCenter(sportCenterId: ID!): SportCenter
+  getSportCenter(sportCenterId: ID!): SportCenter
 
   listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]
   listCommentsBySportCenter(sportCenterId: ID!): [Comment!]
