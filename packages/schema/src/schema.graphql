@@ -49,13 +49,15 @@ type Disponibility {
 type SportCenter {
   sportCenterId: ID!
   name: String!
+  description: String!
+  email: String!
   phone: String!
   ubication: String!
   hoursOperation: String! # Hours attention
   services: [Service]
   image: String
-  ranking: Int
-  access: Boolean
+  ranking: Int!
+  access: Boolean!
 }
 
 type Service {
@@ -107,6 +109,8 @@ input CreateCommentInput {
 input CreateSportCenterInput {
   sportCenterId: ID!
   name: String!
+  email: String!
+  description: String!
   phone: String!
   ubication: String!
   hoursOperation: String
@@ -151,11 +155,12 @@ input UpdateUserInput {
 input UpdateSportCenterInput {
   sportCenterId: ID!
   name: String
+  email: String
+  description: String
   phone: String
   ubication: String
   image: String
-  ranking: Int
-  hoursOperarion: String
+  hoursOperation: String
 }
 input UpdateServiceInput {
   serviceId: ID!
@@ -191,7 +196,7 @@ type Query {
   reservationCount: Int!
   allReservations: [Reservation!]
   findReservation(id: ID!): Reservation
-  findSportCenter(sportCenterId: ID!): SportCenter
+  getSportCenter(sportCenterId: ID!): SportCenter
 
   listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]
   listCommentsBySportCenter(sportCenterId: ID!): [Comment!]
@@ -209,6 +214,7 @@ type Mutation {
   createSportCenter(input: CreateSportCenterInput!): SportCenter
   updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
   deleteSportCenter(sportCenterId: ID!): OperationResponse
+  giveAccess(sportCenterId: String!): OperationResponse
 
   createService(input: CreateServiceInput!): Service
   updateService(input: UpdateServiceInput!): OperationResponse

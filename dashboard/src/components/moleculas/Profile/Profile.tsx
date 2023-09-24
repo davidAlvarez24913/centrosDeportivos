@@ -1,6 +1,13 @@
 import React from "react";
-import { ProfileProps } from "../EditSportCenterForm/EditSportCenterForm";
 
+export type ProfileProps = {
+  name: string;
+  description: string;
+  ubication: string;
+  phone: string;
+  email: string;
+  image?: string | null;
+};
 const Profile = ({
   name,
   description,
@@ -11,7 +18,11 @@ const Profile = ({
 }: ProfileProps) => {
   return (
     <div className="flex flex-col gap-4 py-5">
-      <img className="w-80 " src={image} alt="Imagen Centro Deportivo" />
+      <img
+        className="w-80 "
+        src={image ? image : "/image 10.png"}
+        alt="Imagen Centro Deportivo"
+      />
       <h2 className="text-lg font-bold">Nombre del Centro Deportivo:</h2>
       <p className="text-base">{name}</p>
       <h2 className="text-lg font-bold">Descripción:</h2>

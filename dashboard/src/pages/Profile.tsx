@@ -1,44 +1,46 @@
-import React, { useState } from "react";
-import {
-  LayoutPage,
-  Modal,
-  Profile,
-  SportCenterForm,
-} from "../components/moleculas";
-import { accounts, sportsCenters } from "../data";
+import React from "react";
+import { LayoutPage, Profile } from "../components/moleculas";
+import { accounts } from "../data";
 import {
   AccountSection,
   EditSportCenterButton,
 } from "../components/organismos";
+import useUser from "../Hooks/useUser";
+import {
+  UpdateSportCenterInput,
+  useGetSportCenterQuery,
+  useUpdateSportCenterMutation,
+} from "schema";
 
 const ProfilePage = () => {
-  const newUser = false;
-  const [modal, setModal] = useState(newUser);
-  return (
-    <LayoutPage nameSportCenter="">
+  const sportCenterId = useUser().user?.uid!;
+  const { data, loading, refetch } = useGetSportCenterQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
+  const [updateSportCenterMutation] = useUpdateSportCenterMutation();
+  const sportCenter = data?.getSportCenter!;
+  const onUpdate = (input: UpdateSportCenterInput) => {
+    updateSportCenterMutation({ variables: { input } }).then(() => refetch());
+  };
+  return loading ? (
+    <div></div>
+  ) : (
+    <LayoutPage nameSportCenter={sportCenter.name}>
       <div className="flex ">
         <div className="w-2/3 flex flex-col ">
-          <EditSportCenterButton {...sportsCenters[0]} />
-          <Profile {...sportsCenters[0]} />
+          <EditSportCenterButton
+            sportCenterId={sportCenterId}
+            {...sportCenter}
+            updateSportCenter={onUpdate}
+          />
+          <Profile
+            {...sportCenter}
+            image={sportCenter.image ? sportCenter.image : ""}
+          />
         </div>
         <div className="w-1/3">
           <AccountSection accounts={accounts} />
         </div>
-
-        {newUser && (
-          <Modal
-            title={"Crear Centro Deportivo"}
-            modalState={modal}
-            closeModal={() => {}}
-            cantClose
-          >
-            <SportCenterForm
-              onSubmit={() => {
-                setModal(false);
-              }}
-            />
-          </Modal>
-        )}
       </div>
     </LayoutPage>
   );

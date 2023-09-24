@@ -32,6 +32,16 @@ export const sportCenterResolvers = {
       });
       return result;
     },
+    getSportCenter: async (
+      _root: any,
+      { sportCenterId }: { sportCenterId: string }
+    ) => {
+      const sqlSportCenter = await SportCenter.findOne({
+        where: { sportCenterId: sportCenterId },
+      });
+      const firestoreSportCenter = await findSportCenter(sportCenterId);
+      return { ...sqlSportCenter, ...firestoreSportCenter };
+    },
     getAccess: async (_root: any, { sportCenterId }: any) => {
       const sportCenter = await SportCenter.findOne({
         where: { sportCenterId: sportCenterId },
@@ -86,6 +96,9 @@ export const sportCenterResolvers = {
           {
             name: input.name ?? currentSportCenterSQL[0].name,
             phone: input.phone ?? currentSportCenterSQL[0].phone,
+            email: input.email ?? currentSportCenterSQL[0].email,
+            description:
+              input.description ?? currentSportCenterSQL[0].description,
             ubication: input.ubication ?? currentSportCenterSQL[0].ubication,
             hoursOperation: input.hoursOperation,
           }
@@ -126,6 +139,40 @@ export const sportCenterResolvers = {
         return {
           status: "Failed",
           message: "No se puede eliminar" + JSON.stringify(error),
+        };
+      }
+    },
+    giveAccess: async (
+      root: any,
+      { sportCenterId }: { sportCenterId: string }
+    ) => {
+      try {
+        const existsId = await SportCenter.findOne({
+          where: { sportCenterId: sportCenterId },
+        });
+        if (existsId) {
+          await SportCenter.update(
+            {
+              sportCenterId: sportCenterId,
+            },
+            {
+              access: true,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo con acceso",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe el centro deportivo con el id ${sportCenterId}`,
+          };
+        }
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede dar acceso" + JSON.stringify(error),
         };
       }
     },

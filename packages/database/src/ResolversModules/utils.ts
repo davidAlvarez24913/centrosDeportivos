@@ -17,7 +17,7 @@ export const mergeSportCenter = (
 ) => {
   return sqlSportCenter.map((obj1) => {
     const obj2 = firestoreSportCenter.find(
-      (obj2) => obj1.sportCenterId === obj2.sportCenterId.toString()
+      (obj2) => obj1.sportCenterId === obj2.sportCenterId
     );
     return { ...obj1, ...obj2 };
   });

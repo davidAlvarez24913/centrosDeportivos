@@ -1,12 +1,46 @@
 import React, { useState } from "react";
-import { CustomButton } from "../../atomos";
-import { EditSportCenterForm, Modal } from "../../moleculas";
-import { ProfileProps } from "../../moleculas/EditSportCenterForm/EditSportCenterForm";
+import { CustomButton, CustomInput, CustomTextarea } from "../../atomos";
+import { ImageInput, Modal } from "../../moleculas";
+import { UpdateSportCenterInput } from "schema";
+import { ProfileProps } from "../../moleculas/Profile/Profile";
 
-const EditSportCenterButton = (sportCenterData: ProfileProps) => {
+type EditSportCenterButtonProps = {
+  updateSportCenter: (input: UpdateSportCenterInput) => void;
+  sportCenterId: string;
+} & ProfileProps;
+const EditSportCenterButton = ({
+  sportCenterId,
+  name,
+  description,
+  email,
+  phone,
+  ubication,
+  image,
+  updateSportCenter,
+}: EditSportCenterButtonProps) => {
   const [modal, setModal] = useState(false);
-  const [sportCenter, setSportCenter] = useState<ProfileProps>(sportCenterData);
-  console.log(sportCenter);
+  const [newImage, setNewImage] = useState<File>();
+  const [sportCenter, setSportCenter] = useState<UpdateSportCenterInput>({
+    sportCenterId,
+    name,
+    description,
+    email,
+    phone,
+    ubication,
+    image,
+  });
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    updateSportCenter(sportCenter);
+    alert("Datos de centro deportivo actualizados correctamente");
+  };
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setSportCenter({ ...sportCenter, [event.target.name]: event.target.value });
+  };
   return (
     <div className="w-fit">
       <CustomButton
@@ -24,13 +58,54 @@ const EditSportCenterButton = (sportCenterData: ProfileProps) => {
           setModal(false);
         }}
       >
-        <EditSportCenterForm
-          sportCenter={sportCenter}
-          setSportCenter={setSportCenter}
-          onSubmit={() => {
-            setModal(false);
-          }}
-        />
+        <form
+          className="flex flex-col gap-3 py-4"
+          onSubmit={(e) => handleSubmit(e)}
+        >
+          <ImageInput
+            fileBlob={newImage}
+            label="Agregar Imagen del Centro Deportivo"
+            setFileBlob={setNewImage}
+          />
+          <CustomTextarea
+            color="blue"
+            label="Descripción"
+            name="description"
+            onChange={handleChange}
+            defaultValue={description}
+          />
+          <CustomInput
+            type="text"
+            color="blue"
+            name="ubication"
+            label="Ubicación"
+            defaultValue={ubication}
+            onChange={handleChange}
+          />
+          <CustomInput
+            type="text"
+            color="blue"
+            name="phone"
+            label="Telefono"
+            minLength={10}
+            maxLength={10}
+            defaultValue={phone}
+            onChange={handleChange}
+          />
+          <CustomInput
+            type="email"
+            color="blue"
+            name="email"
+            label="Correo Electrónico"
+            defaultValue={email}
+            onChange={handleChange}
+          />
+          <CustomButton
+            title="Editar Centro Deportivo"
+            color="sucessfull"
+            type="submit"
+          />
+        </form>
       </Modal>
     </div>
   );
