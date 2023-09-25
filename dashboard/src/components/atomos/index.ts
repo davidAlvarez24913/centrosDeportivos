@@ -10,3 +10,4 @@ export { default as TagHour } from "./TagHour";
 export { default as MenuBar } from "./MenuBar";
 export { default as LogoutButton } from "./LogoutButton";
 export { default as Loading } from "./Loading";
+export { default as MoreOptions } from "./MoreOptions";
