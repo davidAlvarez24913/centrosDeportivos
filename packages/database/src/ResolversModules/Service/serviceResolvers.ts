@@ -1,5 +1,6 @@
 import { SportCenter, Service } from "../../db/Entities";
 import {
+  Disponibility,
   FireStoreService,
   createFirestoreService,
   deleteFirestoreService,
@@ -120,28 +121,48 @@ export const serviceResolvers = {
           input.sportCenterId +
           "-" +
           currentServiceSQL?.serviceId;
+
         let imageUrl = "";
-        if (input.image !== currentServiceNoSQL?.image) {
+        if (input.image != currentServiceNoSQL?.image) {
           imageUrl = await uploadFile(input.image, auxNameImage);
-        }
-        if (imageUrl) {
-          await updateFirestoreService({
-            serviceId: input.serviceId,
-            image: auxNameImage + "#" + imageUrl,
-            ranking: input.ranking ?? currentServiceNoSQL?.ranking,
-            disponibility: { ...input.disponibility },
-          });
-          await Service.update(
-            {
+          if (imageUrl) {
+            await updateFirestoreService({
               serviceId: input.serviceId,
-            },
-            {
-              name: input.name ?? currentServiceSQL?.name,
-              description: input.description ?? currentServiceSQL?.description,
-              sport: input.sport ?? currentServiceSQL?.sport,
-            }
-          );
+              image: auxNameImage + "#" + imageUrl,
+              ranking: input.ranking ?? currentServiceNoSQL?.ranking,
+              disponibility: { ...input.disponibility },
+            });
+            await Service.update(
+              {
+                serviceId: input.serviceId,
+              },
+              {
+                name: input.name ?? currentServiceSQL?.name,
+                description:
+                  input.description ?? currentServiceSQL?.description,
+                sport: input.sport ?? currentServiceSQL?.sport,
+              }
+            );
+          }
         }
+
+        await updateFirestoreService({
+          serviceId: input.serviceId,
+          image: input.image,
+          ranking: 0,
+          disponibility: { ...(input.disponibility as Disponibility) },
+        });
+        await Service.update(
+          {
+            serviceId: input.serviceId,
+          },
+          {
+            name: input.name ?? currentServiceSQL?.name,
+            description: input.description ?? currentServiceSQL?.description,
+            sport: input.sport ?? currentServiceSQL?.sport,
+          }
+        );
+
         return {
           status: "Ok",
           message: "Servicio se actualizo exitosamente",
@@ -149,7 +170,7 @@ export const serviceResolvers = {
       } catch (error) {
         return {
           status: "Failed",
-          message: "No se pudo actualizar" + JSON.stringify(error),
+          message: "No se pudo actualizar" + JSON.stringify(error as Error),
         };
       }
     },

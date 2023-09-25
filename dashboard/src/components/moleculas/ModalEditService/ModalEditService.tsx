@@ -29,12 +29,11 @@ const ModalEditService = ({ onUpdate, service }: ModalEditServiceProps) => {
     name: service.name,
     sport: service.sport,
     description: service.description,
-    image: service.image ? getStringUrl(service.image!) : undefined,
+    image: service.image,
   });
   const [fileBlob, setFileBlob] = useState<string | undefined>(
-    serviceToUpdate.image
+    serviceToUpdate.image!
   );
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const disp = cleanTypenameDisponibility({
@@ -98,7 +97,11 @@ const ModalEditService = ({ onUpdate, service }: ModalEditServiceProps) => {
       />
       <ImageInput
         label="agregar imagen del servicio"
-        fileBlob={fileBlob}
+        fileBlob={
+          fileBlob === null || fileBlob === undefined
+            ? ""
+            : getStringUrl(fileBlob)
+        }
         setFileBlob={setFileBlob}
       ></ImageInput>
       <CustomButton

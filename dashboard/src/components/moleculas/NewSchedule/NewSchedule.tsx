@@ -3,9 +3,10 @@ import {
   Service,
   UpdateDisponibilityInput,
   UpdateServiceInput,
+  Weekday,
 } from "schema";
 import { CustomButton, CustomInput } from "../../atomos";
-import { buildRangeHour } from "../../../utils";
+import { buildRangeHour, changeLanguageDayES } from "../../../utils";
 import useUser from "../../../Hooks/useUser";
 
 type PropsNewSchedule = {
@@ -27,6 +28,7 @@ const NewSchedule = ({
 }: PropsNewSchedule) => {
   const { user } = useUser();
   let rangeHourAux: RangeHour;
+  console.log(service);
   return (
     <div>
       <div className="flex justify-between gap-5">
@@ -74,7 +76,21 @@ const NewSchedule = ({
           title="Crear Horario"
           type="button"
           onClick={() => {
-            const result = buildRangeHour(day, rangeHourAux, service);
+            let result = {};
+
+            if (service.disponibility === undefined) {
+              const dayEn = changeLanguageDayES(day);
+
+              Object.entries(Weekday).map((d) => {
+                if (dayEn === d[0]) {
+                  result = { ...result, [dayEn]: [rangeHourAux] };
+                } else {
+                  result = { ...result, [d[0]]: null };
+                }
+              });
+            } else {
+              result = buildRangeHour(day, rangeHourAux, service);
+            }
             addSchedule({
               ...service,
               sportCenterId: user?.uid!,
