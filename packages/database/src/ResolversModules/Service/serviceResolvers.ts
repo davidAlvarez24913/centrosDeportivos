@@ -11,7 +11,7 @@ import { GraphQLError } from "graphql";
 import { reservationResolvers } from "../Reservation/reservationResolver";
 import { mergeServices, schedule } from "../utils";
 import { FirebaseError } from "firebase/app";
-import { uploadFile } from "../../db/Firebase/Bucket";
+import { deleteImage, uploadFile } from "../../db/Firebase/Bucket";
 
 export const serviceResolvers = {
   Query: {
@@ -151,6 +151,10 @@ export const serviceResolvers = {
         const deleteSQL = await Service.delete({
           serviceId: Number(serviceId),
         });
+        // delete image bucket
+        const nameImage = flagNoSQL.image.split("#")[0];
+        await deleteImage(nameImage);
+
         const deletNoSQL = await deleteFirestoreService(serviceId);
         const result = await Promise.all([deletNoSQL, deleteSQL]);
         if (result[1].affected === 1) {
@@ -159,7 +163,7 @@ export const serviceResolvers = {
           return { status: "Failed", message: "Servicio no se elimino ;)" };
         }
       } else {
-        return { status: "Failed", message: "Servicio no se elimino" };
+        return { status: "Failed", message: "El id de servico no existe" };
       }
     },
   },
