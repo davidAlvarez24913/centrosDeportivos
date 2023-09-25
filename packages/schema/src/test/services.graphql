@@ -69,3 +69,9 @@ mutation UpdateService($input: UpdateServiceInput){
         message
     }
 }
+mutation DeleteService($serviceId: ID!){
+    deleteService(serviceId: $serviceId){
+        status
+        message
+    }
+}

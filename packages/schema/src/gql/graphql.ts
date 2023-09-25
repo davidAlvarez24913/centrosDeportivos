@@ -399,6 +399,13 @@ export type UpdateServiceMutationVariables = Exact<{
 
 export type UpdateServiceMutation = { __typename?: 'Mutation', updateService?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
+export type DeleteServiceMutationVariables = Exact<{
+  serviceId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteServiceMutation = { __typename?: 'Mutation', deleteService?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
 }>;
@@ -622,6 +629,40 @@ export function useUpdateServiceMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateServiceMutationHookResult = ReturnType<typeof useUpdateServiceMutation>;
 export type UpdateServiceMutationResult = Apollo.MutationResult<UpdateServiceMutation>;
 export type UpdateServiceMutationOptions = Apollo.BaseMutationOptions<UpdateServiceMutation, UpdateServiceMutationVariables>;
+export const DeleteServiceDocument = gql`
+    mutation DeleteService($serviceId: ID!) {
+  deleteService(serviceId: $serviceId) {
+    status
+    message
+  }
+}
+    `;
+export type DeleteServiceMutationFn = Apollo.MutationFunction<DeleteServiceMutation, DeleteServiceMutationVariables>;
+
+/**
+ * __useDeleteServiceMutation__
+ *
+ * To run a mutation, you first call `useDeleteServiceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteServiceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteServiceMutation, { data, loading, error }] = useDeleteServiceMutation({
+ *   variables: {
+ *      serviceId: // value for 'serviceId'
+ *   },
+ * });
+ */
+export function useDeleteServiceMutation(baseOptions?: Apollo.MutationHookOptions<DeleteServiceMutation, DeleteServiceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteServiceMutation, DeleteServiceMutationVariables>(DeleteServiceDocument, options);
+      }
+export type DeleteServiceMutationHookResult = ReturnType<typeof useDeleteServiceMutation>;
+export type DeleteServiceMutationResult = Apollo.MutationResult<DeleteServiceMutation>;
+export type DeleteServiceMutationOptions = Apollo.BaseMutationOptions<DeleteServiceMutation, DeleteServiceMutationVariables>;
 export const GetAccessDocument = gql`
     query GetAccess($sportCenterId: ID!) {
   getAccess(sportCenterId: $sportCenterId)
