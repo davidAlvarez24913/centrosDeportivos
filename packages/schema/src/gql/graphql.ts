@@ -17,6 +17,17 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type BankAccount = {
+  __typename?: 'BankAccount';
+  accountNumber: Scalars['String']['output'];
+  accountType: Scalars['String']['output'];
+  bankAccountId: Scalars['ID']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  sportCenterId: Scalars['ID']['output'];
+};
+
 export type Comment = {
   __typename?: 'Comment';
   comment: Scalars['String']['output'];
@@ -24,6 +35,15 @@ export type Comment = {
   serviceId?: Maybe<Scalars['ID']['output']>;
   sportCenterId?: Maybe<Scalars['ID']['output']>;
   userId: Scalars['ID']['output'];
+};
+
+export type CreateBankAccountInput = {
+  accountNumber: Scalars['String']['input'];
+  accountType: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  sportCenterId: Scalars['ID']['input'];
 };
 
 export type CreateCommentInput = {
@@ -93,21 +113,29 @@ export type Disponibility = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createBankAccount?: Maybe<BankAccount>;
   createComment?: Maybe<Comment>;
   createReservation?: Maybe<Reservation>;
   createService?: Maybe<Service>;
   createSportCenter?: Maybe<SportCenter>;
   createUser?: Maybe<User>;
+  deleteBankAccount?: Maybe<OperationResponse>;
   deleteComment?: Maybe<OperationResponse>;
   deleteReservation?: Maybe<OperationResponse>;
   deleteService?: Maybe<OperationResponse>;
   deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<Scalars['Boolean']['output']>;
   giveAccess?: Maybe<OperationResponse>;
+  updateBankAccount?: Maybe<OperationResponse>;
   updateComment?: Maybe<Comment>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
   updateUser?: Maybe<User>;
+};
+
+
+export type MutationCreateBankAccountArgs = {
+  input: CreateBankAccountInput;
 };
 
 
@@ -133,6 +161,11 @@ export type MutationCreateSportCenterArgs = {
 
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
+};
+
+
+export type MutationDeleteBankAccountArgs = {
+  bankAccountId: Scalars['ID']['input'];
 };
 
 
@@ -163,6 +196,11 @@ export type MutationDeleteUserArgs = {
 
 export type MutationGiveAccessArgs = {
   sportCenterId: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateBankAccountArgs = {
+  input: UpdateBankAccountInput;
 };
 
 
@@ -200,6 +238,7 @@ export type Query = {
   findUser?: Maybe<User>;
   getAccess?: Maybe<Scalars['Boolean']['output']>;
   getSportCenter?: Maybe<SportCenter>;
+  listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
   listCommentsByService?: Maybe<Array<Comment>>;
   listCommentsBySportCenter?: Maybe<Array<Comment>>;
   listServices?: Maybe<Array<Maybe<Service>>>;
@@ -226,6 +265,11 @@ export type QueryGetAccessArgs = {
 
 
 export type QueryGetSportCenterArgs = {
+  sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryListBankAccountsBySportCenterIdArgs = {
   sportCenterId: Scalars['ID']['input'];
 };
 
@@ -305,6 +349,15 @@ export enum Status {
   Ok = 'Ok'
 }
 
+export type UpdateBankAccountInput = {
+  accountNumber?: InputMaybe<Scalars['String']['input']>;
+  accountType?: InputMaybe<Scalars['String']['input']>;
+  bankAccountId: Scalars['ID']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateDisponibilityInput = {
   Friday?: InputMaybe<Array<UpdateRangeHourInput>>;
   Monday?: InputMaybe<Array<UpdateRangeHourInput>>;
@@ -371,6 +424,34 @@ export enum Weekday {
   Tuesday = 'Tuesday',
   Wednesday = 'Wednesday'
 }
+
+export type ListBankAccountsBySportCenterIdQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type ListBankAccountsBySportCenterIdQuery = { __typename?: 'Query', listBankAccountsBySportCenterId?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string } | null> | null };
+
+export type CreateBankAccountMutationVariables = Exact<{
+  input: CreateBankAccountInput;
+}>;
+
+
+export type CreateBankAccountMutation = { __typename?: 'Mutation', createBankAccount?: { __typename?: 'BankAccount', sportCenterId: string } | null };
+
+export type UpdateBankAccountMutationVariables = Exact<{
+  input: UpdateBankAccountInput;
+}>;
+
+
+export type UpdateBankAccountMutation = { __typename?: 'Mutation', updateBankAccount?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type DeleteBankAccountMutationVariables = Exact<{
+  bankAccountId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAccount?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type CreateReservationInputMutationVariables = Exact<{
   input: CreateReservationInput;
@@ -441,6 +522,147 @@ export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllUSersQuery = { __typename?: 'Query', allUsers?: Array<{ __typename?: 'User', email: string } | null> | null };
 
 
+export const ListBankAccountsBySportCenterIdDocument = gql`
+    query ListBankAccountsBySportCenterId($sportCenterId: ID!) {
+  listBankAccountsBySportCenterId(sportCenterId: $sportCenterId) {
+    bankAccountId
+    name
+    id
+    accountType
+    accountNumber
+    email
+  }
+}
+    `;
+
+/**
+ * __useListBankAccountsBySportCenterIdQuery__
+ *
+ * To run a query within a React component, call `useListBankAccountsBySportCenterIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListBankAccountsBySportCenterIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListBankAccountsBySportCenterIdQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useListBankAccountsBySportCenterIdQuery(baseOptions: Apollo.QueryHookOptions<ListBankAccountsBySportCenterIdQuery, ListBankAccountsBySportCenterIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListBankAccountsBySportCenterIdQuery, ListBankAccountsBySportCenterIdQueryVariables>(ListBankAccountsBySportCenterIdDocument, options);
+      }
+export function useListBankAccountsBySportCenterIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListBankAccountsBySportCenterIdQuery, ListBankAccountsBySportCenterIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListBankAccountsBySportCenterIdQuery, ListBankAccountsBySportCenterIdQueryVariables>(ListBankAccountsBySportCenterIdDocument, options);
+        }
+export type ListBankAccountsBySportCenterIdQueryHookResult = ReturnType<typeof useListBankAccountsBySportCenterIdQuery>;
+export type ListBankAccountsBySportCenterIdLazyQueryHookResult = ReturnType<typeof useListBankAccountsBySportCenterIdLazyQuery>;
+export type ListBankAccountsBySportCenterIdQueryResult = Apollo.QueryResult<ListBankAccountsBySportCenterIdQuery, ListBankAccountsBySportCenterIdQueryVariables>;
+export const CreateBankAccountDocument = gql`
+    mutation CreateBankAccount($input: CreateBankAccountInput!) {
+  createBankAccount(input: $input) {
+    sportCenterId
+  }
+}
+    `;
+export type CreateBankAccountMutationFn = Apollo.MutationFunction<CreateBankAccountMutation, CreateBankAccountMutationVariables>;
+
+/**
+ * __useCreateBankAccountMutation__
+ *
+ * To run a mutation, you first call `useCreateBankAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBankAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBankAccountMutation, { data, loading, error }] = useCreateBankAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateBankAccountMutation(baseOptions?: Apollo.MutationHookOptions<CreateBankAccountMutation, CreateBankAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateBankAccountMutation, CreateBankAccountMutationVariables>(CreateBankAccountDocument, options);
+      }
+export type CreateBankAccountMutationHookResult = ReturnType<typeof useCreateBankAccountMutation>;
+export type CreateBankAccountMutationResult = Apollo.MutationResult<CreateBankAccountMutation>;
+export type CreateBankAccountMutationOptions = Apollo.BaseMutationOptions<CreateBankAccountMutation, CreateBankAccountMutationVariables>;
+export const UpdateBankAccountDocument = gql`
+    mutation UpdateBankAccount($input: UpdateBankAccountInput!) {
+  updateBankAccount(input: $input) {
+    status
+    message
+  }
+}
+    `;
+export type UpdateBankAccountMutationFn = Apollo.MutationFunction<UpdateBankAccountMutation, UpdateBankAccountMutationVariables>;
+
+/**
+ * __useUpdateBankAccountMutation__
+ *
+ * To run a mutation, you first call `useUpdateBankAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBankAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBankAccountMutation, { data, loading, error }] = useUpdateBankAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateBankAccountMutation(baseOptions?: Apollo.MutationHookOptions<UpdateBankAccountMutation, UpdateBankAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateBankAccountMutation, UpdateBankAccountMutationVariables>(UpdateBankAccountDocument, options);
+      }
+export type UpdateBankAccountMutationHookResult = ReturnType<typeof useUpdateBankAccountMutation>;
+export type UpdateBankAccountMutationResult = Apollo.MutationResult<UpdateBankAccountMutation>;
+export type UpdateBankAccountMutationOptions = Apollo.BaseMutationOptions<UpdateBankAccountMutation, UpdateBankAccountMutationVariables>;
+export const DeleteBankAccountDocument = gql`
+    mutation DeleteBankAccount($bankAccountId: ID!) {
+  deleteBankAccount(bankAccountId: $bankAccountId) {
+    status
+    message
+  }
+}
+    `;
+export type DeleteBankAccountMutationFn = Apollo.MutationFunction<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>;
+
+/**
+ * __useDeleteBankAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteBankAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBankAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBankAccountMutation, { data, loading, error }] = useDeleteBankAccountMutation({
+ *   variables: {
+ *      bankAccountId: // value for 'bankAccountId'
+ *   },
+ * });
+ */
+export function useDeleteBankAccountMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>(DeleteBankAccountDocument, options);
+      }
+export type DeleteBankAccountMutationHookResult = ReturnType<typeof useDeleteBankAccountMutation>;
+export type DeleteBankAccountMutationResult = Apollo.MutationResult<DeleteBankAccountMutation>;
+export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>;
 export const CreateReservationInputDocument = gql`
     mutation CreateReservationInput($input: CreateReservationInput!) {
   createReservation(input: $input) {

@@ -1,5 +1,6 @@
 import { Entity, Column, BaseEntity, OneToMany, PrimaryColumn } from "typeorm";
 import Service from "./Service";
+import BankAccount from "./BankAccount";
 
 @Entity()
 class SportCenter extends BaseEntity {
@@ -31,5 +32,10 @@ class SportCenter extends BaseEntity {
     onDelete: "CASCADE",
   })
   services: Service[];
+
+  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.sportCenter, {
+    onDelete: "CASCADE",
+  })
+  bankAccounts: BankAccount[];
 }
 export default SportCenter;

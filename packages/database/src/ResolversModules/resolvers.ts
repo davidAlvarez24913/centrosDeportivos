@@ -3,6 +3,7 @@ import { serviceResolvers } from "./Service/serviceResolvers";
 import { sportCenterResolvers } from "./SportCenter/sportCenterResolvers";
 import { reservationResolvers } from "./Reservation/reservationResolver";
 import { commentResolvers } from "./Comment/CommentResolver";
+import { bankAccountResolvers } from "./BankAccount/BankAccountResolvers";
 
 const resolvers = {
   Query: {
@@ -11,6 +12,7 @@ const resolvers = {
     ...sportCenterResolvers.Query,
     ...reservationResolvers.Query,
     ...commentResolvers.Query,
+    ...bankAccountResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
@@ -18,6 +20,7 @@ const resolvers = {
     ...sportCenterResolvers.Mutation,
     ...reservationResolvers.Mutation,
     ...commentResolvers.Mutation,
+    ...bankAccountResolvers.Mutation,
   },
 };
 export default resolvers;

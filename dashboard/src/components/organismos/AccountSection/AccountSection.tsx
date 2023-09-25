@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { CustomButton } from "../../atomos";
-import Account, { AccountProps } from "../Account/Account";
+import Account from "../Account/Account";
 import { Modal } from "../../moleculas";
 import BanckAccountForm from "../../moleculas/BankAccountForm/BankAccountForm";
+import { BankAccountContentProps } from "../../moleculas/BankAccountContent/BankAccountContent";
+import { CreateBankAccountInput } from "schema";
 
 type AccountSectionProps = {
-  accounts: AccountProps[];
+  accounts: BankAccountContentProps[];
+  onCreate: (input: CreateBankAccountInput) => void;
+  sportCenterId: string;
 };
-const AccountSection = ({ accounts }: AccountSectionProps) => {
+const AccountSection = ({
+  accounts,
+  onCreate,
+  sportCenterId,
+}: AccountSectionProps) => {
   const [modal, setModal] = useState(false);
 
   return (
@@ -21,8 +29,8 @@ const AccountSection = ({ accounts }: AccountSectionProps) => {
           setModal(true);
         }}
       />
-      {accounts.map((account, index) => {
-        return <Account {...account} key={index} />;
+      {accounts.map((account) => {
+        return <Account {...account} key={account.bankAccountId} />;
       })}
       <Modal
         title={"Crear Cuenta Bancaria"}
@@ -31,7 +39,11 @@ const AccountSection = ({ accounts }: AccountSectionProps) => {
           setModal(false);
         }}
       >
-        <BanckAccountForm onSubmit={() => setModal(false)} />
+        <BanckAccountForm
+          closeModal={() => setModal(false)}
+          onCreate={onCreate}
+          sportCenterId={sportCenterId}
+        />
       </Modal>
     </div>
   );

@@ -2,36 +2,30 @@ import React, { useState } from "react";
 import { CustomButton } from "../../atomos";
 import Modal from "../../moleculas/Modal";
 import { BankAccountContent } from "../../moleculas";
+import { BankAccountContentProps } from "../../moleculas/BankAccountContent/BankAccountContent";
 
-export type AccountProps = {
-  bankName: string;
-  id: string;
-  accountType: string;
-  accountNumber: string;
-  email: string;
-};
-const Account = (account: AccountProps) => {
+const Account = (account: BankAccountContentProps) => {
   const [modal, setModal] = useState(false);
 
-  const { bankName } = account;
+  const { name } = account;
   return (
     <div>
       <CustomButton
         color="outline"
-        title={bankName}
+        title={name}
         type="button"
         onClick={() => {
           setModal(true);
         }}
       />
       <Modal
-        title={bankName}
+        title={name}
         modalState={modal}
         closeModal={() => {
           setModal(false);
         }}
       >
-        <BankAccountContent {...account} />
+        <BankAccountContent {...account} closeModal={() => setModal(false)} />
       </Modal>
     </div>
   );

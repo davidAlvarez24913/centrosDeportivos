@@ -1,28 +1,75 @@
 import React from "react";
 import { LayoutPage, Profile } from "../components/moleculas";
-import { accounts } from "../data";
 import {
   AccountSection,
   EditSportCenterButton,
 } from "../components/organismos";
 import useUser from "../Hooks/useUser";
 import {
+  CreateBankAccountInput,
+  UpdateBankAccountInput,
   UpdateSportCenterInput,
+  useCreateBankAccountMutation,
+  useDeleteBankAccountMutation,
   useGetSportCenterQuery,
+  useListBankAccountsBySportCenterIdQuery,
+  useUpdateBankAccountMutation,
   useUpdateSportCenterMutation,
 } from "schema";
+import { error } from "console";
 
 const ProfilePage = () => {
   const sportCenterId = useUser().user?.uid!;
   const { data, loading, refetch } = useGetSportCenterQuery({
     variables: { sportCenterId: sportCenterId },
   });
+  const bankAccountsData = useListBankAccountsBySportCenterIdQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
   const [updateSportCenterMutation] = useUpdateSportCenterMutation();
-  const sportCenter = data?.getSportCenter!;
-  const onUpdate = (input: UpdateSportCenterInput) => {
+  const [createBankAccountMutation] = useCreateBankAccountMutation();
+  const [updateBankAccountMutation] = useUpdateBankAccountMutation();
+  const [deleteBankAccountMutation] = useDeleteBankAccountMutation();
+
+  const onUpdateSportCenter = (input: UpdateSportCenterInput) => {
     updateSportCenterMutation({ variables: { input } }).then(() => refetch());
   };
-  return loading ? (
+  const onCreateBankAccount = (input: CreateBankAccountInput) => {
+    createBankAccountMutation({ variables: { input } }).then(() => {
+      bankAccountsData.refetch();
+      alert("Cuenta Bancaria creada correctamente");
+    });
+  };
+  const onUpdateBankAccount = (input: UpdateBankAccountInput) => {
+    updateBankAccountMutation({ variables: { input } }).then(() => {
+      bankAccountsData.refetch();
+      alert("Cuenta Bancaria Editada correctamente");
+    });
+  };
+  const onDeleleteBackAccount = (bankAccountId: string) => {
+    deleteBankAccountMutation({
+      variables: { bankAccountId: bankAccountId },
+    }).then(() => {
+      bankAccountsData.refetch();
+      alert("Cuenta Bancaria Eliminada correctamente");
+    });
+  };
+
+  const sportCenter = data?.getSportCenter!;
+  const bankAccounts =
+    bankAccountsData.data?.listBankAccountsBySportCenterId?.map(
+      (bankAccount) => {
+        return {
+          ...bankAccount!,
+          onDelete: () => {
+            onDeleleteBackAccount(bankAccount?.bankAccountId!);
+          },
+          onUpdate: onUpdateBankAccount,
+        };
+      }
+    ) || [];
+
+  return loading && bankAccountsData.loading ? (
     <div></div>
   ) : (
     <LayoutPage nameSportCenter={sportCenter.name}>
@@ -31,7 +78,7 @@ const ProfilePage = () => {
           <EditSportCenterButton
             sportCenterId={sportCenterId}
             {...sportCenter}
-            updateSportCenter={onUpdate}
+            updateSportCenter={onUpdateSportCenter}
           />
           <Profile
             {...sportCenter}
@@ -39,7 +86,11 @@ const ProfilePage = () => {
           />
         </div>
         <div className="w-1/3">
-          <AccountSection accounts={accounts} />
+          <AccountSection
+            accounts={bankAccounts}
+            onCreate={onCreateBankAccount}
+            sportCenterId={sportCenterId}
+          />
         </div>
       </div>
     </LayoutPage>
