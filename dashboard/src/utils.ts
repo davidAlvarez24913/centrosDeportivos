@@ -72,3 +72,6 @@ export const buildRangeHour = (
     return result;
   }
 };
+export const getImageNameBucket = (fieldImage: string) => {
+  return fieldImage.split("#")[0];
+};
