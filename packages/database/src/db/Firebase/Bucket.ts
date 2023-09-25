@@ -4,6 +4,7 @@ import {
   getDownloadURL,
   uploadBytesResumable,
   uploadString,
+  deleteObject,
 } from "firebase/storage";
 import { storage } from "./config";
 
@@ -32,4 +33,9 @@ export const uploadFile = async (file: string, nameImage: string) => {
   const fileName = "imagen.png"; // Reemplaza con el nombre deseado para el archivo
   const url = await getDownloadURL(storageRef);
   return url;
+};
+
+export const deleteImage = async (nameImage: string) => {
+  const storageRef = ref(storage, nameImage);
+  return await deleteObject(storageRef);
 };
