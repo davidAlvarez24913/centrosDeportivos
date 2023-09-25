@@ -76,7 +76,8 @@ export const serviceResolvers = {
             input.disponibility === undefined || input.disponibility === null
               ? undefined
               : schedule(input.disponibility);
-          // here logic upload image
+
+          // upload image
           const auxNameImage =
             "services/" + input.sportCenterId + "-" + serviceId;
           const imageUrl = await uploadFile(input.image, auxNameImage);
@@ -85,12 +86,9 @@ export const serviceResolvers = {
           await createFirestoreService({
             serviceId,
             image: auxNameImage + "#" + imageUrl,
-            // ranking: input.ranking,
-            // disponibility: auxDisponibility,
           });
           return {
             ...input,
-            // disponibility: auxDisponibility,
             serviceId,
           };
         } catch (error) {
@@ -116,22 +114,34 @@ export const serviceResolvers = {
           serviceId: input.serviceId,
         });
         const currentServiceNoSQL = await findService(input.serviceId);
-        await updateFirestoreService({
-          serviceId: input.serviceId,
-          image: input.image ?? currentServiceNoSQL?.image,
-          ranking: input.ranking ?? currentServiceNoSQL?.ranking,
-          disponibility: { ...input.disponibility },
-        });
-        await Service.update(
-          {
+
+        const auxNameImage =
+          "services/" +
+          input.sportCenterId +
+          "-" +
+          currentServiceSQL?.serviceId;
+        let imageUrl = "";
+        if (input.image !== currentServiceNoSQL?.image) {
+          imageUrl = await uploadFile(input.image, auxNameImage);
+        }
+        if (imageUrl) {
+          await updateFirestoreService({
             serviceId: input.serviceId,
-          },
-          {
-            name: input.name ?? currentServiceSQL?.name,
-            description: input.description ?? currentServiceSQL?.description,
-            sport: input.sport ?? currentServiceSQL?.sport,
-          }
-        );
+            image: auxNameImage + "#" + imageUrl,
+            ranking: input.ranking ?? currentServiceNoSQL?.ranking,
+            disponibility: { ...input.disponibility },
+          });
+          await Service.update(
+            {
+              serviceId: input.serviceId,
+            },
+            {
+              name: input.name ?? currentServiceSQL?.name,
+              description: input.description ?? currentServiceSQL?.description,
+              sport: input.sport ?? currentServiceSQL?.sport,
+            }
+          );
+        }
         return {
           status: "Ok",
           message: "Servicio se actualizo exitosamente",
