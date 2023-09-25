@@ -329,6 +329,7 @@ export type UpdateServiceInput = {
   ranking?: InputMaybe<Scalars['Int']['input']>;
   serviceId: Scalars['ID']['input'];
   sport?: InputMaybe<Sport>;
+  sportCenterId: Scalars['ID']['input'];
 };
 
 export type UpdateSportCenterInput = {

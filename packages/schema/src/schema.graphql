@@ -164,6 +164,7 @@ input UpdateSportCenterInput {
 }
 input UpdateServiceInput {
   serviceId: ID!
+  sportCenterId:ID!
   name: String
   description: String
   sport: Sport
