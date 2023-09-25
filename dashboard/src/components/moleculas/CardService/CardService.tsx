@@ -11,13 +11,14 @@ import { getStringUrl } from "../../../utils";
 import ModalEditService from "../ModalEditService";
 
 type PropsCardService = {
+  onRefetch: () => void;
   service: Omit<
     Service,
     "ranking" | "reservations" | "sportCenterId" | "__typename"
   >;
 };
 
-const CardService = ({ service }: PropsCardService) => {
+const CardService = ({ service, onRefetch }: PropsCardService) => {
   const [modal, setModal] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const [updateServiceMutation] = useUpdateServiceMutation();
@@ -27,6 +28,7 @@ const CardService = ({ service }: PropsCardService) => {
     updateServiceMutation({
       variables: { input },
       onCompleted: () => {
+        onRefetch();
         alert("se actualiza el servicio exitosamente");
         setModalEdit(false);
       },
@@ -72,11 +74,12 @@ const CardService = ({ service }: PropsCardService) => {
             deleteServiceMutation({
               variables: { serviceId: service.serviceId },
               onCompleted: () => {
+                onRefetch();
                 setModal(false);
                 console.log("servico eliminado");
               },
               onError: (err) => {
-                console.error("Error servicio no eliminado");
+                console.error("Error servicio no eliminado: " + err);
               },
             });
           }

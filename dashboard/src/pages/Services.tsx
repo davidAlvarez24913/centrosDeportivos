@@ -25,7 +25,15 @@ const ServicesPage = () => {
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10  mt-5">
           {services?.map((service, index) => {
             const { __typename, ...auxService } = service as Service;
-            return <CardService service={auxService} key={index} />;
+            return (
+              <CardService
+                onRefetch={() => {
+                  refetch();
+                }}
+                service={auxService}
+                key={index}
+              />
+            );
           })}
         </div>
       </div>

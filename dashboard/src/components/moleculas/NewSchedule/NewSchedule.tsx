@@ -28,7 +28,7 @@ const NewSchedule = ({
 }: PropsNewSchedule) => {
   const { user } = useUser();
   let rangeHourAux: RangeHour;
-  console.log(service);
+
   return (
     <div>
       <div className="flex justify-between gap-5">
