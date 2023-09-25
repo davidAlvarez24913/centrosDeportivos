@@ -37,10 +37,10 @@ export const buildRangeHour = (
   >
 ) => {
   const dayEn = changeLanguageDayES(day);
-  if (service.disponibility) {
+  let daysAux = {};
+  if (service.disponibility !== null) {
     const { __typename, ...days } = service.disponibility!;
     // clean days with rangeHour that has __typename
-    let daysAux = {};
     Object.entries(days).map((d) => {
       if (d[1] == null) {
         daysAux = { ...daysAux, [d[0] as Weekday]: null };
@@ -73,16 +73,15 @@ export const buildRangeHour = (
       return result;
     }
   } else {
-    let result = {};
     Object.entries(Weekday).map((d) => {
       if (dayEn === d[0]) {
-        result = { ...result, [dayEn]: rangeHourAux };
+        daysAux = { ...daysAux, [dayEn]: [rangeHourAux] };
       } else {
-        result = { ...result, [d[0]]: null };
+        daysAux = { ...daysAux, [d[0]]: null };
       }
     });
-    console.log(result);
-    return result;
+    console.log(daysAux);
+    return daysAux;
   }
 };
 export const getImageNameBucket = (fieldImage: string) => {
@@ -90,19 +89,24 @@ export const getImageNameBucket = (fieldImage: string) => {
 };
 
 export const cleanTypenameDisponibility = (service: Service) => {
-  const { __typename, ...days } = service.disponibility!;
-
   let daysAux = {};
-  Object.entries(days).map((d) => {
-    if (d[1] == null) {
-      daysAux = { ...daysAux, [d[0] as Weekday]: null };
-    } else {
-      const cl = d[1].map((el) => {
-        const { __typename, ...rest } = el!;
-        return rest;
-      });
-      daysAux = { ...daysAux, [d[0] as Weekday]: cl };
-    }
-  });
-  return daysAux;
+  if (service.disponibility) {
+    const { __typename, ...days } = service.disponibility!;
+
+    Object.entries(days).map((d) => {
+      if (d[1] == null) {
+        daysAux = { ...daysAux, [d[0] as Weekday]: null };
+      } else {
+        const cl = d[1].map((el) => {
+          const { __typename, ...rest } = el!;
+          return rest;
+        });
+        daysAux = { ...daysAux, [d[0] as Weekday]: cl };
+      }
+    });
+    return daysAux;
+  } else {
+    daysAux = service.disponibility!;
+    return daysAux;
+  }
 };
