@@ -6,6 +6,7 @@ import {
 } from "schema";
 import { CustomButton, CustomInput } from "../../atomos";
 import { buildRangeHour } from "../../../utils";
+import useUser from "../../../Hooks/useUser";
 
 type PropsNewSchedule = {
   onClose: () => void;
@@ -24,6 +25,7 @@ const NewSchedule = ({
   addSchedule,
   day,
 }: PropsNewSchedule) => {
+  const { user } = useUser();
   let rangeHourAux: RangeHour;
   return (
     <div>
@@ -75,6 +77,8 @@ const NewSchedule = ({
             const result = buildRangeHour(day, rangeHourAux, service);
             addSchedule({
               ...service,
+              sportCenterId: user?.uid!,
+              image: service.image,
               disponibility: result as UpdateDisponibilityInput,
             });
             onClose();

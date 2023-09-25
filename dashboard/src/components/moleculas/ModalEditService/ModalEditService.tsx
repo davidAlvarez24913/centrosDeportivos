@@ -5,31 +5,30 @@ import {
   CustomSelect,
   CustomTextarea,
 } from "../../atomos";
-import { Service, Sport } from "schema";
+import {
+  Service,
+  Sport,
+  UpdateDisponibilityInput,
+  UpdateServiceInput,
+} from "schema";
 import ImageInput from "../ImageInput";
+import { cleanTypenameDisponibility, getStringUrl } from "../../../utils";
 import useUser from "../../../Hooks/useUser";
-import { getImageNameBucket, getStringUrl } from "../../../utils";
 
 type ModalEditServiceProps = {
-  onUpdate: () => void;
-  onRefetch: () => void;
+  onUpdate: (input: UpdateServiceInput) => void;
   service: Omit<
     Service,
     "ranking" | "reservations" | "sportCenterId" | "__typename"
   >;
 };
 const sports = Object.values(Sport);
-const ModalEditService = ({
-  onUpdate,
-  onRefetch,
-  service,
-}: ModalEditServiceProps) => {
+const ModalEditService = ({ onUpdate, service }: ModalEditServiceProps) => {
   const { user } = useUser();
   const [serviceToUpdate, setserviceToUpdate] = useState({
     name: service.name,
     sport: service.sport,
     description: service.description,
-    sportCenterId: user?.uid,
     image: service.image ? getStringUrl(service.image!) : undefined,
   });
   const [fileBlob, setFileBlob] = useState<string | undefined>(
@@ -38,6 +37,20 @@ const ModalEditService = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const disp = cleanTypenameDisponibility({
+      ...serviceToUpdate,
+      disponibility: service.disponibility as UpdateDisponibilityInput,
+      serviceId: service.serviceId,
+      image: fileBlob,
+    } as Service);
+
+    onUpdate({
+      ...serviceToUpdate,
+      disponibility: disp,
+      serviceId: service.serviceId,
+      sportCenterId: user?.uid!,
+      image: fileBlob,
+    } as UpdateServiceInput);
   };
 
   return (
@@ -92,10 +105,6 @@ const ModalEditService = ({
         title="Actualizar Servicio"
         color="sucessfull"
         type="submit"
-        onClick={() => {
-          console.log(serviceToUpdate);
-          console.log(getImageNameBucket(service.image!));
-        }}
       />
     </form>
   );

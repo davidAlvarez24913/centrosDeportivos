@@ -1,7 +1,12 @@
 import { useState } from "react";
 import Modal from "../Modal";
 import ServiceModal from "../ServiceModal";
-import { Service, useDeleteServiceMutation } from "schema";
+import {
+  Service,
+  UpdateServiceInput,
+  useDeleteServiceMutation,
+  useUpdateServiceMutation,
+} from "schema";
 import { getStringUrl } from "../../../utils";
 import ModalEditService from "../ModalEditService";
 
@@ -15,8 +20,24 @@ type PropsCardService = {
 const CardService = ({ service }: PropsCardService) => {
   const [modal, setModal] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
-
+  const [updateServiceMutation] = useUpdateServiceMutation();
   const [deleteServiceMutation] = useDeleteServiceMutation();
+
+  const onUpdate = (input: UpdateServiceInput) => {
+    updateServiceMutation({
+      variables: { input },
+      onCompleted: () => {
+        alert("se actualiza el servicio exitosamente");
+        setModalEdit(false);
+      },
+      onError: (err) => {
+        console.log(JSON.parse(JSON.stringify(err as Error)));
+        alert(
+          "No se pudo actualizar el servicio: " + JSON.stringify(err as Error)
+        );
+      },
+    });
+  };
   return (
     <div>
       <div
@@ -78,11 +99,7 @@ const CardService = ({ service }: PropsCardService) => {
         }}
         modalState={modalEdit}
       >
-        <ModalEditService
-          service={service}
-          onRefetch={() => {}}
-          onUpdate={() => {}}
-        />
+        <ModalEditService service={service} onUpdate={onUpdate} />
       </Modal>
     </div>
   );
