@@ -3,3 +3,5 @@ node_modules/
 package-lock.json
 .env
 yarn.lock
+bun.lockb
+package.json
