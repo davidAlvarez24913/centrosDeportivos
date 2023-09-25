@@ -3,10 +3,9 @@ import {
   Service,
   UpdateDisponibilityInput,
   UpdateServiceInput,
-  Weekday,
 } from "schema";
 import { CustomButton, CustomInput } from "../../atomos";
-import { buildRangeHour, changeLanguageDayES } from "../../../utils";
+import { buildRangeHour } from "../../../utils";
 
 type PropsNewSchedule = {
   onClose: () => void;
