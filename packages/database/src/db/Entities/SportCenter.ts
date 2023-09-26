@@ -23,7 +23,7 @@ class SportCenter extends BaseEntity {
   ubication: string;
 
   @Column()
-  hoursOperation: string;
+  schedule: string;
 
   @Column()
   access: boolean;

@@ -100,7 +100,7 @@ export const sportCenterResolvers = {
             description:
               input.description ?? currentSportCenterSQL[0].description,
             ubication: input.ubication ?? currentSportCenterSQL[0].ubication,
-            hoursOperation: input.hoursOperation,
+            schedule: input.schedule,
           }
         );
         return {

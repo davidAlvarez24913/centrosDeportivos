@@ -16,7 +16,6 @@ import {
   useUpdateBankAccountMutation,
   useUpdateSportCenterMutation,
 } from "schema";
-import { error } from "console";
 
 const ProfilePage = () => {
   const sportCenterId = useUser().user?.uid!;

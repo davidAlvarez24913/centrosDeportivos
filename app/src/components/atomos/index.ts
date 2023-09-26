@@ -10,3 +10,4 @@ export { default as CustomButton } from "./CustomButton";
 export { default as CustomInput } from "./CustomInput";
 export { default as CommonTag } from "./CommonTag";
 export { default as InformationSection } from "./InformationSection";
+export { default as Loading } from "./Loading";

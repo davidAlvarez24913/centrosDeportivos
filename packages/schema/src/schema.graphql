@@ -53,9 +53,9 @@ type SportCenter {
   email: String!
   phone: String!
   ubication: String!
-  hoursOperation: String! # Hours attention
+  schedule: String! # Hours attention
   services: [Service]
-  image: String
+  image: String!
   ranking: Int!
   access: Boolean!
 }
@@ -123,7 +123,7 @@ input CreateSportCenterInput {
   description: String!
   phone: String!
   ubication: String!
-  hoursOperation: String
+  schedule: String
   image: String!
   ranking: Int
   access: Boolean!
@@ -178,11 +178,11 @@ input UpdateSportCenterInput {
   phone: String
   ubication: String
   image: String
-  hoursOperation: String
+  schedule: String
 }
 input UpdateServiceInput {
   serviceId: ID!
-  sportCenterId:ID!
+  sportCenterId: ID!
   name: String
   description: String
   sport: Sport

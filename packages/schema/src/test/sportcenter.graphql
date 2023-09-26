@@ -9,9 +9,22 @@ query GetSportCenter($sportCenterId: ID!) {
     description
     phone
     ubication
-    hoursOperation
+    schedule
     ranking
     image
+  }
+}
+query ListSportCenters {
+  listSportCenters {
+    sportCenterId
+    name
+    description
+    email
+    phone
+    ubication
+    schedule
+    image
+    ranking
   }
 }
 mutation CreateSportCenter($input: CreateSportCenterInput!) {

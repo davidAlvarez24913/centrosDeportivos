@@ -83,11 +83,11 @@ export type CreateSportCenterInput = {
   access: Scalars['Boolean']['input'];
   description: Scalars['String']['input'];
   email: Scalars['String']['input'];
-  hoursOperation?: InputMaybe<Scalars['String']['input']>;
   image: Scalars['String']['input'];
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
   ranking?: InputMaybe<Scalars['Int']['input']>;
+  schedule?: InputMaybe<Scalars['String']['input']>;
   sportCenterId: Scalars['ID']['input'];
   ubication: Scalars['String']['input'];
 };
@@ -334,11 +334,11 @@ export type SportCenter = {
   access: Scalars['Boolean']['output'];
   description: Scalars['String']['output'];
   email: Scalars['String']['output'];
-  hoursOperation: Scalars['String']['output'];
-  image?: Maybe<Scalars['String']['output']>;
+  image: Scalars['String']['output'];
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
   ranking: Scalars['Int']['output'];
+  schedule: Scalars['String']['output'];
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
   ubication: Scalars['String']['output'];
@@ -388,10 +388,10 @@ export type UpdateServiceInput = {
 export type UpdateSportCenterInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  hoursOperation?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+  schedule?: InputMaybe<Scalars['String']['input']>;
   sportCenterId: Scalars['ID']['input'];
   ubication?: InputMaybe<Scalars['String']['input']>;
 };
@@ -500,7 +500,12 @@ export type GetSportCenterQueryVariables = Exact<{
 }>;
 
 
-export type GetSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, hoursOperation: string, ranking: number, image?: string | null } | null };
+export type GetSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, ranking: number, image: string } | null };
+
+export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, description: string, email: string, phone: string, ubication: string, schedule: string, image: string, ranking: number }> | null };
 
 export type CreateSportCenterMutationVariables = Exact<{
   input: CreateSportCenterInput;
@@ -927,7 +932,7 @@ export const GetSportCenterDocument = gql`
     description
     phone
     ubication
-    hoursOperation
+    schedule
     ranking
     image
   }
@@ -961,6 +966,48 @@ export function useGetSportCenterLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetSportCenterQueryHookResult = ReturnType<typeof useGetSportCenterQuery>;
 export type GetSportCenterLazyQueryHookResult = ReturnType<typeof useGetSportCenterLazyQuery>;
 export type GetSportCenterQueryResult = Apollo.QueryResult<GetSportCenterQuery, GetSportCenterQueryVariables>;
+export const ListSportCentersDocument = gql`
+    query ListSportCenters {
+  listSportCenters {
+    sportCenterId
+    name
+    description
+    email
+    phone
+    ubication
+    schedule
+    image
+    ranking
+  }
+}
+    `;
+
+/**
+ * __useListSportCentersQuery__
+ *
+ * To run a query within a React component, call `useListSportCentersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListSportCentersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListSportCentersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListSportCentersQuery(baseOptions?: Apollo.QueryHookOptions<ListSportCentersQuery, ListSportCentersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListSportCentersQuery, ListSportCentersQueryVariables>(ListSportCentersDocument, options);
+      }
+export function useListSportCentersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListSportCentersQuery, ListSportCentersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListSportCentersQuery, ListSportCentersQueryVariables>(ListSportCentersDocument, options);
+        }
+export type ListSportCentersQueryHookResult = ReturnType<typeof useListSportCentersQuery>;
+export type ListSportCentersLazyQueryHookResult = ReturnType<typeof useListSportCentersLazyQuery>;
+export type ListSportCentersQueryResult = Apollo.QueryResult<ListSportCentersQuery, ListSportCentersQueryVariables>;
 export const CreateSportCenterDocument = gql`
     mutation CreateSportCenter($input: CreateSportCenterInput!) {
   createSportCenter(input: $input) {

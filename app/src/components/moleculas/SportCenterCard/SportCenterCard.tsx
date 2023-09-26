@@ -56,7 +56,7 @@ const SportCenterCard = ({
           </div>
         </div>
         <img
-          src={image}
+          src={image === "" ? "assets/default-image.jpg" : image}
           alt="sportIcon"
           className="w-[180px] rounded-r-2xl object-cover"
         />

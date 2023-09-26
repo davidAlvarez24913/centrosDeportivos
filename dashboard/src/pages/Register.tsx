@@ -33,7 +33,7 @@ const Register = () => {
           image: "",
           phone: "",
           ubication: "",
-          hoursOperation: "",
+          schedule: "",
           ranking: 0,
         };
         createSportCenterMutation({
