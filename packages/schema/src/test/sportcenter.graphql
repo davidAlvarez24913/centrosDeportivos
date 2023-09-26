@@ -14,17 +14,34 @@ query GetSportCenter($sportCenterId: ID!) {
     image
   }
 }
+query GetSportCenterWithServices($sportCenterId: ID!) {
+  getSportCenterWithServices(sportCenterId: $sportCenterId) {
+    name
+    email
+    description
+    phone
+    ubication
+    schedule
+    ranking
+    image
+    services {
+      serviceId
+      name
+      sport
+      description
+      image
+    }
+  }
+}
+
 query ListSportCenters {
   listSportCenters {
     sportCenterId
     name
-    description
-    email
     phone
     ubication
     schedule
     image
-    ranking
   }
 }
 mutation CreateSportCenter($input: CreateSportCenterInput!) {

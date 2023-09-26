@@ -23,7 +23,10 @@ const SportCenterInformation = ({
   return (
     <div>
       <div className="flex flex-col gap-3 mt-5">
-        <img src={image} alt="service image" />
+        <img
+          src={image === "" ? "assets/default-image.jpg" : image}
+          alt="service image"
+        />
         <StarRank stars={ranking} setStars={() => {}}></StarRank>
         <p className="text-sm font-normal">{description}</p>
         <InformationSection

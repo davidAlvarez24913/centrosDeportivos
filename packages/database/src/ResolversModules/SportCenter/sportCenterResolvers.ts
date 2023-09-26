@@ -42,6 +42,14 @@ export const sportCenterResolvers = {
       const firestoreSportCenter = await findSportCenter(sportCenterId);
       return { ...sqlSportCenter, ...firestoreSportCenter };
     },
+    getSportCenterWithServices: async (root: any, { sportCenterId }: any) => {
+      const sportCenterWithServices = await SportCenter.findOne({
+        relations: { services: true },
+        where: { sportCenterId: sportCenterId },
+      });
+      const firestoreSportCenter = await findSportCenter(sportCenterId);
+      return { ...sportCenterWithServices, ...firestoreSportCenter };
+    },
     getAccess: async (_root: any, { sportCenterId }: any) => {
       const sportCenter = await SportCenter.findOne({
         where: { sportCenterId: sportCenterId },

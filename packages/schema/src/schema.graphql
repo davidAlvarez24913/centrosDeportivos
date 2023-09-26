@@ -227,6 +227,7 @@ type Query {
   listServices: [Service]
   listServicesBySportCenterId(sportCenterId: ID!): [Service]
   getAccess(sportCenterId: ID!): Boolean
+  getSportCenterWithServices(sportCenterId: ID!): SportCenter
 
   #bankAccounts
   listBankAccountsBySportCenterId(sportCenterId: ID!): [BankAccount]
