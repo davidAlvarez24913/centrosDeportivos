@@ -1,4 +1,4 @@
-import { Reservation, Service, User } from "../../db/Entities";
+import { Reservation, Service, User } from "../../db/TypeOrm/Entities";
 import {
   FireStoreReservation,
   createFirestoreReservation,

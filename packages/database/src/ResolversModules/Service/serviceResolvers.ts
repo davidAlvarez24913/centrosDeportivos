@@ -1,4 +1,4 @@
-import { SportCenter, Service } from "../../db/Entities";
+import { SportCenter, Service } from "../../db/TypeOrm/Entities";
 import {
   Disponibility,
   FireStoreService,

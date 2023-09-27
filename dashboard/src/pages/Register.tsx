@@ -4,12 +4,9 @@ import {
   CustomInput,
   CustomInputWithIcon,
 } from "../components/atomos";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  deleteUser,
-} from "firebase/auth";
+import { getAuth, deleteUser } from "firebase/auth";
 import { useCreateSportCenterMutation } from "schema";
+import { CreateUser } from "../Firebase";
 const Register = () => {
   const [createSportCenterMutation] = useCreateSportCenterMutation();
   const auth = getAuth();
@@ -21,7 +18,7 @@ const Register = () => {
   });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createUserWithEmailAndPassword(auth, registData.email, registData.password)
+    CreateUser(registData.email, registData.password)
       .then((userCredential) => {
         const userId = userCredential.user.uid;
         const sportCenter = {

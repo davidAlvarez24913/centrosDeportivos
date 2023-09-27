@@ -1,4 +1,4 @@
-import { BankAccount } from "../../db/Entities";
+import { BankAccount } from "../../db/TypeOrm/Entities";
 
 export const bankAccountResolvers = {
   Query: {
@@ -12,7 +12,6 @@ export const bankAccountResolvers = {
       const result = bankAccounts.map((bankAccount) => {
         return { ...bankAccount, sportCenterId: sportCenterId };
       });
-      console.log(result);
       return result;
     },
   },

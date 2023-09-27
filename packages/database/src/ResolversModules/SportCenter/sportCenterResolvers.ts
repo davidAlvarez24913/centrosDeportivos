@@ -1,4 +1,4 @@
-import { SportCenter } from "../../db/Entities";
+import { SportCenter } from "../../db/TypeOrm/Entities";
 import { GraphQLError } from "graphql";
 import {
   FireStoreSportCenter,

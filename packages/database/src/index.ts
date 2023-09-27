@@ -1,7 +1,9 @@
-import { dataSource } from "./db/config";
+import { dataSource } from "./db/TypeOrm/config";
+import { app } from "./db/Firebase/config";
 import { apolloServer } from "./app";
 import "reflect-metadata";
 import ip from "ip";
+import { Console } from "console";
 
 const ip_local = ip.address();
 
@@ -15,3 +17,5 @@ apolloServer
   .then(({ url }) => {
     console.log(`Server ready alt ${url}graphql`);
   });
+
+console.log(`Conexión con ${app.options.projectId} establecida`);

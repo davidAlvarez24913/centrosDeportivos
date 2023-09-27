@@ -5,7 +5,7 @@ import { MenuCard } from "src/components/moleculas";
 
 const HomePage = () => {
   const ionRouter = useIonRouter();
-  const loggedIn = true;
+  const loggedIn = false;
   return (
     <IonPage>
       <IonContent>

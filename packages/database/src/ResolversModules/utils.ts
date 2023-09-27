@@ -1,4 +1,9 @@
-import { Reservation, Service, SportCenter, User } from "../db/Entities";
+import {
+  Reservation,
+  Service,
+  SportCenter,
+  User,
+} from "../db/TypeOrm/Entities";
 import { FireStoreReservation } from "../db/Firebase/Firestore/Reservation";
 import { FireStoreService } from "../db/Firebase/Firestore/Service";
 import { FireStoreSportCenter } from "../db/Firebase/Firestore/SportCenter";

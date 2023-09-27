@@ -1,4 +1,4 @@
-import { User } from "../../db/Entities";
+import { User } from "../../db/TypeOrm/Entities";
 import {
   FireStoreUser,
   createUser,
