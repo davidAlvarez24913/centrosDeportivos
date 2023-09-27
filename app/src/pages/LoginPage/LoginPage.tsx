@@ -15,8 +15,8 @@ const LoginPage = () => {
       <IonContent>
         <Background>
           <div className="flex flex-col gap-5 py-5">
-            <CustomInput typeInput="text" placeholder="Correo electronico" />
-            <CustomInput typeInput="password" placeholder="Contraseña" />
+            <CustomInput type="text" placeholder="Correo electronico" />
+            <CustomInput type="password" placeholder="Contraseña" />
             <CustomButton
               color="sucessfull"
               title="INICIAR SESION"

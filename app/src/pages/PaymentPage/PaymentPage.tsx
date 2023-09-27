@@ -28,7 +28,7 @@ const HomePage = () => {
             <h3 className="font-bold text-lg">
               Identificador de la transacción
             </h3>
-            <CustomInput typeInput="number" placeholder="000000000000" />
+            <CustomInput type="number" placeholder="000000000000" />
             <PhotoPicker photo={undefined} setPhoto={() => {}} />
             <CustomButton title="enviar" color="sucessfull" type="submit" />
           </div>

@@ -10,7 +10,7 @@ const MyReservationsPage = () => {
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 mt-5 justify-center">
-            <CustomInput typeInput="text" placeholder="Buscar"></CustomInput>
+            <CustomInput type="text" placeholder="Buscar"></CustomInput>
             <div className="flex flex-col gap-3">
               {myReservations.map((reservation) => {
                 return (

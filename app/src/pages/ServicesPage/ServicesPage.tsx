@@ -13,7 +13,7 @@ const ServicesPage = () => {
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 mt-5 justify-center">
-            <CustomInput typeInput="text" placeholder="Buscar" />
+            <CustomInput type="text" placeholder="Buscar" />
             <div className="flex flex-col gap-3">
               {services.map((service) => {
                 return (
