@@ -9,16 +9,17 @@ import {
   ServiceCard,
   SportCenterInformation,
 } from "src/components/moleculas";
-import { reviews, services } from "src/data";
+import { reviews } from "src/data";
 
 const SportCenterPage = () => {
   const { sportCenterId } = useParams<{ sportCenterId: string }>();
+
   const { data, loading } = useGetSportCenterWithServicesQuery({
     variables: { sportCenterId: sportCenterId },
   });
-  const sportCenter = data!.getSportCenterWithServices!;
+  const sportCenter = data?.getSportCenterWithServices;
   const services =
-    sportCenter.services?.map((service) => {
+    sportCenter?.services?.map((service) => {
       return { ...service!, image: "" };
     }) || [];
 
@@ -27,7 +28,7 @@ const SportCenterPage = () => {
   );
   return (
     <IonPage>
-      <Header title={sportCenter.name} path="/sportsCenters" />
+      <Header title={sportCenter?.name || ""} path="/sportsCenters" />
       <Segment
         segment={segment}
         segmentList={["servicios", "informacion"]}
@@ -58,7 +59,7 @@ const SportCenterPage = () => {
                   <NoDataCard>No hay servicios por el momento</NoDataCard>
                 )
               ) : (
-                <SportCenterInformation {...sportCenter} reviews={reviews} />
+                <SportCenterInformation {...sportCenter!} reviews={reviews} />
               )}
             </>
           )}
