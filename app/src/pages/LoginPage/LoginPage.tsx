@@ -4,6 +4,7 @@ import {
   Background,
   CustomButton,
   CustomInput,
+  CustomInputWithIcon,
   Header,
 } from "src/components/atomos";
 
@@ -16,7 +17,11 @@ const LoginPage = () => {
         <Background>
           <div className="flex flex-col gap-5 py-5">
             <CustomInput type="text" placeholder="Correo electronico" />
-            <CustomInput type="password" placeholder="Contraseña" />
+            <CustomInputWithIcon
+              isPassword
+              type="password"
+              placeholder="Contraseña"
+            />
             <CustomButton
               color="sucessfull"
               title="INICIAR SESION"

@@ -4,6 +4,7 @@ import {
   Background,
   CustomButton,
   CustomInput,
+  CustomInputWithIcon,
   Header,
 } from "src/components/atomos";
 
@@ -18,8 +19,16 @@ const RegisterPage = () => {
             <CustomInput type="text" placeholder="Cedula/Pasaporte" />
             <CustomInput type="text" placeholder="Telefono" />
             <CustomInput type="text" placeholder="Correo electronico" />
-            <CustomInput type="password" placeholder="Contraseña" />
-            <CustomInput type="password" placeholder="Confirma contraseña" />
+            <CustomInputWithIcon
+              isPassword
+              type="password"
+              placeholder="Contraseña"
+            />
+            <CustomInputWithIcon
+              isPassword
+              type="password"
+              placeholder="Confirma contraseña"
+            />
             <CustomButton
               color="sucessfull"
               title="REGISTRARSE"

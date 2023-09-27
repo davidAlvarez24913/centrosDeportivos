@@ -1,21 +1,9 @@
 import React from "react";
 
 type PropsCustomInput = {
-  placeholder?: string;
-  pathSVG?: string;
-  onClickIcon?: () => void;
   errorMessage?: string;
 } & React.ComponentProps<"input">;
-const CustomInput = ({
-  placeholder,
-  pathSVG,
-  onClickIcon,
-  errorMessage,
-  ...rest
-}: PropsCustomInput) => {
-  const auxIcon = "assets/icon/eye-outline.svg";
-  const flagIcon = !(rest.type === "password") && pathSVG !== undefined;
-  const onClick = () => {};
+const CustomInput = ({ errorMessage, ...rest }: PropsCustomInput) => {
   return (
     <div>
       <div className=" flex w-full flex-col rounded-xl border border-customText">
@@ -23,13 +11,8 @@ const CustomInput = ({
           <input
             {...rest}
             type={rest.type}
-            placeholder={placeholder}
             className="w-full text-customText font-light border-none bg-transparent px-1 placeholder:text-customText placeholder:font-light outline-none"
           />
-          {flagIcon && <img src={pathSVG} alt={pathSVG} />}
-          {rest.type === "password" && (
-            <img src={auxIcon} alt={auxIcon} onClick={onClickIcon ?? onClick} />
-          )}
         </div>
       </div>
       {errorMessage && (
