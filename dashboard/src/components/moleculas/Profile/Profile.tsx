@@ -6,7 +6,7 @@ export type ProfileProps = {
   ubication: string;
   phone: string;
   email: string;
-  image?: string | null;
+  image: string;
 };
 const Profile = ({
   name,
@@ -20,7 +20,7 @@ const Profile = ({
     <div className="flex flex-col gap-4 py-5">
       <img
         className="w-80 "
-        src={image ? image : "/image 10.png"}
+        src={image ? image : "/default-image.jpg"}
         alt="Imagen Centro Deportivo"
       />
       <h2 className="text-lg font-bold">Nombre del Centro Deportivo:</h2>

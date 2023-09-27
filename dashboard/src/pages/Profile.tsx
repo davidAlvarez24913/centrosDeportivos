@@ -16,6 +16,7 @@ import {
   useUpdateBankAccountMutation,
   useUpdateSportCenterMutation,
 } from "schema";
+import { Loading } from "../components/atomos";
 
 const ProfilePage = () => {
   const sportCenterId = useUser().user?.uid!;
@@ -54,7 +55,7 @@ const ProfilePage = () => {
     });
   };
 
-  const sportCenter = data?.getSportCenter!;
+  const sportCenter = data?.getSportCenter;
   const bankAccounts =
     bankAccountsData.data?.listBankAccountsBySportCenterId?.map(
       (bankAccount) => {
@@ -68,30 +69,29 @@ const ProfilePage = () => {
       }
     ) || [];
 
-  return loading && bankAccountsData.loading ? (
-    <div></div>
-  ) : (
-    <LayoutPage nameSportCenter={sportCenter.name}>
-      <div className="flex ">
-        <div className="w-2/3 flex flex-col ">
-          <EditSportCenterButton
-            sportCenterId={sportCenterId}
-            {...sportCenter}
-            updateSportCenter={onUpdateSportCenter}
-          />
-          <Profile
-            {...sportCenter}
-            image={sportCenter.image ? sportCenter.image : ""}
-          />
+  return (
+    <LayoutPage nameSportCenter={sportCenter?.name || " "}>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="flex ">
+          <div className="w-2/3 flex flex-col ">
+            <EditSportCenterButton
+              sportCenterId={sportCenterId}
+              {...sportCenter!}
+              updateSportCenter={onUpdateSportCenter}
+            />
+            <Profile {...sportCenter!} />
+          </div>
+          <div className="w-1/3">
+            <AccountSection
+              accounts={bankAccounts}
+              onCreate={onCreateBankAccount}
+              sportCenterId={sportCenterId}
+            />
+          </div>
         </div>
-        <div className="w-1/3">
-          <AccountSection
-            accounts={bankAccounts}
-            onCreate={onCreateBankAccount}
-            sportCenterId={sportCenterId}
-          />
-        </div>
-      </div>
+      )}
     </LayoutPage>
   );
 };
