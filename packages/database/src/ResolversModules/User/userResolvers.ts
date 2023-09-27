@@ -28,7 +28,7 @@ export const userResolvers = {
     createUser: async (root: any, { input }: any) => {
       const result = await User.insert(input);
       const userId = result.identifiers[0].userId;
-      await createUser({ userId: userId, avatarUrl: input.avatarUrl });
+      await createUser({ userId: userId, image: input.image });
       return { ...input, id: userId };
     },
     deleteUser: async (root: any, { userId }: any) => {
@@ -42,12 +42,12 @@ export const userResolvers = {
         { userId: input.userId },
         {
           name: input.name,
-          age: input.age,
+          id: input.id,
           phone: input.phone,
           email: input.email,
         }
       );
-      await updateUser({ userId: input.userId, avatarUrl: input.avatarUrl });
+      await updateUser({ userId: input.userId, image: input.image });
       if (result.affected === 1) return { ...input };
       return false;
     },

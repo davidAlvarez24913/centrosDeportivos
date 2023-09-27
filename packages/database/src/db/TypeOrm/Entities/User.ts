@@ -1,22 +1,16 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, BaseEntity, OneToMany, PrimaryColumn } from "typeorm";
 import Reservation from "./Reservation";
 
 @Entity()
 class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  userId: number;
+  @PrimaryColumn()
+  userId: string;
 
   @Column()
   name: string;
 
   @Column()
-  age: number;
+  id: string;
 
   @Column()
   phone: string;

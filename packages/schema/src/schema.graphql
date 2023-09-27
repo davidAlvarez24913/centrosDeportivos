@@ -23,11 +23,11 @@ type OperationResponse {
 }
 type User {
   userId: ID!
+  id: String!
   name: String!
-  age: Int!
   phone: String!
   email: String!
-  avatarUrl: String
+  image: String
 }
 
 type RangeHour {
@@ -103,11 +103,12 @@ type Comment {
 }
 
 input CreateUserInput {
+  userId: ID!
   name: String!
-  age: Int!
+  id: String!
   phone: String!
   email: String!
-  avatarUrl: String
+  image: String
 }
 input CreateCommentInput {
   sportCenterId: ID!
@@ -165,10 +166,10 @@ input CreateReservationInput {
 input UpdateUserInput {
   userId: ID!
   name: String!
-  age: Int!
+  id: String!
   phone: String!
   email: String!
-  avatarUrl: String
+  image: String
 }
 input UpdateSportCenterInput {
   sportCenterId: ID!

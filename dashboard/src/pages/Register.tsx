@@ -4,12 +4,10 @@ import {
   CustomInput,
   CustomInputWithIcon,
 } from "../components/atomos";
-import { getAuth, deleteUser } from "firebase/auth";
 import { useCreateSportCenterMutation } from "schema";
-import { CreateUser } from "../Firebase";
+import { CreateUser, DeleteUser } from "../Firebase";
 const Register = () => {
   const [createSportCenterMutation] = useCreateSportCenterMutation();
-  const auth = getAuth();
   const [registData, setRegistData] = useState({
     name: "",
     email: "",
@@ -41,7 +39,7 @@ const Register = () => {
           })
           .catch((error) => {
             alert(error);
-            deleteUser(auth.currentUser!);
+            DeleteUser();
           });
       })
       .catch((error) => {

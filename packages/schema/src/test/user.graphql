@@ -1,5 +1,11 @@
-query AllUSers{
-    allUsers{
-        email
-    }
+query AllUSers {
+  allUsers {
+    email
+  }
+}
+
+mutation createUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    userId
+  }
 }
