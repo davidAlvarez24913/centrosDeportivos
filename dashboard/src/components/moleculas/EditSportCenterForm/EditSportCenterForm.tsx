@@ -8,7 +8,7 @@ export type ProfileProps = {
   ubication: string;
   phone: string;
   email: string;
-  image?: string | null;
+  image: string;
 };
 type EditSportCenterFormProps = {
   onSubmit: () => void;
@@ -21,7 +21,7 @@ const EditSportCenterForm = ({
   sportCenter,
   setSportCenter,
 }: EditSportCenterFormProps) => {
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

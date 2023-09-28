@@ -15,7 +15,7 @@ type ServiceFormProps = {
 const sports = Object.values(Sport);
 const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
   const { user } = useUser();
-  const [fileBlob, setFileBlob] = useState<string>();
+  const [fileBlob, setFileBlob] = useState<string>("");
   const [newService, setNewService] = useState({
     name: "",
     sport: "",

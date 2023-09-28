@@ -31,9 +31,7 @@ const ModalEditService = ({ onUpdate, service }: ModalEditServiceProps) => {
     description: service.description,
     image: service.image,
   });
-  const [fileBlob, setFileBlob] = useState<string | undefined>(
-    serviceToUpdate.image!
-  );
+  const [fileBlob, setFileBlob] = useState<string>(serviceToUpdate.image!);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const disp = cleanTypenameDisponibility({

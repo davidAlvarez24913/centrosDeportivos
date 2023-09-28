@@ -1,7 +1,7 @@
 type PropsImageInput = {
   label: string;
-  fileBlob: string | undefined;
-  setFileBlob: React.Dispatch<React.SetStateAction<string | undefined>>;
+  fileBlob: string;
+  setFileBlob: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
@@ -47,7 +47,6 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
               if (files) {
                 fileToDataURL(files[0], (dataURL) => {
                   setFileBlob(dataURL);
-                  // console.log("Data URL:", dataURL);
                 });
               }
             }}
@@ -63,7 +62,7 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
           <span
             className="text-red-700 py-2 text-center"
             onClick={() => {
-              setFileBlob(undefined);
+              setFileBlob("");
             }}
           >
             Eliminar

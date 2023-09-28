@@ -6,7 +6,7 @@ type SportCenterFormProps = {
   onSubmit: () => void;
 };
 const SportCenterForm = ({ onSubmit }: SportCenterFormProps) => {
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<string>("");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit();

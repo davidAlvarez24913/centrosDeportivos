@@ -81,15 +81,23 @@ export const serviceResolvers = {
           // upload image
           const auxNameImage =
             "services/" + input.sportCenterId + "-" + serviceId;
-          const imageUrl = await uploadFile(input.image, auxNameImage);
+          if (input.image !== "") {
+            const imageUrl = await uploadFile(input.image, auxNameImage);
+            await createFirestoreService({
+              serviceId,
+              image: auxNameImage + "#" + imageUrl,
+            });
+          } else {
+            await createFirestoreService({
+              serviceId,
+              image: "",
+            });
+          }
 
           // insert firestore
-          await createFirestoreService({
-            serviceId,
-            image: auxNameImage + "#" + imageUrl,
-          });
           return {
             ...input,
+            image: input.image === "" ? "" : auxNameImage,
             serviceId,
           };
         } catch (error) {

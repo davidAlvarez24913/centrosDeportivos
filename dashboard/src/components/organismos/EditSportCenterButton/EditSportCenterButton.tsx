@@ -19,7 +19,7 @@ const EditSportCenterButton = ({
   updateSportCenter,
 }: EditSportCenterButtonProps) => {
   const [modal, setModal] = useState(false);
-  const [newImage, setNewImage] = useState<string>();
+  const [newImage, setNewImage] = useState<string>("");
   const [sportCenter, setSportCenter] = useState<UpdateSportCenterInput>({
     sportCenterId,
     name,
