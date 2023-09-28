@@ -1,11 +1,14 @@
 import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import React from "react";
+import useUser from "src/Hooks/useUser";
 import { Background, CustomButton } from "src/components/atomos";
 import { MenuCard } from "src/components/moleculas";
 
 const HomePage = () => {
+  const user = useUser();
   const ionRouter = useIonRouter();
-  const loggedIn = false;
+  const loggedIn = user.user ? true : false;
+  console.log(user);
   return (
     <IonPage>
       <IonContent>
@@ -54,7 +57,7 @@ const HomePage = () => {
                   <CustomButton
                     title="Cerrar Sesión"
                     onClick={() => {
-                      console.log("logout");
+                      user.handleSignOut();
                     }}
                     color="cancel"
                     type="button"

@@ -98,6 +98,7 @@ export type CreateUserInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 export type Disponibility = {
@@ -236,7 +237,7 @@ export type Query = {
   allUsers?: Maybe<Array<Maybe<User>>>;
   findReservation?: Maybe<Reservation>;
   findUser?: Maybe<User>;
-  getAccess?: Maybe<Scalars['Boolean']['output']>;
+  getAccess: Scalars['Boolean']['output'];
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
@@ -499,7 +500,7 @@ export type GetAccessQueryVariables = Exact<{
 }>;
 
 
-export type GetAccessQuery = { __typename?: 'Query', getAccess?: boolean | null };
+export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 
 export type GetSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];

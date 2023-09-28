@@ -56,7 +56,7 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             <div className="flex flex-col">
               <nav className="flex flex-col px-3 gap-4 pt-8">
                 <LinkNav
-                  href="/reservaciones"
+                  href="/"
                   iconPath="/icons/book"
                   label="Reservaciones"
                 />

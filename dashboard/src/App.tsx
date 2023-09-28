@@ -17,12 +17,27 @@ function App() {
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Routes>
-            <Route index path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<Register />} />
             <Route
-              path="/reservaciones"
+              path="/login"
               element={
-                <ProtectedRoute redirectTo="/login">
+                <ProtectedRoute login>
+                  <LoginPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRoute regist>
+                  <Register />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              index
+              path="/"
+              element={
+                <ProtectedRoute>
                   <ReservationsPage />
                 </ProtectedRoute>
               }
@@ -43,14 +58,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="*"
-              element={
-                <ProtectedRoute redirectTo="/login">
-                  <LoginPage />
-                </ProtectedRoute>
-              }
-            />
+            |{" "}
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

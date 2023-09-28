@@ -1,30 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CustomButton,
   CustomInput,
   CustomInputWithIcon,
 } from "../components/atomos";
-import { SignIn } from "../Firebase";
 import { FirebaseError } from "@firebase/util";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGetAccessLazyQuery } from "schema";
 import useUser from "../Hooks/useUser";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPass] = useState("");
+  const [userInput, setUserInput] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { user, handleSignOut } = useUser();
+  const { user, handleSignOut, handleSignIn } = useUser();
   const [getAccess, { ...status }] = useGetAccessLazyQuery();
-  console.log("user login", user);
+  console.log(user);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleSignIn(userInput.email, userInput.password)
+      .then((newUser) => {
+        getAccess({
+          variables: { sportCenterId: newUser?.user.uid! },
+          nextFetchPolicy: "no-cache",
+          onCompleted: (data) => {
+            if (data.getAccess) {
+              navigate("/");
+            } else {
+              handleSignOut();
+              alert("No eres admin" + JSON.stringify(data));
+            }
+          },
+          onError: (error) => {
+            alert(error);
+          },
+        });
+      })
 
-  if (user && status.data?.getAccess?.valueOf)
-    return <Navigate to={"/reservaciones"} replace />;
-
+      .catch((error) => {
+        setError((error as FirebaseError).code);
+      });
+  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput({ ...userInput, [event.target.name]: event.target.value });
+  };
   return (
     <div className="w-screen h-screen bg-background fixed m-auto flex items-center justify-center">
-      <div className="flex flex-col border-2 rounded-2xl max-w-xl w-full h-96 border-primary gap-5 p-6 items-center justify-center">
+      <form
+        className="flex flex-col border-2 rounded-2xl max-w-xl w-full h-96 border-primary gap-5 p-6 items-center justify-center"
+        onSubmit={handleSubmit}
+      >
         <div className="flex items-end ">
           <img
             src="/icons/logo.svg"
@@ -42,9 +67,7 @@ const LoginPage = () => {
           color="white"
           type="email"
           name="email"
-          onChange={(e) => {
-            setEmail(e.currentTarget.value);
-          }}
+          onChange={handleChange}
           errorMessage={
             error === "auth/user-not-found"
               ? "Usuario incorrecto, intenta de nuevo!"
@@ -58,9 +81,7 @@ const LoginPage = () => {
           placeholder="Contraseña"
           color="white"
           name="password"
-          onChange={(e) => {
-            setPass(e.currentTarget.value);
-          }}
+          onChange={handleChange}
           errorMessage={
             error === "auth/wrong-password"
               ? "Contraseña incorrecta, intenta de nuevo!"
@@ -70,38 +91,13 @@ const LoginPage = () => {
         <CustomButton
           color="sucessfull"
           title="Iniciar Sesion"
-          type="button"
+          type="submit"
           disable={status.loading}
-          onClick={async () => {
-            console.log("click");
-            try {
-              const response = await SignIn(email, password);
-              getAccess({
-                variables: { sportCenterId: response.user.uid },
-                onCompleted: (data) => {
-                  if (data.getAccess?.valueOf) {
-                    navigate("/reservaciones");
-                  } else {
-                    handleSignOut();
-
-                    alert("No eres admin" + JSON.stringify(data));
-                    console.log(user);
-                  }
-                },
-                onError: (error) => {
-                  alert(error);
-                },
-              });
-            } catch (error) {
-              console.log(error);
-              setError((error as FirebaseError).code);
-            }
-          }}
         />
         <a href="/register" className="text-white">
           Registrarse
         </a>
-      </div>
+      </form>
     </div>
   );
 };

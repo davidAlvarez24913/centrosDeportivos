@@ -35,6 +35,7 @@ import SportsCentersPage from "./pages/SportsCentersPage";
 import SportCenterPage from "./pages/SportCenterPage";
 import DisponibilityPage from "./pages/DisponibilityPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import { UserContextProvider } from "./context/UserContext";
 
 setupIonicReact();
 
@@ -42,31 +43,37 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <ApolloProvider client={client}>
-          <Route exact path="/">
-            <Redirect to="home" />
-          </Route>
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/sports" component={SportsPage} />
-          <Route exact path="/services/:sport" component={ServicesPage} />
-          <Route exact path="/sportsCenters" component={SportsCentersPage} />
-          <Route
-            exact
-            path="/sportCenter/:sportCenterId"
-            component={SportCenterPage}
-          />
-          <Route exact path="/myreservations" component={MyReservationsPage} />
-          <Route exact path="/payment/:info" component={PaymentPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/info-bookings" component={InfoBookingsPage} />
-          <Route
-            exact
-            path="/disponibility/:serviceId"
-            component={DisponibilityPage}
-          />
-          <Route exact path="/profile" component={ProfilePage} />
-        </ApolloProvider>
+        <UserContextProvider>
+          <ApolloProvider client={client}>
+            <Route exact path="/">
+              <Redirect to="home" />
+            </Route>
+            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/sports" component={SportsPage} />
+            <Route exact path="/services/:sport" component={ServicesPage} />
+            <Route exact path="/sportsCenters" component={SportsCentersPage} />
+            <Route
+              exact
+              path="/sportCenter/:sportCenterId"
+              component={SportCenterPage}
+            />
+            <Route
+              exact
+              path="/myreservations"
+              component={MyReservationsPage}
+            />
+            <Route exact path="/payment/:info" component={PaymentPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/info-bookings" component={InfoBookingsPage} />
+            <Route
+              exact
+              path="/disponibility/:serviceId"
+              component={DisponibilityPage}
+            />
+            <Route exact path="/profile" component={ProfilePage} />
+          </ApolloProvider>
+        </UserContextProvider>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

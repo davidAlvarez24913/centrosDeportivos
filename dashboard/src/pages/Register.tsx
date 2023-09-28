@@ -5,22 +5,28 @@ import {
   CustomInputWithIcon,
 } from "../components/atomos";
 import { useCreateSportCenterMutation } from "schema";
-import { CreateUser, DeleteUser } from "../Firebase";
+import useUser from "../Hooks/useUser";
+import { useNavigate } from "react-router-dom";
+import { FirebaseError } from "@firebase/util";
+
 const Register = () => {
   const [createSportCenterMutation] = useCreateSportCenterMutation();
+  const { handleDeleteUser, handleCreateUser, handleSignOut } = useUser();
   const [registData, setRegistData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    CreateUser(registData.email, registData.password)
-      .then((userCredential) => {
-        const userId = userCredential.user.uid;
+    handleCreateUser(registData.email, registData.password)
+      .then((newUser) => {
         const sportCenter = {
-          sportCenterId: userId,
+          sportCenterId: newUser?.user.uid!,
           name: registData.name,
           email: registData.email,
           description: "",
@@ -34,18 +40,19 @@ const Register = () => {
         createSportCenterMutation({
           variables: { input: sportCenter },
         })
-          .then((data) => {
-            alert("Centro deportivo creado correctamente");
+          .then(() => {
+            // alert("Centro deportivo creado correctamente");
+            handleSignOut().then(() => {
+              navigate("/login");
+            });
           })
           .catch((error) => {
             alert(error);
-            DeleteUser();
+            handleDeleteUser();
           });
       })
       .catch((error) => {
-        console.log(error.code);
-        error.code === "auth/email-already-in-use" &&
-          alert("Correo electronico ya registrado");
+        setError((error as FirebaseError).code);
       });
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,6 +96,11 @@ const Register = () => {
             name="email"
             required
             onChange={handleChange}
+            errorMessage={
+              error === "auth/email-already-in-use"
+                ? "Correo electronico ya registrado"
+                : ""
+            }
           />
           <CustomInputWithIcon
             isPassword
@@ -118,7 +130,6 @@ const Register = () => {
             type="submit"
             disable={flag || flag2}
           />
-
           <a href="/login" className="text-white self-center">
             Iniciar Sesión
           </a>
