@@ -60,23 +60,21 @@ export const sportCenterResolvers = {
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
       const { images, ranking, ...dataSQL } = input;
-      const searchedByName = await SportCenter.find({
-        where: { name: dataSQL.name },
-      });
-      // Validation to not create with same name
-      if (searchedByName.length === 0) {
+      let sportCenterId;
+      try {
         const result = await SportCenter.insert(dataSQL);
-        const sportCenterId = result.identifiers[0].sportCenterId;
+        sportCenterId = result.identifiers[0].sportCenterId;
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
           image: input.image,
           ranking: input.ranking,
         });
         return { ...input, sportCenterId };
-      } else {
-        throw new GraphQLError("Nombre del centro deportivo ya existe", {
+      } catch (e) {
+        await SportCenter.delete({ sportCenterId: sportCenterId });
+        throw new GraphQLError("Error no se pudo registrar", {
           extensions: {
-            code: "SPORT_CENTER_ALREADY_EXISTS",
+            code: "SPORT_CENTER_ERROR_REGISTER",
             argumentName: "name",
           },
         });

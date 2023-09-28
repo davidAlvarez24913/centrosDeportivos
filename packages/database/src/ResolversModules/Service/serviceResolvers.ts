@@ -93,10 +93,8 @@ export const serviceResolvers = {
             serviceId,
           };
         } catch (error) {
-          if (serviceId) {
-            await Service.delete({ serviceId: Number(serviceId) });
-          }
-          console.log(typeof error, "error: ", error);
+          await Service.delete({ serviceId: Number(serviceId) });
+
           throw new GraphQLError(
             `No se pudo crear el servicio ${JSON.stringify(error)}`,
             {

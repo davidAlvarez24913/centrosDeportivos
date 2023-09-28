@@ -1,4 +1,11 @@
-import { Entity, Column, BaseEntity, OneToMany, PrimaryColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  BaseEntity,
+  OneToMany,
+  PrimaryColumn,
+  Index,
+} from "typeorm";
 import Service from "./Service";
 import BankAccount from "./BankAccount";
 
@@ -7,6 +14,7 @@ class SportCenter extends BaseEntity {
   @PrimaryColumn()
   sportCenterId: string;
 
+  @Index({ unique: true })
   @Column()
   name: string;
 

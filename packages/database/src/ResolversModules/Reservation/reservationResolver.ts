@@ -50,10 +50,10 @@ export const reservationResolvers = {
         rangeHour,
       } = input;
       const user = await User.findOneBy({
-        userId: Number(userId),
+        userId: userId,
       });
       const service = await Service.findOneBy({
-        serviceId: Number(serviceId),
+        serviceId: serviceId,
       });
       if (user && service) {
         const reservationSQL = await Reservation.insert({
