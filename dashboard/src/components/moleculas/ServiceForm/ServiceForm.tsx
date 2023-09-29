@@ -29,16 +29,19 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
       ...newService,
       image: fileBlob,
     } as CreateServiceInput;
-    createServiceMutation({
-      variables: { input: inputAux },
-      onCompleted: () => {
-        alert("servicio creado");
-        onSubmit();
-      },
-      onError: (err) => {
-        alert("Error al crear servicio" + err);
-      },
-    });
+    inputAux.name &&
+      inputAux.description &&
+      inputAux.sport &&
+      createServiceMutation({
+        variables: { input: inputAux },
+        onCompleted: () => {
+          alert("servicio creado");
+          onSubmit();
+        },
+        onError: (err) => {
+          alert("Error al crear servicio" + err);
+        },
+      });
   };
 
   return (
@@ -52,6 +55,7 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
         name="name"
         label="Nombre del Servicio"
         placeholder="Nombre del Servicio"
+        required
         onChange={(e) =>
           setNewService({ ...newService, name: e.currentTarget.value })
         }
@@ -59,6 +63,7 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
       <CustomTextarea
         color="blue"
         label="Descripción"
+        required
         onChange={(e) => {
           setNewService({ ...newService, description: e.currentTarget.value });
         }}
@@ -68,6 +73,7 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
         sports={sports}
         name="sport"
         label="Deporte"
+        required
         onChange={(e) =>
           setNewService({ ...newService, sport: e.currentTarget.value })
         }
