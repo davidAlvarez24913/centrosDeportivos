@@ -36,6 +36,7 @@ import SportCenterPage from "./pages/SportCenterPage";
 import DisponibilityPage from "./pages/DisponibilityPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import { UserContextProvider } from "./context/UserContext";
+import EditProfile from "./pages/EditProfile";
 
 setupIonicReact();
 
@@ -72,6 +73,7 @@ const App: React.FC = () => (
               component={DisponibilityPage}
             />
             <Route exact path="/profile" component={ProfilePage} />
+            <Route exact path="/editProfile" component={EditProfile} />
           </ApolloProvider>
         </UserContextProvider>
       </IonRouterOutlet>

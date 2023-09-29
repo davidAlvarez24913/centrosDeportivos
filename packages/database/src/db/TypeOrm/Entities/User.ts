@@ -12,6 +12,9 @@ class User extends BaseEntity {
   @Column()
   id: string;
 
+  @Column("date")
+  birthDate: Date;
+
   @Column()
   phone: string;
 

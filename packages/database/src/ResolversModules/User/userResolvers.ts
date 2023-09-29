@@ -1,41 +1,19 @@
 import { User } from "../../db/TypeOrm/Entities";
-import {
-  FireStoreUser,
-  createUser,
-  deleteUser,
-  findUser,
-  listUsers,
-  updateUser,
-} from "../../db/Firebase/Firestore/User";
-import { mergeUsers } from "../utils";
 
 export const userResolvers = {
   Query: {
-    usersCount: async () => (await User.find()).length,
-    allUsers: async () => {
-      const sqlUser = await User.find();
-      const firestoreUser = (await listUsers()) as FireStoreUser[];
-      return mergeUsers(sqlUser, firestoreUser);
-    },
-    findUser: async (root: any, { userId }: any) => {
-      const sqlUser = await User.findOneBy({ userId: userId });
-      const firestoreUser = await findUser(userId);
-      return { ...sqlUser, ...firestoreUser };
-    },
+    allUsers: async () => await User.find(),
+    findUser: async (root: any, { userId }: any) =>
+      await User.findOneBy({ userId: userId }),
   },
 
   Mutation: {
     createUser: async (root: any, { input }: any) => {
-      const result = await User.insert(input);
-      const userId = result.identifiers[0].userId;
-      await createUser({ userId: userId, image: input.image });
-      return { ...input, id: userId };
-    },
-    deleteUser: async (root: any, { userId }: any) => {
-      const result = await User.delete(userId);
-      await deleteUser(userId);
-      if (result.affected === 1) return true;
-      return false;
+      const result = await User.insert({
+        ...input,
+        birthDate: new Date(input.birthDate),
+      });
+      return { ...input, id: result.identifiers[0].userId };
     },
     updateUser: async (root: any, { input }: any) => {
       const result = await User.update(
@@ -47,9 +25,27 @@ export const userResolvers = {
           email: input.email,
         }
       );
-      await updateUser({ userId: input.userId, image: input.image });
-      if (result.affected === 1) return { ...input };
-      return false;
+      if (result.affected === 1)
+        return {
+          status: "Ok",
+          message: "Centro deportivo se actualizo exitosamente",
+        };
+      return {
+        status: "Failed",
+        message: "No se pudo actualizar",
+      };
+    },
+    deleteUser: async (root: any, { userId }: any) => {
+      const result = await User.delete(userId);
+      if (result.affected === 1)
+        return {
+          status: "Ok",
+          message: "Centro deportivo se actualizo exitosamente",
+        };
+      return {
+        status: "Failed",
+        message: "No se pudo actualizar",
+      };
     },
   },
 };

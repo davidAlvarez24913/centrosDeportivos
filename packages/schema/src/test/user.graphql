@@ -3,7 +3,16 @@ query AllUSers {
     email
   }
 }
-
+query GetUser($userId: ID!) {
+  findUser(userId: $userId) {
+    userId
+    name
+    id
+    birthDate
+    email
+    phone
+  }
+}
 mutation createUser($input: CreateUserInput!) {
   createUser(input: $input) {
     userId

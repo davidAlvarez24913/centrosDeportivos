@@ -8,7 +8,6 @@ const HomePage = () => {
   const user = useUser();
   const ionRouter = useIonRouter();
   const loggedIn = user.user ? true : false;
-  console.log(user);
   return (
     <IonPage>
       <IonContent>

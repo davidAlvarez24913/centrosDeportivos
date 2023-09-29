@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "@firebase/auth";
-import { auth } from "../Firebase";
-import { SignIn } from "../Firebase";
-import { signOut } from "@firebase/auth";
+import { auth, SignIn, CreateUser, DeleteUser } from "../Firebase";
+import { signOut, UserCredential } from "@firebase/auth";
 
 export interface UserContextProps {
   user: User | undefined;
-  handleSignIn: (email: string, password: string) => Promise<void>;
+  handleCreateUser: (
+    email: string,
+    password: string
+  ) => Promise<UserCredential | undefined>;
+  handleSignIn: (
+    email: string,
+    password: string
+  ) => Promise<UserCredential | undefined>;
   handleSignOut: () => Promise<void>;
+  handleDeleteUser: () => Promise<void>;
   loadingUser: boolean;
 }
 export const UserContext = React.createContext<UserContextProps | undefined>(
@@ -23,6 +30,7 @@ export const UserContextProvider = ({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      console.log(user);
       if (authUser) {
         setUser(authUser);
         setLoadingUser(false);
@@ -30,21 +38,26 @@ export const UserContextProvider = ({
         setUser(undefined);
         setLoadingUser(false);
       }
-      console.log("fun unsubscribe,user: ", user);
     });
-
     return () => {
-      // Desinscribirse de la detección de cambios en la autenticación al desmontar el componente
       unsubscribe();
     };
   }, []);
 
-  const handleSignIn = async (email: string, password: string) => {
+  const handleCreateUser = async (email: string, password: string) => {
+    const newUser = await CreateUser(email, password);
+    return newUser;
+  };
+  const handleDeleteUser = async () => {
     try {
-      await SignIn(email, password);
+      await DeleteUser();
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      console.error("Error al crear usuario:", error);
     }
+  };
+  const handleSignIn = async (email: string, password: string) => {
+    const newUser = await SignIn(email, password);
+    return newUser;
   };
   const handleSignOut = async () => {
     try {
@@ -55,7 +68,14 @@ export const UserContextProvider = ({
   };
   return (
     <UserContext.Provider
-      value={{ user, handleSignIn, handleSignOut, loadingUser }}
+      value={{
+        user,
+        handleSignIn,
+        handleSignOut,
+        loadingUser,
+        handleCreateUser,
+        handleDeleteUser,
+      }}
     >
       {children}
     </UserContext.Provider>

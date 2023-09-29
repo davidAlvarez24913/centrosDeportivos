@@ -4,11 +4,13 @@ type PropsCustomInput = {
   pathSVG?: string;
   errorMessage?: string;
   isPassword: boolean;
+  label?: string;
 } & React.ComponentProps<"input">;
 const CustomInput = ({
   pathSVG,
   errorMessage,
   isPassword,
+  label,
   ...rest
 }: PropsCustomInput) => {
   const [visible, setVisible] = useState<"text" | "password">("password");
@@ -16,7 +18,15 @@ const CustomInput = ({
   const auxIcon2 = "assets/icon/eye-outline.svg";
   const flagIcon = !(rest.type === "password") && pathSVG !== undefined;
   return (
-    <div>
+    <div className="flex flex-col gap-2">
+      {label && (
+        <label
+          className={`text-base font-light px-1`}
+          htmlFor={label?.replaceAll(" ", "_")}
+        >
+          {label}
+        </label>
+      )}
       <div className=" flex w-full flex-col rounded-xl border border-customText">
         <div className="flex p-2 w-full text-customText">
           <input
@@ -46,7 +56,7 @@ const CustomInput = ({
         </div>
       </div>
       {errorMessage && (
-        <p className="text-red-400 text-xs px-4">{errorMessage as string}</p>
+        <p className="text-red-400 text-xs px-2">{errorMessage as string}</p>
       )}
     </div>
   );

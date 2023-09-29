@@ -5,7 +5,7 @@ import useUser from "src/Hooks/useUser";
 import { Background, Header, Loading } from "src/components/atomos";
 import { ProfileInfo } from "src/components/moleculas";
 
-const ProfilePage = () => {
+const EditProfile = () => {
   const userId = useUser().user?.uid;
 
   const { data, loading } = useGetUserQuery({
@@ -24,4 +24,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default EditProfile;

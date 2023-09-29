@@ -1,6 +1,8 @@
 import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import React, { useState } from "react";
-import { SignIn } from "src/Firebase";
+import useUser from "src/Hooks/useUser";
+import { FirebaseError } from "@firebase/util";
+
 import {
   Background,
   CustomButton,
@@ -10,19 +12,17 @@ import {
 } from "src/components/atomos";
 const LoginPage = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const ionRouter = useIonRouter();
+  const { handleSignIn } = useUser();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    SignIn(userInput.email, userInput.password)
+    handleSignIn(userInput.email, userInput.password)
       .then(() => {
         ionRouter.push("/");
       })
       .catch((error) => {
-        error.code === "auth/user-not-found" &&
-          console.log("Usuario incorrecto, intenta de nuevo!");
-        error.code === "auth/invalid-email" && console.log("Email invalido");
-        error.code === "auth/wrong-password" &&
-          console.log("Contraseña incorrecta, intenta de nuevo!");
+        setError((error as FirebaseError).code);
       });
     console.log(userInput);
   };
@@ -34,37 +34,50 @@ const LoginPage = () => {
       <Header title="Iniciar Sesion" path="/" />
       <IonContent>
         <Background>
-          <form className="flex flex-col gap-5 py-5" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-3 py-5" onSubmit={handleSubmit}>
             <CustomInput
+              label="Correo Electronico"
               type="email"
               name="email"
-              placeholder="Correo electronico"
+              placeholder="Correo Electronico"
               onChange={handleChange}
               required
+              errorMessage={
+                error === "auth/user-not-found"
+                  ? "Usuario incorrecto, intenta de nuevo!"
+                  : error === "auth/invalid-email"
+                  ? "Email invalido"
+                  : ""
+              }
             />
-
             <CustomInputWithIcon
+              label="Contraseña"
               isPassword
               name="password"
               type="password"
               placeholder="Contraseña"
               onChange={handleChange}
               required
+              errorMessage={
+                error === "auth/wrong-password"
+                  ? "Contraseña incorrecta, intenta de nuevo!"
+                  : ""
+              }
             />
             <CustomButton
               color="sucessfull"
               title="INICIAR SESION"
               type="submit"
             />
-            <a href="/" className="text-center">
-              Olvide mi contraseña
-            </a>
             <CustomButton
               color="outline"
               title="REGISTRARSE"
               type="button"
               onClick={() => ionRouter.push("/register")}
             />
+            <a href="/" className="text-center underline">
+              Olvide mi contraseña
+            </a>
           </form>
         </Background>
       </IonContent>
