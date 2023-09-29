@@ -322,7 +322,6 @@ export type Service = {
   disponibility?: Maybe<Disponibility>;
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
-  ranking?: Maybe<Scalars['Int']['output']>;
   reservations?: Maybe<Array<Reservation>>;
   serviceId: Scalars['ID']['output'];
   sport: Sport;
@@ -386,7 +385,6 @@ export type UpdateServiceInput = {
   disponibility?: InputMaybe<UpdateDisponibilityInput>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  ranking?: InputMaybe<Scalars['Int']['input']>;
   serviceId: Scalars['ID']['input'];
   sport?: InputMaybe<Sport>;
   sportCenterId: Scalars['ID']['input'];

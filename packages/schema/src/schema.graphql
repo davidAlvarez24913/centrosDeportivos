@@ -66,7 +66,6 @@ type Service {
   sport: Sport!
   description: String!
   image: String
-  ranking: Int
   sportCenterId: ID!
   disponibility: Disponibility
   reservations: [Reservation!]
@@ -188,7 +187,6 @@ input UpdateServiceInput {
   description: String
   sport: Sport
   image: String
-  ranking: Int
   disponibility: UpdateDisponibilityInput
 }
 input UpdateBankAccountInput {

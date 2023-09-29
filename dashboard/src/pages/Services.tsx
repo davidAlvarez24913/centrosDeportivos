@@ -3,10 +3,11 @@ import { CardService, LayoutPage } from "../components/moleculas";
 import { CreateServiceButton } from "../components/organismos";
 import { Service, useListServicesBySportCenterIdQuery } from "schema";
 import useUser from "../Hooks/useUser";
+import { Loading } from "../components/atomos";
 
 const ServicesPage = () => {
   const { user } = useUser();
-  const { data, refetch } = useListServicesBySportCenterIdQuery({
+  const { data, loading, refetch } = useListServicesBySportCenterIdQuery({
     variables: { sportCenterId: user?.uid as string },
   });
   const services = data?.listServicesBySportCenterId;
@@ -23,18 +24,24 @@ const ServicesPage = () => {
           />
         </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10  mt-5">
-          {services?.map((service, index) => {
-            const { __typename, ...auxService } = service as Service;
-            return (
-              <CardService
-                onRefetch={() => {
-                  refetch();
-                }}
-                service={auxService}
-                key={index}
-              />
-            );
-          })}
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              {services?.map((service, index) => {
+                const { __typename, ...auxService } = service as Service;
+                return (
+                  <CardService
+                    onRefetch={() => {
+                      refetch();
+                    }}
+                    service={auxService}
+                    key={index}
+                  />
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
     </LayoutPage>

@@ -21,10 +21,8 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
     sport: "",
     description: "",
     sportCenterId: user?.uid,
-    image: "",
   });
   const [createServiceMutation, status] = useCreateServiceMutation();
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let inputAux = {
@@ -84,7 +82,6 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
         color="sucessfull"
         type="submit"
         disable={status.loading}
-        onClick={() => console.log(newService)}
       />
     </form>
   );
