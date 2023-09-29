@@ -21,9 +21,7 @@ const CreateServiceResolver = async (root: any, { input }: any) => {
       // upload image
       const auxNameImage = "services/" + input.sportCenterId + "-" + serviceId;
       if (input.image !== "") {
-        console.log("here");
         const imageUrl = await uploadFile(input.image, auxNameImage);
-        console.log(imageUrl);
 
         await createFirestoreService({
           serviceId,
