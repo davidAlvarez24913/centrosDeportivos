@@ -49,7 +49,7 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
           <div>
             <div className="flex flex-col">
               <LinkLogo />
-              <h2 className="text-customText font-semibold text-3xl mx-auto">
+              <h2 className="text-customText font-semibold text-bold md:text-2xl mx-auto">
                 {nameSportCenter}
               </h2>
             </div>

@@ -27,7 +27,7 @@ const CustomLink = ({ label, srcImage, isActive, to }: PropsCustomLink) => {
       <p
         className={`${
           isActive ? "text-background" : "text-customText"
-        } font-normal md:text-2xl`}
+        } font-normal md:text-xl`}
       >
         {label}
       </p>
