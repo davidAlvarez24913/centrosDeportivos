@@ -17,6 +17,9 @@ enum Weekday {
   Saturday
   Sunday
 }
+
+scalar Date
+
 type OperationResponse {
   status: Status!
   message: String!
@@ -24,10 +27,10 @@ type OperationResponse {
 type User {
   userId: ID!
   id: String!
+  birthDate: Date!
   name: String!
   phone: String!
   email: String!
-  image: String
 }
 
 type RangeHour {
@@ -106,9 +109,9 @@ input CreateUserInput {
   userId: ID!
   name: String!
   id: String!
+  birthDate: Date!
   phone: String!
   email: String!
-  image: String
 }
 input CreateCommentInput {
   sportCenterId: ID!
@@ -167,9 +170,9 @@ input UpdateUserInput {
   userId: ID!
   name: String!
   id: String!
+  birthDate: Date!
   phone: String!
   email: String!
-  image: String
 }
 input UpdateSportCenterInput {
   sportCenterId: ID!
@@ -216,7 +219,6 @@ input UpdateDisponibilityInput {
 
 type Query {
   #users
-  usersCount: Int!
   allUsers: [User]
   findUser(userId: ID!): User
 
@@ -250,8 +252,8 @@ type Query {
 type Mutation {
   #users
   createUser(input: CreateUserInput!): User
-  deleteUser(userId: ID!): Boolean
-  updateUser(input: UpdateUserInput!): User
+  deleteUser(userId: ID!): OperationResponse
+  updateUser(input: UpdateUserInput!): OperationResponse
 
   #sportcenters
   createSportCenter(input: CreateSportCenterInput!): SportCenter

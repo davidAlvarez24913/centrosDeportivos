@@ -34,11 +34,12 @@ const LoginPage = () => {
       <Header title="Iniciar Sesion" path="/" />
       <IonContent>
         <Background>
-          <form className="flex flex-col gap-5 py-5" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-3 py-5" onSubmit={handleSubmit}>
             <CustomInput
+              label="Correo Electronico"
               type="email"
               name="email"
-              placeholder="Correo electronico"
+              placeholder="Correo Electronico"
               onChange={handleChange}
               required
               errorMessage={
@@ -49,8 +50,8 @@ const LoginPage = () => {
                   : ""
               }
             />
-
             <CustomInputWithIcon
+              label="Contraseña"
               isPassword
               name="password"
               type="password"
@@ -68,15 +69,15 @@ const LoginPage = () => {
               title="INICIAR SESION"
               type="submit"
             />
-            <a href="/" className="text-center">
-              Olvide mi contraseña
-            </a>
             <CustomButton
               color="outline"
               title="REGISTRARSE"
               type="button"
               onClick={() => ionRouter.push("/register")}
             />
+            <a href="/" className="text-center underline">
+              Olvide mi contraseña
+            </a>
           </form>
         </Background>
       </IonContent>

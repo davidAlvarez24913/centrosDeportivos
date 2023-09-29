@@ -16,6 +16,7 @@ const RegisterPage = () => {
   const [registData, setRegistData] = useState({
     name: "",
     id: "",
+    birthDate: "",
     phone: "",
     email: "",
     password: "",
@@ -31,14 +32,15 @@ const RegisterPage = () => {
           userId: userId!,
           name: registData.name,
           id: registData.id,
+          birthDate: registData.birthDate,
           phone: registData.phone,
           email: registData.email,
-          image: "",
         };
         createUserMutation({
           variables: { input: user },
         })
           .then(() => {
+            console.log("Usuario creado correctamente");
             setAlert({ state: true, msg: "Usuario creado correctamente" });
           })
           .catch((error) => {
@@ -62,8 +64,9 @@ const RegisterPage = () => {
       <Header title="Registro" path="/login" />
       <IonContent>
         <Background>
-          <form className="flex flex-col gap-5 py-5" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-3 py-5" onSubmit={handleSubmit}>
             <CustomInput
+              label="Nombre"
               type="text"
               name="name"
               placeholder="Nombre"
@@ -71,6 +74,7 @@ const RegisterPage = () => {
               required
             />
             <CustomInput
+              label="Cedula/Pasaporte"
               type="text"
               name="id"
               placeholder="Cedula/Pasaporte"
@@ -78,6 +82,14 @@ const RegisterPage = () => {
               required
             />
             <CustomInput
+              label="Fecha de nacimiento"
+              type="date"
+              name="birthDate"
+              onChange={handleChange}
+              required
+            />
+            <CustomInput
+              label="Telefono"
               type="text"
               name="phone"
               placeholder="Telefono"
@@ -86,6 +98,7 @@ const RegisterPage = () => {
               required
             />
             <CustomInput
+              label="Correo electronico"
               type="email"
               name="email"
               placeholder="Correo electronico"
@@ -93,6 +106,7 @@ const RegisterPage = () => {
               required
             />
             <CustomInputWithIcon
+              label="Contraseña"
               isPassword
               name="password"
               type="password"
@@ -104,10 +118,11 @@ const RegisterPage = () => {
               }
             />
             <CustomInputWithIcon
+              label="Confirmar Contraseña"
               isPassword
               type="password"
               name="confirmPassword"
-              placeholder="Confirma contraseña"
+              placeholder="Confirmar contraseña"
               onChange={handleChange}
               required
               errorMessage={flag ? "Las contraseñas deben coincidir" : ""}
