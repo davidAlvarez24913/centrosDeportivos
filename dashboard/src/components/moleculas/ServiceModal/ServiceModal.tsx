@@ -3,14 +3,13 @@ import {
   RangeHour,
   Service,
   UpdateServiceInput,
-  Weekday,
   useUpdateServiceMutation,
 } from "schema";
 import { CustomButton } from "../../atomos";
 import ScheduleContent from "../ScheduleContent";
 import Modal from "../Modal";
 import ModalNewBook from "../ModalNewBook";
-import { changeLanguageDay, getStringUrl } from "../../../utils";
+import { getStringUrl } from "../../../utils";
 
 type ServiceFormProps = {
   onClose: () => void;
