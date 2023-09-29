@@ -1,6 +1,8 @@
 import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import React, { useState } from "react";
-import { SignIn } from "src/Firebase";
+import useUser from "src/Hooks/useUser";
+import { FirebaseError } from "@firebase/util";
+
 import {
   Background,
   CustomButton,
@@ -10,19 +12,17 @@ import {
 } from "src/components/atomos";
 const LoginPage = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const ionRouter = useIonRouter();
+  const { handleSignIn } = useUser();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    SignIn(userInput.email, userInput.password)
+    handleSignIn(userInput.email, userInput.password)
       .then(() => {
         ionRouter.push("/");
       })
       .catch((error) => {
-        error.code === "auth/user-not-found" &&
-          console.log("Usuario incorrecto, intenta de nuevo!");
-        error.code === "auth/invalid-email" && console.log("Email invalido");
-        error.code === "auth/wrong-password" &&
-          console.log("Contraseña incorrecta, intenta de nuevo!");
+        setError((error as FirebaseError).code);
       });
     console.log(userInput);
   };
@@ -41,6 +41,13 @@ const LoginPage = () => {
               placeholder="Correo electronico"
               onChange={handleChange}
               required
+              errorMessage={
+                error === "auth/user-not-found"
+                  ? "Usuario incorrecto, intenta de nuevo!"
+                  : error === "auth/invalid-email"
+                  ? "Email invalido"
+                  : ""
+              }
             />
 
             <CustomInputWithIcon
@@ -50,6 +57,11 @@ const LoginPage = () => {
               placeholder="Contraseña"
               onChange={handleChange}
               required
+              errorMessage={
+                error === "auth/wrong-password"
+                  ? "Contraseña incorrecta, intenta de nuevo!"
+                  : ""
+              }
             />
             <CustomButton
               color="sucessfull"

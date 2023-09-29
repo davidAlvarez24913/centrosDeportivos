@@ -7,10 +7,11 @@ import {
   CustomInputWithIcon,
   Header,
 } from "src/components/atomos";
-import { CreateUser, DeleteUser } from "src/Firebase";
 import { useCreateUserMutation } from "schema";
+import useUser from "src/Hooks/useUser";
 const RegisterPage = () => {
   const [alert, setAlert] = useState({ state: true, msg: "" });
+  const { handleCreateUser, handleDeleteUser } = useUser();
   const [createUserMutation] = useCreateUserMutation();
   const [registData, setRegistData] = useState({
     name: "",
@@ -23,11 +24,11 @@ const RegisterPage = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(registData);
-    CreateUser(registData.email, registData.password)
+    handleCreateUser(registData.email, registData.password)
       .then((userCredential) => {
-        const userId = userCredential.user.uid;
+        const userId = userCredential?.user.uid;
         const user = {
-          userId: userId,
+          userId: userId!,
           name: registData.name,
           id: registData.id,
           phone: registData.phone,
@@ -42,7 +43,7 @@ const RegisterPage = () => {
           })
           .catch((error) => {
             console.log(error);
-            DeleteUser();
+            handleDeleteUser();
           });
       })
       .catch((error) => {
