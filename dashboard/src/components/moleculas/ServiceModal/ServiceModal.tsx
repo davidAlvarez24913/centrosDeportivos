@@ -39,7 +39,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
     <div>
       <div className="py-2">
         <img
-          src={getStringUrl(service.image!) ?? "/image 9.png"}
+          src={getStringUrl(service.image!) ?? "/images/default-service.jpeg"}
           alt={service.name}
           className="w-full rounded-lg"
         />
