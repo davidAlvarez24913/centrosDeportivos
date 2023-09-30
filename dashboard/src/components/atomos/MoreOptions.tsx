@@ -7,12 +7,12 @@ type PropsMoreOptions = {
 const MoreOptions = ({ onEdit, onDelete }: PropsMoreOptions) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative ">
       <button onClick={() => setOpen(!open)} className="px-2">
         <img src="/icons/more.svg" alt="More options icon" width={28} />
       </button>
       <div
-        className={`mt-7  bg-background p-2 z-10 absolute bg-opacity-80 flex flex-col gap-2 rounded-md ${
+        className={`mt-7 ml-2 bg-background p-2 z-30 absolute bg-opacity-80 flex flex-col gap-2 rounded-md ${
           open ? "" : "hidden"
         }`}
       >

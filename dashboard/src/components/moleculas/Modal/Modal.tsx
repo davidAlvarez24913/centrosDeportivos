@@ -28,7 +28,7 @@ const Modal = ({
           <div className="bg-white flex flex-col w-full max-w-lg max-h-[95%] border overflow-y-auto border-white rounded-xl px-7 py-8 ">
             <div className="text-base flex flex-row justify-between">
               <h2 className="text-xl font-bold">{title}</h2>
-              <div className="flex">
+              <div className="flex flex-row gap-3">
                 {moreOptions && (
                   <MoreOptions onDelete={onDelete!} onEdit={onEdit!} />
                 )}
