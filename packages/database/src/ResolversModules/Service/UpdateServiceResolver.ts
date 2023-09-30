@@ -17,13 +17,33 @@ const UpdateServiceResolver = async (root: any, { input }: any) => {
 
     let imageUrl = "";
     // compare that images are different
-    if (input.image != currentServiceNoSQL?.image && input.image !== "") {
-      imageUrl = await uploadFile(input.image, auxNameImage);
-      if (imageUrl) {
+    if (input.image != currentServiceNoSQL?.image) {
+      if (input.image !== "") {
+        imageUrl = await uploadFile(input.image, auxNameImage);
+        if (imageUrl) {
+          await updateFirestoreService({
+            serviceId: input.serviceId,
+            image: auxNameImage + "#" + imageUrl,
+            disponibility: { ...input.disponibility },
+          });
+          await Service.update(
+            {
+              serviceId: input.serviceId,
+            },
+            {
+              name: input.name,
+              description: input.description,
+              sport: input.sport,
+            }
+          );
+        }
+      } else {
+        const nameImage = currentServiceNoSQL?.image.split("#")[0];
+        // await deleteImage(nameImage);
         await updateFirestoreService({
           serviceId: input.serviceId,
-          image: auxNameImage + "#" + imageUrl,
-          disponibility: { ...input.disponibility },
+          image: input.image,
+          disponibility: { ...(input.disponibility as Disponibility) },
         });
         await Service.update(
           {
@@ -37,8 +57,6 @@ const UpdateServiceResolver = async (root: any, { input }: any) => {
         );
       }
     } else {
-      const nameImage = currentServiceNoSQL?.image.split("#")[0];
-      await deleteImage(nameImage);
       await updateFirestoreService({
         serviceId: input.serviceId,
         image: input.image,
