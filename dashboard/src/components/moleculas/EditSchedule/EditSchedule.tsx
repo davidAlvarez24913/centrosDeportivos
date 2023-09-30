@@ -8,8 +8,6 @@ import {
 } from "schema";
 import { CustomButton, CustomInput } from "../../atomos";
 import {
-  buildRangeHour,
-  changeLanguageDay,
   changeLanguageDayES,
   cleanTypenameDisponibility,
 } from "../../../utils";
@@ -59,12 +57,7 @@ const EditSchedule = ({
       }
     );
     const disponibility = { ...disp, [dayEn]: disponibilityDay };
-    console.log({
-      ...service,
-      sportCenterId: user?.uid!,
-      image: service.image,
-      disponibility: disponibility as UpdateDisponibilityInput,
-    });
+
     editSchedule({
       ...service,
       sportCenterId: user?.uid!,
