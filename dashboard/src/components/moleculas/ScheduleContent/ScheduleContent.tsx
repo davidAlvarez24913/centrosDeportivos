@@ -9,11 +9,8 @@ type PropsSchdeuleContent = {
   rangeHourList: RangeHour[];
   day: string;
   loading: boolean;
-  service: Omit<
-    Service,
-    "ranking" | "reservations" | "sportCenterId" | "__typename"
-  >;
-  mutationSchedule?: (input: UpdateServiceInput) => void;
+  service: Omit<Service, "reservations" | "sportCenterId" | "__typename">;
+  mutationSchedule: (input: UpdateServiceInput) => void;
 };
 const ScheduleContent = ({
   scheduelId,
@@ -57,9 +54,13 @@ const ScheduleContent = ({
           rangeHourList.map((item, index) => {
             return (
               <RowRangeHour
+                day={day}
                 rangeHour={item}
                 scheduelId={index.toString()}
+                service={service}
+                index={index}
                 key={index}
+                mutationSchedule={mutationSchedule}
               />
             );
           })
@@ -81,8 +82,8 @@ const ScheduleContent = ({
           onClose={() => {
             setModalNewSchedule(false);
           }}
-          rangeHour={[]}
-          addSchedule={mutationSchedule!}
+          rangeHour={[]} //clean field
+          addSchedule={mutationSchedule}
         />
       </Modal>
     </div>
