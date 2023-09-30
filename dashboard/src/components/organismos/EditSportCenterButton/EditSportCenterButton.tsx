@@ -3,11 +3,13 @@ import { CustomButton, CustomInput, CustomTextarea } from "../../atomos";
 import { ImageInput, Modal } from "../../moleculas";
 import { UpdateSportCenterInput } from "schema";
 import { ProfileProps } from "../../moleculas/Profile/Profile";
+import { getStringUrl } from "../../../utils";
 
 type EditSportCenterButtonProps = {
   updateSportCenter: (input: UpdateSportCenterInput) => void;
   sportCenterId: string;
 } & ProfileProps;
+
 const EditSportCenterButton = ({
   sportCenterId,
   name,
@@ -19,7 +21,7 @@ const EditSportCenterButton = ({
   updateSportCenter,
 }: EditSportCenterButtonProps) => {
   const [modal, setModal] = useState(false);
-  const [newImage, setNewImage] = useState<string>("");
+  const [newImage, setNewImage] = useState<string>(image);
   const [sportCenter, setSportCenter] = useState<UpdateSportCenterInput>({
     sportCenterId,
     name,
@@ -31,7 +33,7 @@ const EditSportCenterButton = ({
   });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    updateSportCenter(sportCenter);
+    updateSportCenter({ ...sportCenter, image: newImage });
     alert("Datos de centro deportivo actualizados correctamente");
   };
   const handleChange = (
@@ -63,7 +65,11 @@ const EditSportCenterButton = ({
           onSubmit={(e) => handleSubmit(e)}
         >
           <ImageInput
-            fileBlob={newImage}
+            fileBlob={
+              newImage.includes("sportscenter/")
+                ? getStringUrl(newImage)
+                : newImage
+            }
             label="Agregar Imagen del Centro Deportivo"
             setFileBlob={setNewImage}
           />
