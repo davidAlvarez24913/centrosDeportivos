@@ -93,15 +93,15 @@ export const cleanTypenameDisponibility = (service: Service) => {
   if (service.disponibility) {
     const { __typename, ...days } = service.disponibility!;
 
-    Object.entries(days).map((d) => {
-      if (d[1] == null) {
-        daysAux = { ...daysAux, [d[0] as Weekday]: null };
+    Object.entries(days).map((day) => {
+      if (day[1] == null) {
+        daysAux = { ...daysAux, [day[0] as Weekday]: null };
       } else {
-        const cl = d[1].map((el) => {
-          const { __typename, ...rest } = el!;
+        const cleanedArray = day[1].map((element) => {
+          const { __typename, ...rest } = element!;
           return rest;
         });
-        daysAux = { ...daysAux, [d[0] as Weekday]: cl };
+        daysAux = { ...daysAux, [day[0] as Weekday]: cleanedArray };
       }
     });
     return daysAux;
