@@ -5,7 +5,6 @@ type ProsCustomButton = {
   type: "button" | "submit" | "reset";
   id?: string;
   disable?: boolean;
-  loading?: boolean;
   addIcon?: boolean;
 };
 function CustomButton({
@@ -15,7 +14,6 @@ function CustomButton({
   type,
   id,
   disable,
-  loading,
   addIcon,
 }: ProsCustomButton) {
   let styleColor = "";
@@ -30,11 +28,24 @@ function CustomButton({
       onClick={onClick}
       type={type}
       disabled={disable}
-      className={`flex flex-row justify-center items-center gap-4 rounded-xl w-full text-xl font-medium h-10 px-4 ${styleColor}`}
+      className={`flex flex-row justify-center items-center gap-4 rounded-xl w-full 
+      text-xl font-medium h-10 px-4 ${styleColor}
+      
+      `}
     >
-      <p className="uppercase text-lg">{title}</p>
+      <p className={`uppercase text-lg ${disable ? "animate-pulse" : ""}`}>
+        {title}
+      </p>
       {addIcon && <img src="/icons/add-bold.svg" alt="add icon" />}
-      {loading && <p>laoding ... xd</p>}
+      {disable && (
+        <img
+          src={`/icons/loading${
+            color === "sucessfull" ? "-blue" : color === "blue" ? "-green" : ""
+          }.svg`}
+          alt="loading"
+          className="w-8 h-8"
+        />
+      )}
     </button>
   );
 }
