@@ -13,10 +13,8 @@ type PropsNewSchedule = {
   onClose: () => void;
   rangeHour: RangeHour[];
   day: string;
-  service: Omit<
-    Service,
-    "ranking" | "reservations" | "sportCenterId" | "__typename"
-  >;
+  loading: boolean;
+  service: Omit<Service, "reservations" | "sportCenterId" | "__typename">;
   addSchedule: (input: UpdateServiceInput) => void;
 };
 const NewSchedule = ({
@@ -25,6 +23,7 @@ const NewSchedule = ({
   service,
   addSchedule,
   day,
+  loading,
 }: PropsNewSchedule) => {
   const { user } = useUser();
   let rangeHourAux: RangeHour;
@@ -74,6 +73,7 @@ const NewSchedule = ({
         <CustomButton
           color="sucessfull"
           title="Crear Horario"
+          disable={loading}
           type="button"
           onClick={() => {
             let result = {};
@@ -97,7 +97,7 @@ const NewSchedule = ({
               image: service.image,
               disponibility: result as UpdateDisponibilityInput,
             });
-            onClose();
+            !loading && onClose();
           }}
         />
       </div>

@@ -8,6 +8,7 @@ type PropsSchdeuleContent = {
   scheduelId: string;
   rangeHourList: RangeHour[];
   day: string;
+  loading: boolean;
   service: Omit<
     Service,
     "ranking" | "reservations" | "sportCenterId" | "__typename"
@@ -18,6 +19,7 @@ const ScheduleContent = ({
   scheduelId,
   rangeHourList,
   day,
+  loading,
   service,
   mutationSchedule,
 }: PropsSchdeuleContent) => {
@@ -73,6 +75,7 @@ const ScheduleContent = ({
         }}
       >
         <NewSchedule
+          loading={loading}
           day={day}
           service={service}
           onClose={() => {
