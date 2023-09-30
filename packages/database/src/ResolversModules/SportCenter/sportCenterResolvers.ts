@@ -9,6 +9,7 @@ import {
   updateFirestoreSportCenter,
 } from "../../db/Firebase/Firestore/SportCenter";
 import { mergeSportCenter } from "../utils";
+import UpdateSportCenterResolver from "./UpdateSportCenterResolver";
 
 export const sportCenterResolvers = {
   Query: {
@@ -80,46 +81,7 @@ export const sportCenterResolvers = {
         });
       }
     },
-    updateSportCenter: async (root: any, { input }: any) => {
-      // query to get current data, if dont pass sql data not update record
-      const currentSportCenterSQL = await SportCenter.find({
-        where: { sportCenterId: input.sportCenterId },
-      });
-      const currentSportCenterNoSQL = await findSportCenter(
-        input.sportCenterId
-      );
-
-      try {
-        await updateFirestoreSportCenter({
-          sportCenterId: input.sportCenterId,
-          image: input.image ?? currentSportCenterNoSQL?.images,
-          ranking: input.ranking ?? currentSportCenterNoSQL?.ranking,
-        });
-        await SportCenter.update(
-          {
-            sportCenterId: input.sportCenterId,
-          },
-          {
-            name: input.name ?? currentSportCenterSQL[0].name,
-            phone: input.phone ?? currentSportCenterSQL[0].phone,
-            email: input.email ?? currentSportCenterSQL[0].email,
-            description:
-              input.description ?? currentSportCenterSQL[0].description,
-            ubication: input.ubication ?? currentSportCenterSQL[0].ubication,
-            schedule: input.schedule,
-          }
-        );
-        return {
-          status: "Ok",
-          message: "Centro deportivo se actualizo exitosamente",
-        };
-      } catch (error) {
-        return {
-          status: "Failed",
-          message: "No se pudo actualizar" + JSON.stringify(error),
-        };
-      }
-    },
+    updateSportCenter: UpdateSportCenterResolver,
     deleteSportCenter: async (
       root: any,
       { sportCenterId }: { sportCenterId: string }
