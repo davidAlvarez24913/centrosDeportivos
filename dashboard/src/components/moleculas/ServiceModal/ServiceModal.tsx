@@ -13,26 +13,23 @@ import { getStringUrl } from "../../../utils";
 
 type ServiceFormProps = {
   onClose: () => void;
+  onRefetch: () => void;
+  onUpdate: (input: UpdateServiceInput) => void;
+  loading: boolean;
   service: Omit<
     Service,
     "ranking" | "reservations" | "sportCenterId" | "__typename"
   >;
 };
 
-const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
+const ServiceModal = ({
+  onClose,
+  service,
+  onRefetch,
+  onUpdate,
+  loading,
+}: ServiceFormProps) => {
   const [modal, setModal] = useState(false);
-  const [updateServiceMutation, { loading }] = useUpdateServiceMutation();
-  const addSchedule = (input: UpdateServiceInput) => {
-    updateServiceMutation({
-      variables: { input },
-      onCompleted: () => {
-        alert("horario agregado");
-      },
-      onError: (error) => {
-        alert("Error: " + error);
-      },
-    });
-  };
 
   return (
     <div>
@@ -57,7 +54,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Lunes"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <ScheduleContent
@@ -67,7 +64,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Martes"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <ScheduleContent
@@ -78,7 +75,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Miercoles"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <ScheduleContent
@@ -89,7 +86,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Jueves"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <ScheduleContent
@@ -99,7 +96,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Viernes"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <ScheduleContent
@@ -110,7 +107,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Sabado"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <ScheduleContent
@@ -120,7 +117,7 @@ const ServiceModal = ({ onClose, service }: ServiceFormProps) => {
         }
         scheduelId="11"
         day="Domingo"
-        mutationSchedule={addSchedule}
+        mutationSchedule={onUpdate}
         loading={loading}
       />
       <div className="mt-2">

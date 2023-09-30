@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import ServiceModal from "../ServiceModal";
 import {
@@ -21,7 +21,7 @@ type PropsCardService = {
 const CardService = ({ service, onRefetch }: PropsCardService) => {
   const [modal, setModal] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
-  const [updateServiceMutation] = useUpdateServiceMutation();
+  const [updateServiceMutation, { loading }] = useUpdateServiceMutation();
   const [deleteServiceMutation] = useDeleteServiceMutation();
 
   const onUpdate = (input: UpdateServiceInput) => {
@@ -29,17 +29,37 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
       variables: { input },
       onCompleted: () => {
         onRefetch();
-        alert("se actualiza el servicio exitosamente");
+        alert("se actualizo el servicio exitosamente");
         setModalEdit(false);
       },
       onError: (err) => {
-        console.log(JSON.parse(JSON.stringify(err as Error)));
         alert(
           "No se pudo actualizar el servicio: " + JSON.stringify(err as Error)
         );
       },
     });
   };
+
+  const onDelete = () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm("Esta seguro de eliminar el servicio")) {
+      deleteServiceMutation({
+        variables: { serviceId: service.serviceId },
+        onCompleted: () => {
+          onRefetch();
+          setModal(false);
+          console.log("servico eliminado");
+        },
+        onError: (err) => {
+          console.error("Error servicio no eliminado: " + err);
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    onRefetch();
+  }, [updateServiceMutation]);
   return (
     <div>
       <div
@@ -59,7 +79,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
         </h2>
       </div>
       <Modal
-        title={service.name ?? "Cancha1"}
+        title={service.name ?? "Nombre servicio"}
         modalState={modal}
         moreOptions={true}
         onEdit={() => {
@@ -68,22 +88,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           //open modal edit
           setModalEdit(true);
         }}
-        onDelete={() => {
-          // eslint-disable-next-line no-restricted-globals
-          if (confirm("Esta seguro de eliminar el servicio")) {
-            deleteServiceMutation({
-              variables: { serviceId: service.serviceId },
-              onCompleted: () => {
-                onRefetch();
-                setModal(false);
-                console.log("servico eliminado");
-              },
-              onError: (err) => {
-                console.error("Error servicio no eliminado: " + err);
-              },
-            });
-          }
-        }}
+        onDelete={onDelete}
         closeModal={() => {
           setModal(false);
         }}
@@ -93,6 +98,9 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           onClose={() => {
             setModal(false);
           }}
+          onRefetch={onRefetch}
+          onUpdate={onUpdate}
+          loading={loading}
         />
       </Modal>
       <Modal
