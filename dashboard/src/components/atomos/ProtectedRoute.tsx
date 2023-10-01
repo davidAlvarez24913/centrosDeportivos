@@ -42,7 +42,7 @@ const ProtectedRoute = ({
   if (user && regist) {
     return <Navigate to={redirectTo} replace />;
   }
-  if (user && login)
+  if (user && login && access)
     return (
       <>
         <Navigate to={"/"} replace />
