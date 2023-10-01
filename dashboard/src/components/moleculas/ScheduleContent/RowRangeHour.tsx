@@ -1,7 +1,18 @@
-import { RangeHour, Service, UpdateServiceInput } from "schema";
+import {
+  Disponibility,
+  RangeHour,
+  Service,
+  UpdateServiceInput,
+  Weekday,
+} from "schema";
 import Modal from "../Modal";
 import { useState } from "react";
 import EditSchedule from "../EditSchedule";
+import {
+  changeLanguageDayES,
+  cleanTypenameDisponibility,
+} from "../../../utils";
+import useUser from "../../../Hooks/useUser";
 
 type PropsSchdeuleContent = {
   scheduelId: string;
@@ -20,6 +31,25 @@ const RowRangeHour = ({
   mutationSchedule,
 }: PropsSchdeuleContent) => {
   const [modalEditSchedule, setModalEditSchedule] = useState(false);
+  const user = useUser().user;
+  const onDelete = () => {
+    const dayEn = changeLanguageDayES(day);
+    const disp = cleanTypenameDisponibility(
+      service as Service
+    ) as Disponibility;
+    const auxDayDisponibility = disp[Weekday[dayEn as Weekday]]?.filter(
+      (range, i) => i !== index
+    );
+    const input = {
+      ...service,
+      sportCenterId: user?.uid,
+      disponibility: {
+        ...disp,
+        [dayEn]: auxDayDisponibility,
+      },
+    };
+    mutationSchedule(input as UpdateServiceInput);
+  };
 
   return (
     <div className="flex justify-between">
@@ -34,13 +64,7 @@ const RowRangeHour = ({
       >
         Editar
       </p>
-      <p
-        className="font-normal text-red-700 cursor-pointer"
-        onClick={() => {
-          // mutation do delete range hour
-          console.log(scheduelId);
-        }}
-      >
+      <p className="font-normal text-red-700 cursor-pointer" onClick={onDelete}>
         Eliminar
       </p>
       <Modal
@@ -51,7 +75,6 @@ const RowRangeHour = ({
         }}
       >
         <EditSchedule
-          // loading={true}
           day={day as string}
           index={index}
           service={service}
