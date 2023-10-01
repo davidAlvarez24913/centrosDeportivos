@@ -63,7 +63,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
   return (
     <div>
       <div
-        className="rounded-lg flex flex-col"
+        className="rounded-lg flex flex-col border border-black w-96 h-80"
         onClick={() => {
           setModal(true);
         }}
@@ -72,9 +72,9 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
         <img
           src={getStringUrl(service.image!) ?? "/images/default-service.jpeg"}
           alt={service.name}
-          className="rounded-lg w-80 h-52"
+          className="rounded-t-lg h-5/6 object-fill "
         />
-        <h2 className="text-customText font-semibold -mt-11 ml-4 text-2xl">
+        <h2 className="text-customText font-semibold h-1/6 bg-background  rounded-b-lg  p-2 text-2xl">
           {service.name}
         </h2>
       </div>

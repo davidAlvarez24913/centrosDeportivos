@@ -70,7 +70,6 @@ const LoginPage = () => {
           },
         });
       })
-
       .catch((error) => {
         setError((error as FirebaseError).code);
       });

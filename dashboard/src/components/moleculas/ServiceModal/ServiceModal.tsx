@@ -37,7 +37,7 @@ const ServiceModal = ({
         <img
           src={getStringUrl(service.image!) ?? "/images/default-service.jpeg"}
           alt={service.name}
-          className="w-full rounded-lg"
+          className="w-full max-h-72 object-fill rounded-lg"
         />
       </div>
       <p className="font-semibold">Descripcion: </p>
