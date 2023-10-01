@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { client } from "schema";
 import { ApolloProvider } from "@apollo/client";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ReservationsPage from "./pages/Reservations";
 import ServicesPage from "./pages/Services";
 import ProfilePage from "./pages/Profile";

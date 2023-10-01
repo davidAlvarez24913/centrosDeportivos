@@ -35,7 +35,6 @@ const Register = () => {
         variables: { sportCenterId: user.uid },
         nextFetchPolicy: "no-cache",
         onCompleted: () => {
-          console.log("ejecutandose");
           navigate("/");
         },
         onError: (error) => {
@@ -82,7 +81,7 @@ const Register = () => {
           variables: { input: sportCenter },
         })
           .then(() => {
-            // alert("Centro deportivo creado correctamente");
+            alert("Centro deportivo creado correctamente");
             handleSignOut().then(() => {
               navigate("/login");
             });

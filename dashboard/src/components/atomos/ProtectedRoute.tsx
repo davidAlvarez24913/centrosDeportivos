@@ -15,7 +15,6 @@ const ProtectedRoute = ({
   const [access, setAccess] = useState(false);
   const [getAccess] = useGetAccessLazyQuery();
   const { user, loadingUser } = useUser();
-  console.log("user load:", loadingUser, "user: ", user, "access: ", access);
 
   const verifyAccess = () => {
     !loadingUser &&
@@ -24,8 +23,6 @@ const ProtectedRoute = ({
         variables: { sportCenterId: user.uid },
         nextFetchPolicy: "no-cache",
         onCompleted: (data) => {
-          console.log("ejecutandose");
-          console.log(data);
           setAccess(data.getAccess);
         },
         onError: (error) => {

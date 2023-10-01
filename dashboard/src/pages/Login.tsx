@@ -24,7 +24,6 @@ const LoginPage = () => {
         variables: { sportCenterId: user.uid },
         nextFetchPolicy: "no-cache",
         onCompleted: () => {
-          console.log("ejecutandose");
           navigate("/");
         },
         onError: (error) => {
