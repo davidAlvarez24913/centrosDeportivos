@@ -35,7 +35,7 @@ const ServiceModal = ({
     <div>
       <div className="py-2">
         <img
-          src={getStringUrl(service.image!) ?? "/images/default-service.jpeg"}
+          src={service.image === "" ? "/default-image.jpg" : service.image!}
           alt={service.name}
           className="w-full max-h-72 object-fill rounded-lg"
         />

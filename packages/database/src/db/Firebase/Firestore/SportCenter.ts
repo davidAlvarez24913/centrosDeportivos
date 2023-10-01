@@ -1,4 +1,5 @@
 import {
+  DocumentData,
   collection,
   deleteDoc,
   doc,
@@ -18,12 +19,25 @@ const document = "sportscenter";
 
 export const listSportCenters = async () => {
   const sportCenterSnapShot = await getDocs(collection(db, document));
-  return sportCenterSnapShot.docs.map((sc) => sc.data());
+  const result = sportCenterSnapShot.docs
+    .map((sc) => sc.data())
+    .map((item) => {
+      return {
+        ...item,
+        image: item.image !== "" ? item.image!.split("#")[1] : item.image,
+      };
+    });
+  return result;
 };
 export const findSportCenter = async (sportCenterId: string) => {
   const docRef = doc(db, document, sportCenterId);
-  const docSnap = await getDoc(docRef);
-  return docSnap.data();
+  const docSnap = (await getDoc(docRef)).data();
+  const result = {
+    ...docSnap,
+    image:
+      docSnap?.image !== "" ? docSnap?.image!.split("#")[1] : docSnap.image,
+  };
+  return result as DocumentData | undefined;
 };
 export const createFirestoreSportCenter = async (sc: FireStoreSportCenter) =>
   await setDoc(doc(db, document, `${sc.sportCenterId}`), sc);

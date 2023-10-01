@@ -95,9 +95,7 @@ const ModalEditService = ({ onUpdate, service }: ModalEditServiceProps) => {
       />
       <ImageInput
         label="agregar imagen del servicio"
-        fileBlob={
-          fileBlob.includes("services/") ? getStringUrl(fileBlob) : fileBlob
-        }
+        fileBlob={fileBlob}
         setFileBlob={setFileBlob}
       ></ImageInput>
       <CustomButton

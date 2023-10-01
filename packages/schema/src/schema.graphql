@@ -68,7 +68,7 @@ type Service {
   name: String!
   sport: Sport!
   description: String!
-  image: String
+  image: String!
   sportCenterId: ID!
   disponibility: Disponibility
   reservations: [Reservation!]

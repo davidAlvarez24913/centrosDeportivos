@@ -65,11 +65,7 @@ const EditSportCenterButton = ({
           onSubmit={(e) => handleSubmit(e)}
         >
           <ImageInput
-            fileBlob={
-              newImage.includes("sportscenter/")
-                ? getStringUrl(newImage)
-                : newImage
-            }
+            fileBlob={newImage}
             label="Agregar Imagen del Centro Deportivo"
             setFileBlob={setNewImage}
           />

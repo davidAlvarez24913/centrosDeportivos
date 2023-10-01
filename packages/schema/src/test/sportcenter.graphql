@@ -1,7 +1,17 @@
 query GetAccess($sportCenterId: ID!) {
   getAccess(sportCenterId: $sportCenterId)
 }
-
+query ListSportCenters {
+  listSportCenters {
+    sportCenterId
+    name
+    phone
+    ubication
+    schedule
+    image
+    ranking
+  }
+}
 query GetSportCenter($sportCenterId: ID!) {
   getSportCenter(sportCenterId: $sportCenterId) {
     name
@@ -34,16 +44,6 @@ query GetSportCenterWithServices($sportCenterId: ID!) {
   }
 }
 
-query ListSportCenters {
-  listSportCenters {
-    sportCenterId
-    name
-    phone
-    ubication
-    schedule
-    image
-  }
-}
 mutation CreateSportCenter($input: CreateSportCenterInput!) {
   createSportCenter(input: $input) {
     sportCenterId

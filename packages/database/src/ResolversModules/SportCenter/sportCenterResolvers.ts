@@ -16,22 +16,12 @@ export const sportCenterResolvers = {
     listSportCenters: async () => {
       const firestoreSportCenter =
         (await listSportCenters()) as FireStoreSportCenter[];
-      const sportsCenters = await SportCenter.find({
-        relations: { services: true },
-      });
+      const sportsCenters = await SportCenter.find();
       const mergedSportsCenter = mergeSportCenter(
         sportsCenters,
         firestoreSportCenter
       );
-      const result = mergedSportsCenter.map((sportCenter) => {
-        return {
-          ...sportCenter,
-          services: sportCenter.services.map((service) => {
-            return { ...service };
-          }),
-        };
-      });
-      return result;
+      return mergedSportsCenter;
     },
     getSportCenter: async (
       _root: any,

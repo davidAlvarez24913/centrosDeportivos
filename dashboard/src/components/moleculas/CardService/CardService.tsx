@@ -70,9 +70,9 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
         role="button"
       >
         <img
-          src={getStringUrl(service.image!) ?? "/images/default-service.jpeg"}
+          src={service.image ? service.image : "/default-image.jpg"}
           alt={service.name}
-          className="rounded-t-lg h-5/6 object-fill "
+          className="rounded-t-lg h-5/6 object-fill"
         />
         <h2 className="text-customText font-semibold h-1/6 bg-background  rounded-b-lg  p-2 text-2xl">
           {service.name}

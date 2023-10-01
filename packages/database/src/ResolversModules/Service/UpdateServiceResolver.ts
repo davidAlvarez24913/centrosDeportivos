@@ -38,8 +38,7 @@ const UpdateServiceResolver = async (root: any, { input }: any) => {
           );
         }
       } else {
-        const nameImage = currentServiceNoSQL?.image.split("#")[0];
-        // await deleteImage(nameImage);
+        await deleteImage(auxNameImage);
         await updateFirestoreService({
           serviceId: input.serviceId,
           image: input.image,
