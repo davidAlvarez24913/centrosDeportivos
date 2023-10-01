@@ -32,7 +32,7 @@ export const UserContextProvider = ({
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       console.log(user);
       if (authUser) {
-        setUser(authUser);
+        setUser((prevState) => prevState ?? authUser);
         setLoadingUser(false);
       } else {
         setUser(undefined);
@@ -42,6 +42,7 @@ export const UserContextProvider = ({
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCreateUser = async (email: string, password: string) => {

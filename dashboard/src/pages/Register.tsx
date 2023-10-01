@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CustomButton,
   CustomInput,
   CustomInputWithIcon,
 } from "../components/atomos";
-import { useCreateSportCenterMutation } from "schema";
+import { useCreateSportCenterMutation, useGetAccessLazyQuery } from "schema";
 import useUser from "../Hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "@firebase/util";
 
 const Register = () => {
   const [createSportCenterMutation] = useCreateSportCenterMutation();
-  const { handleDeleteUser, handleCreateUser, handleSignOut } = useUser();
+  const {
+    handleDeleteUser,
+    handleCreateUser,
+    handleSignOut,
+    user,
+    loadingUser,
+  } = useUser();
+  const [getAccess] = useGetAccessLazyQuery();
+
   const [registData, setRegistData] = useState({
     name: "",
     email: "",
@@ -20,7 +28,39 @@ const Register = () => {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const verifyAccess = () => {
+    !loadingUser &&
+      user &&
+      getAccess({
+        variables: { sportCenterId: user.uid },
+        nextFetchPolicy: "no-cache",
+        onCompleted: () => {
+          navigate("/");
+        },
+        onError: (error) => {
+          alert("No eres admin" + JSON.stringify(error));
+        },
+      });
+  };
+  useEffect(() => {
+    verifyAccess();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingUser]);
 
+  if (loadingUser) {
+    return (
+      <div className="w-screen h-screen bg-background">
+        <div className="flex flex-row items-center justify-center content-center py-[50%]">
+          <h4 className="text-primary text-xl">Cargando</h4>
+          <img
+            src="/icons/loading-green.svg"
+            alt="loading"
+            className="w-10 h-10"
+          />
+        </div>
+      </div>
+    );
+  }
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleCreateUser(registData.email, registData.password)
@@ -41,7 +81,7 @@ const Register = () => {
           variables: { input: sportCenter },
         })
           .then(() => {
-            // alert("Centro deportivo creado correctamente");
+            alert("Centro deportivo creado correctamente");
             handleSignOut().then(() => {
               navigate("/login");
             });
