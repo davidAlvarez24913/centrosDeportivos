@@ -13,9 +13,44 @@ const LoginPage = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { user, handleSignOut, handleSignIn } = useUser();
+
+  const { handleSignOut, handleSignIn, user, loadingUser } = useUser();
   const [getAccess, { ...status }] = useGetAccessLazyQuery();
-  console.log(user);
+
+  const verifyAccess = () => {
+    !loadingUser &&
+      user &&
+      getAccess({
+        variables: { sportCenterId: user.uid },
+        nextFetchPolicy: "no-cache",
+        onCompleted: () => {
+          console.log("ejecutandose");
+          navigate("/");
+        },
+        onError: (error) => {
+          alert("No eres admin" + JSON.stringify(error));
+        },
+      });
+  };
+  useEffect(() => {
+    verifyAccess();
+  }, [loadingUser]);
+
+  if (loadingUser) {
+    return (
+      <div className="w-screen h-screen bg-background">
+        <div className="flex flex-row items-center justify-center content-center py-[50%]">
+          <h4 className="text-primary text-xl">Cargando</h4>
+          <img
+            src="/icons/loading-green.svg"
+            alt="loading"
+            className="w-10 h-10"
+          />
+        </div>
+      </div>
+    );
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleSignIn(userInput.email, userInput.password)

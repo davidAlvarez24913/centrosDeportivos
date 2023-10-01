@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { client } from "schema";
 import { ApolloProvider } from "@apollo/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ReservationsPage from "./pages/Reservations";
 import ServicesPage from "./pages/Services";
 import ProfilePage from "./pages/Profile";
@@ -17,48 +17,14 @@ function App() {
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/login"
-              element={
-                <ProtectedRoute login>
-                  <LoginPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <ProtectedRoute regist>
-                  <Register />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              index
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <ReservationsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/servicios"
-              element={
-                <ProtectedRoute>
-                  <ServicesPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/perfil"
-              element={
-                <ProtectedRoute>
-                  <ProfilePage />
-                </ProtectedRoute>
-              }
-            />
-            |{" "}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<ReservationsPage />} />
+              <Route index path="/" element={<ReservationsPage />} />
+              <Route path="/perfil" element={<ProfilePage />} />
+              <Route path="/servicios" element={<ServicesPage />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

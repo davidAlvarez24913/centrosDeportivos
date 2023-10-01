@@ -1,59 +1,46 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import { useEffect, useState } from "react";
 import { useGetAccessLazyQuery } from "schema";
 
+type PropsProtectedRoute = {
+  children?: React.ReactNode;
+  redirectTo?: string;
+};
+
 const ProtectedRoute = ({
   children,
   redirectTo = "/login",
-  regist,
-  login,
-}: {
-  children?: React.ReactNode;
-  redirectTo?: string;
-  regist?: Boolean;
-  login?: Boolean;
-}) => {
-  const [getAccess] = useGetAccessLazyQuery();
+}: PropsProtectedRoute) => {
   const [access, setAccess] = useState(false);
-  const { user } = useUser();
+  const [getAccess] = useGetAccessLazyQuery();
+  const { user, loadingUser } = useUser();
+  console.log("user load:", loadingUser, "user: ", user, "access: ", access);
 
-  useEffect(() => {
-    console.log(user);
-    console.log("PROTECTED");
-    console.log(redirectTo);
-    user &&
-      regist !== true &&
+  const verifyAccess = () => {
+    !loadingUser &&
+      user &&
       getAccess({
         variables: { sportCenterId: user.uid },
         nextFetchPolicy: "no-cache",
         onCompleted: (data) => {
+          console.log("ejecutandose");
+          console.log(data);
           setAccess(data.getAccess);
         },
         onError: (error) => {
           alert("No eres admin" + JSON.stringify(error));
         },
       });
-  }, [user]);
+  };
+  useEffect(() => {
+    verifyAccess();
+  }, []);
 
-  if (user === undefined && regist) {
-    return <>{children}</>;
-  }
-  if (user && regist) {
+  if (loadingUser && user === undefined && !access) {
     return <Navigate to={redirectTo} replace />;
   }
-  if (user && login)
-    return (
-      <>
-        <Navigate to={"/"} replace />
-      </>
-    );
-  if (login) return <>{children}</>;
-
-  if (user === undefined && !access) {
-    return <Navigate to={redirectTo} replace />;
-  }
-  return <>{children}</>;
+  return children ? <>{children}</> : <Outlet />;
 };
 
 export default ProtectedRoute;
