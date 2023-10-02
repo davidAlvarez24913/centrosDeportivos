@@ -6,25 +6,40 @@ import {
 import { deleteImage, uploadFile } from "../../db/Firebase/Bucket";
 
 const UpdateSportCenterResolver = async (root: any, { input }: any) => {
-  // query to get current data, if dont pass sql data not update record
-  const currentSportCenterSQL = await SportCenter.find({
-    where: { sportCenterId: input.sportCenterId },
-  });
-  const currentSportCenterNoSQL = await findSportCenter(input.sportCenterId);
-
   try {
-    if (input.image !== currentSportCenterNoSQL?.image) {
-      if (input.image !== "") {
-        const auxNameImage = "sportscenter/" + input.sportCenterId + "#";
-        let imageUrl = "";
-        imageUrl = await uploadFile(input.image, auxNameImage);
-        if (imageUrl) {
-          await updateFirestoreSportCenter({
-            sportCenterId: input.sportCenterId,
-            image: auxNameImage + imageUrl,
-          });
-        }
+    // query to get current data, if dont pass sql data not update record
+    const currentSportCenterSQL = await SportCenter.find({
+      where: { sportCenterId: input.sportCenterId },
+    });
+    const currentSportCenterNoSQL = await findSportCenter(input.sportCenterId);
+    const auxNameImage = "sportscenter/" + input.sportCenterId + "#";
+    let imageUrl = "";
 
+    if (input.image === "") {
+      currentSportCenterNoSQL?.image && (await deleteImage(auxNameImage));
+      await updateFirestoreSportCenter({
+        sportCenterId: input.sportCenterId,
+        image: input.image,
+      });
+      await SportCenter.update(
+        {
+          sportCenterId: input.sportCenterId,
+        },
+        {
+          name: input.name,
+          phone: input.phone,
+          email: input.email,
+          description: input.description,
+          ubication: input.ubication,
+          schedule: input.schedule,
+        }
+      );
+    } else {
+      if (auxNameImage + input.image === currentSportCenterNoSQL?.image) {
+        await updateFirestoreSportCenter({
+          sportCenterId: input.sportCenterId,
+          image: auxNameImage + input.image,
+        });
         await SportCenter.update(
           {
             sportCenterId: input.sportCenterId,
@@ -39,50 +54,80 @@ const UpdateSportCenterResolver = async (root: any, { input }: any) => {
           }
         );
       } else {
-        const nameImage =
-          "sportscenter/" +
-          (currentSportCenterNoSQL?.sportCenterId as string) +
-          "#";
-        await deleteImage(nameImage);
-        await updateFirestoreSportCenter({
-          sportCenterId: input.sportCenterId,
-          image: input.image,
-        });
-
-        await SportCenter.update(
-          {
+        imageUrl = await uploadFile(input.image, auxNameImage);
+        if (imageUrl) {
+          await updateFirestoreSportCenter({
             sportCenterId: input.sportCenterId,
-          },
-          {
-            name: input.name,
-            phone: input.phone,
-            email: input.email,
-            description: input.description,
-            ubication: input.ubication,
-            schedule: input.schedule,
-          }
-        );
-      }
-    } else {
-      await updateFirestoreSportCenter({
-        sportCenterId: input.sportCenterId,
-        image: input.image,
-      });
-
-      await SportCenter.update(
-        {
-          sportCenterId: input.sportCenterId,
-        },
-        {
-          name: input.name,
-          phone: input.phone,
-          email: input.email,
-          description: input.description,
-          ubication: input.ubication,
-          schedule: input.schedule,
+            image: auxNameImage + imageUrl,
+          });
+          await SportCenter.update(
+            {
+              sportCenterId: input.sportCenterId,
+            },
+            {
+              name: input.name,
+              phone: input.phone,
+              email: input.email,
+              description: input.description,
+              ubication: input.ubication,
+              schedule: input.schedule,
+            }
+          );
         }
-      );
+      }
     }
+
+    // if (input.image !== currentSportCenterNoSQL?.image) {
+    //   if (input.image !== "") {
+    //     const auxNameImage = "sportscenter/" + input.sportCenterId + "#";
+    //     let imageUrl = "";
+    //
+
+    //   } else {
+    //     const nameImage =
+    //       "sportscenter/" +
+    //       (currentSportCenterNoSQL?.sportCenterId as string) +
+    //       "#";
+    //     await deleteImage(nameImage);
+    //     await updateFirestoreSportCenter({
+    //       sportCenterId: input.sportCenterId,
+    //       image: input.image,
+    //     });
+
+    //     await SportCenter.update(
+    //       {
+    //         sportCenterId: input.sportCenterId,
+    //       },
+    //       {
+    //         name: input.name,
+    //         phone: input.phone,
+    //         email: input.email,
+    //         description: input.description,
+    //         ubication: input.ubication,
+    //         schedule: input.schedule,
+    //       }
+    //     );
+    //   }
+    // } else {
+    //   await updateFirestoreSportCenter({
+    //     sportCenterId: input.sportCenterId,
+    //     image: input.image,
+    //   });
+
+    //   await SportCenter.update(
+    //     {
+    //       sportCenterId: input.sportCenterId,
+    //     },
+    //     {
+    //       name: input.name,
+    //       phone: input.phone,
+    //       email: input.email,
+    //       description: input.description,
+    //       ubication: input.ubication,
+    //       schedule: input.schedule,
+    //     }
+    //   );
+    // }
     return {
       status: "Ok",
       message: "Centro deportivo se actualizo exitosamente",
