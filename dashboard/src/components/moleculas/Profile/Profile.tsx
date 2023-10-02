@@ -21,7 +21,7 @@ const Profile = ({
     <div className="flex flex-col gap-4 py-5">
       <img
         className="w-80 "
-        src={image ? getStringUrl(image) : "/default-image.jpg"}
+        src={image !== "" ? image : "/default-image.jpg"}
         alt="Imagen Centro Deportivo"
       />
       <h2 className="text-lg font-bold">Nombre del Centro Deportivo:</h2>
