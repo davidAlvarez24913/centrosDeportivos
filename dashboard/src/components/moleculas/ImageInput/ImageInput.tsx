@@ -53,14 +53,14 @@ const ImageInput = ({ label, fileBlob, setFileBlob }: PropsImageInput) => {
           />
         </>
       ) : (
-        <div className="flex flex-col w-36 h-36">
+        <div className="flex flex-col w-52 h-52">
           <img
             src={fileBlob}
             alt="image_service"
-            className=" border border-green-300 opacity-95 rounded-lg"
+            className="flex flex-1 border border-green-300 opacity-95 rounded-lg"
           />
           <span
-            className="text-red-700 py-2 text-center"
+            className="text-primary py-1 font-semibold   text-center"
             onClick={() => {
               setFileBlob("");
             }}
