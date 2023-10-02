@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import { useEffect, useState } from "react";
 import { useGetAccessLazyQuery } from "schema";
@@ -15,6 +15,8 @@ const ProtectedRoute = ({
   const [access, setAccess] = useState(false);
   const [getAccess] = useGetAccessLazyQuery();
   const { user, loadingUser } = useUser();
+  const pathname = useLocation().pathname;
+  const protectedRoutes = ["/", "perfil", "/servicios"];
 
   const verifyAccess = () => {
     !loadingUser &&
@@ -35,7 +37,11 @@ const ProtectedRoute = ({
   }, []);
 
   if (loadingUser && user === undefined && !access) {
-    return <Navigate to={redirectTo} replace />;
+    if (protectedRoutes.includes(pathname)) {
+      return <Navigate to={pathname} replace />;
+    } else {
+      return <Navigate to={redirectTo} replace />;
+    }
   }
   return children ? <>{children}</> : <Outlet />;
 };
