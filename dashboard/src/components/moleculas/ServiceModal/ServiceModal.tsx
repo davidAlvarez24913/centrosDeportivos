@@ -1,15 +1,7 @@
-import React, { useState } from "react";
-import {
-  RangeHour,
-  Service,
-  UpdateServiceInput,
-  useUpdateServiceMutation,
-} from "schema";
+import React from "react";
+import { RangeHour, Service, UpdateServiceInput } from "schema";
 import { CustomButton } from "../../atomos";
 import ScheduleContent from "../ScheduleContent";
-import Modal from "../Modal";
-import ModalNewBook from "../ModalNewBook";
-import { getStringUrl } from "../../../utils";
 
 type ServiceFormProps = {
   onClose: () => void;
@@ -20,6 +12,7 @@ type ServiceFormProps = {
     Service,
     "ranking" | "reservations" | "sportCenterId" | "__typename"
   >;
+  setModalReservation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ServiceModal = ({
@@ -28,9 +21,8 @@ const ServiceModal = ({
   onRefetch,
   onUpdate,
   loading,
+  setModalReservation,
 }: ServiceFormProps) => {
-  const [modal, setModal] = useState(false);
-
   return (
     <div>
       <div className="py-2">
@@ -126,23 +118,11 @@ const ServiceModal = ({
           addIcon
           color="blue"
           onClick={() => {
-            setModal(true);
+            setModalReservation(true);
+            onClose();
           }}
           type="button"
         />
-        <Modal
-          title={service.name ?? "Cancha1"}
-          modalState={modal}
-          closeModal={() => {
-            setModal(false);
-          }}
-        >
-          <ModalNewBook
-            onClose={() => {
-              setModal(false);
-            }}
-          />
-        </Modal>
       </div>
     </div>
   );

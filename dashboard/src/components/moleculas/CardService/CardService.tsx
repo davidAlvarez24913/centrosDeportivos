@@ -7,8 +7,8 @@ import {
   useDeleteServiceMutation,
   useUpdateServiceMutation,
 } from "schema";
-import { getStringUrl } from "../../../utils";
 import ModalEditService from "../ModalEditService";
+import ModalNewBook from "../ModalNewBook";
 
 type PropsCardService = {
   onRefetch: () => void;
@@ -20,6 +20,8 @@ type PropsCardService = {
 
 const CardService = ({ service, onRefetch }: PropsCardService) => {
   const [modal, setModal] = useState(false);
+  const [modalReservation, setModalReservation] = useState(false);
+
   const [modalEdit, setModalEdit] = useState(false);
   const [updateServiceMutation, { loading }] = useUpdateServiceMutation();
   const [deleteServiceMutation] = useDeleteServiceMutation();
@@ -59,7 +61,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
 
   useEffect(() => {
     onRefetch();
-  }, [updateServiceMutation]);
+  }, [onRefetch, updateServiceMutation]);
   return (
     <div>
       <div
@@ -101,6 +103,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           onRefetch={onRefetch}
           onUpdate={onUpdate}
           loading={loading}
+          setModalReservation={setModalReservation}
         />
       </Modal>
       <Modal
@@ -112,6 +115,21 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
       >
         <ModalEditService service={service} onUpdate={onUpdate} />
       </Modal>
+      <>
+        <Modal
+          title={service.name ?? "Servicio"}
+          modalState={modalReservation}
+          closeModal={() => {
+            setModalReservation(false);
+          }}
+        >
+          <ModalNewBook
+            onClose={() => {
+              setModalReservation(false);
+            }}
+          />
+        </Modal>
+      </>
     </div>
   );
 };

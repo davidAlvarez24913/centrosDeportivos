@@ -34,7 +34,6 @@ const ModalNewBook = ({ onClose }: NewBookProps) => {
   return (
     <div>
       <div className="flex flex-col gap-4 py-4">
-        <h1 className="font-semibold text-lg ">name service</h1>
         <h2 className="font-semibold text-lg ">Valor total: ${price}</h2>
         <h1 className="font-semibold text-lg ">Fecha</h1>
         <BodyDisponibility
