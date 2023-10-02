@@ -510,6 +510,13 @@ export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, image: string, ranking: number }> | null };
 
+export type GetNameSportCenterQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type GetNameSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string } | null };
+
 export type GetSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
 }>;
@@ -1034,6 +1041,41 @@ export function useListSportCentersLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ListSportCentersQueryHookResult = ReturnType<typeof useListSportCentersQuery>;
 export type ListSportCentersLazyQueryHookResult = ReturnType<typeof useListSportCentersLazyQuery>;
 export type ListSportCentersQueryResult = Apollo.QueryResult<ListSportCentersQuery, ListSportCentersQueryVariables>;
+export const GetNameSportCenterDocument = gql`
+    query GetNameSportCenter($sportCenterId: ID!) {
+  getSportCenter(sportCenterId: $sportCenterId) {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetNameSportCenterQuery__
+ *
+ * To run a query within a React component, call `useGetNameSportCenterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNameSportCenterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNameSportCenterQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useGetNameSportCenterQuery(baseOptions: Apollo.QueryHookOptions<GetNameSportCenterQuery, GetNameSportCenterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNameSportCenterQuery, GetNameSportCenterQueryVariables>(GetNameSportCenterDocument, options);
+      }
+export function useGetNameSportCenterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNameSportCenterQuery, GetNameSportCenterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNameSportCenterQuery, GetNameSportCenterQueryVariables>(GetNameSportCenterDocument, options);
+        }
+export type GetNameSportCenterQueryHookResult = ReturnType<typeof useGetNameSportCenterQuery>;
+export type GetNameSportCenterLazyQueryHookResult = ReturnType<typeof useGetNameSportCenterLazyQuery>;
+export type GetNameSportCenterQueryResult = Apollo.QueryResult<GetNameSportCenterQuery, GetNameSportCenterQueryVariables>;
 export const GetSportCenterDocument = gql`
     query GetSportCenter($sportCenterId: ID!) {
   getSportCenter(sportCenterId: $sportCenterId) {

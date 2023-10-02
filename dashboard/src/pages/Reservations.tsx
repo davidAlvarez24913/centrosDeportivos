@@ -1,8 +1,14 @@
 import React from "react";
 import { LayoutPage, Table } from "../components/moleculas";
 import { ReservationsRow } from "../components/organismos";
+import useUser from "../Hooks/useUser";
+import { useGetNameSportCenterQuery } from "schema";
 
 const ReservationsPage = () => {
+  const { user } = useUser();
+  const status = useGetNameSportCenterQuery({
+    variables: { sportCenterId: user?.uid as string },
+  });
   const data = [
     {
       reservationId: "001",
@@ -27,7 +33,7 @@ const ReservationsPage = () => {
     <ReservationsRow {...reservation} key={reservation.reservationId} />
   ));
   return (
-    <LayoutPage nameSportCenter="">
+    <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       <div>
         <h2 className="text-xl font-bold">Por Pagar</h2>
         <Table

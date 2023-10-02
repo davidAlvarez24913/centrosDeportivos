@@ -1,19 +1,26 @@
 import React from "react";
 import { CardService, LayoutPage } from "../components/moleculas";
 import { CreateServiceButton } from "../components/organismos";
-import { Service, useListServicesBySportCenterIdQuery } from "schema";
+import {
+  Service,
+  useGetNameSportCenterQuery,
+  useListServicesBySportCenterIdQuery,
+} from "schema";
 import useUser from "../Hooks/useUser";
 import { Loading } from "../components/atomos";
 
 const ServicesPage = () => {
   const { user } = useUser();
+  const status = useGetNameSportCenterQuery({
+    variables: { sportCenterId: user?.uid as string },
+  });
   const { data, loading, refetch } = useListServicesBySportCenterIdQuery({
     variables: { sportCenterId: user?.uid as string },
   });
   const services = data?.listServicesBySportCenterId;
 
   return (
-    <LayoutPage nameSportCenter="">
+    <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       <div>
         <div className="flex flex-row justify-between">
           <h2 className="text-2xl font-bold">Servicios</h2>

@@ -12,6 +12,11 @@ query ListSportCenters {
     ranking
   }
 }
+query GetNameSportCenter($sportCenterId: ID!){
+  getSportCenter(sportCenterId: $sportCenterId) {
+    name
+  }
+}
 query GetSportCenter($sportCenterId: ID!) {
   getSportCenter(sportCenterId: $sportCenterId) {
     name
