@@ -36,7 +36,8 @@ export const mergeServices = (
     const obj2 = firestoreService.find(
       (obj2) => obj1.serviceId == obj2.serviceId
     );
-    return { ...obj1, ...obj2 };
+    const { sportCenter, ...rest } = obj1;
+    return { ...rest, ...obj2 };
   });
 };
 

@@ -1,18 +1,11 @@
-import { SportCenter, Service } from "../../db/TypeOrm/Entities";
+import { Reservation, Service, User } from "../../db/TypeOrm/Entities";
 import {
   Disponibility,
   FireStoreService,
-  createFirestoreService,
-  deleteFirestoreService,
-  findService,
   listServices,
-  updateFirestoreService,
 } from "../../db/Firebase/Firestore/Service";
-import { GraphQLError } from "graphql";
 import { reservationResolvers } from "../Reservation/reservationResolver";
-import { mergeServices, schedule } from "../utils";
-import { FirebaseError } from "firebase/app";
-import { deleteImage, uploadFile } from "../../db/Firebase/Bucket";
+import { mergeServices } from "../utils";
 import CreateServiceResolver from "./CreateServiceResolver";
 import UpdateServiceResolver from "./UpdateServiceResolver";
 import DeleteServiceResolver from "./DeleteServiceResolver";
@@ -26,12 +19,12 @@ export const serviceResolvers = {
       });
       const servicesNoSQL = (await listServices()) as FireStoreService[];
       const mergeService = mergeServices(servicesSQL, servicesNoSQL);
+
       const allReservations =
         await reservationResolvers.Query.allReservations();
       const result = mergeService.map((service) => {
         return {
           ...service,
-          sportCenterId: service.sportCenter.sportCenterId,
           reservations: allReservations.filter(
             (reservation) => reservation.serviceId === service.serviceId
           ),
@@ -41,24 +34,14 @@ export const serviceResolvers = {
     },
     listServicesBySportCenterId: async (root: any, { sportCenterId }: any) => {
       const servicesSQL = await Service.find({
-        relations: { sportCenter: true, reservations: true },
+        where: { sportCenter: { sportCenterId: sportCenterId } },
       });
       const servicesNoSQL = (await listServices()) as FireStoreService[];
       const mergeService = mergeServices(servicesSQL, servicesNoSQL);
-      const allReservations =
-        await reservationResolvers.Query.allReservations();
-      const result = mergeService.map((service) => {
-        return {
-          ...service,
-          sportCenterId: service.sportCenter.sportCenterId,
-          reservations: allReservations.filter(
-            (reservation) => reservation.serviceId === service.serviceId
-          ),
-        };
+
+      return mergeService.map((service) => {
+        return { ...service, sportCenterId: sportCenterId };
       });
-      return result.filter(
-        (service) => service.sportCenterId === sportCenterId
-      );
     },
   },
   Mutation: {

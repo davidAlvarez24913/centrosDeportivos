@@ -1,3 +1,13 @@
+query ListServices{
+    listServices{
+        serviceId
+        sportCenterId
+        name
+        description
+        sport
+        image
+    }
+}
 query ListServicesBySportCenterId( $sportCenterId: ID!){
     listServicesBySportCenterId( sportCenterId: $sportCenterId){
         serviceId

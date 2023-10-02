@@ -465,6 +465,11 @@ export type CreateReservationInputMutationVariables = Exact<{
 
 export type CreateReservationInputMutation = { __typename?: 'Mutation', createReservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, paymentPhoto?: string | null, date: string, rangeHour: string } | null };
 
+export type ListServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListServicesQuery = { __typename?: 'Query', listServices?: Array<{ __typename?: 'Service', serviceId: string, sportCenterId: string, name: string, description: string, sport: Sport, image: string } | null> | null };
+
 export type ListServicesBySportCenterIdQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
 }>;
@@ -735,6 +740,45 @@ export function useCreateReservationInputMutation(baseOptions?: Apollo.MutationH
 export type CreateReservationInputMutationHookResult = ReturnType<typeof useCreateReservationInputMutation>;
 export type CreateReservationInputMutationResult = Apollo.MutationResult<CreateReservationInputMutation>;
 export type CreateReservationInputMutationOptions = Apollo.BaseMutationOptions<CreateReservationInputMutation, CreateReservationInputMutationVariables>;
+export const ListServicesDocument = gql`
+    query ListServices {
+  listServices {
+    serviceId
+    sportCenterId
+    name
+    description
+    sport
+    image
+  }
+}
+    `;
+
+/**
+ * __useListServicesQuery__
+ *
+ * To run a query within a React component, call `useListServicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListServicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListServicesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListServicesQuery(baseOptions?: Apollo.QueryHookOptions<ListServicesQuery, ListServicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListServicesQuery, ListServicesQueryVariables>(ListServicesDocument, options);
+      }
+export function useListServicesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListServicesQuery, ListServicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListServicesQuery, ListServicesQueryVariables>(ListServicesDocument, options);
+        }
+export type ListServicesQueryHookResult = ReturnType<typeof useListServicesQuery>;
+export type ListServicesLazyQueryHookResult = ReturnType<typeof useListServicesLazyQuery>;
+export type ListServicesQueryResult = Apollo.QueryResult<ListServicesQuery, ListServicesQueryVariables>;
 export const ListServicesBySportCenterIdDocument = gql`
     query ListServicesBySportCenterId($sportCenterId: ID!) {
   listServicesBySportCenterId(sportCenterId: $sportCenterId) {

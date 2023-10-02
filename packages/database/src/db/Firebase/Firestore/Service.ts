@@ -27,7 +27,6 @@ export type Disponibility = {
 export type FireStoreService = {
   serviceId: number;
   image: string;
-  ranking?: number;
   disponibility?: Disponibility;
 };
 const document = "services";
