@@ -8,3 +8,4 @@ export { default as Segment } from "./Segment";
 export { default as StarRank } from "./StarRank";
 export { default as SportCenterInformation } from "./SportCenterInformation";
 export { default as ProfileInfo } from "./ProfileInfo";
+export { default as ProfileForm } from "./ProfileForm";

@@ -11,7 +11,6 @@ export const userResolvers = {
     createUser: async (root: any, { input }: any) => {
       const result = await User.insert({
         ...input,
-        birthDate: new Date(input.birthDate),
       });
       return { ...input, id: result.identifiers[0].userId };
     },
@@ -21,6 +20,7 @@ export const userResolvers = {
         {
           name: input.name,
           id: input.id,
+          birthDate: input.birthDate,
           phone: input.phone,
           email: input.email,
         }

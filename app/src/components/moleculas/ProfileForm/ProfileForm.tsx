@@ -1,8 +1,14 @@
-import { useIonRouter } from "@ionic/react";
+import { IonAlert, useIonRouter } from "@ionic/react";
 import React, { useState } from "react";
-import { CommonTag, CustomButton, CustomInput } from "src/components/atomos";
+import {
+  UpdateUserInput,
+  UpdateUserMutation,
+  useUpdateUserMutation,
+} from "schema";
+import { CustomButton, CustomInput } from "src/components/atomos";
 
 type ProfileFormProps = {
+  userId: string;
   name: string;
   id: string;
   birthDate: string;
@@ -10,6 +16,7 @@ type ProfileFormProps = {
   email: string;
 };
 const ProfileForm = ({
+  userId,
   name,
   id,
   birthDate,
@@ -17,18 +24,23 @@ const ProfileForm = ({
   email,
 }: ProfileFormProps) => {
   const ionRouter = useIonRouter();
-  const [registData, setRegistData] = useState({
-    name: "",
-    id: "",
-    birthDate: "",
-    phone: "",
+  const [isOpen, setIsOpen] = useState(false);
+  const [userData, setUserData] = useState({
+    userId: userId,
+    name: name,
+    id: id,
+    birthDate: birthDate,
+    phone: phone,
+    email: email,
   });
+  const [updateUserMutation] = useUpdateUserMutation();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(registData);
+    setIsOpen(true);
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRegistData({ ...registData, [event.target.name]: event.target.value });
+    setUserData({ ...userData, [event.target.name]: event.target.value });
   };
   return (
     <div className="flex flex-col gap-3 p-5">
@@ -37,6 +49,7 @@ const ProfileForm = ({
           label="Nombre"
           type="text"
           name="name"
+          defaultValue={name}
           placeholder="Nombre"
           onChange={handleChange}
           required
@@ -45,6 +58,7 @@ const ProfileForm = ({
           label="Cedula/Pasaporte"
           type="text"
           name="id"
+          defaultValue={id}
           placeholder="Cedula/Pasaporte"
           onChange={handleChange}
           required
@@ -53,6 +67,7 @@ const ProfileForm = ({
           label="Fecha de nacimiento"
           type="date"
           name="birthDate"
+          defaultValue={birthDate}
           onChange={handleChange}
           required
         />
@@ -60,21 +75,46 @@ const ProfileForm = ({
           label="Telefono"
           type="text"
           name="phone"
+          defaultValue={phone}
           placeholder="Telefono"
           maxLength={10}
           onChange={handleChange}
           required
         />
-        <CustomInput
-          label="Correo electronico"
-          type="email"
-          name="email"
-          placeholder="Correo electronico"
-          onChange={handleChange}
-          required
+        <CustomButton color="sucessfull" title="Editar" type="submit" />
+        <CustomButton
+          color="cancel"
+          title="Cancelar"
+          type="button"
+          onClick={() => {
+            ionRouter.push("/profile");
+          }}
         />
-
-        <CustomButton color="sucessfull" title="REGISTRARSE" type="submit" />
+        <IonAlert
+          isOpen={isOpen}
+          header="Seguro que desea editar la informacion!"
+          buttons={[
+            {
+              text: "Cancel",
+              role: "cancel",
+              handler: () => {
+                setIsOpen(false);
+              },
+            },
+            {
+              text: "Aceptar",
+              role: "confirm",
+              handler: () => {
+                updateUserMutation({ variables: { input: userData } }).then(
+                  () => {
+                    setIsOpen(false);
+                    ionRouter.push("/profile");
+                  }
+                );
+              },
+            },
+          ]}
+        ></IonAlert>
       </form>
     </div>
   );

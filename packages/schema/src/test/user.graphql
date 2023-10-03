@@ -13,8 +13,14 @@ query GetUser($userId: ID!) {
     phone
   }
 }
-mutation createUser($input: CreateUserInput!) {
+mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     userId
+  }
+}
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    status
+    message
   }
 }

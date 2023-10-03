@@ -34,7 +34,7 @@ function CustomButton({
       disabled={disable}
       className={`rounded-xl w-full text-xl font-medium h-10 ${styleColor}`}
     >
-      {title}
+      {title.toUpperCase()}
       {loading && (
         <IonSpinner name="crescent" className="text-primary text-xs" />
       )}
