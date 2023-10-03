@@ -239,6 +239,7 @@ export type Query = {
   findReservation?: Maybe<Reservation>;
   findUser?: Maybe<User>;
   getAccess: Scalars['Boolean']['output'];
+  getDisponibility?: Maybe<Disponibility>;
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
@@ -263,6 +264,11 @@ export type QueryFindUserArgs = {
 
 export type QueryGetAccessArgs = {
   sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetDisponibilityArgs = {
+  serviceId: Scalars['ID']['input'];
 };
 
 
@@ -497,6 +503,13 @@ export type DeleteServiceMutationVariables = Exact<{
 
 
 export type DeleteServiceMutation = { __typename?: 'Mutation', deleteService?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type GetDisponibilityQueryVariables = Exact<{
+  serviceId: Scalars['ID']['input'];
+}>;
+
+
+export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
 
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -968,6 +981,70 @@ export function useDeleteServiceMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteServiceMutationHookResult = ReturnType<typeof useDeleteServiceMutation>;
 export type DeleteServiceMutationResult = Apollo.MutationResult<DeleteServiceMutation>;
 export type DeleteServiceMutationOptions = Apollo.BaseMutationOptions<DeleteServiceMutation, DeleteServiceMutationVariables>;
+export const GetDisponibilityDocument = gql`
+    query GetDisponibility($serviceId: ID!) {
+  getDisponibility(serviceId: $serviceId) {
+    Monday {
+      startHour
+      endHour
+      price
+    }
+    Saturday {
+      startHour
+      endHour
+      price
+    }
+    Sunday {
+      startHour
+      endHour
+      price
+    }
+    Tuesday {
+      startHour
+      endHour
+      price
+    }
+    Thursday {
+      startHour
+      endHour
+      price
+    }
+    Wednesday {
+      startHour
+      endHour
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetDisponibilityQuery__
+ *
+ * To run a query within a React component, call `useGetDisponibilityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDisponibilityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDisponibilityQuery({
+ *   variables: {
+ *      serviceId: // value for 'serviceId'
+ *   },
+ * });
+ */
+export function useGetDisponibilityQuery(baseOptions: Apollo.QueryHookOptions<GetDisponibilityQuery, GetDisponibilityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDisponibilityQuery, GetDisponibilityQueryVariables>(GetDisponibilityDocument, options);
+      }
+export function useGetDisponibilityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDisponibilityQuery, GetDisponibilityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDisponibilityQuery, GetDisponibilityQueryVariables>(GetDisponibilityDocument, options);
+        }
+export type GetDisponibilityQueryHookResult = ReturnType<typeof useGetDisponibilityQuery>;
+export type GetDisponibilityLazyQueryHookResult = ReturnType<typeof useGetDisponibilityLazyQuery>;
+export type GetDisponibilityQueryResult = Apollo.QueryResult<GetDisponibilityQuery, GetDisponibilityQueryVariables>;
 export const GetAccessDocument = gql`
     query GetAccess($sportCenterId: ID!) {
   getAccess(sportCenterId: $sportCenterId)
