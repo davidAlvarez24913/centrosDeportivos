@@ -1,6 +1,7 @@
 import React from "react";
 import { MainCard } from "src/components/atomos";
 import FullService from "./FullServiceModal";
+import { InformationSectionProps } from "src/components/atomos/InformationSection";
 type ServiceCardProps = {
   serviceId: string;
   name: string;
@@ -9,6 +10,7 @@ type ServiceCardProps = {
   sportCenter: string;
   sport: string;
   showSportCenter?: boolean;
+  information: InformationSectionProps;
 };
 const ServiceCard = (service: ServiceCardProps) => {
   const {
@@ -37,7 +39,7 @@ const ServiceCard = (service: ServiceCardProps) => {
           </p>
         </div>
         <img
-          src={image}
+          src={image !== "" ? image : "/assets/default-image.jpg"}
           alt="sportIcon"
           className="max-w-[180px] min-w-[180px] max-h-32 object-cover rounded-r-2xl"
         />

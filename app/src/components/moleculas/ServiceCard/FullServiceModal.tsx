@@ -7,6 +7,7 @@ import {
   Header,
   InformationSection,
 } from "src/components/atomos";
+import { InformationSectionProps } from "src/components/atomos/InformationSection";
 type FullServiceProps = {
   serviceId: string;
   name: string;
@@ -14,6 +15,7 @@ type FullServiceProps = {
   image: string;
   sportCenter: string;
   sport: string;
+  information: InformationSectionProps;
 };
 const FullService = ({
   name,
@@ -22,6 +24,7 @@ const FullService = ({
   sportCenter,
   serviceId,
   sport,
+  information,
 }: FullServiceProps) => {
   const ref = useRef<HTMLIonModalElement>(null);
   const ionRouter = useIonRouter();
@@ -47,11 +50,7 @@ const FullService = ({
               />
               <p className="font-light text-base leading-4 ">{sport}</p>
             </div>
-            <InformationSection
-              phone={sport}
-              ubication={sport}
-              schedule={sport}
-            />
+            <InformationSection {...information} />
             <CustomButton
               title="Seleccionar horarios"
               color="sucessfull"

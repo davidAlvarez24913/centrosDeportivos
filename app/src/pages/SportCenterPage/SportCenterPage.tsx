@@ -1,7 +1,10 @@
 import { IonContent, IonPage } from "@ionic/react";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { useGetSportCenterWithServicesQuery } from "schema";
+import {
+  useGetSportCenterQuery,
+  useListServicesBySportCenterIdQuery,
+} from "schema";
 import { Background, Header, Loading } from "src/components/atomos";
 import NoDataCard from "src/components/atomos/NoDataCard";
 import {
@@ -14,13 +17,24 @@ import { reviews } from "src/data";
 const SportCenterPage = () => {
   const { sportCenterId } = useParams<{ sportCenterId: string }>();
 
-  const { data, loading } = useGetSportCenterWithServicesQuery({
+  const sportCenterData = useGetSportCenterQuery({
     variables: { sportCenterId: sportCenterId },
   });
-  const sportCenter = data?.getSportCenterWithServices;
+  const servicesData = useListServicesBySportCenterIdQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
+  const sportCenter = sportCenterData.data?.getSportCenter;
+  const information = {
+    schedule: sportCenter?.schedule || "",
+    ubication: sportCenter?.ubication || "",
+    phone: sportCenter?.phone || "",
+    sportCenter: sportCenter?.name || "",
+  };
   const services =
-    sportCenter?.services?.map((service) => {
-      return { ...service!, image: "" };
+    servicesData.data?.listServicesBySportCenterId?.map((service) => {
+      return {
+        ...service!,
+      };
     }) || [];
 
   const [segment, setSegment] = useState<"servicios" | "informacion">(
@@ -38,7 +52,7 @@ const SportCenterPage = () => {
       />
       <IonContent>
         <Background>
-          {loading ? (
+          {sportCenterData.loading && servicesData.loading ? (
             <Loading />
           ) : (
             <>
@@ -50,7 +64,8 @@ const SportCenterPage = () => {
                         <ServiceCard
                           key={service.serviceId}
                           {...service}
-                          sportCenter={sportCenterId}
+                          information={information}
+                          sportCenter={sportCenter?.name || ""}
                         />
                       );
                     })}

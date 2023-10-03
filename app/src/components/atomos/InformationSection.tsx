@@ -1,5 +1,5 @@
 import React from "react";
-type InformationSectionProps = {
+export type InformationSectionProps = {
   schedule: string;
   ubication: string;
   phone: string;

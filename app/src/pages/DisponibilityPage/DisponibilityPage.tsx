@@ -35,7 +35,7 @@ const DisponibilityPage = () => {
   return (
     <IonPage>
       <Header
-        title="xxx"
+        title={serviceId}
         dismiss={() => {
           router.goBack();
         }}

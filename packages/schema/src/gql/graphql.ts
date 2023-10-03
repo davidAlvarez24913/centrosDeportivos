@@ -475,7 +475,7 @@ export type ListServicesBySportCenterIdQueryVariables = Exact<{
 }>;
 
 
-export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string, disponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null } | null> | null };
+export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null };
 
 export type CreateServiceMutationVariables = Exact<{
   input: CreateServiceInput;
@@ -794,43 +794,6 @@ export const ListServicesBySportCenterIdDocument = gql`
     sport
     description
     image
-    disponibility {
-      Monday {
-        startHour
-        endHour
-        price
-      }
-      Tuesday {
-        startHour
-        endHour
-        price
-      }
-      Wednesday {
-        startHour
-        endHour
-        price
-      }
-      Thursday {
-        startHour
-        endHour
-        price
-      }
-      Friday {
-        startHour
-        endHour
-        price
-      }
-      Saturday {
-        startHour
-        endHour
-        price
-      }
-      Sunday {
-        startHour
-        endHour
-        price
-      }
-    }
   }
 }
     `;

@@ -24,7 +24,6 @@ const LoginPage = () => {
       .catch((error) => {
         setError((error as FirebaseError).code);
       });
-    console.log(userInput);
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput({ ...userInput, [event.target.name]: event.target.value });

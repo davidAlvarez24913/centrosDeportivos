@@ -21,6 +21,11 @@ const ServicesPage = () => {
                     key={service.serviceId}
                     {...service}
                     showSportCenter
+                    information={{
+                      schedule: "",
+                      ubication: "",
+                      phone: "",
+                    }}
                   />
                 );
               })}

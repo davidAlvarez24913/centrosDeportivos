@@ -1,87 +1,41 @@
-query ListServices{
-    listServices{
-        serviceId
-        sportCenterId
-        name
-        description
-        sport
-        image
-    }
+query ListServices {
+  listServices {
+    serviceId
+    sportCenterId
+    name
+    description
+    sport
+    image
+  }
 }
-query ListServicesBySportCenterId( $sportCenterId: ID!){
-    listServicesBySportCenterId( sportCenterId: $sportCenterId){
-        serviceId
-        name
-        sport
-        description
-        image
-        disponibility
-        {
-        Monday
-        {
-            startHour
-            endHour
-            price
-        }
-        Tuesday
-        {
-            startHour
-            endHour
-            price
-        }
-        Wednesday
-        {
-            startHour
-            endHour
-            price
-        }
-        Thursday
-        {
-            startHour
-            endHour
-            price
-        }
-        Friday
-        {
-            startHour
-            endHour
-            price
-        }
-        Saturday
-        {
-            startHour
-            endHour
-            price
-        }
-        Sunday
-        {
-            startHour
-            endHour
-            price
-        }
-        }
-    }
+query ListServicesBySportCenterId($sportCenterId: ID!) {
+  listServicesBySportCenterId(sportCenterId: $sportCenterId) {
+    serviceId
+    name
+    sport
+    description
+    image
+  }
 }
-mutation createService($input: CreateServiceInput!){
-    createService(input: $input){
-      serviceId
-        name
-        sport
-        description
-        image
-        sportCenterId
-    }
-
+mutation createService($input: CreateServiceInput!) {
+  createService(input: $input) {
+    serviceId
+    name
+    sport
+    description
+    image
+    sportCenterId
+  }
 }
-mutation UpdateService($input: UpdateServiceInput){
-    updateService(input : $input){
-        status
-        message
-    }
+mutation UpdateService($input: UpdateServiceInput) {
+  updateService(input: $input) {
+    status
+    message
+  }
 }
-mutation DeleteService($serviceId: ID!){
-    deleteService(serviceId: $serviceId){
-        status
-        message
-    }
+mutation DeleteService($serviceId: ID!) {
+  deleteService(serviceId: $serviceId) {
+    status
+    message
+  }
 }
