@@ -37,7 +37,7 @@ const ModalNewBook = ({ onClose, serviceId }: NewBookProps) => {
   const [modalConfirm, setModalConfirm] = useState(false);
   const [days, setDays] = useState(daysDisponibility());
   const [hours, setHours] = useState<PropsAvailableHours[]>();
-  const [day, setDay] = useState<string>();
+  const [day, setDay] = useState<string>(new Date().toLocaleDateString());
   const { data, loading } = useGetDisponibilityQuery({
     variables: { serviceId: serviceId },
     onCompleted: (data) => {

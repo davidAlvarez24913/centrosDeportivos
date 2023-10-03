@@ -10,7 +10,7 @@ type PropsAvailableHours = {
 
 type PropsBodyDisponibility = {
   serviceId: string;
-  setDay: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDay: React.Dispatch<React.SetStateAction<string>>;
   days: {
     date: string;
     available: boolean;
@@ -46,6 +46,39 @@ const BodyDisponibility = ({
     setPrice(prices !== 0 ? prices.reduce((a, b) => a + b, 0) : 0);
   }, [hours, setPrice]);
 
+  const onSelectDay = (date: string, index: number) => {
+    setDay(date);
+    setDays(
+      days.map((day, i) => {
+        if (i === index) return { date: day.date, available: true };
+        else return { date: day.date, available: false };
+      })
+    );
+  };
+  const handleHours = (
+    hour: PropsAvailableHours,
+    hours: PropsAvailableHours[]
+  ) => {
+    if (hour.available === true) {
+      const aux = hours.map((h) => {
+        if (h.rangeHour === hour.rangeHour) {
+          return { ...hour, available: false };
+        } else {
+          return h;
+        }
+      });
+      setHours(aux);
+    } else {
+      const aux = hours.map((h) => {
+        if (h.rangeHour === hour.rangeHour) {
+          return { ...hour, available: true };
+        } else {
+          return h;
+        }
+      });
+      setHours(aux);
+    }
+  };
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-4 py-4 overflow-scroll">
@@ -56,13 +89,7 @@ const BodyDisponibility = ({
               date={day.date}
               key={index}
               onClick={() => {
-                setDay(day.date);
-                setDays(
-                  days.map((day, i) => {
-                    if (i === index) return { date: day.date, available: true };
-                    else return { date: day.date, available: false };
-                  })
-                );
+                onSelectDay(day.date, index);
               }}
             />
           );
@@ -77,25 +104,7 @@ const BodyDisponibility = ({
               rangeHour={hour.rangeHour}
               key={index}
               onClick={() => {
-                if (hour.available === true) {
-                  const aux = hours.map((h) => {
-                    if (h.rangeHour === hour.rangeHour) {
-                      return { ...hour, available: false };
-                    } else {
-                      return h;
-                    }
-                  });
-                  setHours(aux);
-                } else {
-                  const aux = hours.map((h) => {
-                    if (h.rangeHour === hour.rangeHour) {
-                      return { ...hour, available: true };
-                    } else {
-                      return h;
-                    }
-                  });
-                  setHours(aux);
-                }
+                handleHours(hour, hours);
               }}
             />
           );
