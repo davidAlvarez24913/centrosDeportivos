@@ -528,7 +528,14 @@ export type GetDisponibilityQueryVariables = Exact<{
 }>;
 
 
-export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
+export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
+
+export type ListServicesBySportCenterIdWithDisponibilityQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type ListServicesBySportCenterIdWithDisponibilityQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string, disponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null } | null> | null };
 
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -1051,6 +1058,11 @@ export const GetDisponibilityDocument = gql`
       endHour
       price
     }
+    Friday {
+      startHour
+      endHour
+      price
+    }
   }
 }
     `;
@@ -1082,6 +1094,82 @@ export function useGetDisponibilityLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetDisponibilityQueryHookResult = ReturnType<typeof useGetDisponibilityQuery>;
 export type GetDisponibilityLazyQueryHookResult = ReturnType<typeof useGetDisponibilityLazyQuery>;
 export type GetDisponibilityQueryResult = Apollo.QueryResult<GetDisponibilityQuery, GetDisponibilityQueryVariables>;
+export const ListServicesBySportCenterIdWithDisponibilityDocument = gql`
+    query ListServicesBySportCenterIdWithDisponibility($sportCenterId: ID!) {
+  listServicesBySportCenterId(sportCenterId: $sportCenterId) {
+    serviceId
+    name
+    sport
+    description
+    image
+    disponibility {
+      Monday {
+        startHour
+        endHour
+        price
+      }
+      Saturday {
+        startHour
+        endHour
+        price
+      }
+      Sunday {
+        startHour
+        endHour
+        price
+      }
+      Tuesday {
+        startHour
+        endHour
+        price
+      }
+      Thursday {
+        startHour
+        endHour
+        price
+      }
+      Wednesday {
+        startHour
+        endHour
+        price
+      }
+      Friday {
+        startHour
+        endHour
+        price
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useListServicesBySportCenterIdWithDisponibilityQuery__
+ *
+ * To run a query within a React component, call `useListServicesBySportCenterIdWithDisponibilityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListServicesBySportCenterIdWithDisponibilityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListServicesBySportCenterIdWithDisponibilityQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useListServicesBySportCenterIdWithDisponibilityQuery(baseOptions: Apollo.QueryHookOptions<ListServicesBySportCenterIdWithDisponibilityQuery, ListServicesBySportCenterIdWithDisponibilityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListServicesBySportCenterIdWithDisponibilityQuery, ListServicesBySportCenterIdWithDisponibilityQueryVariables>(ListServicesBySportCenterIdWithDisponibilityDocument, options);
+      }
+export function useListServicesBySportCenterIdWithDisponibilityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListServicesBySportCenterIdWithDisponibilityQuery, ListServicesBySportCenterIdWithDisponibilityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListServicesBySportCenterIdWithDisponibilityQuery, ListServicesBySportCenterIdWithDisponibilityQueryVariables>(ListServicesBySportCenterIdWithDisponibilityDocument, options);
+        }
+export type ListServicesBySportCenterIdWithDisponibilityQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdWithDisponibilityQuery>;
+export type ListServicesBySportCenterIdWithDisponibilityLazyQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdWithDisponibilityLazyQuery>;
+export type ListServicesBySportCenterIdWithDisponibilityQueryResult = Apollo.QueryResult<ListServicesBySportCenterIdWithDisponibilityQuery, ListServicesBySportCenterIdWithDisponibilityQueryVariables>;
 export const GetAccessDocument = gql`
     query GetAccess($sportCenterId: ID!) {
   getAccess(sportCenterId: $sportCenterId)

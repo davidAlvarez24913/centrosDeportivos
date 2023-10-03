@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import ServiceModal from "../ServiceModal";
 import {
+  Disponibility,
   Service,
   UpdateServiceInput,
   useDeleteServiceMutation,
+  useGetDisponibilityQuery,
   useUpdateServiceMutation,
 } from "schema";
 import ModalEditService from "../ModalEditService";
@@ -26,12 +28,24 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
   const [updateServiceMutation, { loading }] = useUpdateServiceMutation();
   const [deleteServiceMutation] = useDeleteServiceMutation();
 
+  const {
+    data,
+    loading: loadDisponibility,
+    refetch,
+  } = useGetDisponibilityQuery({
+    variables: { serviceId: service.serviceId },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
   const onUpdate = (input: UpdateServiceInput) => {
     updateServiceMutation({
       variables: { input },
       onCompleted: () => {
         onRefetch();
         alert("se actualizo el servicio exitosamente");
+        refetch();
         setModalEdit(false);
       },
       onError: (err) => {
@@ -125,6 +139,8 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
         >
           <ModalNewBook
             serviceId={service.serviceId}
+            loadDisponibility={loadDisponibility}
+            disponibility={data?.getDisponibility as Disponibility}
             nameService={service.name ?? "Nombre servicio"}
             onClose={() => {
               setModalReservation(false);

@@ -3,17 +3,14 @@ import { CustomButton } from "../../atomos";
 import BodyDisponibility from "../../organismos/BodyDisponibility";
 import Modal from "../Modal/Modal";
 import ModalConfirmBooking from "../ModalConfirmBooking";
-import {
-  Disponibility,
-  RangeHour,
-  Weekday,
-  useGetDisponibilityQuery,
-} from "schema";
+import { Disponibility, RangeHour, Weekday } from "schema";
 import { covertDateToStringEs, getDayString } from "../../../utils";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
   nameService: string;
+  disponibility: Disponibility;
+  loadDisponibility: boolean;
 };
 
 const daysDisponibility = () => {
@@ -33,25 +30,25 @@ type PropsAvailableHours = {
   price: number;
 };
 
-const ModalNewBook = ({ onClose, serviceId, nameService }: NewBookProps) => {
+const ModalNewBook = ({
+  onClose,
+  serviceId,
+  nameService,
+  disponibility,
+  loadDisponibility,
+}: NewBookProps) => {
   const [price, setPrice] = useState(0.0);
   const [modalConfirm, setModalConfirm] = useState(false);
   const [days, setDays] = useState(daysDisponibility()); // days to show
   const [hours, setHours] = useState<PropsAvailableHours[]>();
   const [day, setDay] = useState<string>(new Date().toLocaleDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
-  const { data, loading } = useGetDisponibilityQuery({
-    variables: { serviceId: serviceId },
-    onError: (e) => {
-      console.log(e);
-    },
-  });
 
   useEffect(() => {
     const getDisponibility = (day: string) => {
       const dayString = getDayString(day);
-      const { __typename, ...rest } = !loading
-        ? (data?.getDisponibility as Disponibility)
+      const { __typename, ...rest } = !loadDisponibility
+        ? disponibility
         : ([] as Disponibility);
       return rest[Weekday[dayString as Weekday]];
     };
@@ -68,7 +65,7 @@ const ModalNewBook = ({ onClose, serviceId, nameService }: NewBookProps) => {
       };
     });
     setHours(availableHours);
-  }, [data?.getDisponibility, day, loading]);
+  }, [disponibility, day, loadDisponibility]);
 
   return (
     <div>

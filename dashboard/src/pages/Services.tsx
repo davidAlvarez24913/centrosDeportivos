@@ -4,7 +4,7 @@ import { CreateServiceButton } from "../components/organismos";
 import {
   Service,
   useGetNameSportCenterQuery,
-  useListServicesBySportCenterIdQuery,
+  useListServicesBySportCenterIdWithDisponibilityQuery,
 } from "schema";
 import useUser from "../Hooks/useUser";
 import { Loading } from "../components/atomos";
@@ -14,9 +14,10 @@ const ServicesPage = () => {
   const status = useGetNameSportCenterQuery({
     variables: { sportCenterId: user?.uid as string },
   });
-  const { data, loading, refetch } = useListServicesBySportCenterIdQuery({
-    variables: { sportCenterId: user?.uid as string },
-  });
+  const { data, loading, refetch } =
+    useListServicesBySportCenterIdWithDisponibilityQuery({
+      variables: { sportCenterId: user?.uid as string },
+    });
   const services = data?.listServicesBySportCenterId;
 
   return (
