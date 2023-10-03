@@ -110,3 +110,16 @@ export const cleanTypenameDisponibility = (service: Service) => {
     return daysAux;
   }
 };
+export const getDayString = (date: string) => {
+  const day = new Date(date).getDay();
+  let auxDay = "";
+
+  if (0 === day) auxDay = "Sunday";
+  if (1 === day) auxDay = "Monday";
+  if (2 === day) auxDay = "Tuesday";
+  if (3 === day) auxDay = "Wednesday";
+  if (4 === day) auxDay = "Thursday";
+  if (5 === day) auxDay = "Friday";
+  if (6 === day) auxDay = "Saturday";
+  return auxDay;
+};
