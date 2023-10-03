@@ -123,3 +123,24 @@ export const getDayString = (date: string) => {
   if (6 === day) auxDay = "Saturday";
   return auxDay;
 };
+
+export const covertDateToStringEs = (day: string) => {
+  const aux = new Date(day);
+  const date = new Date(
+    Date.UTC(
+      aux.getFullYear(),
+      aux.getUTCMonth(),
+      aux.getUTCDate(),
+      aux.getHours(),
+      aux.getMinutes(),
+      aux.getSeconds()
+    )
+  );
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return date.toLocaleDateString("es-ES", options);
+};

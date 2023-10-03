@@ -509,7 +509,7 @@ export type GetDisponibilityQueryVariables = Exact<{
 }>;
 
 
-export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
+export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
 
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -973,6 +973,11 @@ export const GetDisponibilityDocument = gql`
       price
     }
     Wednesday {
+      startHour
+      endHour
+      price
+    }
+    Friday {
       startHour
       endHour
       price

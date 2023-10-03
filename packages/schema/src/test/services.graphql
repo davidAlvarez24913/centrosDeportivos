@@ -39,12 +39,7 @@ mutation DeleteService($serviceId: ID!) {
     message
   }
 }
-mutation DeleteService($serviceId: ID!) {
-  deleteService(serviceId: $serviceId) {
-    status
-    message
-  }
-}
+
 query GetDisponibility($serviceId: ID!) {
   getDisponibility(serviceId: $serviceId) {
     Monday {

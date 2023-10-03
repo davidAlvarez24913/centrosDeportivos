@@ -125,6 +125,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
         >
           <ModalNewBook
             serviceId={service.serviceId}
+            nameService={service.name ?? "Nombre servicio"}
             onClose={() => {
               setModalReservation(false);
             }}

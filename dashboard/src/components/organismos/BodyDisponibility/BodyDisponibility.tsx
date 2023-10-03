@@ -9,8 +9,7 @@ type PropsAvailableHours = {
 };
 
 type PropsBodyDisponibility = {
-  serviceId: string;
-  setDay: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDay: React.Dispatch<React.SetStateAction<string>>;
   days: {
     date: string;
     available: boolean;
@@ -28,6 +27,8 @@ type PropsBodyDisponibility = {
   setHours: React.Dispatch<
     React.SetStateAction<PropsAvailableHours[] | undefined>
   >;
+  selectedHour: string[];
+  getHour: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const BodyDisponibility = ({
@@ -36,8 +37,9 @@ const BodyDisponibility = ({
   setPrice,
   setHours,
   setDays,
-  serviceId,
   setDay,
+  getHour,
+  selectedHour,
 }: PropsBodyDisponibility) => {
   useEffect(() => {
     const prices = hours
@@ -45,6 +47,40 @@ const BodyDisponibility = ({
       : 0;
     setPrice(prices !== 0 ? prices.reduce((a, b) => a + b, 0) : 0);
   }, [hours, setPrice]);
+
+  const onSelectDay = (date: string, index: number) => {
+    setDay(date);
+    setDays(
+      days.map((day, i) => {
+        if (i === index) return { date: day.date, available: true };
+        else return { date: day.date, available: false };
+      })
+    );
+  };
+  const handleHours = (
+    hour: PropsAvailableHours,
+    hours: PropsAvailableHours[]
+  ) => {
+    if (hour.available === true) {
+      const aux = hours.map((h) => {
+        if (h.rangeHour === hour.rangeHour) {
+          return { ...hour, available: false };
+        } else {
+          return h;
+        }
+      });
+      setHours(aux);
+    } else {
+      const aux = hours.map((h) => {
+        if (h.rangeHour === hour.rangeHour) {
+          return { ...hour, available: true };
+        } else {
+          return h;
+        }
+      });
+      setHours(aux);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -56,19 +92,15 @@ const BodyDisponibility = ({
               date={day.date}
               key={index}
               onClick={() => {
-                setDay(day.date);
-                setDays(
-                  days.map((day, i) => {
-                    if (i === index) return { date: day.date, available: true };
-                    else return { date: day.date, available: false };
-                  })
-                );
+                getHour([]);
+
+                onSelectDay(day.date, index);
               }}
             />
           );
         })}
       </div>
-      <h1>Seleccionar Horario</h1>
+      <h2 className="font-semibold">Seleccionar Horario</h2>
       <div className=" flex gap-4 flex-wrap">
         {hours?.map((hour, index) => {
           return (
@@ -77,25 +109,15 @@ const BodyDisponibility = ({
               rangeHour={hour.rangeHour}
               key={index}
               onClick={() => {
-                if (hour.available === true) {
-                  const aux = hours.map((h) => {
-                    if (h.rangeHour === hour.rangeHour) {
-                      return { ...hour, available: false };
-                    } else {
-                      return h;
-                    }
-                  });
-                  setHours(aux);
+                if (selectedHour.includes(hour.rangeHour)) {
+                  const aux = selectedHour.filter(
+                    (auxHour) => auxHour !== hour.rangeHour
+                  );
+                  getHour(aux);
                 } else {
-                  const aux = hours.map((h) => {
-                    if (h.rangeHour === hour.rangeHour) {
-                      return { ...hour, available: true };
-                    } else {
-                      return h;
-                    }
-                  });
-                  setHours(aux);
+                  getHour([...selectedHour, hour.rangeHour]);
                 }
+                handleHours(hour, hours);
               }}
             />
           );
