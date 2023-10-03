@@ -122,5 +122,11 @@ query GetDisponibility($serviceId: ID!){
             endHour
             price
         }
+        Friday
+        {
+            startHour
+            endHour
+            price
+        }
     }
 }
