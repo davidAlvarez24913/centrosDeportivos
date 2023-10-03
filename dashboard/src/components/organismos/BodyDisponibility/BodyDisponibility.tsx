@@ -9,7 +9,6 @@ type PropsAvailableHours = {
 };
 
 type PropsBodyDisponibility = {
-  serviceId: string;
   setDay: React.Dispatch<React.SetStateAction<string>>;
   days: {
     date: string;
@@ -28,6 +27,8 @@ type PropsBodyDisponibility = {
   setHours: React.Dispatch<
     React.SetStateAction<PropsAvailableHours[] | undefined>
   >;
+  selectedHour: string[];
+  getHour: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const BodyDisponibility = ({
@@ -36,8 +37,9 @@ const BodyDisponibility = ({
   setPrice,
   setHours,
   setDays,
-  serviceId,
   setDay,
+  getHour,
+  selectedHour,
 }: PropsBodyDisponibility) => {
   useEffect(() => {
     const prices = hours
@@ -79,6 +81,7 @@ const BodyDisponibility = ({
       setHours(aux);
     }
   };
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-4 py-4 overflow-scroll">
@@ -89,13 +92,15 @@ const BodyDisponibility = ({
               date={day.date}
               key={index}
               onClick={() => {
+                getHour([]);
+
                 onSelectDay(day.date, index);
               }}
             />
           );
         })}
       </div>
-      <h1>Seleccionar Horario</h1>
+      <h2 className="font-semibold">Seleccionar Horario</h2>
       <div className=" flex gap-4 flex-wrap">
         {hours?.map((hour, index) => {
           return (
@@ -104,6 +109,14 @@ const BodyDisponibility = ({
               rangeHour={hour.rangeHour}
               key={index}
               onClick={() => {
+                if (selectedHour.includes(hour.rangeHour)) {
+                  const aux = selectedHour.filter(
+                    (auxHour) => auxHour !== hour.rangeHour
+                  );
+                  getHour(aux);
+                } else {
+                  getHour([...selectedHour, hour.rangeHour]);
+                }
                 handleHours(hour, hours);
               }}
             />

@@ -5,18 +5,20 @@ type ModalConfirmBookingProps = {
   onCreateRervation: () => void;
   hours: string | string[];
   price: number;
+  date: string;
 };
 const ModalConfirmBooking = ({
   onClose,
   onCreateRervation,
   hours,
   price,
+  date,
 }: ModalConfirmBookingProps) => {
   return (
     <div>
       <div className="my-2">
         <h2 className="font-semibold">Fecha</h2>
-        <p>Miércoles 9 Ago. 2023</p>
+        <p>{date}</p>
       </div>
       <div className="my-2">
         <h2 className="font-semibold">Horario</h2>

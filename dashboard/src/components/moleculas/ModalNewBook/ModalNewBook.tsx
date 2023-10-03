@@ -9,10 +9,11 @@ import {
   Weekday,
   useGetDisponibilityQuery,
 } from "schema";
-import { getDayString } from "../../../utils";
+import { covertDateToStringEs, getDayString } from "../../../utils";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
+  nameService: string;
 };
 
 const daysDisponibility = () => {
@@ -32,17 +33,15 @@ type PropsAvailableHours = {
   price: number;
 };
 
-const ModalNewBook = ({ onClose, serviceId }: NewBookProps) => {
+const ModalNewBook = ({ onClose, serviceId, nameService }: NewBookProps) => {
   const [price, setPrice] = useState(0.0);
   const [modalConfirm, setModalConfirm] = useState(false);
-  const [days, setDays] = useState(daysDisponibility());
+  const [days, setDays] = useState(daysDisponibility()); // days to show
   const [hours, setHours] = useState<PropsAvailableHours[]>();
   const [day, setDay] = useState<string>(new Date().toLocaleDateString());
+  const [selectedHours, setSelectedHours] = useState<string[]>([]);
   const { data, loading } = useGetDisponibilityQuery({
     variables: { serviceId: serviceId },
-    onCompleted: (data) => {
-      console.log(data);
-    },
     onError: (e) => {
       console.log(e);
     },
@@ -78,12 +77,13 @@ const ModalNewBook = ({ onClose, serviceId }: NewBookProps) => {
         <h1 className="font-semibold text-lg ">Fecha</h1>
         <BodyDisponibility
           setDay={setDay}
-          serviceId={serviceId}
           days={days}
           hours={hours}
           setDays={setDays}
           setHours={setHours}
           setPrice={setPrice}
+          selectedHour={selectedHours}
+          getHour={setSelectedHours}
         ></BodyDisponibility>
       </div>
       <div className="flex content-end mt-20">
@@ -97,16 +97,17 @@ const ModalNewBook = ({ onClose, serviceId }: NewBookProps) => {
         />
       </div>
       <Modal
-        title={"name sportcenter"}
+        title={nameService || ""}
         modalState={modalConfirm}
         closeModal={() => {
           setModalConfirm(false);
         }}
       >
         <ModalConfirmBooking
-          price={20.5}
+          price={price}
+          date={covertDateToStringEs(day)}
           onCreateRervation={() => {}}
-          hours={["11:00 - 12:00", "11:00 - 12:00"]}
+          hours={selectedHours}
           onClose={() => {
             setModalConfirm(false);
           }}
