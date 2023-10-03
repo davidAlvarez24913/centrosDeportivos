@@ -41,6 +41,18 @@ export const mergeServices = (
   });
 };
 
+export const mergeServicesWithSportCenter = (
+  sqlServices: Service[],
+  firestoreService: FireStoreService[]
+) => {
+  return sqlServices.map((obj1) => {
+    const obj2 = firestoreService.find(
+      (obj2) => obj1.serviceId == obj2.serviceId
+    );
+    const { sportCenter, ...rest } = obj1;
+    return { service: { ...rest, ...obj2 }, sportCenter: sportCenter };
+  });
+};
 export const mergeReservations = (
   sqlServices: Reservation[],
   firestoreService: FireStoreReservation[]

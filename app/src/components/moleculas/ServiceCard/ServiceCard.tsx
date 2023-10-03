@@ -28,9 +28,9 @@ const ServiceCard = (service: ServiceCardProps) => {
         id={`open-service-${serviceId}-modal`}
       >
         <div className="flex flex-col gap-2 px-4 py-2">
-          <h2 className="text-2xl font-bold">{name}</h2>
+          <h2 className="text-xl font-bold">{name}</h2>
           {showSportCenter && (
-            <h2 className="text-xl font-semibold leading-3 mb-1">
+            <h2 className="text-lg font-semibold leading-3 mb-1 text-primary">
               {sportCenter}
             </h2>
           )}
@@ -41,7 +41,7 @@ const ServiceCard = (service: ServiceCardProps) => {
         <img
           src={image !== "" ? image : "/assets/default-image.jpg"}
           alt="sportIcon"
-          className="max-w-[180px] min-w-[180px] max-h-32 object-cover rounded-r-2xl"
+          className="max-w-[140px] min-w-[140px] min-h-32 object-cover rounded-r-2xl"
         />
       </div>
       <FullService {...service} />

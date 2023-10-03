@@ -17,6 +17,24 @@ query ListServicesBySportCenterId($sportCenterId: ID!) {
     image
   }
 }
+query ListServicesBySport($sport: Sport!) {
+  listServicesBySport(sport: $sport) {
+    service {
+      serviceId
+      name
+      sport
+      description
+      image
+    }
+    sportCenter {
+      sportCenterId
+      name
+      phone
+      ubication
+      schedule
+    }
+  }
+}
 mutation createService($input: CreateServiceInput!) {
   createService(input: $input) {
     serviceId

@@ -246,6 +246,7 @@ export type Query = {
   listCommentsByService?: Maybe<Array<Comment>>;
   listCommentsBySportCenter?: Maybe<Array<Comment>>;
   listServices?: Maybe<Array<Maybe<Service>>>;
+  listServicesBySport?: Maybe<Array<Maybe<ServiceWithSportCenter>>>;
   listServicesBySportCenterId?: Maybe<Array<Maybe<Service>>>;
   listSportCenters?: Maybe<Array<SportCenter>>;
   reservationCount: Scalars['Int']['output'];
@@ -298,6 +299,11 @@ export type QueryListCommentsBySportCenterArgs = {
 };
 
 
+export type QueryListServicesBySportArgs = {
+  sport: Sport;
+};
+
+
 export type QueryListServicesBySportCenterIdArgs = {
   sportCenterId: Scalars['ID']['input'];
 };
@@ -331,7 +337,13 @@ export type Service = {
   reservations?: Maybe<Array<Reservation>>;
   serviceId: Scalars['ID']['output'];
   sport: Sport;
-  sportCenterId: Scalars['ID']['output'];
+  sportCenterId?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ServiceWithSportCenter = {
+  __typename?: 'ServiceWithSportCenter';
+  service?: Maybe<Service>;
+  sportCenter?: Maybe<SportCenter>;
 };
 
 export enum Sport {
@@ -474,7 +486,7 @@ export type CreateReservationInputMutation = { __typename?: 'Mutation', createRe
 export type ListServicesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListServicesQuery = { __typename?: 'Query', listServices?: Array<{ __typename?: 'Service', serviceId: string, sportCenterId: string, name: string, description: string, sport: Sport, image: string } | null> | null };
+export type ListServicesQuery = { __typename?: 'Query', listServices?: Array<{ __typename?: 'Service', serviceId: string, sportCenterId?: string | null, name: string, description: string, sport: Sport, image: string } | null> | null };
 
 export type ListServicesBySportCenterIdQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -483,12 +495,19 @@ export type ListServicesBySportCenterIdQueryVariables = Exact<{
 
 export type ListServicesBySportCenterIdQuery = { __typename?: 'Query', listServicesBySportCenterId?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null };
 
+export type ListServicesBySportQueryVariables = Exact<{
+  sport: Sport;
+}>;
+
+
+export type ListServicesBySportQuery = { __typename?: 'Query', listServicesBySport?: Array<{ __typename?: 'ServiceWithSportCenter', service?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null, sportCenter?: { __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string } | null } | null> | null };
+
 export type CreateServiceMutationVariables = Exact<{
   input: CreateServiceInput;
 }>;
 
 
-export type CreateServiceMutation = { __typename?: 'Mutation', createService?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string, sportCenterId: string } | null };
+export type CreateServiceMutation = { __typename?: 'Mutation', createService?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string, sportCenterId?: string | null } | null };
 
 export type UpdateServiceMutationVariables = Exact<{
   input?: InputMaybe<UpdateServiceInput>;
@@ -509,7 +528,7 @@ export type GetDisponibilityQueryVariables = Exact<{
 }>;
 
 
-export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Friday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
+export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: { __typename?: 'Disponibility', Monday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Saturday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Sunday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Tuesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Thursday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null, Wednesday?: Array<{ __typename?: 'RangeHour', startHour: string, endHour: string, price: number } | null> | null } | null };
 
 export type GetAccessQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -838,6 +857,54 @@ export function useListServicesBySportCenterIdLazyQuery(baseOptions?: Apollo.Laz
 export type ListServicesBySportCenterIdQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdQuery>;
 export type ListServicesBySportCenterIdLazyQueryHookResult = ReturnType<typeof useListServicesBySportCenterIdLazyQuery>;
 export type ListServicesBySportCenterIdQueryResult = Apollo.QueryResult<ListServicesBySportCenterIdQuery, ListServicesBySportCenterIdQueryVariables>;
+export const ListServicesBySportDocument = gql`
+    query ListServicesBySport($sport: Sport!) {
+  listServicesBySport(sport: $sport) {
+    service {
+      serviceId
+      name
+      sport
+      description
+      image
+    }
+    sportCenter {
+      sportCenterId
+      name
+      phone
+      ubication
+      schedule
+    }
+  }
+}
+    `;
+
+/**
+ * __useListServicesBySportQuery__
+ *
+ * To run a query within a React component, call `useListServicesBySportQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListServicesBySportQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListServicesBySportQuery({
+ *   variables: {
+ *      sport: // value for 'sport'
+ *   },
+ * });
+ */
+export function useListServicesBySportQuery(baseOptions: Apollo.QueryHookOptions<ListServicesBySportQuery, ListServicesBySportQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListServicesBySportQuery, ListServicesBySportQueryVariables>(ListServicesBySportDocument, options);
+      }
+export function useListServicesBySportLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListServicesBySportQuery, ListServicesBySportQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListServicesBySportQuery, ListServicesBySportQueryVariables>(ListServicesBySportDocument, options);
+        }
+export type ListServicesBySportQueryHookResult = ReturnType<typeof useListServicesBySportQuery>;
+export type ListServicesBySportLazyQueryHookResult = ReturnType<typeof useListServicesBySportLazyQuery>;
+export type ListServicesBySportQueryResult = Apollo.QueryResult<ListServicesBySportQuery, ListServicesBySportQueryVariables>;
 export const CreateServiceDocument = gql`
     mutation createService($input: CreateServiceInput!) {
   createService(input: $input) {
@@ -973,11 +1040,6 @@ export const GetDisponibilityDocument = gql`
       price
     }
     Wednesday {
-      startHour
-      endHour
-      price
-    }
-    Friday {
       startHour
       endHour
       price

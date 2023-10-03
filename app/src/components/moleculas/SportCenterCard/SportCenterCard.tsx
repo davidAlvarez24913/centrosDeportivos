@@ -58,7 +58,7 @@ const SportCenterCard = ({
         <img
           src={image === "" ? "assets/default-image.jpg" : image}
           alt="sportIcon"
-          className="w-[180px] rounded-r-2xl object-cover"
+          className="max-w-[140px] min-w-[140px] min-h-32  object-cover rounded-r-2xl"
         />
       </div>
     </MainCard>

@@ -6,7 +6,7 @@ import {
   listServices,
 } from "../../db/Firebase/Firestore/Service";
 import { reservationResolvers } from "../Reservation/reservationResolver";
-import { mergeServices } from "../utils";
+import { mergeServices, mergeServicesWithSportCenter } from "../utils";
 import CreateServiceResolver from "./CreateServiceResolver";
 import UpdateServiceResolver from "./UpdateServiceResolver";
 import DeleteServiceResolver from "./DeleteServiceResolver";
@@ -43,6 +43,21 @@ export const serviceResolvers = {
       return mergeService.map((service) => {
         return { ...service, sportCenterId: sportCenterId };
       });
+    },
+    listServicesBySport: async (root: any, { sport }: any) => {
+      const servicesSQL = await Service.find({
+        where: { sport: sport },
+        relations: { sportCenter: true },
+      });
+
+      const servicesNoSQL = (await listServices()) as FireStoreService[];
+      const mergeService = mergeServicesWithSportCenter(
+        servicesSQL,
+        servicesNoSQL
+      );
+      console.log(mergeService);
+
+      return mergeService;
     },
     getDisponibility: async (root: any, { serviceId }: any) => {
       const data = (await findService(serviceId)) as FireStoreService;

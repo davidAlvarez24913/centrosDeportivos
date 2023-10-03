@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonRoute, useIonRouter } from "@ionic/react";
+import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import React from "react";
 import { Background, CustomInput, Header } from "src/components/atomos";
 import { MenuCard } from "src/components/moleculas";

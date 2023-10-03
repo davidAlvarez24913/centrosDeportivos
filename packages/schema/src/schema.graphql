@@ -69,7 +69,7 @@ type Service {
   sport: Sport!
   description: String!
   image: String!
-  sportCenterId: ID!
+  sportCenterId: ID
   disponibility: Disponibility
   reservations: [Reservation!]
 }
@@ -214,7 +214,10 @@ input UpdateDisponibilityInput {
   Friday: [UpdateRangeHourInput!]
   Saturday: [UpdateRangeHourInput!]
 }
-
+type ServiceWithSportCenter {
+  service: Service
+  sportCenter: SportCenter
+}
 type Query {
   #users
   allUsers: [User]
@@ -227,6 +230,7 @@ type Query {
   #services
   listServices: [Service]
   listServicesBySportCenterId(sportCenterId: ID!): [Service]
+  listServicesBySport(sport: Sport!): [ServiceWithSportCenter]
   getAccess(sportCenterId: ID!): Boolean!
   getSportCenterWithServices(sportCenterId: ID!): SportCenter
   getDisponibility(serviceId: ID!): Disponibility
