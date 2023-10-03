@@ -2,16 +2,20 @@ import { useEffect } from "react";
 import DayCard from "../../moleculas/DayCard";
 import { TagHour } from "../../atomos";
 
+type PropsAvailableHours = {
+  rangeHour: string;
+  available: boolean;
+  price: number;
+};
+
 type PropsBodyDisponibility = {
+  serviceId: string;
+  setDay: React.Dispatch<React.SetStateAction<string | undefined>>;
   days: {
     date: string;
     available: boolean;
   }[];
-  hours: {
-    rangeHour: string;
-    available: boolean;
-    price: number;
-  }[];
+  hours: PropsAvailableHours[] | undefined;
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   setDays: React.Dispatch<
     React.SetStateAction<
@@ -22,13 +26,7 @@ type PropsBodyDisponibility = {
     >
   >;
   setHours: React.Dispatch<
-    React.SetStateAction<
-      {
-        rangeHour: string;
-        available: boolean;
-        price: number;
-      }[]
-    >
+    React.SetStateAction<PropsAvailableHours[] | undefined>
   >;
 };
 
@@ -38,13 +36,16 @@ const BodyDisponibility = ({
   setPrice,
   setHours,
   setDays,
+  serviceId,
+  setDay,
 }: PropsBodyDisponibility) => {
   useEffect(() => {
     const prices = hours
-      .filter((hour) => hour.available === true)
-      .map((_) => _.price);
-    setPrice(prices.reduce((a, b) => a + b, 0));
-  }, [hours]);
+      ? hours!.filter((hour) => hour.available === true).map((_) => _.price)
+      : 0;
+    setPrice(prices !== 0 ? prices.reduce((a, b) => a + b, 0) : 0);
+  }, [hours, setPrice]);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-4 py-4 overflow-scroll">
@@ -55,7 +56,7 @@ const BodyDisponibility = ({
               date={day.date}
               key={index}
               onClick={() => {
-                // TODO query disponibility
+                setDay(day.date);
                 setDays(
                   days.map((day, i) => {
                     if (i === index) return { date: day.date, available: true };
@@ -69,7 +70,7 @@ const BodyDisponibility = ({
       </div>
       <h1>Seleccionar Horario</h1>
       <div className=" flex gap-4 flex-wrap">
-        {hours.map((hour, index) => {
+        {hours?.map((hour, index) => {
           return (
             <TagHour
               available={hour.available!}

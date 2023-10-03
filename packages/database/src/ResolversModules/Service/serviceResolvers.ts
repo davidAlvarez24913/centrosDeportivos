@@ -2,6 +2,7 @@ import { Reservation, Service, User } from "../../db/TypeOrm/Entities";
 import {
   Disponibility,
   FireStoreService,
+  findService,
   listServices,
 } from "../../db/Firebase/Firestore/Service";
 import { reservationResolvers } from "../Reservation/reservationResolver";
@@ -42,6 +43,10 @@ export const serviceResolvers = {
       return mergeService.map((service) => {
         return { ...service, sportCenterId: sportCenterId };
       });
+    },
+    getDisponibility: async (root: any, { serviceId }: any) => {
+      const data = (await findService(serviceId)) as FireStoreService;
+      return data.disponibility;
     },
   },
   Mutation: {
