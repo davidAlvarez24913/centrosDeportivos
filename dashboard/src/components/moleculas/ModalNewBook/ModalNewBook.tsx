@@ -38,7 +38,7 @@ const ModalNewBook = ({
 
   //hooks data
   const [price, setPrice] = useState(0.0);
-  const [day, setDay] = useState<string>(new Date().toLocaleDateString());
+  const [day, setDay] = useState<string>(new Date().toDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
 
   //hook get reservations
@@ -56,25 +56,35 @@ const ModalNewBook = ({
       const { __typename, ...rest } = hour as RangeHour;
       return rest;
     });
-    console.log(day);
-    // here check with reservations
     getReservations({
-      variables: { date: day },
-      onCompleted: (data) => {
-        console.log("lazy query realizada");
-      },
+      variables: { date: new Date(day).toDateString() },
     });
 
-    !status.loading && console.log(status.data);
+    if (!status.loading) {
+      const reservationsRangeHour: string[] = [];
+      status.data?.getReservationsByDate?.map((reservation) => {
+        if (reservation?.state) {
+          reservation.rangeHour?.map((h) => {
+            reservationsRangeHour.push(h as string);
+            return null;
+          });
+        }
+        return null;
+      });
 
-    const availableHours = auxHours?.map((hour) => {
-      return {
-        rangeHour: hour.startHour + " - " + hour.endHour,
-        available: false,
-        price: hour.price,
-      };
-    });
-    setHours(availableHours);
+      const availableHours = auxHours?.map((hour) => {
+        return {
+          rangeHour: hour.startHour + " - " + hour.endHour,
+          available: false,
+          price: hour.price,
+        };
+      });
+
+      const availableHoursFiltered = availableHours?.filter(
+        (h) => !reservationsRangeHour.includes(h.rangeHour)
+      );
+      setHours(availableHoursFiltered);
+    }
   }, [
     disponibility,
     day,
@@ -122,6 +132,9 @@ const ModalNewBook = ({
           serviceId={serviceId}
           date={day}
           hours={selectedHours}
+          onRefetch={() => {
+            status.refetch();
+          }}
           onClose={() => {
             setModalConfirm(false);
           }}

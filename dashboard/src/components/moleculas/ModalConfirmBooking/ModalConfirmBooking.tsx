@@ -9,6 +9,7 @@ type ModalConfirmBookingProps = {
   price: number;
   date: string;
   serviceId: string;
+  onRefetch: () => void;
 };
 const ModalConfirmBooking = ({
   onClose,
@@ -16,6 +17,7 @@ const ModalConfirmBooking = ({
   price,
   date,
   serviceId,
+  onRefetch,
 }: ModalConfirmBookingProps) => {
   const userId = useUser().user?.uid;
   const [createReservationMutation] = useCreateReservationScMutation();
@@ -24,7 +26,7 @@ const ModalConfirmBooking = ({
     const auxInput = {
       reservationPrice: price,
       rangeHour: hours,
-      date: date,
+      date: new Date(date).toDateString(),
       serviceId: serviceId,
       userId: userId!,
     };
@@ -32,6 +34,8 @@ const ModalConfirmBooking = ({
       variables: { input: auxInput },
       onCompleted: (data) => {
         alert("Reserva creada exitosamente");
+        onRefetch();
+        onClose();
       },
       onError: (error) => {
         alert(error);
