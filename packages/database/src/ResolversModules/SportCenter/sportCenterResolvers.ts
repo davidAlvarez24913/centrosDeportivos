@@ -1,4 +1,4 @@
-import { SportCenter } from "../../db/TypeOrm/Entities";
+import { SportCenter, User } from "../../db/TypeOrm/Entities";
 import { GraphQLError } from "graphql";
 import {
   FireStoreSportCenter,
@@ -51,10 +51,20 @@ export const sportCenterResolvers = {
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
       const { images, ranking, ...dataSQL } = input;
+      console.log(input);
       let sportCenterId;
       try {
         const result = await SportCenter.insert(dataSQL);
         sportCenterId = result.identifiers[0].sportCenterId;
+        const user = await User.insert({
+          userId: input.sportCenterId,
+          name: input.name,
+          id: "",
+          birthDate: "",
+          phone: "",
+          email: input.email,
+        });
+        console.log(user);
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
           image: input.image,
