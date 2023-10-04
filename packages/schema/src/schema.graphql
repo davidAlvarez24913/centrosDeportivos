@@ -91,9 +91,9 @@ type Reservation {
   reservationPrice: Float!
   userId: ID!
   serviceId: ID!
-  image: String # Should optional?
+  image: String!
   date: String!
-  rangeHour: [String]
+  rangeHour: [String]!
 }
 
 type Comment {
@@ -241,7 +241,7 @@ type Query {
   reservationCount: Int!
   allReservations: [Reservation!]
   findReservation(id: ID!): Reservation
-  getReservationsByDate(date: String!): [Reservation]
+  getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 
   #comments
   listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]
