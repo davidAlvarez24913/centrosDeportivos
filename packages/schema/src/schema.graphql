@@ -241,6 +241,7 @@ type Query {
   reservationCount: Int!
   allReservations: [Reservation!]
   findReservation(id: ID!): Reservation
+  getReservationsByDate(date: String!): [Reservation]
 
   #comments
   listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]

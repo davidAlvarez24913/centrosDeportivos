@@ -40,6 +40,27 @@ export const reservationResolvers = {
       const { id } = args;
       return await Reservation.findOneBy({ reservationId: id });
     },
+    getReservationsByDate: async (root: any, { date }: any) => {
+      const reservationsSQL = await Reservation.find({
+        where: { date: date },
+        relations: { user: true, service: true },
+      });
+
+      const reservationsNoSQL = await listReservations();
+
+      const mergedReservations = mergeReservations(
+        reservationsSQL,
+        reservationsNoSQL as FireStoreReservation[]
+      );
+      const result = mergedReservations.map((reservation) => {
+        return {
+          ...reservation,
+          userId: reservation.user.userId,
+          serviceId: reservation.service.serviceId,
+        };
+      });
+      return result;
+    },
   },
 
   Mutation: {
