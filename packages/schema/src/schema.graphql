@@ -18,7 +18,7 @@ enum Weekday {
   Sunday
 }
 
-scalar Date
+scalar String
 
 type OperationResponse {
   status: Status!
@@ -27,7 +27,7 @@ type OperationResponse {
 type User {
   userId: ID!
   id: String!
-  birthDate: Date!
+  birthDate: String!
   name: String!
   phone: String!
   email: String!
@@ -108,7 +108,7 @@ input CreateUserInput {
   userId: ID!
   name: String!
   id: String!
-  birthDate: Date!
+  birthDate: String!
   phone: String!
   email: String!
 }
@@ -168,7 +168,7 @@ input UpdateUserInput {
   userId: ID!
   name: String!
   id: String!
-  birthDate: Date!
+  birthDate: String!
   phone: String!
   email: String!
 }
