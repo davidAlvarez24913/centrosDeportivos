@@ -1,13 +1,26 @@
-mutation CreateReservation($input: CreateReservationInput!){
-    createReservation(input: $input){
-        reservationId
-        state
-        paymentId
-        reservationPrice
-        userId
-        serviceId
-        image
-        date
-        rangeHour
-    }
+query ListReservations {
+  allReservations {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+mutation CreateReservation($input: CreateReservationInput!) {
+  createReservation(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
 }

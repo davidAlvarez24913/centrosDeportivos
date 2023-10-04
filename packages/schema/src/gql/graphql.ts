@@ -15,7 +15,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: any; output: any; }
 };
 
 export type BankAccount = {
@@ -93,7 +92,7 @@ export type CreateSportCenterInput = {
 };
 
 export type CreateUserInput = {
-  birthDate: Scalars['Date']['input'];
+  birthDate: Scalars['String']['input'];
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -419,7 +418,7 @@ export type UpdateSportCenterInput = {
 };
 
 export type UpdateUserInput = {
-  birthDate: Scalars['Date']['input'];
+  birthDate: Scalars['String']['input'];
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -429,7 +428,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
-  birthDate: Scalars['Date']['output'];
+  birthDate: Scalars['String']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
@@ -474,6 +473,11 @@ export type DeleteBankAccountMutationVariables = Exact<{
 
 
 export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAccount?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type ListReservationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null }> | null };
 
 export type CreateReservationMutationVariables = Exact<{
   input: CreateReservationInput;
@@ -593,7 +597,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', findUser?: { __typename?: 'User', userId: string, name: string, id: string, birthDate: any, email: string, phone: string } | null };
+export type GetUserQuery = { __typename?: 'Query', findUser?: { __typename?: 'User', userId: string, name: string, id: string, birthDate: string, email: string, phone: string } | null };
 
 export type CreateUserMutationVariables = Exact<{
   input: CreateUserInput;
@@ -751,6 +755,48 @@ export function useDeleteBankAccountMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteBankAccountMutationHookResult = ReturnType<typeof useDeleteBankAccountMutation>;
 export type DeleteBankAccountMutationResult = Apollo.MutationResult<DeleteBankAccountMutation>;
 export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>;
+export const ListReservationsDocument = gql`
+    query ListReservations {
+  allReservations {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+    `;
+
+/**
+ * __useListReservationsQuery__
+ *
+ * To run a query within a React component, call `useListReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListReservationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListReservationsQuery(baseOptions?: Apollo.QueryHookOptions<ListReservationsQuery, ListReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListReservationsQuery, ListReservationsQueryVariables>(ListReservationsDocument, options);
+      }
+export function useListReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListReservationsQuery, ListReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListReservationsQuery, ListReservationsQueryVariables>(ListReservationsDocument, options);
+        }
+export type ListReservationsQueryHookResult = ReturnType<typeof useListReservationsQuery>;
+export type ListReservationsLazyQueryHookResult = ReturnType<typeof useListReservationsLazyQuery>;
+export type ListReservationsQueryResult = Apollo.QueryResult<ListReservationsQuery, ListReservationsQueryVariables>;
 export const CreateReservationDocument = gql`
     mutation CreateReservation($input: CreateReservationInput!) {
   createReservation(input: $input) {

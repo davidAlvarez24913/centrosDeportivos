@@ -2,13 +2,16 @@ import React from "react";
 import { LayoutPage, Table } from "../components/moleculas";
 import { ReservationsRow } from "../components/organismos";
 import useUser from "../Hooks/useUser";
-import { useGetNameSportCenterQuery } from "schema";
+import { useGetNameSportCenterQuery, useListReservationsQuery } from "schema";
 
 const ReservationsPage = () => {
   const { user } = useUser();
   const status = useGetNameSportCenterQuery({
     variables: { sportCenterId: user?.uid as string },
   });
+  const reservations = useListReservationsQuery();
+  console.log(reservations);
+
   const data = [
     {
       reservationId: "001",
