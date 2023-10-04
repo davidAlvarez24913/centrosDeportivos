@@ -56,12 +56,11 @@ export type CreateCommentInput = {
 
 export type CreateReservationInput = {
   date: Scalars['String']['input'];
-  paymentId: Scalars['String']['input'];
-  paymentPhoto?: InputMaybe<Scalars['String']['input']>;
-  rangeHour?: InputMaybe<Array<Scalars['String']['input']>>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  paymentId?: InputMaybe<Scalars['String']['input']>;
+  rangeHour?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   reservationPrice: Scalars['Float']['input'];
   serviceId: Scalars['ID']['input'];
-  state: Scalars['Boolean']['input'];
   userId: Scalars['ID']['input'];
 };
 
@@ -318,9 +317,9 @@ export type RangeHour = {
 export type Reservation = {
   __typename?: 'Reservation';
   date: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
   paymentId?: Maybe<Scalars['String']['output']>;
-  paymentPhoto?: Maybe<Scalars['String']['output']>;
-  rangeHour: Scalars['String']['output'];
+  rangeHour?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   reservationId: Scalars['ID']['output'];
   reservationPrice: Scalars['Float']['output'];
   serviceId: Scalars['ID']['output'];
@@ -476,12 +475,12 @@ export type DeleteBankAccountMutationVariables = Exact<{
 
 export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAccount?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
-export type CreateReservationInputMutationVariables = Exact<{
+export type CreateReservationMutationVariables = Exact<{
   input: CreateReservationInput;
 }>;
 
 
-export type CreateReservationInputMutation = { __typename?: 'Mutation', createReservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, paymentPhoto?: string | null, date: string, rangeHour: string } | null };
+export type CreateReservationMutation = { __typename?: 'Mutation', createReservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null } | null };
 
 export type ListServicesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -752,8 +751,8 @@ export function useDeleteBankAccountMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteBankAccountMutationHookResult = ReturnType<typeof useDeleteBankAccountMutation>;
 export type DeleteBankAccountMutationResult = Apollo.MutationResult<DeleteBankAccountMutation>;
 export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>;
-export const CreateReservationInputDocument = gql`
-    mutation CreateReservationInput($input: CreateReservationInput!) {
+export const CreateReservationDocument = gql`
+    mutation CreateReservation($input: CreateReservationInput!) {
   createReservation(input: $input) {
     reservationId
     state
@@ -761,38 +760,38 @@ export const CreateReservationInputDocument = gql`
     reservationPrice
     userId
     serviceId
-    paymentPhoto
+    image
     date
     rangeHour
   }
 }
     `;
-export type CreateReservationInputMutationFn = Apollo.MutationFunction<CreateReservationInputMutation, CreateReservationInputMutationVariables>;
+export type CreateReservationMutationFn = Apollo.MutationFunction<CreateReservationMutation, CreateReservationMutationVariables>;
 
 /**
- * __useCreateReservationInputMutation__
+ * __useCreateReservationMutation__
  *
- * To run a mutation, you first call `useCreateReservationInputMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateReservationInputMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateReservationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReservationMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createReservationInputMutation, { data, loading, error }] = useCreateReservationInputMutation({
+ * const [createReservationMutation, { data, loading, error }] = useCreateReservationMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useCreateReservationInputMutation(baseOptions?: Apollo.MutationHookOptions<CreateReservationInputMutation, CreateReservationInputMutationVariables>) {
+export function useCreateReservationMutation(baseOptions?: Apollo.MutationHookOptions<CreateReservationMutation, CreateReservationMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateReservationInputMutation, CreateReservationInputMutationVariables>(CreateReservationInputDocument, options);
+        return Apollo.useMutation<CreateReservationMutation, CreateReservationMutationVariables>(CreateReservationDocument, options);
       }
-export type CreateReservationInputMutationHookResult = ReturnType<typeof useCreateReservationInputMutation>;
-export type CreateReservationInputMutationResult = Apollo.MutationResult<CreateReservationInputMutation>;
-export type CreateReservationInputMutationOptions = Apollo.BaseMutationOptions<CreateReservationInputMutation, CreateReservationInputMutationVariables>;
+export type CreateReservationMutationHookResult = ReturnType<typeof useCreateReservationMutation>;
+export type CreateReservationMutationResult = Apollo.MutationResult<CreateReservationMutation>;
+export type CreateReservationMutationOptions = Apollo.BaseMutationOptions<CreateReservationMutation, CreateReservationMutationVariables>;
 export const ListServicesDocument = gql`
     query ListServices {
   listServices {

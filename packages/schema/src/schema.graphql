@@ -91,9 +91,9 @@ type Reservation {
   reservationPrice: Float!
   userId: ID!
   serviceId: ID!
-  paymentPhoto: String # Should optional?
+  image: String # Should optional?
   date: String!
-  rangeHour: String!
+  rangeHour: [String]
 }
 
 type Comment {
@@ -155,14 +155,13 @@ input CreateScheduleInput {
 }
 
 input CreateReservationInput {
-  state: Boolean!
-  date: String!
-  paymentId: String!
-  reservationPrice: Float!
-  userId: ID!
   serviceId: ID!
-  paymentPhoto: String
-  rangeHour: [String!]
+  userId: ID!
+  date: String!
+  reservationPrice: Float!
+  rangeHour: [String]
+  paymentId: String
+  image: String
 }
 
 input UpdateUserInput {

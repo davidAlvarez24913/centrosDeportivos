@@ -1,4 +1,4 @@
-mutation CreateReservationInput($input: CreateReservationInput!){
+mutation CreateReservation($input: CreateReservationInput!){
     createReservation(input: $input){
         reservationId
         state
@@ -6,7 +6,7 @@ mutation CreateReservationInput($input: CreateReservationInput!){
         reservationPrice
         userId
         serviceId
-        paymentPhoto
+        image
         date
         rangeHour
     }

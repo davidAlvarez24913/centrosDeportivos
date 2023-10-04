@@ -40,7 +40,6 @@ export const reservationResolvers = {
   Mutation: {
     createReservation: async (root: any, { input }: any) => {
       const {
-        state,
         date,
         reservationPrice,
         userId,
@@ -49,17 +48,17 @@ export const reservationResolvers = {
         paymentPhoto,
         rangeHour,
       } = input;
-      const user = await User.findOneBy({
-        userId: userId,
-      });
+      // const user = await User.findOneBy({
+      //   userId: userId,
+      // });
       const service = await Service.findOneBy({
         serviceId: serviceId,
       });
-      if (user && service) {
+      if (service) {
         const reservationSQL = await Reservation.insert({
-          state,
+          state: true,
           date,
-          paymentId,
+          paymentId: paymentId == undefined ? "" : paymentId,
           reservationPrice,
           user: userId,
           service: serviceId,
