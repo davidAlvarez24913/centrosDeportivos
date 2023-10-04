@@ -1,4 +1,9 @@
-import { Reservation, Service, User } from "../../db/TypeOrm/Entities";
+import {
+  Reservation,
+  Service,
+  SportCenter,
+  User,
+} from "../../db/TypeOrm/Entities";
 import {
   FireStoreReservation,
   createFirestoreReservation,
@@ -45,38 +50,50 @@ export const reservationResolvers = {
         userId,
         paymentId,
         serviceId,
-        paymentPhoto,
+        image,
         rangeHour,
       } = input;
-      // const user = await User.findOneBy({
-      //   userId: userId,
-      // });
+      const userApp = await User.findOneBy({
+        userId: userId,
+      });
+      const userSC = await SportCenter.findOneBy({
+        sportCenterId: userId,
+      });
+
+      // Control data when SportCenter make it booking
+      const state = userSC === undefined ? false : true;
+      const imageAux = userSC === undefined ? "" : image;
+      const paymentIdAux = userSC === undefined ? "" : paymentId;
       const service = await Service.findOneBy({
         serviceId: serviceId,
       });
-      if (service) {
+      if (userApp && userSC && service) {
         const reservationSQL = await Reservation.insert({
-          state: true,
+          state: state,
           date,
-          paymentId: paymentId == undefined ? "" : paymentId,
+          paymentId: paymentIdAux,
           reservationPrice,
           user: userId,
           service: serviceId,
         });
-        const reservationNoSQL = await createFirestoreReservation({
+        await createFirestoreReservation({
           reservationId: reservationSQL.identifiers[0].reservationId,
-          paymentPhoto: paymentPhoto,
+          image: imageAux,
           rangeHour: rangeHour,
         });
         return {
           ...input,
+          state: state,
           reservationId: reservationSQL.identifiers[0].reservationId,
         };
       } else {
-        throw new GraphQLError("Id de usuario/servico es erròneo!", {
+        // delete reservation if firestoreservation failed
+        await SportCenter.delete({ sportCenterId: input.userId });
+
+        throw new GraphQLError("No se pudo realizar la reserva!", {
           extensions: {
-            code: "ERROR_ID",
-            argumentName: "id",
+            code: "ERROR_RESERVATION",
+            argumentName: "Reservation: Inspect exits user or request failed",
           },
         });
       }
