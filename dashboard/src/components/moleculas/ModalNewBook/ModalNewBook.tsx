@@ -7,13 +7,9 @@ import {
   Disponibility,
   RangeHour,
   Weekday,
-  useCreateReservationMutation,
+  useGetReservationsByDateLazyQuery,
 } from "schema";
-import {
-  covertDateToStringEs,
-  daysDisponibility,
-  getDayString,
-} from "../../../utils";
+import { daysDisponibility, getDayString } from "../../../utils";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
@@ -42,8 +38,11 @@ const ModalNewBook = ({
 
   //hooks data
   const [price, setPrice] = useState(0.0);
-  const [day, setDay] = useState<string>(new Date().toLocaleDateString());
+  const [day, setDay] = useState<string>(new Date().toDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
+
+  //hook get reservations
+  const [getReservations, status] = useGetReservationsByDateLazyQuery();
 
   useEffect(() => {
     const getDisponibility = (day: string) => {
@@ -57,16 +56,43 @@ const ModalNewBook = ({
       const { __typename, ...rest } = hour as RangeHour;
       return rest;
     });
-    // here check with reservations
-    const availableHours = auxHours?.map((hour) => {
-      return {
-        rangeHour: hour.startHour + " - " + hour.endHour,
-        available: false,
-        price: hour.price,
-      };
+    getReservations({
+      variables: { date: new Date(day).toDateString() },
     });
-    setHours(availableHours);
-  }, [disponibility, day, loadDisponibility]);
+
+    if (!status.loading) {
+      const reservationsRangeHour: string[] = [];
+      status.data?.getReservationsByDate?.map((reservation) => {
+        if (reservation?.state) {
+          reservation.rangeHour?.map((h) => {
+            reservationsRangeHour.push(h as string);
+            return null;
+          });
+        }
+        return null;
+      });
+
+      const availableHours = auxHours?.map((hour) => {
+        return {
+          rangeHour: hour.startHour + " - " + hour.endHour,
+          available: false,
+          price: hour.price,
+        };
+      });
+
+      const availableHoursFiltered = availableHours?.filter(
+        (h) => !reservationsRangeHour.includes(h.rangeHour)
+      );
+      setHours(availableHoursFiltered);
+    }
+  }, [
+    disponibility,
+    day,
+    loadDisponibility,
+    getReservations,
+    status.loading,
+    status.data,
+  ]);
 
   return (
     <div>
@@ -104,8 +130,11 @@ const ModalNewBook = ({
         <ModalConfirmBooking
           price={price}
           serviceId={serviceId}
-          date={covertDateToStringEs(day)}
+          date={day}
           hours={selectedHours}
+          onRefetch={() => {
+            status.refetch();
+          }}
           onClose={() => {
             setModalConfirm(false);
           }}

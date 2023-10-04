@@ -1,6 +1,7 @@
-import { useCreateReservationMutation } from "schema";
+import { useCreateReservationScMutation } from "schema";
 import useUser from "../../../Hooks/useUser";
 import { CustomButton } from "../../atomos";
+import { covertDateToStringEs } from "../../../utils";
 
 type ModalConfirmBookingProps = {
   onClose: () => void;
@@ -8,6 +9,7 @@ type ModalConfirmBookingProps = {
   price: number;
   date: string;
   serviceId: string;
+  onRefetch: () => void;
 };
 const ModalConfirmBooking = ({
   onClose,
@@ -15,15 +17,16 @@ const ModalConfirmBooking = ({
   price,
   date,
   serviceId,
+  onRefetch,
 }: ModalConfirmBookingProps) => {
   const userId = useUser().user?.uid;
-  const [createReservationMutation] = useCreateReservationMutation();
+  const [createReservationMutation] = useCreateReservationScMutation();
 
   const onCreateRervation = () => {
     const auxInput = {
       reservationPrice: price,
       rangeHour: hours,
-      date: date,
+      date: new Date(date).toDateString(),
       serviceId: serviceId,
       userId: userId!,
     };
@@ -31,6 +34,8 @@ const ModalConfirmBooking = ({
       variables: { input: auxInput },
       onCompleted: (data) => {
         alert("Reserva creada exitosamente");
+        onRefetch();
+        onClose();
       },
       onError: (error) => {
         alert(error);
@@ -42,7 +47,7 @@ const ModalConfirmBooking = ({
     <div>
       <div className="my-2">
         <h2 className="font-semibold">Fecha</h2>
-        <p>{date}</p>
+        <p>{covertDateToStringEs(date)}</p>
       </div>
       <div className="my-2">
         <h2 className="font-semibold">Horario</h2>
