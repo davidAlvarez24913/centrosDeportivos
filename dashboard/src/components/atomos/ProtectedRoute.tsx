@@ -38,11 +38,11 @@ const ProtectedRoute = ({
 
   if (loadingUser && user === undefined && !access) {
     return <Navigate to={redirectTo} replace />;
-  } else {
-    if (protectedRoutes.includes(pathname)) {
-      return <Navigate to={pathname} replace />;
-    }
   }
+  // TODO control refresh to redirect
+  // if (protectedRoutes.includes(pathname)) {
+  //   return <Navigate to={pathname} replace />;
+  // }
 
   return children ? <>{children}</> : <Outlet />;
 };
