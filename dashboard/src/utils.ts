@@ -144,3 +144,15 @@ export const covertDateToStringEs = (day: string) => {
   };
   return date.toLocaleDateString("es-ES", options);
 };
+
+export const daysDisponibility = () => {
+  let dateAux = new Date();
+  let arrayDay = [{ date: dateAux.toUTCString(), available: true }];
+  for (let i = 1; i < 7; i++) {
+    const element = new Date(dateAux.setDate(dateAux.getDate() + i));
+    arrayDay.push({ date: element.toUTCString(), available: false });
+    dateAux = new Date();
+  }
+
+  return arrayDay;
+};
