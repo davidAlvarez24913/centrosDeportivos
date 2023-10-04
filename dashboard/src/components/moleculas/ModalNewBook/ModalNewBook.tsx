@@ -3,8 +3,17 @@ import { CustomButton } from "../../atomos";
 import BodyDisponibility from "../../organismos/BodyDisponibility";
 import Modal from "../Modal/Modal";
 import ModalConfirmBooking from "../ModalConfirmBooking";
-import { Disponibility, RangeHour, Weekday } from "schema";
-import { covertDateToStringEs, getDayString } from "../../../utils";
+import {
+  Disponibility,
+  RangeHour,
+  Weekday,
+  useCreateReservationMutation,
+} from "schema";
+import {
+  covertDateToStringEs,
+  daysDisponibility,
+  getDayString,
+} from "../../../utils";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
@@ -13,17 +22,6 @@ type NewBookProps = {
   loadDisponibility: boolean;
 };
 
-const daysDisponibility = () => {
-  let dateAux = new Date();
-  let arrayDay = [{ date: dateAux.toUTCString(), available: true }];
-  for (let i = 1; i < 7; i++) {
-    const element = new Date(dateAux.setDate(dateAux.getDate() + i));
-    arrayDay.push({ date: element.toUTCString(), available: false });
-    dateAux = new Date();
-  }
-
-  return arrayDay;
-};
 type PropsAvailableHours = {
   rangeHour: string;
   available: boolean;
@@ -37,10 +35,13 @@ const ModalNewBook = ({
   disponibility,
   loadDisponibility,
 }: NewBookProps) => {
-  const [price, setPrice] = useState(0.0);
+  //hooks ui
   const [modalConfirm, setModalConfirm] = useState(false);
   const [days, setDays] = useState(daysDisponibility()); // days to show
   const [hours, setHours] = useState<PropsAvailableHours[]>();
+
+  //hooks data
+  const [price, setPrice] = useState(0.0);
   const [day, setDay] = useState<string>(new Date().toLocaleDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
 
@@ -102,8 +103,8 @@ const ModalNewBook = ({
       >
         <ModalConfirmBooking
           price={price}
+          serviceId={serviceId}
           date={covertDateToStringEs(day)}
-          onCreateRervation={() => {}}
           hours={selectedHours}
           onClose={() => {
             setModalConfirm(false);

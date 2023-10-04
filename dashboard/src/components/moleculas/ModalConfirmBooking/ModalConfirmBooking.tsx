@@ -1,19 +1,42 @@
+import { useCreateReservationMutation } from "schema";
+import useUser from "../../../Hooks/useUser";
 import { CustomButton } from "../../atomos";
+import { error } from "console";
 
 type ModalConfirmBookingProps = {
   onClose: () => void;
-  onCreateRervation: () => void;
-  hours: string | string[];
+  hours: string[];
   price: number;
   date: string;
+  serviceId: string;
 };
 const ModalConfirmBooking = ({
   onClose,
-  onCreateRervation,
   hours,
   price,
   date,
+  serviceId,
 }: ModalConfirmBookingProps) => {
+  const userId = useUser().user?.uid;
+  const [createReservationMutation] = useCreateReservationMutation();
+
+  const onCreateRervation = () => {
+    const auxInput = {
+      reservationPrice: price,
+      rangeHour: hours,
+      date: date,
+      serviceId: serviceId,
+      userId: userId!,
+    };
+    createReservationMutation({
+      variables: { input: auxInput },
+      onCompleted: () => {},
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+  };
+
   return (
     <div>
       <div className="my-2">
