@@ -11,7 +11,7 @@ import { db } from "../config";
 
 export type FireStoreReservation = {
   reservationId: string;
-  paymentPhoto?: string;
+  image?: string;
   rangeHour: string[];
 };
 const document = "reservations";
