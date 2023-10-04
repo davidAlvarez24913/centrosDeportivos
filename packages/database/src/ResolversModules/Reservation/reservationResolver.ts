@@ -64,7 +64,8 @@ export const reservationResolvers = {
   },
 
   Mutation: {
-    createReservation: async (root: any, { input }: any) => {
+    //SC ==> SportCenter
+    createReservationSC: async (root: any, { input }: any) => {
       const {
         date,
         reservationPrice,
@@ -82,9 +83,9 @@ export const reservationResolvers = {
       });
 
       // Control data when SportCenter make it booking
-      const state = userSC === undefined ? false : true;
-      const imageAux = userSC === undefined ? "" : image;
-      const paymentIdAux = userSC === undefined ? "" : paymentId;
+      const state = true;
+      const imageAux = "";
+      const paymentIdAux = "";
       const service = await Service.findOneBy({
         serviceId: serviceId,
       });
@@ -105,6 +106,58 @@ export const reservationResolvers = {
         return {
           ...input,
           state: state,
+          reservationId: reservationSQL.identifiers[0].reservationId,
+        };
+      } else {
+        // delete reservation if firestoreservation failed
+        await SportCenter.delete({ sportCenterId: input.userId });
+
+        throw new GraphQLError("No se pudo realizar la reserva!", {
+          extensions: {
+            code: "ERROR_RESERVATION",
+            argumentName: "Reservation: Inspect exits user or request failed",
+          },
+        });
+      }
+    },
+    //SC ==> SportCenter
+    createReservationUser: async (root: any, { input }: any) => {
+      const {
+        date,
+        reservationPrice,
+        userId,
+        paymentId,
+        serviceId,
+        image,
+        rangeHour,
+      } = input;
+      const userApp = await User.findOneBy({
+        userId: userId,
+      });
+      const userSC = await SportCenter.findOneBy({
+        sportCenterId: userId,
+      });
+
+      const service = await Service.findOneBy({
+        serviceId: serviceId,
+      });
+      if (userApp && userSC && service) {
+        const reservationSQL = await Reservation.insert({
+          state: true,
+          date,
+          paymentId,
+          reservationPrice,
+          user: userId,
+          service: serviceId,
+        });
+        await createFirestoreReservation({
+          reservationId: reservationSQL.identifiers[0].reservationId,
+          image,
+          rangeHour: rangeHour,
+        });
+        return {
+          ...input,
+          state: true,
           reservationId: reservationSQL.identifiers[0].reservationId,
         };
       } else {

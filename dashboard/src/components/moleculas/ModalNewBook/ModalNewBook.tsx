@@ -7,13 +7,9 @@ import {
   Disponibility,
   RangeHour,
   Weekday,
-  useCreateReservationMutation,
+  useGetReservationsByDateLazyQuery,
 } from "schema";
-import {
-  covertDateToStringEs,
-  daysDisponibility,
-  getDayString,
-} from "../../../utils";
+import { daysDisponibility, getDayString } from "../../../utils";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
@@ -45,6 +41,9 @@ const ModalNewBook = ({
   const [day, setDay] = useState<string>(new Date().toLocaleDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
 
+  //hook get reservations
+  const [getReservations, status] = useGetReservationsByDateLazyQuery();
+
   useEffect(() => {
     const getDisponibility = (day: string) => {
       const dayString = getDayString(day);
@@ -57,7 +56,17 @@ const ModalNewBook = ({
       const { __typename, ...rest } = hour as RangeHour;
       return rest;
     });
+    console.log(day);
     // here check with reservations
+    getReservations({
+      variables: { date: day },
+      onCompleted: (data) => {
+        console.log("lazy query realizada");
+      },
+    });
+
+    !status.loading && console.log(status.data);
+
     const availableHours = auxHours?.map((hour) => {
       return {
         rangeHour: hour.startHour + " - " + hour.endHour,
@@ -66,7 +75,14 @@ const ModalNewBook = ({
       };
     });
     setHours(availableHours);
-  }, [disponibility, day, loadDisponibility]);
+  }, [
+    disponibility,
+    day,
+    loadDisponibility,
+    getReservations,
+    status.loading,
+    status.data,
+  ]);
 
   return (
     <div>
@@ -104,7 +120,7 @@ const ModalNewBook = ({
         <ModalConfirmBooking
           price={price}
           serviceId={serviceId}
-          date={covertDateToStringEs(day)}
+          date={day}
           hours={selectedHours}
           onClose={() => {
             setModalConfirm(false);

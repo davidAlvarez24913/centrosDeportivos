@@ -275,7 +275,8 @@ type Mutation {
   deleteBankAccount(bankAccountId: ID!): OperationResponse
 
   #reservations
-  createReservation(input: CreateReservationInput!): Reservation
+  createReservationSC(input: CreateReservationInput!): Reservation
+  createReservationUser(input: CreateReservationInput!): Reservation
   deleteReservation(id: ID!): OperationResponse
 
   #comments

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { DayCard, TagHour } from "src/components/atomos";
-import { disponibility, exampleRervations } from "src/data";
 
 type PropsBodyDisponibility = {
   days: {

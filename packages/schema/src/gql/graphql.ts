@@ -15,7 +15,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: any; output: any; }
 };
 
 export type BankAccount = {
@@ -93,7 +92,7 @@ export type CreateSportCenterInput = {
 };
 
 export type CreateUserInput = {
-  birthDate: Scalars['Date']['input'];
+  birthDate: Scalars['String']['input'];
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -116,7 +115,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createBankAccount?: Maybe<BankAccount>;
   createComment?: Maybe<Comment>;
-  createReservation?: Maybe<Reservation>;
+  createReservationSC?: Maybe<Reservation>;
+  createReservationUser?: Maybe<Reservation>;
   createService?: Maybe<Service>;
   createSportCenter?: Maybe<SportCenter>;
   createUser?: Maybe<User>;
@@ -145,7 +145,12 @@ export type MutationCreateCommentArgs = {
 };
 
 
-export type MutationCreateReservationArgs = {
+export type MutationCreateReservationScArgs = {
+  input: CreateReservationInput;
+};
+
+
+export type MutationCreateReservationUserArgs = {
   input: CreateReservationInput;
 };
 
@@ -239,6 +244,7 @@ export type Query = {
   findUser?: Maybe<User>;
   getAccess: Scalars['Boolean']['output'];
   getDisponibility?: Maybe<Disponibility>;
+  getReservationsByDate?: Maybe<Array<Maybe<Reservation>>>;
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
@@ -269,6 +275,11 @@ export type QueryGetAccessArgs = {
 
 export type QueryGetDisponibilityArgs = {
   serviceId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetReservationsByDateArgs = {
+  date: Scalars['String']['input'];
 };
 
 
@@ -419,7 +430,7 @@ export type UpdateSportCenterInput = {
 };
 
 export type UpdateUserInput = {
-  birthDate: Scalars['Date']['input'];
+  birthDate: Scalars['String']['input'];
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -429,7 +440,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
-  birthDate: Scalars['Date']['output'];
+  birthDate: Scalars['String']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
@@ -475,12 +486,26 @@ export type DeleteBankAccountMutationVariables = Exact<{
 
 export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAccount?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
-export type CreateReservationMutationVariables = Exact<{
+export type CreateReservationScMutationVariables = Exact<{
   input: CreateReservationInput;
 }>;
 
 
-export type CreateReservationMutation = { __typename?: 'Mutation', createReservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null } | null };
+export type CreateReservationScMutation = { __typename?: 'Mutation', createReservationSC?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null } | null };
+
+export type CreateReservationUserMutationVariables = Exact<{
+  input: CreateReservationInput;
+}>;
+
+
+export type CreateReservationUserMutation = { __typename?: 'Mutation', createReservationUser?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null } | null };
+
+export type GetReservationsByDateQueryVariables = Exact<{
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetReservationsByDateQuery = { __typename?: 'Query', getReservationsByDate?: Array<{ __typename?: 'Reservation', state: boolean, rangeHour?: Array<string | null> | null } | null> | null };
 
 export type ListServicesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -593,7 +618,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', findUser?: { __typename?: 'User', userId: string, name: string, id: string, birthDate: any, email: string, phone: string } | null };
+export type GetUserQuery = { __typename?: 'Query', findUser?: { __typename?: 'User', userId: string, name: string, id: string, birthDate: string, email: string, phone: string } | null };
 
 export type CreateUserMutationVariables = Exact<{
   input: CreateUserInput;
@@ -751,9 +776,9 @@ export function useDeleteBankAccountMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteBankAccountMutationHookResult = ReturnType<typeof useDeleteBankAccountMutation>;
 export type DeleteBankAccountMutationResult = Apollo.MutationResult<DeleteBankAccountMutation>;
 export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>;
-export const CreateReservationDocument = gql`
-    mutation CreateReservation($input: CreateReservationInput!) {
-  createReservation(input: $input) {
+export const CreateReservationScDocument = gql`
+    mutation CreateReservationSC($input: CreateReservationInput!) {
+  createReservationSC(input: $input) {
     reservationId
     state
     paymentId
@@ -766,32 +791,109 @@ export const CreateReservationDocument = gql`
   }
 }
     `;
-export type CreateReservationMutationFn = Apollo.MutationFunction<CreateReservationMutation, CreateReservationMutationVariables>;
+export type CreateReservationScMutationFn = Apollo.MutationFunction<CreateReservationScMutation, CreateReservationScMutationVariables>;
 
 /**
- * __useCreateReservationMutation__
+ * __useCreateReservationScMutation__
  *
- * To run a mutation, you first call `useCreateReservationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateReservationMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateReservationScMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReservationScMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createReservationMutation, { data, loading, error }] = useCreateReservationMutation({
+ * const [createReservationScMutation, { data, loading, error }] = useCreateReservationScMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useCreateReservationMutation(baseOptions?: Apollo.MutationHookOptions<CreateReservationMutation, CreateReservationMutationVariables>) {
+export function useCreateReservationScMutation(baseOptions?: Apollo.MutationHookOptions<CreateReservationScMutation, CreateReservationScMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateReservationMutation, CreateReservationMutationVariables>(CreateReservationDocument, options);
+        return Apollo.useMutation<CreateReservationScMutation, CreateReservationScMutationVariables>(CreateReservationScDocument, options);
       }
-export type CreateReservationMutationHookResult = ReturnType<typeof useCreateReservationMutation>;
-export type CreateReservationMutationResult = Apollo.MutationResult<CreateReservationMutation>;
-export type CreateReservationMutationOptions = Apollo.BaseMutationOptions<CreateReservationMutation, CreateReservationMutationVariables>;
+export type CreateReservationScMutationHookResult = ReturnType<typeof useCreateReservationScMutation>;
+export type CreateReservationScMutationResult = Apollo.MutationResult<CreateReservationScMutation>;
+export type CreateReservationScMutationOptions = Apollo.BaseMutationOptions<CreateReservationScMutation, CreateReservationScMutationVariables>;
+export const CreateReservationUserDocument = gql`
+    mutation CreateReservationUser($input: CreateReservationInput!) {
+  createReservationUser(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+    `;
+export type CreateReservationUserMutationFn = Apollo.MutationFunction<CreateReservationUserMutation, CreateReservationUserMutationVariables>;
+
+/**
+ * __useCreateReservationUserMutation__
+ *
+ * To run a mutation, you first call `useCreateReservationUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReservationUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createReservationUserMutation, { data, loading, error }] = useCreateReservationUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateReservationUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateReservationUserMutation, CreateReservationUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateReservationUserMutation, CreateReservationUserMutationVariables>(CreateReservationUserDocument, options);
+      }
+export type CreateReservationUserMutationHookResult = ReturnType<typeof useCreateReservationUserMutation>;
+export type CreateReservationUserMutationResult = Apollo.MutationResult<CreateReservationUserMutation>;
+export type CreateReservationUserMutationOptions = Apollo.BaseMutationOptions<CreateReservationUserMutation, CreateReservationUserMutationVariables>;
+export const GetReservationsByDateDocument = gql`
+    query GetReservationsByDate($date: String!) {
+  getReservationsByDate(date: $date) {
+    state
+    rangeHour
+  }
+}
+    `;
+
+/**
+ * __useGetReservationsByDateQuery__
+ *
+ * To run a query within a React component, call `useGetReservationsByDateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReservationsByDateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReservationsByDateQuery({
+ *   variables: {
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useGetReservationsByDateQuery(baseOptions: Apollo.QueryHookOptions<GetReservationsByDateQuery, GetReservationsByDateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetReservationsByDateQuery, GetReservationsByDateQueryVariables>(GetReservationsByDateDocument, options);
+      }
+export function useGetReservationsByDateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReservationsByDateQuery, GetReservationsByDateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetReservationsByDateQuery, GetReservationsByDateQueryVariables>(GetReservationsByDateDocument, options);
+        }
+export type GetReservationsByDateQueryHookResult = ReturnType<typeof useGetReservationsByDateQuery>;
+export type GetReservationsByDateLazyQueryHookResult = ReturnType<typeof useGetReservationsByDateLazyQuery>;
+export type GetReservationsByDateQueryResult = Apollo.QueryResult<GetReservationsByDateQuery, GetReservationsByDateQueryVariables>;
 export const ListServicesDocument = gql`
     query ListServices {
   listServices {

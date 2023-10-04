@@ -1,5 +1,5 @@
-mutation CreateReservation($input: CreateReservationInput!){
-    createReservation(input: $input){
+mutation CreateReservationSC($input: CreateReservationInput!){
+    createReservationSC(input: $input){
         reservationId
         state
         paymentId
@@ -8,6 +8,27 @@ mutation CreateReservation($input: CreateReservationInput!){
         serviceId
         image
         date
+        rangeHour
+    }
+}
+
+mutation CreateReservationUser($input: CreateReservationInput!){
+    createReservationUser(input: $input){
+        reservationId
+        state
+        paymentId
+        reservationPrice
+        userId
+        serviceId
+        image
+        date
+        rangeHour
+    }
+}
+
+query GetReservationsByDate($date: String!){
+    getReservationsByDate(date: $date){
+        state
         rangeHour
     }
 }

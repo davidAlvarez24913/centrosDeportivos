@@ -1,6 +1,7 @@
-import { useCreateReservationMutation } from "schema";
+import { useCreateReservationScMutation } from "schema";
 import useUser from "../../../Hooks/useUser";
 import { CustomButton } from "../../atomos";
+import { covertDateToStringEs } from "../../../utils";
 
 type ModalConfirmBookingProps = {
   onClose: () => void;
@@ -17,7 +18,7 @@ const ModalConfirmBooking = ({
   serviceId,
 }: ModalConfirmBookingProps) => {
   const userId = useUser().user?.uid;
-  const [createReservationMutation] = useCreateReservationMutation();
+  const [createReservationMutation] = useCreateReservationScMutation();
 
   const onCreateRervation = () => {
     const auxInput = {
@@ -42,7 +43,7 @@ const ModalConfirmBooking = ({
     <div>
       <div className="my-2">
         <h2 className="font-semibold">Fecha</h2>
-        <p>{date}</p>
+        <p>{covertDateToStringEs(date)}</p>
       </div>
       <div className="my-2">
         <h2 className="font-semibold">Horario</h2>
