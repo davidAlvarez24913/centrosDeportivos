@@ -63,7 +63,7 @@ export const mergeReservations = (
     );
     return {
       ...obj1,
-      paymentPhoto: obj2?.paymentPhoto,
+      ...obj2,
     };
   });
 };
