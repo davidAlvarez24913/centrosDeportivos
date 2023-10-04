@@ -487,6 +487,11 @@ export type DeleteBankAccountMutationVariables = Exact<{
 
 export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAccount?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
+export type ListReservationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null }> | null };
+
 export type CreateReservationScMutationVariables = Exact<{
   input: CreateReservationInput;
 }>;
@@ -778,6 +783,48 @@ export function useDeleteBankAccountMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteBankAccountMutationHookResult = ReturnType<typeof useDeleteBankAccountMutation>;
 export type DeleteBankAccountMutationResult = Apollo.MutationResult<DeleteBankAccountMutation>;
 export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<DeleteBankAccountMutation, DeleteBankAccountMutationVariables>;
+export const ListReservationsDocument = gql`
+    query ListReservations {
+  allReservations {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+    `;
+
+/**
+ * __useListReservationsQuery__
+ *
+ * To run a query within a React component, call `useListReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListReservationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListReservationsQuery(baseOptions?: Apollo.QueryHookOptions<ListReservationsQuery, ListReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListReservationsQuery, ListReservationsQueryVariables>(ListReservationsDocument, options);
+      }
+export function useListReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListReservationsQuery, ListReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListReservationsQuery, ListReservationsQueryVariables>(ListReservationsDocument, options);
+        }
+export type ListReservationsQueryHookResult = ReturnType<typeof useListReservationsQuery>;
+export type ListReservationsLazyQueryHookResult = ReturnType<typeof useListReservationsLazyQuery>;
+export type ListReservationsQueryResult = Apollo.QueryResult<ListReservationsQuery, ListReservationsQueryVariables>;
 export const CreateReservationScDocument = gql`
     mutation CreateReservationSC($input: CreateReservationInput!) {
   createReservationSC(input: $input) {

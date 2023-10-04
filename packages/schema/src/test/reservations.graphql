@@ -1,29 +1,42 @@
-mutation CreateReservationSC($input: CreateReservationInput!){
-    createReservationSC(input: $input){
-        reservationId
-        state
-        paymentId
-        reservationPrice
-        userId
-        serviceId
-        image
-        date
-        rangeHour
-    }
+query ListReservations {
+  allReservations {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+mutation CreateReservationSC($input: CreateReservationInput!) {
+  createReservationSC(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
 }
 
-mutation CreateReservationUser($input: CreateReservationInput!){
-    createReservationUser(input: $input){
-        reservationId
-        state
-        paymentId
-        reservationPrice
-        userId
-        serviceId
-        image
-        date
-        rangeHour
-    }
+mutation CreateReservationUser($input: CreateReservationInput!) {
+  createReservationUser(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
 }
 
 query GetReservationsByDate($date: String!, $serviceId: String!){

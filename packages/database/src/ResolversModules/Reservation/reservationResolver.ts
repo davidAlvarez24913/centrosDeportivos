@@ -22,11 +22,12 @@ export const reservationResolvers = {
       const reservationsSQL = await Reservation.find({
         relations: { user: true, service: true },
       });
-
+      console.log(reservationsSQL);
       const mergedReservations = mergeReservations(
         reservationsSQL,
         reservationsNoSQL
       );
+
       const result = mergedReservations.map((reservation) => {
         return {
           ...reservation,
