@@ -1,7 +1,6 @@
 import { useCreateReservationMutation } from "schema";
 import useUser from "../../../Hooks/useUser";
 import { CustomButton } from "../../atomos";
-import { error } from "console";
 
 type ModalConfirmBookingProps = {
   onClose: () => void;
@@ -30,9 +29,11 @@ const ModalConfirmBooking = ({
     };
     createReservationMutation({
       variables: { input: auxInput },
-      onCompleted: () => {},
+      onCompleted: (data) => {
+        alert("Reserva creada exitosamente");
+      },
       onError: (error) => {
-        console.log(error);
+        alert(error);
       },
     });
   };
