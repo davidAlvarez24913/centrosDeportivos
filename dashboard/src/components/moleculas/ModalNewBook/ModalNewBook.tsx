@@ -8,6 +8,7 @@ import {
   RangeHour,
   Weekday,
   useGetReservationsByDateLazyQuery,
+  useGetReservationsByDateQuery,
 } from "schema";
 import { daysDisponibility, getDayString } from "../../../utils";
 type NewBookProps = {
@@ -42,26 +43,36 @@ const ModalNewBook = ({
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
 
   //hook get reservations
-  const [getReservations, status] = useGetReservationsByDateLazyQuery();
+  const status = useGetReservationsByDateQuery({
+    variables: { date: new Date(day).toDateString(), serviceId: serviceId },
+  });
+
+  const getDisponibility = (day: string) => {
+    // map hours by date
+    const dayString = getDayString(day);
+
+    const { __typename, ...rest } = !loadDisponibility
+      ? disponibility
+      : ([] as Disponibility);
+
+    const dispByDay = rest[Weekday[dayString as Weekday]];
+
+    const result = dispByDay?.map((hour) => {
+      //map to clean typename
+      const { __typename, ...rest } = hour as RangeHour;
+      return {
+        rangeHour: rest.startHour + " - " + rest.endHour,
+        available: false,
+        price: rest.price,
+      };
+    });
+    return result;
+  };
+
+  const reservationsRangeHour: string[] = [];
 
   useEffect(() => {
-    const getDisponibility = (day: string) => {
-      const dayString = getDayString(day);
-      const { __typename, ...rest } = !loadDisponibility
-        ? disponibility
-        : ([] as Disponibility);
-      return rest[Weekday[dayString as Weekday]];
-    };
-    const auxHours = getDisponibility(day as string)?.map((hour) => {
-      const { __typename, ...rest } = hour as RangeHour;
-      return rest;
-    });
-    getReservations({
-      variables: { date: new Date(day).toDateString() },
-    });
-
     if (!status.loading) {
-      const reservationsRangeHour: string[] = [];
       status.data?.getReservationsByDate?.forEach((reservation) => {
         if (reservation?.state) {
           reservation.rangeHour?.forEach((h) => {
@@ -69,22 +80,13 @@ const ModalNewBook = ({
           });
         }
       });
-
-      const availableHours = auxHours?.map((hour) => {
-        return {
-          rangeHour: hour.startHour + " - " + hour.endHour,
-          available: false,
-          price: hour.price,
-        };
-      });
-
-      const availableHoursFiltered = availableHours?.filter(
-        (h) => !reservationsRangeHour.includes(h.rangeHour)
-      );
-      console.log(availableHoursFiltered);
-      setHours(availableHoursFiltered);
     }
-  }, []);
+
+    const availableHoursFiltered = getDisponibility(day as string)?.filter(
+      (h) => !reservationsRangeHour.includes(h.rangeHour)
+    );
+    setHours(availableHoursFiltered);
+  }, [day, status.loading]);
 
   return (
     <div>

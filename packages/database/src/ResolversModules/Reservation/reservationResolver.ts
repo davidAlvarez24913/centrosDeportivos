@@ -41,9 +41,9 @@ export const reservationResolvers = {
       const { id } = args;
       return await Reservation.findOneBy({ reservationId: id });
     },
-    getReservationsByDate: async (root: any, { date }: any) => {
+    getReservationsByDate: async (root: any, { date, serviceId }: any) => {
       const reservationsSQL = await Reservation.find({
-        where: { date: date },
+        where: { date: date, service: { serviceId: serviceId } },
         relations: { user: true, service: true },
       });
 
@@ -86,7 +86,7 @@ export const reservationResolvers = {
       // Control data when SportCenter make it booking
       const state = true;
       const imageAux = "";
-      const paymentIdAux = "";
+      const paymentIdAux = "Generado por admin";
       const service = await Service.findOneBy({
         serviceId: serviceId,
       });

@@ -280,6 +280,7 @@ export type QueryGetDisponibilityArgs = {
 
 export type QueryGetReservationsByDateArgs = {
   date: Scalars['String']['input'];
+  serviceId: Scalars['String']['input'];
 };
 
 
@@ -507,6 +508,7 @@ export type CreateReservationUserMutation = { __typename?: 'Mutation', createRes
 
 export type GetReservationsByDateQueryVariables = Exact<{
   date: Scalars['String']['input'];
+  serviceId: Scalars['String']['input'];
 }>;
 
 
@@ -906,8 +908,8 @@ export type CreateReservationUserMutationHookResult = ReturnType<typeof useCreat
 export type CreateReservationUserMutationResult = Apollo.MutationResult<CreateReservationUserMutation>;
 export type CreateReservationUserMutationOptions = Apollo.BaseMutationOptions<CreateReservationUserMutation, CreateReservationUserMutationVariables>;
 export const GetReservationsByDateDocument = gql`
-    query GetReservationsByDate($date: String!) {
-  getReservationsByDate(date: $date) {
+    query GetReservationsByDate($date: String!, $serviceId: String!) {
+  getReservationsByDate(date: $date, serviceId: $serviceId) {
     state
     rangeHour
   }
@@ -927,6 +929,7 @@ export const GetReservationsByDateDocument = gql`
  * const { data, loading, error } = useGetReservationsByDateQuery({
  *   variables: {
  *      date: // value for 'date'
+ *      serviceId: // value for 'serviceId'
  *   },
  * });
  */

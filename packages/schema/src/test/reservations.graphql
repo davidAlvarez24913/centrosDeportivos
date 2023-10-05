@@ -39,9 +39,9 @@ mutation CreateReservationUser($input: CreateReservationInput!) {
   }
 }
 
-query GetReservationsByDate($date: String!) {
-  getReservationsByDate(date: $date) {
-    state
-    rangeHour
-  }
+query GetReservationsByDate($date: String!, $serviceId: String!){
+    getReservationsByDate(date: $date,serviceId: $serviceId){
+        state
+        rangeHour
+    }
 }
