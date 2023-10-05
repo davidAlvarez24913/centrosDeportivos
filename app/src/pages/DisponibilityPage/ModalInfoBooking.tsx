@@ -2,7 +2,7 @@ import { IonContent, IonModal, useIonToast } from "@ionic/react";
 import React, { useRef } from "react";
 import {
   CreateReservationInput,
-  useCreateReservationInputMutation,
+  useCreateReservationUserMutation,
 } from "schema";
 import {
   Background,
@@ -16,7 +16,7 @@ const ModalInfoBooking = () => {
   const ref = useRef<HTMLIonModalElement>(null);
   const [present] = useIonToast();
   const [createReservationInputMutation, { data, loading }] =
-    useCreateReservationInputMutation();
+    useCreateReservationUserMutation();
   return (
     <IonModal trigger="modal-info-booking" ref={ref}>
       <Header
