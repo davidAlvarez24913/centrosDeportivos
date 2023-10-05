@@ -9,31 +9,15 @@ const ReservationsPage = () => {
   const status = useGetNameSportCenterQuery({
     variables: { sportCenterId: user?.uid as string },
   });
-  const reservations = useListReservationsQuery();
-  console.log(reservations);
+  const { data, loading } = useListReservationsQuery();
+  console.log(data?.allReservations);
 
-  const data = [
-    {
-      reservationId: "001",
-      serviceName: "Cancha 1",
-      schedule: "10:00 - 11:00",
-      price: "20.00",
-      state: true,
-      date: "Miércoles 9 Ago. 2023",
-      paymetId: "100001001100",
-    },
-    {
-      reservationId: "001",
-      serviceName: "Cancha 2",
-      schedule: "10:00 - 11:00",
-      price: "20.00",
-      state: false,
-      date: "Miércoles 9 Ago. 2023",
-      paymetId: "100001001100",
-    },
-  ];
-  const rows = data.map((reservation) => (
-    <ReservationsRow {...reservation} key={reservation.reservationId} />
+  const rows = data?.allReservations?.map((reservation) => (
+    <ReservationsRow
+      {...reservation!}
+      serviceName={reservation.serviceId}
+      key={reservation.reservationId}
+    />
   ));
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>

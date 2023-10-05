@@ -5,15 +5,16 @@ import { ReservationCard } from "../../moleculas";
 type ReservationsRowProps = {
   reservationId: string;
   serviceName: string;
-  schedule: string;
-  price: string;
+  rangeHour: string;
+  reservationPrice: string;
   state: boolean;
   date: string;
-  paymetId: string;
+  paymentId: string;
 };
 const ReservationsRow = (reservation: ReservationsRowProps) => {
   const [modal, setModal] = useState(false);
-  const { reservationId, serviceName, schedule, price } = reservation;
+  const { reservationId, serviceName, rangeHour, reservationPrice } =
+    reservation;
   return (
     <>
       <tr className="border-b border-background">
@@ -24,10 +25,10 @@ const ReservationsRow = (reservation: ReservationsRowProps) => {
           <p className="text-start text-sm font-normal">{serviceName}</p>
         </th>
         <th className="py-5">
-          <p className="text-start text-sm font-normal">{schedule}</p>
+          <p className="text-start text-sm font-normal">{rangeHour}</p>
         </th>
         <th className="py-5">
-          <p className="text-start text-sm font-normal">$ {price}</p>
+          <p className="text-start text-sm font-normal">$ {reservationPrice}</p>
         </th>
         <th className="">
           <img

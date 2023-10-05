@@ -217,6 +217,10 @@ type ServiceWithSportCenter {
   service: Service
   sportCenter: SportCenter
 }
+type ReservationWithServiceName {
+  reservation: Reservation
+  serviceName: String
+}
 type Query {
   #users
   allUsers: [User]

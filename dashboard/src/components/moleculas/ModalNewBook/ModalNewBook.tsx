@@ -62,14 +62,12 @@ const ModalNewBook = ({
 
     if (!status.loading) {
       const reservationsRangeHour: string[] = [];
-      status.data?.getReservationsByDate?.map((reservation) => {
+      status.data?.getReservationsByDate?.forEach((reservation) => {
         if (reservation?.state) {
-          reservation.rangeHour?.map((h) => {
+          reservation.rangeHour?.forEach((h) => {
             reservationsRangeHour.push(h as string);
-            return null;
           });
         }
-        return null;
       });
 
       const availableHours = auxHours?.map((hour) => {
@@ -83,16 +81,10 @@ const ModalNewBook = ({
       const availableHoursFiltered = availableHours?.filter(
         (h) => !reservationsRangeHour.includes(h.rangeHour)
       );
+      console.log(availableHoursFiltered);
       setHours(availableHoursFiltered);
     }
-  }, [
-    disponibility,
-    day,
-    loadDisponibility,
-    getReservations,
-    status.loading,
-    status.data,
-  ]);
+  }, []);
 
   return (
     <div>

@@ -4,21 +4,21 @@ import { CustomButton } from "../../atomos";
 type ReservationCardProps = {
   reservationId: string;
   serviceName: string;
-  schedule: string;
-  price: string;
+  rangeHour: string;
+  reservationPrice: string;
   state: boolean;
   date: string;
-  paymetId: string;
+  paymentId: string;
 };
 
 const ReservationCard = ({
   reservationId,
   serviceName,
-  schedule,
-  price,
+  rangeHour,
+  reservationPrice,
   state,
   date,
-  paymetId,
+  paymentId,
 }: ReservationCardProps) => {
   return (
     <div>
@@ -29,9 +29,9 @@ const ReservationCard = ({
           <h2 className="text-lg font-bold">Fecha:</h2>
           <p className="text-base">{date}</p>
           <h2 className="text-lg font-bold">Servicio</h2>
-          <p className="text-base">{schedule}</p>
+          <p className="text-base">{rangeHour}</p>
           <h2 className="text-lg font-bold">ID Transferencia:</h2>
-          <p className="text-base">{paymetId}</p>
+          <p className="text-base">{paymentId}</p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold">Estado del pago:</h2>
@@ -41,7 +41,7 @@ const ReservationCard = ({
             <p className="text-base">Pendiente</p>
           )}
           <h2 className="text-lg font-bold">Precio:</h2>
-          <p className="text-base">$ {price}</p>
+          <p className="text-base">$ {reservationPrice}</p>
         </div>
       </div>
       {!state && (
