@@ -1,14 +1,18 @@
 query ListReservations {
   allReservations {
-    reservationId
-    state
-    paymentId
-    reservationPrice
-    userId
-    serviceId
-    image
-    date
-    rangeHour
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    userName
+    serviceName
   }
 }
 mutation CreateReservationSC($input: CreateReservationInput!) {
@@ -39,9 +43,9 @@ mutation CreateReservationUser($input: CreateReservationInput!) {
   }
 }
 
-query GetReservationsByDate($date: String!, $serviceId: String!){
-    getReservationsByDate(date: $date,serviceId: $serviceId){
-        state
-        rangeHour
-    }
+query GetReservationsByDate($date: String!, $serviceId: String!) {
+  getReservationsByDate(date: $date, serviceId: $serviceId) {
+    state
+    rangeHour
+  }
 }

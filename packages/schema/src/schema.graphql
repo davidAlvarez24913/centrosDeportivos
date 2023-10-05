@@ -87,13 +87,13 @@ type BankAccount {
 type Reservation {
   reservationId: ID!
   state: Boolean!
-  paymentId: String
+  paymentId: String!
   reservationPrice: Float!
   userId: ID!
   serviceId: ID!
   image: String!
   date: String!
-  rangeHour: [String]!
+  rangeHour: [String!]!
 }
 
 type Comment {
@@ -217,9 +217,10 @@ type ServiceWithSportCenter {
   service: Service
   sportCenter: SportCenter
 }
-type ReservationWithServiceName {
+type ReservationNames {
   reservation: Reservation
   serviceName: String
+  userName: String
 }
 type Query {
   #users
@@ -243,7 +244,7 @@ type Query {
 
   #reservations
   reservationCount: Int!
-  allReservations: [Reservation!]
+  allReservations: [ReservationNames]
   findReservation(id: ID!): Reservation
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 

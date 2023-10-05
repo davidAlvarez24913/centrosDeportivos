@@ -4,7 +4,8 @@ import { CustomButton } from "../../atomos";
 type ReservationCardProps = {
   reservationId: string;
   serviceName: string;
-  rangeHour: string;
+  userName: string;
+  rangeHour: string[];
   reservationPrice: string;
   state: boolean;
   date: string;
@@ -14,6 +15,7 @@ type ReservationCardProps = {
 const ReservationCard = ({
   reservationId,
   serviceName,
+  userName,
   rangeHour,
   reservationPrice,
   state,
@@ -34,6 +36,8 @@ const ReservationCard = ({
           <p className="text-base">{paymentId}</p>
         </div>
         <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-bold">Usuario:</h2>
+          <p className="text-base">{userName}</p>
           <h2 className="text-lg font-bold">Estado del pago:</h2>
           {state ? (
             <p className="text-base">Pagado</p>

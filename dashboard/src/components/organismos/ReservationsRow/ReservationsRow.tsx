@@ -5,7 +5,8 @@ import { ReservationCard } from "../../moleculas";
 type ReservationsRowProps = {
   reservationId: string;
   serviceName: string;
-  rangeHour: string;
+  userName: string;
+  rangeHour: string[];
   reservationPrice: string;
   state: boolean;
   date: string;

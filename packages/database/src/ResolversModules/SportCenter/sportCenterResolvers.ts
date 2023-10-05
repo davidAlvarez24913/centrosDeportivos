@@ -64,7 +64,6 @@ export const sportCenterResolvers = {
           phone: "",
           email: input.email,
         });
-        console.log(user);
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
           image: input.image,

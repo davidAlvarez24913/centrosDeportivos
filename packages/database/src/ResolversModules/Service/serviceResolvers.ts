@@ -27,7 +27,8 @@ export const serviceResolvers = {
         return {
           ...service,
           reservations: allReservations.filter(
-            (reservation) => reservation.serviceId === service.serviceId
+            (reservation) =>
+              reservation.reservation.serviceId === service.serviceId
           ),
         };
       });
@@ -55,8 +56,6 @@ export const serviceResolvers = {
         servicesSQL,
         servicesNoSQL
       );
-      console.log(mergeService);
-
       return mergeService;
     },
     getDisponibility: async (root: any, { serviceId }: any) => {

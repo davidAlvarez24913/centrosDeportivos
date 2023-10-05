@@ -238,7 +238,7 @@ export type OperationResponse = {
 export type Query = {
   __typename?: 'Query';
   allComments?: Maybe<Array<Comment>>;
-  allReservations?: Maybe<Array<Reservation>>;
+  allReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   allUsers?: Maybe<Array<Maybe<User>>>;
   findReservation?: Maybe<Reservation>;
   findUser?: Maybe<User>;
@@ -329,14 +329,21 @@ export type RangeHour = {
 export type Reservation = {
   __typename?: 'Reservation';
   date: Scalars['String']['output'];
-  image?: Maybe<Scalars['String']['output']>;
-  paymentId?: Maybe<Scalars['String']['output']>;
-  rangeHour?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  image: Scalars['String']['output'];
+  paymentId: Scalars['String']['output'];
+  rangeHour: Array<Scalars['String']['output']>;
   reservationId: Scalars['ID']['output'];
   reservationPrice: Scalars['Float']['output'];
   serviceId: Scalars['ID']['output'];
   state: Scalars['Boolean']['output'];
   userId: Scalars['ID']['output'];
+};
+
+export type ReservationNames = {
+  __typename?: 'ReservationNames';
+  reservation?: Maybe<Reservation>;
+  serviceName?: Maybe<Scalars['String']['output']>;
+  userName?: Maybe<Scalars['String']['output']>;
 };
 
 export type Service = {
@@ -490,21 +497,21 @@ export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAcc
 export type ListReservationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null }> | null };
+export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
 
 export type CreateReservationScMutationVariables = Exact<{
   input: CreateReservationInput;
 }>;
 
 
-export type CreateReservationScMutation = { __typename?: 'Mutation', createReservationSC?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null } | null };
+export type CreateReservationScMutation = { __typename?: 'Mutation', createReservationSC?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null };
 
 export type CreateReservationUserMutationVariables = Exact<{
   input: CreateReservationInput;
 }>;
 
 
-export type CreateReservationUserMutation = { __typename?: 'Mutation', createReservationUser?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId?: string | null, reservationPrice: number, userId: string, serviceId: string, image?: string | null, date: string, rangeHour?: Array<string | null> | null } | null };
+export type CreateReservationUserMutation = { __typename?: 'Mutation', createReservationUser?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null };
 
 export type GetReservationsByDateQueryVariables = Exact<{
   date: Scalars['String']['input'];
@@ -512,7 +519,7 @@ export type GetReservationsByDateQueryVariables = Exact<{
 }>;
 
 
-export type GetReservationsByDateQuery = { __typename?: 'Query', getReservationsByDate?: Array<{ __typename?: 'Reservation', state: boolean, rangeHour?: Array<string | null> | null } | null> | null };
+export type GetReservationsByDateQuery = { __typename?: 'Query', getReservationsByDate?: Array<{ __typename?: 'Reservation', state: boolean, rangeHour: Array<string> } | null> | null };
 
 export type ListServicesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -786,15 +793,19 @@ export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<Delete
 export const ListReservationsDocument = gql`
     query ListReservations {
   allReservations {
-    reservationId
-    state
-    paymentId
-    reservationPrice
-    userId
-    serviceId
-    image
-    date
-    rangeHour
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    userName
+    serviceName
   }
 }
     `;
