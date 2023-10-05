@@ -47,11 +47,6 @@ const ModalNewBook = ({
     variables: { date: new Date(day).toDateString(), serviceId: serviceId },
   });
 
-  //reservaciones
-  //dipsonibilidad
-  //day
-  // filter data
-
   const getDisponibility = (day: string) => {
     // map hours by date
     const dayString = getDayString(day);
@@ -91,7 +86,7 @@ const ModalNewBook = ({
       (h) => !reservationsRangeHour.includes(h.rangeHour)
     );
     setHours(availableHoursFiltered);
-  }, [day, status]);
+  }, [day, status.loading]);
 
   return (
     <div>

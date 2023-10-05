@@ -102,26 +102,28 @@ const BodyDisponibility = ({
       </div>
       <h2 className="font-semibold">Seleccionar Horario</h2>
       <div className=" flex gap-4 flex-wrap">
-        {hours?.map((hour, index) => {
-          return (
-            <TagHour
-              available={hour.available!}
-              rangeHour={hour.rangeHour}
-              key={index}
-              onClick={() => {
-                if (selectedHour.includes(hour.rangeHour)) {
-                  const aux = selectedHour.filter(
-                    (auxHour) => auxHour !== hour.rangeHour
-                  );
-                  getHour(aux);
-                } else {
-                  getHour([...selectedHour, hour.rangeHour]);
-                }
-                handleHours(hour, hours);
-              }}
-            />
-          );
-        })}
+        {hours === undefined && <p>Reservas no disponibles</p>}
+        {hours &&
+          hours?.map((hour, index) => {
+            return (
+              <TagHour
+                available={hour.available!}
+                rangeHour={hour.rangeHour}
+                key={index}
+                onClick={() => {
+                  if (selectedHour.includes(hour.rangeHour)) {
+                    const aux = selectedHour.filter(
+                      (auxHour) => auxHour !== hour.rangeHour
+                    );
+                    getHour(aux);
+                  } else {
+                    getHour([...selectedHour, hour.rangeHour]);
+                  }
+                  handleHours(hour, hours);
+                }}
+              />
+            );
+          })}
       </div>
     </div>
   );
