@@ -232,7 +232,6 @@ type Query {
   getSportCenter(sportCenterId: ID!): SportCenter
 
   #services
-  listServices: [Service]
   listServicesBySportCenterId(sportCenterId: ID!): [Service]
   listServicesBySport(sport: Sport!): [ServiceWithSportCenter]
   getAccess(sportCenterId: ID!): Boolean!
@@ -244,9 +243,8 @@ type Query {
 
   #reservations
   reservationCount: Int!
-  allReservations: [ReservationNames]
   listSCReservations(sportCenterId: ID!): [ReservationNames]
-  findReservation(id: ID!): Reservation
+  listUserReservations(userId: ID!): [ReservationNames]
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 
   #comments

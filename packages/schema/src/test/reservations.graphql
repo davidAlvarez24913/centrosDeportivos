@@ -1,20 +1,3 @@
-query ListReservations {
-  allReservations {
-    reservation {
-      reservationId
-      state
-      paymentId
-      reservationPrice
-      userId
-      serviceId
-      image
-      date
-      rangeHour
-    }
-    userName
-    serviceName
-  }
-}
 query ListSCReservations($sportCenterId: ID!) {
   listSCReservations(sportCenterId: $sportCenterId) {
     reservation {
@@ -32,6 +15,27 @@ query ListSCReservations($sportCenterId: ID!) {
     serviceName
   }
 }
+query ListUserReservations($userId: ID!) {
+  listUserReservations(userId: $userId) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+
+query GetReservationsByDate($date: String!, $serviceId: String!) {
+  getReservationsByDate(date: $date, serviceId: $serviceId) {
+    state
+    rangeHour
+  }
+}
+
 mutation CreateReservationSC($input: CreateReservationInput!) {
   createReservationSC(input: $input) {
     reservationId
@@ -56,13 +60,6 @@ mutation CreateReservationUser($input: CreateReservationInput!) {
     serviceId
     image
     date
-    rangeHour
-  }
-}
-
-query GetReservationsByDate($date: String!, $serviceId: String!) {
-  getReservationsByDate(date: $date, serviceId: $serviceId) {
-    state
     rangeHour
   }
 }

@@ -238,7 +238,7 @@ export type OperationResponse = {
 export type Query = {
   __typename?: 'Query';
   allComments?: Maybe<Array<Comment>>;
-  allReservations?: Maybe<Array<Maybe<ReservationNames>>>;
+  allReservations?: Maybe<Array<Maybe<Reservation>>>;
   allUsers?: Maybe<Array<Maybe<User>>>;
   findReservation?: Maybe<Reservation>;
   findUser?: Maybe<User>;
@@ -255,6 +255,7 @@ export type Query = {
   listServicesBySport?: Maybe<Array<Maybe<ServiceWithSportCenter>>>;
   listServicesBySportCenterId?: Maybe<Array<Maybe<Service>>>;
   listSportCenters?: Maybe<Array<SportCenter>>;
+  listUserReservations?: Maybe<Array<Maybe<Reservation>>>;
   reservationCount: Scalars['Int']['output'];
 };
 
@@ -323,6 +324,11 @@ export type QueryListServicesBySportArgs = {
 
 export type QueryListServicesBySportCenterIdArgs = {
   sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryListUserReservationsArgs = {
+  userId: Scalars['ID']['input'];
 };
 
 export type RangeHour = {
@@ -503,7 +509,7 @@ export type DeleteBankAccountMutation = { __typename?: 'Mutation', deleteBankAcc
 export type ListReservationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
+export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null> | null };
 
 export type ListScReservationsQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -511,6 +517,13 @@ export type ListScReservationsQueryVariables = Exact<{
 
 
 export type ListScReservationsQuery = { __typename?: 'Query', listSCReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
+
+export type ListUserReservationsQueryVariables = Exact<{
+  userId: Scalars['ID']['input'];
+}>;
+
+
+export type ListUserReservationsQuery = { __typename?: 'Query', listUserReservations?: Array<{ __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null> | null };
 
 export type CreateReservationScMutationVariables = Exact<{
   input: CreateReservationInput;
@@ -806,19 +819,15 @@ export type DeleteBankAccountMutationOptions = Apollo.BaseMutationOptions<Delete
 export const ListReservationsDocument = gql`
     query ListReservations {
   allReservations {
-    reservation {
-      reservationId
-      state
-      paymentId
-      reservationPrice
-      userId
-      serviceId
-      image
-      date
-      rangeHour
-    }
-    userName
-    serviceName
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
   }
 }
     `;
@@ -896,6 +905,49 @@ export function useListScReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type ListScReservationsQueryHookResult = ReturnType<typeof useListScReservationsQuery>;
 export type ListScReservationsLazyQueryHookResult = ReturnType<typeof useListScReservationsLazyQuery>;
 export type ListScReservationsQueryResult = Apollo.QueryResult<ListScReservationsQuery, ListScReservationsQueryVariables>;
+export const ListUserReservationsDocument = gql`
+    query ListUserReservations($userId: ID!) {
+  listUserReservations(userId: $userId) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+    `;
+
+/**
+ * __useListUserReservationsQuery__
+ *
+ * To run a query within a React component, call `useListUserReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListUserReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListUserReservationsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useListUserReservationsQuery(baseOptions: Apollo.QueryHookOptions<ListUserReservationsQuery, ListUserReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListUserReservationsQuery, ListUserReservationsQueryVariables>(ListUserReservationsDocument, options);
+      }
+export function useListUserReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListUserReservationsQuery, ListUserReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListUserReservationsQuery, ListUserReservationsQueryVariables>(ListUserReservationsDocument, options);
+        }
+export type ListUserReservationsQueryHookResult = ReturnType<typeof useListUserReservationsQuery>;
+export type ListUserReservationsLazyQueryHookResult = ReturnType<typeof useListUserReservationsLazyQuery>;
+export type ListUserReservationsQueryResult = Apollo.QueryResult<ListUserReservationsQuery, ListUserReservationsQueryVariables>;
 export const CreateReservationScDocument = gql`
     mutation CreateReservationSC($input: CreateReservationInput!) {
   createReservationSC(input: $input) {

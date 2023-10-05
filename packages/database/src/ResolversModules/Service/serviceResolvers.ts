@@ -13,27 +13,6 @@ import DeleteServiceResolver from "./DeleteServiceResolver";
 
 export const serviceResolvers = {
   Query: {
-    listServices: async () => {
-      // evitar hacer JOIN con el find, buscar forma de obtener sportCenterId.
-      const servicesSQL = await Service.find({
-        relations: { sportCenter: true, reservations: true },
-      });
-      const servicesNoSQL = (await listServices()) as FireStoreService[];
-      const mergeService = mergeServices(servicesSQL, servicesNoSQL);
-
-      const allReservations =
-        await reservationResolvers.Query.allReservations();
-      const result = mergeService.map((service) => {
-        return {
-          ...service,
-          reservations: allReservations.filter(
-            (reservation) =>
-              reservation.reservation.serviceId === service.serviceId
-          ),
-        };
-      });
-      return result;
-    },
     listServicesBySportCenterId: async (root: any, { sportCenterId }: any) => {
       const servicesSQL = await Service.find({
         where: { sportCenter: { sportCenterId: sportCenterId } },

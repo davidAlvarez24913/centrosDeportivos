@@ -16,29 +16,6 @@ import { GraphQLError } from "graphql";
 export const reservationResolvers = {
   Query: {
     reservationCount: async () => (await Reservation.find()).length,
-    allReservations: async () => {
-      const reservationsNoSQL =
-        (await listReservations()) as FireStoreReservation[];
-      const reservationsSQL = await Reservation.find({
-        relations: { user: true, service: true },
-      });
-      const mergedReservations = mergeReservations(
-        reservationsSQL,
-        reservationsNoSQL
-      );
-      const result = mergedReservations.map((reservation) => {
-        return {
-          reservation: {
-            ...reservation,
-            userId: reservation.user.userId,
-            serviceId: reservation.service.serviceId,
-          },
-          serviceName: reservation.service.name,
-          userName: reservation.user.name,
-        };
-      });
-      return result;
-    },
     listSCReservations: async (root: any, { sportCenterId }: any) => {
       const reservationsNoSQL =
         (await listReservations()) as FireStoreReservation[];
@@ -63,19 +40,35 @@ export const reservationResolvers = {
       });
       return result;
     },
-
-    findReservation: async (root: any, args: any) => {
-      const { id } = args;
-      return await Reservation.findOneBy({ reservationId: id });
+    listUserReservations: async (root: any, { userId }: any) => {
+      const reservationsNoSQL =
+        (await listReservations()) as FireStoreReservation[];
+      const reservationsSQL = await Reservation.find({
+        where: { user: { userId: userId } },
+        relations: { user: true, service: true },
+      });
+      const mergedReservations = mergeReservations(
+        reservationsSQL,
+        reservationsNoSQL
+      );
+      const result = mergedReservations.map((reservation) => {
+        return {
+          reservation: {
+            ...reservation,
+            userId: reservation.user.userId,
+            serviceId: reservation.service.serviceId,
+          },
+          serviceName: reservation.service.name,
+        };
+      });
+      return result;
     },
     getReservationsByDate: async (root: any, { date, serviceId }: any) => {
       const reservationsSQL = await Reservation.find({
         where: { date: date, service: { serviceId: serviceId } },
         relations: { user: true, service: true },
       });
-
       const reservationsNoSQL = await listReservations();
-
       const mergedReservations = mergeReservations(
         reservationsSQL,
         reservationsNoSQL as FireStoreReservation[]
