@@ -14,28 +14,35 @@ type ReservationsRowProps = {
 };
 const ReservationsRow = (reservation: ReservationsRowProps) => {
   const [modal, setModal] = useState(false);
-  const { reservationId, serviceName, rangeHour, reservationPrice } =
+  const { reservationId, serviceName, userName, rangeHour, reservationPrice } =
     reservation;
   return (
     <>
-      <tr className="border-b border-background">
-        <th className="px-3 py-5">
-          <p className="text-start text-sm font-normal">{reservationId}</p>
+      <tr className="border-b border-background ">
+        <th className=" py-5">
+          <p className="text-center text-sm font-normal">{reservationId}</p>
         </th>
         <th className="py-5">
-          <p className="text-start text-sm font-normal">{serviceName}</p>
+          <p className="text-center text-sm font-normal">{serviceName}</p>
         </th>
         <th className="py-5">
-          <p className="text-start text-sm font-normal">{rangeHour}</p>
+          <p className="text-center text-sm font-normal">{userName}</p>
         </th>
         <th className="py-5">
-          <p className="text-start text-sm font-normal">$ {reservationPrice}</p>
+          {rangeHour.map((hour) => {
+            return <p className="text-center text-sm font-normal">{hour}</p>;
+          })}
         </th>
-        <th className="">
+        <th className="py-5">
+          <p className="text-center text-sm font-normal">
+            $ {reservationPrice}
+          </p>
+        </th>
+        <th className="py-5">
           <img
             src="icons/show-more.svg"
             alt="show more icon"
-            className="cursor-pointer px-3"
+            className="cursor-pointer mx-auto"
             onClick={() => setModal(true)}
           />
         </th>

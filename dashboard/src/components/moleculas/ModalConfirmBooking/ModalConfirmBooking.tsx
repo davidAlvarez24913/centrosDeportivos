@@ -29,6 +29,7 @@ const ModalConfirmBooking = ({
       date: new Date(date).toDateString(),
       serviceId: serviceId,
       userId: userId!,
+      paymentId: "",
       image: "",
     };
     createReservationMutation({

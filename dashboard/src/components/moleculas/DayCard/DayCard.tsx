@@ -36,7 +36,7 @@ const DayCard = ({ date, available, onClick }: PropsDaycard) => {
   return (
     <div
       className={
-        "flex flex-col items-center w-32 h-32 p-2 text-lg gap-1 font-semibold rounded-xl border-2 border-background " +
+        "flex flex-col items-center w-32 h-32 p-2 text-lg gap-1 font-semibold rounded-xl border-2 border-background cursor-pointer " +
         styles
       }
       onClick={onClick}

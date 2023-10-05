@@ -12,7 +12,7 @@ const TagHour = ({ rangeHour, available, onClick }: PropsTagHour) => {
   return (
     <div
       className={
-        "flex flex-row flex-wrap items-center p-2 text-md rounded-xl  border-background" +
+        "flex flex-row flex-wrap items-center p-2 text-md rounded-xl  border-background cursor-pointer" +
         styles
       }
       onClick={onClick}

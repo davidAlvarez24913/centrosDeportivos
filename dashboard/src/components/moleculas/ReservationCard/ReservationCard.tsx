@@ -31,7 +31,11 @@ const ReservationCard = ({
           <h2 className="text-lg font-bold">Fecha:</h2>
           <p className="text-base">{date}</p>
           <h2 className="text-lg font-bold">Servicio</h2>
-          <p className="text-base">{rangeHour}</p>
+          <ul className="list-disc text-base ml-5">
+            {rangeHour.map((hour) => {
+              return <li>{hour}</li>;
+            })}
+          </ul>
           <h2 className="text-lg font-bold">ID Transferencia:</h2>
           <p className="text-base">{paymentId}</p>
         </div>

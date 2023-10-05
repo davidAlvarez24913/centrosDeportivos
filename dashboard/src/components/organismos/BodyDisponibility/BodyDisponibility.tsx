@@ -102,7 +102,10 @@ const BodyDisponibility = ({
       </div>
       <h2 className="font-semibold">Seleccionar Horario</h2>
       <div className=" flex gap-4 flex-wrap">
-        {hours === undefined && <p>Reservas no disponibles</p>}
+        {(hours?.length! < 1 || hours === undefined) && (
+          <p>Horarios no disponibles</p>
+        )}
+
         {hours &&
           hours?.map((hour, index) => {
             return (

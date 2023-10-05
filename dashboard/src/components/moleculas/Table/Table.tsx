@@ -13,7 +13,11 @@ const Table = ({ headers, data }: TableProps) => {
           <tr className="pl-3">
             {headers.map((header) => {
               return (
-                <th scope="col" key={header} className="py-3 first:px-3">
+                <th
+                  scope="col"
+                  key={header}
+                  className="py-3  w-1/6 text-center "
+                >
                   {header}
                 </th>
               );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LayoutPage, Table } from "../components/moleculas";
 import { ReservationsRow } from "../components/organismos";
 import useUser from "../Hooks/useUser";
@@ -10,8 +10,7 @@ const ReservationsPage = () => {
   const status = useGetNameSportCenterQuery({
     variables: { sportCenterId: user?.uid as string },
   });
-  const { data, loading } = useListReservationsQuery();
-  console.log(data?.allReservations);
+  const { data, loading, refetch } = useListReservationsQuery();
 
   const paidReservations = data?.allReservations?.filter(
     (result) => result?.reservation?.state! === true
@@ -43,6 +42,11 @@ const ReservationsPage = () => {
       />
     );
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       {loading ? (
@@ -56,7 +60,14 @@ const ReservationsPage = () => {
           />
           <h2 className="text-xl font-bold">Pagadas</h2>
           <Table
-            headers={["ID", "servicios", "horario", "precio", "ver mas"]}
+            headers={[
+              "ID",
+              "servicios",
+              "usuario",
+              "horario",
+              "precio",
+              "ver mas",
+            ]}
             data={paidRows!}
           />
         </div>
