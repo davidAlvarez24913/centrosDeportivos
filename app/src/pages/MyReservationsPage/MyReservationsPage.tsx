@@ -15,10 +15,14 @@ const MyReservationsPage = () => {
               {myReservations.map((reservation) => {
                 return (
                   <ReservationCard
-                    nameSportCenter={reservation.titleSportCenter}
-                    nameService={reservation.nameService}
-                    rangeHour={reservation.rangeHour}
-                    paymentStatus={reservation.paymentStatus}
+                    reservationId={reservation.key.toString()}
+                    sportCenterName={reservation.titleSportCenter}
+                    serviceName={reservation.nameService}
+                    rangeHour={[reservation.rangeHour]}
+                    state={reservation.paymentStatus}
+                    date="miercoles"
+                    paymentId="123123"
+                    reservationPrice="12"
                     key={reservation.key}
                   ></ReservationCard>
                 );

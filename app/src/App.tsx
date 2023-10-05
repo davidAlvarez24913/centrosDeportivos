@@ -29,7 +29,6 @@ import ServicesPage from "./pages/ServicesPage";
 import MyReservationsPage from "./pages/MyReservationsPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import InfoBookingsPage from "./pages/InfoBookingsPage";
 import PaymentPage from "./pages/PaymentPage";
 import SportsCentersPage from "./pages/SportsCentersPage";
 import SportCenterPage from "./pages/SportCenterPage";
@@ -66,7 +65,6 @@ const App: React.FC = () => (
             <Route exact path="/payment/:info" component={PaymentPage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/info-bookings" component={InfoBookingsPage} />
             <Route
               exact
               path="/disponibility/:serviceId"

@@ -12,14 +12,7 @@ const ReviewModal = () => {
   const [stars, setStars] = useState<number>();
   const ref = useRef<HTMLIonModalElement>(null);
   return (
-    <IonModal
-      ref={ref}
-      trigger="review-modal"
-      style={{
-        "--max-height": "350px",
-        "--max-width": "350px",
-      }}
-    >
+    <IonModal ref={ref} trigger="review-modal">
       <Header
         title="Deja tu reseña"
         dismiss={() => {
@@ -28,7 +21,7 @@ const ReviewModal = () => {
       />
       <IonContent>
         <Background>
-          <div className="flex flex-col gap-2 py-4">
+          <div className="flex flex-col gap-2 py-10">
             <MainCard>
               <div className="flex">
                 <textarea
