@@ -15,6 +15,23 @@ query ListReservations {
     serviceName
   }
 }
+query ListSCReservations($sportCenterId: ID!) {
+  listSCReservations(sportCenterId: $sportCenterId) {
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    userName
+    serviceName
+  }
+}
 mutation CreateReservationSC($input: CreateReservationInput!) {
   createReservationSC(input: $input) {
     reservationId

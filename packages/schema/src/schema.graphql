@@ -245,6 +245,7 @@ type Query {
   #reservations
   reservationCount: Int!
   allReservations: [ReservationNames]
+  listSCReservations(sportCenterId: ID!): [ReservationNames]
   findReservation(id: ID!): Reservation
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 

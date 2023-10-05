@@ -250,6 +250,7 @@ export type Query = {
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
   listCommentsByService?: Maybe<Array<Comment>>;
   listCommentsBySportCenter?: Maybe<Array<Comment>>;
+  listSCReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   listServices?: Maybe<Array<Maybe<Service>>>;
   listServicesBySport?: Maybe<Array<Maybe<ServiceWithSportCenter>>>;
   listServicesBySportCenterId?: Maybe<Array<Maybe<Service>>>;
@@ -306,6 +307,11 @@ export type QueryListCommentsByServiceArgs = {
 
 
 export type QueryListCommentsBySportCenterArgs = {
+  sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryListScReservationsArgs = {
   sportCenterId: Scalars['ID']['input'];
 };
 
@@ -498,6 +504,13 @@ export type ListReservationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ListReservationsQuery = { __typename?: 'Query', allReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
+
+export type ListScReservationsQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type ListScReservationsQuery = { __typename?: 'Query', listSCReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
 
 export type CreateReservationScMutationVariables = Exact<{
   input: CreateReservationInput;
@@ -836,6 +849,53 @@ export function useListReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ListReservationsQueryHookResult = ReturnType<typeof useListReservationsQuery>;
 export type ListReservationsLazyQueryHookResult = ReturnType<typeof useListReservationsLazyQuery>;
 export type ListReservationsQueryResult = Apollo.QueryResult<ListReservationsQuery, ListReservationsQueryVariables>;
+export const ListScReservationsDocument = gql`
+    query ListSCReservations($sportCenterId: ID!) {
+  listSCReservations(sportCenterId: $sportCenterId) {
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    userName
+    serviceName
+  }
+}
+    `;
+
+/**
+ * __useListScReservationsQuery__
+ *
+ * To run a query within a React component, call `useListScReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListScReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListScReservationsQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useListScReservationsQuery(baseOptions: Apollo.QueryHookOptions<ListScReservationsQuery, ListScReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListScReservationsQuery, ListScReservationsQueryVariables>(ListScReservationsDocument, options);
+      }
+export function useListScReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListScReservationsQuery, ListScReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListScReservationsQuery, ListScReservationsQueryVariables>(ListScReservationsDocument, options);
+        }
+export type ListScReservationsQueryHookResult = ReturnType<typeof useListScReservationsQuery>;
+export type ListScReservationsLazyQueryHookResult = ReturnType<typeof useListScReservationsLazyQuery>;
+export type ListScReservationsQueryResult = Apollo.QueryResult<ListScReservationsQuery, ListScReservationsQueryVariables>;
 export const CreateReservationScDocument = gql`
     mutation CreateReservationSC($input: CreateReservationInput!) {
   createReservationSC(input: $input) {

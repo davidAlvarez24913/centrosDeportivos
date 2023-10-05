@@ -39,6 +39,30 @@ export const reservationResolvers = {
       });
       return result;
     },
+    listSCReservations: async (root: any, { sportCenterId }: any) => {
+      const reservationsNoSQL =
+        (await listReservations()) as FireStoreReservation[];
+      const reservationsSQL = await Reservation.find({
+        where: { service: { sportCenter: { sportCenterId: sportCenterId } } },
+        relations: { user: true, service: true },
+      });
+      const mergedReservations = mergeReservations(
+        reservationsSQL,
+        reservationsNoSQL
+      );
+      const result = mergedReservations.map((reservation) => {
+        return {
+          reservation: {
+            ...reservation,
+            userId: reservation.user.userId,
+            serviceId: reservation.service.serviceId,
+          },
+          serviceName: reservation.service.name,
+          userName: reservation.user.name,
+        };
+      });
+      return result;
+    },
 
     findReservation: async (root: any, args: any) => {
       const { id } = args;

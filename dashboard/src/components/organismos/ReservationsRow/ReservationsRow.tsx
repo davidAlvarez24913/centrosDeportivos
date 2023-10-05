@@ -14,16 +14,25 @@ type ReservationsRowProps = {
 };
 const ReservationsRow = (reservation: ReservationsRowProps) => {
   const [modal, setModal] = useState(false);
-  const { reservationId, serviceName, userName, rangeHour, reservationPrice } =
-    reservation;
+  const {
+    reservationId,
+    serviceName,
+    userName,
+    rangeHour,
+    reservationPrice,
+    date,
+  } = reservation;
   return (
     <>
       <tr className="border-b border-background ">
-        <th className=" py-5">
+        <th className="pl-2 py-5">
           <p className="text-center text-sm font-normal">{reservationId}</p>
         </th>
         <th className="py-5">
           <p className="text-center text-sm font-normal">{serviceName}</p>
+        </th>
+        <th className="py-5">
+          <p className="text-center text-sm font-normal">{date}</p>
         </th>
         <th className="py-5">
           <p className="text-center text-sm font-normal">{userName}</p>

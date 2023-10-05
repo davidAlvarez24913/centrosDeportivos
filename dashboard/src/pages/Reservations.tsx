@@ -1,22 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LayoutPage, Table } from "../components/moleculas";
 import { ReservationsRow } from "../components/organismos";
 import useUser from "../Hooks/useUser";
-import { useGetNameSportCenterQuery, useListReservationsQuery } from "schema";
+import {
+  ReservationNames,
+  useGetNameSportCenterQuery,
+  useListScReservationsLazyQuery,
+} from "schema";
 import { Loading } from "../components/atomos";
 
 const ReservationsPage = () => {
   const { user } = useUser();
+  const sportCenterId = user?.uid!;
   const status = useGetNameSportCenterQuery({
-    variables: { sportCenterId: user?.uid as string },
+    variables: { sportCenterId: sportCenterId },
   });
-  const { data, loading, refetch } = useListReservationsQuery();
+  const [listReservations, { loading }] = useListScReservationsLazyQuery();
 
-  const paidReservations = data?.allReservations?.filter(
-    (result) => result?.reservation?.state! === true
+  const [reservations, setReservations] = useState<ReservationNames[]>([]);
+  useEffect(() => {
+    listReservations({ variables: { sportCenterId: sportCenterId } }).then(
+      (reservations) => {
+        const result =
+          reservations.data?.listSCReservations?.map((result) => {
+            return result!;
+          }) || [];
+        setReservations(result);
+      }
+    );
+  }, []);
+
+  const paidReservations = reservations.filter(
+    (result) => result.reservation?.state! === true
   );
-  const unPaidReservations = data?.allReservations?.filter(
-    (result) => result?.reservation?.state! === false
+  const unPaidReservations = reservations?.filter(
+    (result) => result.reservation?.state! === false
   );
   const paidRows = paidReservations?.map((result) => {
     const reservation = result?.reservation!;
@@ -43,10 +61,6 @@ const ReservationsPage = () => {
     );
   });
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       {loading ? (
@@ -64,6 +78,7 @@ const ReservationsPage = () => {
               "ID",
               "servicios",
               "usuario",
+              "fecha",
               "horario",
               "precio",
               "ver mas",

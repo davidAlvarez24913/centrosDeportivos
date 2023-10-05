@@ -16,7 +16,7 @@ const Table = ({ headers, data }: TableProps) => {
                 <th
                   scope="col"
                   key={header}
-                  className="py-3  w-1/6 text-center "
+                  className="py-3 first:pl-2 text-center "
                 >
                   {header}
                 </th>
