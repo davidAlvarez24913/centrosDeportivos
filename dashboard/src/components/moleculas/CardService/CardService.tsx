@@ -117,6 +117,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           onRefetch={onRefetch}
           onUpdate={onUpdate}
           loading={loading}
+          flagDispopinibility={data?.getDisponibility === null}
           setModalReservation={setModalReservation}
         />
       </Modal>

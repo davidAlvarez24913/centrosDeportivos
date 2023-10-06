@@ -6,6 +6,7 @@ type ProsCustomButton = {
   id?: string;
   disable?: boolean;
   addIcon?: boolean;
+  loading?: boolean;
 };
 function CustomButton({
   title,
@@ -15,6 +16,7 @@ function CustomButton({
   id,
   disable,
   addIcon,
+  loading,
 }: ProsCustomButton) {
   let styleColor = "";
   if (color === "cancel") styleColor = "bg-error text-customText";
@@ -33,11 +35,11 @@ function CustomButton({
       
       `}
     >
-      <p className={`uppercase text-lg ${disable ? "animate-pulse" : ""}`}>
+      <p className={`uppercase text-lg ${loading ? "animate-pulse" : ""}`}>
         {title}
       </p>
       {addIcon && <img src="/icons/add-bold.svg" alt="add icon" />}
-      {disable && (
+      {loading && (
         <img
           src={`/icons/loading${
             color === "sucessfull" ? "-blue" : color === "blue" ? "-green" : ""

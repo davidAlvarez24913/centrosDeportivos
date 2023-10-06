@@ -8,6 +8,7 @@ type ServiceFormProps = {
   onRefetch: () => void;
   onUpdate: (input: UpdateServiceInput) => void;
   loading: boolean;
+  flagDispopinibility: boolean;
   service: Omit<
     Service,
     "ranking" | "reservations" | "sportCenterId" | "__typename"
@@ -22,6 +23,7 @@ const ServiceModal = ({
   onUpdate,
   loading,
   setModalReservation,
+  flagDispopinibility,
 }: ServiceFormProps) => {
   return (
     <div>
@@ -114,8 +116,13 @@ const ServiceModal = ({
       />
       <div className="mt-2">
         <CustomButton
-          title="Crear Reservacion"
-          addIcon
+          title={
+            flagDispopinibility
+              ? "No exiten horarios asignados"
+              : "Crear Reservacion"
+          }
+          addIcon={!flagDispopinibility}
+          disable={flagDispopinibility}
           color="blue"
           onClick={() => {
             setModalReservation(true);
