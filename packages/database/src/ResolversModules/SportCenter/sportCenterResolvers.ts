@@ -51,7 +51,6 @@ export const sportCenterResolvers = {
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
       const { images, ranking, ...dataSQL } = input;
-      console.log(input);
       let sportCenterId;
       try {
         const result = await SportCenter.insert(dataSQL);
@@ -67,7 +66,6 @@ export const sportCenterResolvers = {
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,
           image: input.image,
-          ranking: input.ranking,
         });
         return { ...input, sportCenterId };
       } catch (e) {

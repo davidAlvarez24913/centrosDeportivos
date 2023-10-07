@@ -59,7 +59,6 @@ type SportCenter {
   schedule: String! # Hours attention
   services: [Service]
   image: String!
-  ranking: Int!
   access: Boolean!
 }
 
@@ -128,7 +127,6 @@ input CreateSportCenterInput {
   ubication: String!
   schedule: String
   image: String!
-  ranking: Int
   access: Boolean!
 }
 

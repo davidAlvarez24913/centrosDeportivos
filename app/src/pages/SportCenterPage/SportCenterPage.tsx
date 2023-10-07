@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import {
   useGetSportCenterQuery,
+  useListReviewsBySportCenterQuery,
   useListServicesBySportCenterIdQuery,
 } from "schema";
 import { Background, Header, Loading } from "src/components/atomos";
@@ -12,7 +13,6 @@ import {
   ServiceCard,
   SportCenterInformation,
 } from "src/components/moleculas";
-import { reviews } from "src/data";
 
 const SportCenterPage = () => {
   const { sportCenterId } = useParams<{ sportCenterId: string }>();
@@ -21,6 +21,9 @@ const SportCenterPage = () => {
     variables: { sportCenterId: sportCenterId },
   });
   const servicesData = useListServicesBySportCenterIdQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
+  const reviewsData = useListReviewsBySportCenterQuery({
     variables: { sportCenterId: sportCenterId },
   });
   const sportCenter = sportCenterData.data?.getSportCenter;
@@ -34,6 +37,12 @@ const SportCenterPage = () => {
     servicesData.data?.listServicesBySportCenterId?.map((service) => {
       return {
         ...service!,
+      };
+    }) || [];
+  const reviews =
+    reviewsData.data?.listReviewsBySportCenter?.map((review) => {
+      return {
+        ...review!,
       };
     }) || [];
 

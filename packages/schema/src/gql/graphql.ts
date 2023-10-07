@@ -76,7 +76,6 @@ export type CreateSportCenterInput = {
   image: Scalars['String']['input'];
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
-  ranking?: InputMaybe<Scalars['Int']['input']>;
   schedule?: InputMaybe<Scalars['String']['input']>;
   sportCenterId: Scalars['ID']['input'];
   ubication: Scalars['String']['input'];
@@ -377,7 +376,6 @@ export type SportCenter = {
   image: Scalars['String']['output'];
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
-  ranking: Scalars['Int']['output'];
   schedule: Scalars['String']['output'];
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
@@ -608,7 +606,7 @@ export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, image: string, ranking: number }> | null };
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, image: string }> | null };
 
 export type GetNameSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -622,14 +620,14 @@ export type GetSportCenterQueryVariables = Exact<{
 }>;
 
 
-export type GetSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, ranking: number, image: string } | null };
+export type GetSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, image: string } | null };
 
 export type GetSportCenterWithServicesQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
 }>;
 
 
-export type GetSportCenterWithServicesQuery = { __typename?: 'Query', getSportCenterWithServices?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, ranking: number, image: string, services?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null } | null };
+export type GetSportCenterWithServicesQuery = { __typename?: 'Query', getSportCenterWithServices?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, image: string, services?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null } | null };
 
 export type CreateSportCenterMutationVariables = Exact<{
   input: CreateSportCenterInput;
@@ -1513,7 +1511,6 @@ export const ListSportCentersDocument = gql`
     ubication
     schedule
     image
-    ranking
   }
 }
     `;
@@ -1588,7 +1585,6 @@ export const GetSportCenterDocument = gql`
     phone
     ubication
     schedule
-    ranking
     image
   }
 }
@@ -1630,7 +1626,6 @@ export const GetSportCenterWithServicesDocument = gql`
     phone
     ubication
     schedule
-    ranking
     image
     services {
       serviceId
