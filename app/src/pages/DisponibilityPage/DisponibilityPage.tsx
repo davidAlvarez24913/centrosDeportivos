@@ -23,8 +23,10 @@ type PropsAvailableHours = {
 };
 
 const DisponibilityPage = () => {
-  const { serviceId } = useParams<{ serviceId: string }>();
-
+  const { info } = useParams<{
+    info: string;
+  }>();
+  const { serviceId, sportCenter, nameService } = JSON.parse(info);
   const router = useIonRouter();
   const [present] = useIonToast();
   const userId = useUser().user?.uid;
@@ -134,7 +136,7 @@ const DisponibilityPage = () => {
   return (
     <IonPage>
       <Header
-        title={serviceId}
+        title={sportCenter}
         dismiss={() => {
           router.goBack();
         }}
@@ -142,7 +144,7 @@ const DisponibilityPage = () => {
       <IonContent>
         <Background>
           <div className="flex flex-col gap-4 py-4">
-            <h1>name service</h1>
+            <h1 className="text-xl font-medium">{nameService}</h1>
             <h2>Valor total: ${price}</h2>
             <h1>Fecha</h1>
             <BodyDisponibility
@@ -171,6 +173,8 @@ const DisponibilityPage = () => {
         date={day}
         hours={selectedHours}
         price={price}
+        sportCenter={sportCenter}
+        nameService={nameService}
         serviceId={serviceId}
         key={serviceId}
         onCreateBooking={onCreateBooking}

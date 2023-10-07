@@ -1,4 +1,4 @@
-import { IonContent, IonModal, IonRoute, useIonRouter } from "@ionic/react";
+import { IonContent, IonModal, useIonRouter } from "@ionic/react";
 import React, { useRef } from "react";
 import { CreateReservationUserMutation } from "schema";
 import {
@@ -17,6 +17,8 @@ type PropsmModaInfoBooking = {
   onCreateBooking: () => void;
   loading: boolean;
   data: CreateReservationUserMutation | null | undefined;
+  sportCenter: string;
+  nameService: string;
 };
 
 const ModalInfoBooking = ({
@@ -27,6 +29,8 @@ const ModalInfoBooking = ({
   onCreateBooking,
   data,
   loading,
+  sportCenter,
+  nameService,
 }: PropsmModaInfoBooking) => {
   const ref = useRef<HTMLIonModalElement>(null);
   const router = useIonRouter();
@@ -40,8 +44,8 @@ const ModalInfoBooking = ({
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 py-4">
-            <CommonTag title="Centro Deportivo:" data={""} />
-            <CommonTag title="Servicio:" data={""} />
+            <CommonTag title="Centro Deportivo:" data={sportCenter} />
+            <CommonTag title="Servicio:" data={nameService} />
             <CommonTag title="Fecha:" data={covertDateToStringEs(date)} />
             <div>
               <h2 className="text-primary text-xl">Horario:</h2>
@@ -69,7 +73,7 @@ const ModalInfoBooking = ({
                   title="Realizar pago"
                   type="button"
                   onClick={() => {
-                    const data = { price: price, hours: hours, date: date };
+                    const data = { sportce: price, hours: hours, date: date };
                     router.push(`/payment/${JSON.stringify(data)}`);
                   }}
                 />

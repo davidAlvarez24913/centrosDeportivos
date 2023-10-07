@@ -55,7 +55,12 @@ const FullService = ({
               title="Seleccionar horarios"
               color="sucessfull"
               onClick={() => {
-                ionRouter.push(`/disponibility/${serviceId}`);
+                const info = JSON.stringify({
+                  serviceId: serviceId,
+                  sportCenter: sportCenter,
+                  nameService: name,
+                });
+                ionRouter.push(`/disponibility/${info}`);
               }}
               type="button"
             />
