@@ -62,8 +62,6 @@ export const reservationResolvers = {
           sportCenterName: reservation.service.sportCenter.name,
         };
       });
-      console.log(result);
-
       return result;
     },
     getReservationsByDate: async (root: any, { date, serviceId }: any) => {

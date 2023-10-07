@@ -68,3 +68,9 @@ mutation CreateReservationUser($input: CreateReservationInput!) {
     rangeHour
   }
 }
+mutation DeleteReservation($reservationId: ID!) {
+  deleteReservation(reservationId: $reservationId) {
+    status
+    message
+  }
+}

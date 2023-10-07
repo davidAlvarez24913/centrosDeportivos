@@ -282,16 +282,10 @@ type Mutation {
   #reservations
   createReservationSC(input: CreateReservationInput!): Reservation
   createReservationUser(input: CreateReservationInput!): Reservation
-  deleteReservation(id: ID!): OperationResponse
+  deleteReservation(reservationId: ID!): OperationResponse
 
   #comments
   createComment(input: CreateCommentInput!): Comment
   updateComment(id: ID!): Comment
   deleteComment(id: ID!): OperationResponse
-
-  # TODO
-  # mutation to plus and less like
-  # query filter by sport all sportcenter
-  # add description in sportcenter
-  # Add query Myreservations with : nameSportCenter , nameService, rangeHour stateReservation
 }
