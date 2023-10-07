@@ -17,15 +17,19 @@ query ListSCReservations($sportCenterId: ID!) {
 }
 query ListUserReservations($userId: ID!) {
   listUserReservations(userId: $userId) {
-    reservationId
-    state
-    paymentId
-    reservationPrice
-    userId
-    serviceId
-    image
-    date
-    rangeHour
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    userName
+    serviceName
   }
 }
 
