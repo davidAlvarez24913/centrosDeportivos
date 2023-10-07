@@ -1,5 +1,6 @@
 import { IonContent, IonModal } from "@ionic/react";
 import React, { useRef, useState } from "react";
+import { useCreateReviewMutation } from "schema";
 import {
   Background,
   CustomButton,
@@ -7,10 +8,32 @@ import {
   MainCard,
 } from "src/components/atomos";
 import { StarRank } from "src/components/moleculas";
-
-const ReviewModal = () => {
+type ReviewModalProps = {
+  userId: string;
+  sportCenterId: string;
+};
+const ReviewModal = ({ userId, sportCenterId }: ReviewModalProps) => {
   const [stars, setStars] = useState<number>();
+  const [review, setReview] = useState("");
   const ref = useRef<HTMLIonModalElement>(null);
+  const [createReview] = useCreateReviewMutation();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    createReview({
+      variables: {
+        input: {
+          sportCenterId: sportCenterId,
+          userId: userId,
+          review: review,
+          ranking: stars || 0,
+        },
+      },
+      onCompleted: () => {
+        ref.current?.dismiss();
+      },
+    });
+  };
   return (
     <IonModal ref={ref} trigger="review-modal">
       <Header
@@ -21,7 +44,7 @@ const ReviewModal = () => {
       />
       <IonContent>
         <Background>
-          <div className="flex flex-col gap-2 py-10">
+          <form className="flex flex-col gap-2 py-10" onSubmit={handleSubmit}>
             <MainCard>
               <div className="flex">
                 <textarea
@@ -32,19 +55,13 @@ const ReviewModal = () => {
                   cols={25}
                   rows={6}
                   maxLength={200}
+                  onChange={(e) => setReview(e.currentTarget.value)}
                 ></textarea>
               </div>
             </MainCard>
             <StarRank stars={stars} setStars={setStars} />
-            <CustomButton
-              title="Enviar"
-              type="button"
-              color="sucessfull"
-              onClick={() => {
-                // mutation save comment
-              }}
-            />
-          </div>
+            <CustomButton title="Enviar" type="submit" color="sucessfull" />
+          </form>
         </Background>
       </IonContent>
     </IonModal>

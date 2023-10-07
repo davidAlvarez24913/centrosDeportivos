@@ -96,12 +96,12 @@ type Reservation {
   rangeHour: [String!]!
 }
 
-type Comment {
-  commentId: ID!
-  sportCenterId: ID
-  serviceId: ID
+type Review {
+  reviewId: ID!
+  sportCenterId: ID!
   userId: ID!
-  comment: String!
+  review: String!
+  ranking: Int!
 }
 
 input CreateUserInput {
@@ -112,11 +112,11 @@ input CreateUserInput {
   phone: String!
   email: String!
 }
-input CreateCommentInput {
+input CreateReviewInput {
   sportCenterId: ID!
-  serviceId: ID
   userId: ID!
-  comment: String!
+  review: String!
+  ranking: Int!
 }
 
 input CreateSportCenterInput {
@@ -221,6 +221,7 @@ type ReservationNames {
   reservation: Reservation
   serviceName: String
   sportCenterName: String
+  sportCenterId: String
   userName: String
 }
 type Query {
@@ -249,9 +250,7 @@ type Query {
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 
   #comments
-  listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]
-  listCommentsBySportCenter(sportCenterId: ID!): [Comment!]
-  allComments: [Comment!]
+  listReviewsBySportCenter(sportCenterId: ID!): [Review!]
 
   # disponibility will be query get all reservationsByServiceByDate and schedule
   # Create resolver get Service By Id
@@ -285,7 +284,7 @@ type Mutation {
   deleteReservation(reservationId: ID!): OperationResponse
 
   #comments
-  createComment(input: CreateCommentInput!): Comment
-  updateComment(id: ID!): Comment
-  deleteComment(id: ID!): OperationResponse
+  createReview(input: CreateReviewInput!): Review
+  updateReview(id: ID!): Review
+  deleteReview(id: ID!): OperationResponse
 }

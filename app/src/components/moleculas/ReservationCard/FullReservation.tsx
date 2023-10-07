@@ -10,10 +10,12 @@ import {
 import ReviewModal from "./ReviewModal";
 import { covertDateToStringEs } from "src/utils";
 import { useDeleteReservationMutation } from "schema";
+import useUser from "src/Hooks/useUser";
 type FullServiceProps = {
   reservationId: string;
   serviceName: string;
   sportCenterName: string;
+  sportCenterId: string;
   rangeHour: string[];
   reservationPrice: number;
   state: boolean;
@@ -24,6 +26,7 @@ type FullServiceProps = {
 const FullReservation = ({
   reservationId,
   sportCenterName,
+  sportCenterId,
   serviceName,
   rangeHour,
   state,
@@ -31,6 +34,7 @@ const FullReservation = ({
   reservationPrice,
   refetch,
 }: FullServiceProps) => {
+  const { user } = useUser();
   const ref = useRef<HTMLIonModalElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [deleteReservation] = useDeleteReservationMutation();
@@ -117,7 +121,7 @@ const FullReservation = ({
             ]}
           ></IonAlert>
         </Background>
-        <ReviewModal />
+        <ReviewModal userId={user?.uid || ""} sportCenterId={sportCenterId} />
       </IonContent>
     </IonModal>
   );

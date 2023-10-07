@@ -28,9 +28,9 @@ query ListUserReservations($userId: ID!) {
       date
       rangeHour
     }
-    userName
     serviceName
     sportCenterName
+    sportCenterId
   }
 }
 

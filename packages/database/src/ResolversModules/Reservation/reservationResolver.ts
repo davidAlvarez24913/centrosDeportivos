@@ -60,6 +60,7 @@ export const reservationResolvers = {
           },
           serviceName: reservation.service.name,
           sportCenterName: reservation.service.sportCenter.name,
+          sportCenterId: reservation.service.sportCenter.sportCenterId,
         };
       });
       return result;

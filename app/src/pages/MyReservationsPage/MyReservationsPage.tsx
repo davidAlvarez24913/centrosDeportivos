@@ -40,6 +40,7 @@ const MyReservationsPage = () => {
                       key={reservation.reservation?.reservationId}
                       {...reservation.reservation!}
                       sportCenterName={reservation.sportCenterName || ""}
+                      sportCenterId={reservation.sportCenterId || ""}
                       serviceName={reservation.serviceName || ""}
                       refetch={refetch}
                     ></ReservationCard>
