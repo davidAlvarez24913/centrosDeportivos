@@ -220,6 +220,7 @@ type ServiceWithSportCenter {
 type ReservationNames {
   reservation: Reservation
   serviceName: String
+  sportCenterName: String
   userName: String
 }
 type Query {

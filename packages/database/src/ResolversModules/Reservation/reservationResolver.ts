@@ -45,7 +45,7 @@ export const reservationResolvers = {
         (await listReservations()) as FireStoreReservation[];
       const reservationsSQL = await Reservation.find({
         where: { user: { userId: userId } },
-        relations: { user: true, service: true },
+        relations: { user: true, service: { sportCenter: true } },
       });
       const mergedReservations = mergeReservations(
         reservationsSQL,
@@ -59,8 +59,11 @@ export const reservationResolvers = {
             serviceId: reservation.service.serviceId,
           },
           serviceName: reservation.service.name,
+          sportCenterName: reservation.service.sportCenter.name,
         };
       });
+      console.log(result);
+
       return result;
     },
     getReservationsByDate: async (root: any, { date, serviceId }: any) => {
@@ -155,16 +158,13 @@ export const reservationResolvers = {
       const userApp = await User.findOneBy({
         userId: userId,
       });
-      const userSC = await SportCenter.findOneBy({
-        sportCenterId: userId,
-      });
 
       const service = await Service.findOneBy({
         serviceId: serviceId,
       });
-      if (userApp && userSC && service) {
+      if (userApp && service) {
         const reservationSQL = await Reservation.insert({
-          state: true,
+          state: false,
           date,
           paymentId,
           reservationPrice,

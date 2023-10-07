@@ -347,6 +347,7 @@ export type ReservationNames = {
   __typename?: 'ReservationNames';
   reservation?: Maybe<Reservation>;
   serviceName?: Maybe<Scalars['String']['output']>;
+  sportCenterName?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -510,7 +511,7 @@ export type ListUserReservationsQueryVariables = Exact<{
 }>;
 
 
-export type ListUserReservationsQuery = { __typename?: 'Query', listUserReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
+export type ListUserReservationsQuery = { __typename?: 'Query', listUserReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, sportCenterName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
 
 export type GetReservationsByDateQueryVariables = Exact<{
   date: Scalars['String']['input'];
@@ -861,6 +862,7 @@ export const ListUserReservationsDocument = gql`
     }
     userName
     serviceName
+    sportCenterName
   }
 }
     `;

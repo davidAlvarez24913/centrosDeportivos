@@ -81,7 +81,9 @@ const ModalInfoBooking = ({
                   color="sucessfull"
                   title="pagar despues"
                   type="button"
-                  onClick={() => {}}
+                  onClick={() => {
+                    router.push("/myreservations");
+                  }}
                 />
               </div>
             )}

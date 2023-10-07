@@ -7,7 +7,7 @@ type ReservationProps = {
   serviceName: string;
   sportCenterName: string;
   rangeHour: string[];
-  reservationPrice: string;
+  reservationPrice: number;
   state: boolean;
   date: string;
   paymentId: string;
