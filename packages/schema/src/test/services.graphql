@@ -1,13 +1,3 @@
-query ListServices {
-  listServices {
-    serviceId
-    sportCenterId
-    name
-    description
-    sport
-    image
-  }
-}
 query ListServicesBySportCenterId($sportCenterId: ID!) {
   listServicesBySportCenterId(sportCenterId: $sportCenterId) {
     serviceId
@@ -66,42 +56,42 @@ query ListServicesBySportCenterIdWithDisponibility($sportCenterId: ID!) {
     sport
     description
     image
-    disponibility{
+    disponibility {
       Monday {
-      startHour
-      endHour
-      price
-    }
-    Saturday {
-      startHour
-      endHour
-      price
-    }
-    Sunday {
-      startHour
-      endHour
-      price
-    }
-    Tuesday {
-      startHour
-      endHour
-      price
-    }
-    Thursday {
-      startHour
-      endHour
-      price
-    }
-    Wednesday {
-      startHour
-      endHour
-      price
-    }
-    Friday {
-      startHour
-      endHour
-      price
-    }
+        startHour
+        endHour
+        price
+      }
+      Saturday {
+        startHour
+        endHour
+        price
+      }
+      Sunday {
+        startHour
+        endHour
+        price
+      }
+      Tuesday {
+        startHour
+        endHour
+        price
+      }
+      Thursday {
+        startHour
+        endHour
+        price
+      }
+      Wednesday {
+        startHour
+        endHour
+        price
+      }
+      Friday {
+        startHour
+        endHour
+        price
+      }
     }
   }
 }
