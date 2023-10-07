@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { DayCard, TagHour } from "src/components/atomos";
 
+type PropsAvailableHours = {
+  rangeHour: string;
+  available: boolean;
+  price: number;
+};
+
 type PropsBodyDisponibility = {
+  setDay: React.Dispatch<React.SetStateAction<string>>;
   days: {
     date: string;
     available: boolean;
   }[];
-  hours: {
-    rangeHour: string;
-    available: boolean;
-    price: number;
-  }[];
+  hours: PropsAvailableHours[] | undefined;
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   setDays: React.Dispatch<
     React.SetStateAction<
@@ -21,14 +24,10 @@ type PropsBodyDisponibility = {
     >
   >;
   setHours: React.Dispatch<
-    React.SetStateAction<
-      {
-        rangeHour: string;
-        available: boolean;
-        price: number;
-      }[]
-    >
+    React.SetStateAction<PropsAvailableHours[] | undefined>
   >;
+  selectedHour: string[];
+  getHour: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const BodyDisponibility = ({
@@ -37,13 +36,43 @@ const BodyDisponibility = ({
   setPrice,
   setHours,
   setDays,
+  setDay,
+  getHour,
+  selectedHour,
 }: PropsBodyDisponibility) => {
-  useEffect(() => {
-    const prices = hours
-      .filter((hour) => hour.available === true)
-      .map((_) => _.price);
-    setPrice(prices.reduce((a, b) => a + b, 0));
-  }, [hours]);
+  const onSelectDay = (date: string, index: number) => {
+    setDay(date);
+    const aux = days.map((day, i) => {
+      if (i === index) return { date: day.date, available: true };
+      else return { date: day.date, available: false };
+    });
+    setDays(aux);
+  };
+
+  const handleHours = (
+    hour: PropsAvailableHours,
+    hours: PropsAvailableHours[]
+  ) => {
+    if (hour.available === true) {
+      const aux = hours.map((h) => {
+        if (h.rangeHour === hour.rangeHour) {
+          return { ...hour, available: false };
+        } else {
+          return h;
+        }
+      });
+      setHours(aux);
+    } else {
+      const aux = hours.map((h) => {
+        if (h.rangeHour === hour.rangeHour) {
+          return { ...hour, available: true };
+        } else {
+          return h;
+        }
+      });
+      setHours(aux);
+    }
+  };
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-8 py-4 overflow-scroll">
@@ -54,13 +83,8 @@ const BodyDisponibility = ({
               date={day.date}
               key={index}
               onClick={() => {
-                // TODO query disponibility
-                setDays(
-                  days.map((day, i) => {
-                    if (i === index) return { date: day.date, available: true };
-                    else return { date: day.date, available: false };
-                  })
-                );
+                getHour([]);
+                onSelectDay(day.date, index);
               }}
             />
           );
@@ -68,39 +92,34 @@ const BodyDisponibility = ({
       </div>
       <h1>Seleccionar Horario</h1>
       <div className=" flex gap-4 flex-wrap">
-        {hours.map((hour, index) => {
-          return (
-            <TagHour
-              available={hour.available!}
-              rangeHour={hour.rangeHour}
-              key={index}
-              onClick={() => {
-                if (hour.available === true) {
-                  const aux = hours.map((h) => {
-                    if (h.rangeHour === hour.rangeHour) {
-                      return { ...hour, available: false };
-                    } else {
-                      return h;
-                    }
-                  });
-                  setHours(aux);
-                } else {
-                  const aux = hours.map((h) => {
-                    if (h.rangeHour === hour.rangeHour) {
-                      return { ...hour, available: true };
-                    } else {
-                      return h;
-                    }
-                  });
-                  setHours(aux);
-                }
-              }}
-            />
-          );
-        })}
+        {(hours === undefined || hours.length < 1) && (
+          <p>Horarios no disponibles</p>
+        )}
+
+        {hours &&
+          hours?.map((hour, index) => {
+            return (
+              <TagHour
+                available={hour.available!}
+                rangeHour={hour.rangeHour}
+                key={index}
+                onClick={() => {
+                  if (selectedHour.includes(hour.rangeHour)) {
+                    const aux = selectedHour.filter(
+                      (auxHour) => auxHour !== hour.rangeHour
+                    );
+                    getHour(aux);
+                  } else {
+                    getHour([...selectedHour, hour.rangeHour]);
+                  }
+                  handleHours(hour, hours);
+                }}
+              />
+            );
+          })}
       </div>
     </div>
   );
 };
 
-export default BodyDisponibility;
+export default memo(BodyDisponibility);
