@@ -4,6 +4,7 @@ import { sportCenterResolvers } from "./SportCenter/sportCenterResolvers";
 import { reservationResolvers } from "./Reservation/reservationResolver";
 import { commentResolvers } from "./Comment/CommentResolver";
 import { bankAccountResolvers } from "./BankAccount/BankAccountResolvers";
+import { disponibilityResolvers } from "./Disponibility/DisponibilityResolver";
 
 const resolvers = {
   Query: {
@@ -13,6 +14,7 @@ const resolvers = {
     ...reservationResolvers.Query,
     ...commentResolvers.Query,
     ...bankAccountResolvers.Query,
+    ...disponibilityResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
