@@ -4,6 +4,7 @@ import {
   Review,
   createReview,
   getReviewsBySportCenter,
+  reservationReviewed,
 } from "../../db/Firebase/Firestore/Review";
 
 export const reviewResolvers = {
@@ -14,6 +15,13 @@ export const reviewResolvers = {
     ) => {
       const reviews = await getReviewsBySportCenter(sportCenterId);
       return reviews;
+    },
+    reservationReviewed: async (
+      root: any,
+      { reservationId }: { reservationId: string }
+    ) => {
+      const reviews = await reservationReviewed(reservationId);
+      return reviews.length > 0;
     },
   },
   Mutation: {

@@ -9,7 +9,8 @@ import { db } from "../config";
 
 export type Review = {
   reviewId: string;
-  sportCenterId?: number;
+  reservationId: number;
+  sportCenterId: number;
   userId: number;
   review: string;
   rankign: number;
@@ -29,5 +30,15 @@ export const getReviewsBySportCenter = async (sportCenterId: string) => {
   const snapReviews = await getDocs(q);
   return snapReviews.docs.map((review) => {
     return { ...review.data(), reviewId: review.id };
+  });
+};
+export const reservationReviewed = async (reservationId: string) => {
+  const q = query(
+    collection(db, document),
+    where("reservationId", "==", reservationId)
+  );
+  const snapReviews = await getDocs(q);
+  return snapReviews.docs.map((review) => {
+    return { ...review.data() };
   });
 };

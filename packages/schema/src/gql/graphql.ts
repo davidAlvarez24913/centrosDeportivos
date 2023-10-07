@@ -49,6 +49,7 @@ export type CreateReservationInput = {
 
 export type CreateReviewInput = {
   ranking: Scalars['Int']['input'];
+  reservationId: Scalars['ID']['input'];
   review: Scalars['String']['input'];
   sportCenterId: Scalars['ID']['input'];
   userId: Scalars['ID']['input'];
@@ -112,13 +113,11 @@ export type Mutation = {
   createUser?: Maybe<User>;
   deleteBankAccount?: Maybe<OperationResponse>;
   deleteReservation?: Maybe<OperationResponse>;
-  deleteReview?: Maybe<OperationResponse>;
   deleteService?: Maybe<OperationResponse>;
   deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<OperationResponse>;
   giveAccess?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
-  updateReview?: Maybe<Review>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
   updateUser?: Maybe<OperationResponse>;
@@ -170,11 +169,6 @@ export type MutationDeleteReservationArgs = {
 };
 
 
-export type MutationDeleteReviewArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationDeleteServiceArgs = {
   serviceId: Scalars['ID']['input'];
 };
@@ -197,11 +191,6 @@ export type MutationGiveAccessArgs = {
 
 export type MutationUpdateBankAccountArgs = {
   input: UpdateBankAccountInput;
-};
-
-
-export type MutationUpdateReviewArgs = {
-  id: Scalars['ID']['input'];
 };
 
 
@@ -242,6 +231,7 @@ export type Query = {
   listSportCenters?: Maybe<Array<SportCenter>>;
   listUserReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   reservationCount: Scalars['Int']['output'];
+  reservationReviewed: Scalars['Boolean']['output'];
 };
 
 
@@ -305,6 +295,11 @@ export type QueryListUserReservationsArgs = {
   userId: Scalars['ID']['input'];
 };
 
+
+export type QueryReservationReviewedArgs = {
+  reservationId: Scalars['ID']['input'];
+};
+
 export type RangeHour = {
   __typename?: 'RangeHour';
   endHour: Scalars['String']['output'];
@@ -337,6 +332,7 @@ export type ReservationNames = {
 export type Review = {
   __typename?: 'Review';
   ranking: Scalars['Int']['output'];
+  reservationId: Scalars['ID']['output'];
   review: Scalars['String']['output'];
   reviewId: Scalars['ID']['output'];
   sportCenterId: Scalars['ID']['output'];
@@ -538,7 +534,14 @@ export type ListReviewsBySportCenterQueryVariables = Exact<{
 }>;
 
 
-export type ListReviewsBySportCenterQuery = { __typename?: 'Query', listReviewsBySportCenter?: Array<{ __typename?: 'Review', reviewId: string, sportCenterId: string, userId: string, review: string, ranking: number }> | null };
+export type ListReviewsBySportCenterQuery = { __typename?: 'Query', listReviewsBySportCenter?: Array<{ __typename?: 'Review', reviewId: string, sportCenterId: string, reservationId: string, userId: string, review: string, ranking: number }> | null };
+
+export type ReservationReviewedQueryVariables = Exact<{
+  reservationId: Scalars['ID']['input'];
+}>;
+
+
+export type ReservationReviewedQuery = { __typename?: 'Query', reservationReviewed: boolean };
 
 export type CreateReviewMutationVariables = Exact<{
   input: CreateReviewInput;
@@ -1064,6 +1067,7 @@ export const ListReviewsBySportCenterDocument = gql`
   listReviewsBySportCenter(sportCenterId: $sportCenterId) {
     reviewId
     sportCenterId
+    reservationId
     userId
     review
     ranking
@@ -1098,6 +1102,39 @@ export function useListReviewsBySportCenterLazyQuery(baseOptions?: Apollo.LazyQu
 export type ListReviewsBySportCenterQueryHookResult = ReturnType<typeof useListReviewsBySportCenterQuery>;
 export type ListReviewsBySportCenterLazyQueryHookResult = ReturnType<typeof useListReviewsBySportCenterLazyQuery>;
 export type ListReviewsBySportCenterQueryResult = Apollo.QueryResult<ListReviewsBySportCenterQuery, ListReviewsBySportCenterQueryVariables>;
+export const ReservationReviewedDocument = gql`
+    query ReservationReviewed($reservationId: ID!) {
+  reservationReviewed(reservationId: $reservationId)
+}
+    `;
+
+/**
+ * __useReservationReviewedQuery__
+ *
+ * To run a query within a React component, call `useReservationReviewedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReservationReviewedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReservationReviewedQuery({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useReservationReviewedQuery(baseOptions: Apollo.QueryHookOptions<ReservationReviewedQuery, ReservationReviewedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReservationReviewedQuery, ReservationReviewedQueryVariables>(ReservationReviewedDocument, options);
+      }
+export function useReservationReviewedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReservationReviewedQuery, ReservationReviewedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReservationReviewedQuery, ReservationReviewedQueryVariables>(ReservationReviewedDocument, options);
+        }
+export type ReservationReviewedQueryHookResult = ReturnType<typeof useReservationReviewedQuery>;
+export type ReservationReviewedLazyQueryHookResult = ReturnType<typeof useReservationReviewedLazyQuery>;
+export type ReservationReviewedQueryResult = Apollo.QueryResult<ReservationReviewedQuery, ReservationReviewedQueryVariables>;
 export const CreateReviewDocument = gql`
     mutation CreateReview($input: CreateReviewInput!) {
   createReview(input: $input) {

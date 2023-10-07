@@ -1,4 +1,4 @@
-import { IonContent, IonModal } from "@ionic/react";
+import { IonContent, IonModal, useIonToast } from "@ionic/react";
 import React, { useRef, useState } from "react";
 import { useCreateReviewMutation } from "schema";
 import {
@@ -11,27 +11,41 @@ import { StarRank } from "src/components/moleculas";
 type ReviewModalProps = {
   userId: string;
   sportCenterId: string;
+  reservationId: string;
+  setIsReviewed: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const ReviewModal = ({ userId, sportCenterId }: ReviewModalProps) => {
+const ReviewModal = ({
+  userId,
+  sportCenterId,
+  reservationId,
+  setIsReviewed,
+}: ReviewModalProps) => {
   const [stars, setStars] = useState<number>();
   const [review, setReview] = useState("");
   const ref = useRef<HTMLIonModalElement>(null);
   const [createReview] = useCreateReviewMutation();
-
+  const [present] = useIonToast();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createReview({
       variables: {
         input: {
           sportCenterId: sportCenterId,
+          reservationId: reservationId,
           userId: userId,
           review: review,
           ranking: stars || 0,
         },
       },
-      onCompleted: () => {
-        ref.current?.dismiss();
-      },
+    }).then(() => {
+      ref.current?.dismiss();
+      present({
+        message: "Reseña enviada",
+        duration: 1500,
+        color: "success",
+        position: "top",
+      });
+      setIsReviewed(true);
     });
   };
   return (

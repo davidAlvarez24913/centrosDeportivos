@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { IonAlert, IonContent, IonModal, useIonRouter } from "@ionic/react";
 import {
@@ -9,7 +9,11 @@ import {
 } from "src/components/atomos";
 import ReviewModal from "./ReviewModal";
 import { covertDateToStringEs } from "src/utils";
-import { useDeleteReservationMutation } from "schema";
+import {
+  useDeleteReservationMutation,
+  useReservationReviewedLazyQuery,
+  useReservationReviewedQuery,
+} from "schema";
 import useUser from "src/Hooks/useUser";
 type FullServiceProps = {
   reservationId: string;
@@ -37,7 +41,15 @@ const FullReservation = ({
   const { user } = useUser();
   const ref = useRef<HTMLIonModalElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isReviewed, setIsReviewed] = useState(true);
   const [deleteReservation] = useDeleteReservationMutation();
+  useReservationReviewedQuery({
+    variables: { reservationId: reservationId },
+    onCompleted: (res) => {
+      console.log("alsdkjfasldfjk", res.reservationReviewed);
+      setIsReviewed(res.reservationReviewed);
+    },
+  });
   const ionRouter = useIonRouter();
   return (
     <IonModal ref={ref} trigger={`open-reservation-${reservationId}-modal`}>
@@ -66,12 +78,14 @@ const FullReservation = ({
             />
             <div className="flex flex-col gap-4">
               {state ? (
-                <CustomButton
-                  color="sucessfull"
-                  title="Calificar Servicio"
-                  type="button"
-                  id="review-modal"
-                />
+                !isReviewed && (
+                  <CustomButton
+                    color="sucessfull"
+                    title="Calificar Servicio"
+                    type="button"
+                    id="review-modal"
+                  />
+                )
               ) : (
                 <>
                   <CustomButton
@@ -121,7 +135,12 @@ const FullReservation = ({
             ]}
           ></IonAlert>
         </Background>
-        <ReviewModal userId={user?.uid || ""} sportCenterId={sportCenterId} />
+        <ReviewModal
+          userId={user?.uid || ""}
+          sportCenterId={sportCenterId}
+          reservationId={reservationId}
+          setIsReviewed={setIsReviewed}
+        />
       </IonContent>
     </IonModal>
   );

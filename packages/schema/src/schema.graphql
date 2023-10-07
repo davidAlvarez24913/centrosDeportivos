@@ -97,6 +97,7 @@ type Reservation {
 
 type Review {
   reviewId: ID!
+  reservationId: ID!
   sportCenterId: ID!
   userId: ID!
   review: String!
@@ -113,6 +114,7 @@ input CreateUserInput {
 }
 input CreateReviewInput {
   sportCenterId: ID!
+  reservationId: ID!
   userId: ID!
   review: String!
   ranking: Int!
@@ -247,8 +249,9 @@ type Query {
   listUserReservations(userId: ID!): [ReservationNames]
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 
-  #comments
+  #reviews
   listReviewsBySportCenter(sportCenterId: ID!): [Review!]
+  reservationReviewed(reservationId: ID!): Boolean!
 
   # disponibility will be query get all reservationsByServiceByDate and schedule
   # Create resolver get Service By Id
@@ -281,8 +284,6 @@ type Mutation {
   createReservationUser(input: CreateReservationInput!): Reservation
   deleteReservation(reservationId: ID!): OperationResponse
 
-  #comments
+  #reviews
   createReview(input: CreateReviewInput!): Review
-  updateReview(id: ID!): Review
-  deleteReview(id: ID!): OperationResponse
 }
