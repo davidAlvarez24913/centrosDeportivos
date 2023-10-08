@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 type PropsTagHour = {
   rangeHour: string;
@@ -22,4 +22,4 @@ const TagHour = ({ rangeHour, available, onClick }: PropsTagHour) => {
   );
 };
 
-export default TagHour;
+export default memo(TagHour);
