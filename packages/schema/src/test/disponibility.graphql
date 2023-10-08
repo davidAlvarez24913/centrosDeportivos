@@ -1,7 +1,6 @@
 query GetDisponibility($serviceId: ID!, $date: String!) {
   getDisponibility(serviceId: $serviceId, date: $date) {
-      startHour
-      endHour
+      rangeHour
       price
   }
 }

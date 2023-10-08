@@ -34,9 +34,10 @@ export const disponibilityResolvers = {
           reservationsSQL,
           reservationsNoSQL as FireStoreReservation[]
         );
-        const bookings = mergedReservations
-          .filter((reservation) => reservation.state)
-          .flatMap((reservation) => reservation.rangeHour);
+        const bookings = mergedReservations.flatMap(
+          (reservation) => reservation.rangeHour
+        );
+        console.log(" \n bookings: ", bookings);
 
         const { disponibility } = (await findService(
           serviceId

@@ -6,14 +6,11 @@ import ModalInfoBooking from "./ModalInfoBooking";
 import { useParams } from "react-router";
 import {
   CreateReservationInput,
-  Disponibility,
-  RangeHour,
-  Weekday,
   useCreateReservationUserMutation,
   useGetDisponibilityQuery,
   useGetReservationsByDateQuery,
 } from "schema";
-import { daysDisponibility, getDayString } from "src/utils";
+import { daysDisponibility } from "src/utils";
 import useUser from "src/Hooks/useUser";
 
 type PropsAvailableHours = {
@@ -33,20 +30,35 @@ const DisponibilityPage = () => {
 
   const [price, setPrice] = useState(0.0);
   const [days, setDays] = useState(daysDisponibility());
-  const [hours, setHours] = useState<PropsAvailableHours[] | undefined>();
 
   //hooks data
   const [day, setDay] = useState<string>(new Date().toDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
 
   //hook get reservations
-  const status = useGetReservationsByDateQuery({
-    variables: { date: new Date(day).toDateString(), serviceId: serviceId },
-  });
-  const disp = useGetDisponibilityQuery({
-    variables: { serviceId: serviceId },
-  });
 
+  const disponibility = useGetDisponibilityQuery({
+    variables: { serviceId: serviceId, date: new Date(day).toDateString() },
+  });
+  const auxHours = disponibility.data?.getDisponibility?.map((element) => {
+    return {
+      rangeHour: element?.rangeHour,
+      available: false,
+      price: element?.price,
+    };
+  }) as PropsAvailableHours[];
+  const [hours, setHours] = useState<PropsAvailableHours[]>(auxHours);
+
+  useEffect(() => {
+    const auxHours = disponibility.data?.getDisponibility?.map((element) => {
+      return {
+        rangeHour: element?.rangeHour,
+        available: false,
+        price: element?.price,
+      };
+    }) as PropsAvailableHours[];
+    setHours(auxHours);
+  }, [day]);
   //mutation create reservation
   const [createReservationInputMutation, { data, loading }] =
     useCreateReservationUserMutation();
@@ -65,8 +77,7 @@ const DisponibilityPage = () => {
     createReservationInputMutation({
       variables: { input },
       onCompleted: () => {
-        disp.refetch();
-        status.refetch();
+        disponibility.refetch();
         present({
           message: "Reservacion realizada exitosamente",
           duration: 1500,
@@ -84,45 +95,6 @@ const DisponibilityPage = () => {
       },
     });
   };
-  const getDisponibility = (day: string) => {
-    // map hours by date
-    const dayString = getDayString(day);
-
-    const { __typename, ...rest } =
-      disp.data?.getDisponibility ?? ([] as Disponibility);
-
-    const dispByDay = rest[Weekday[dayString as Weekday]];
-
-    const result = dispByDay?.map((hour) => {
-      //map to clean typename
-      const { __typename, ...rest } = hour as RangeHour;
-      return {
-        rangeHour: rest.startHour + " - " + rest.endHour,
-        available: false,
-        price: rest.price,
-      };
-    });
-    return result;
-  };
-
-  const reservationsRangeHour: string[] = [];
-
-  useEffect(() => {
-    if (!status.loading) {
-      status.data?.getReservationsByDate?.forEach((reservation) => {
-        if (reservation?.state) {
-          reservation.rangeHour?.forEach((h) => {
-            reservationsRangeHour.push(h as string);
-          });
-        }
-      });
-    }
-
-    const availableHoursFiltered = getDisponibility(day as string)?.filter(
-      (h) => !reservationsRangeHour.includes(h.rangeHour)
-    );
-    setHours(availableHoursFiltered);
-  }, [day, status.loading, status.data?.getReservationsByDate]);
 
   useEffect(() => {
     if (hours) {

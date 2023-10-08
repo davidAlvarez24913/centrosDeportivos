@@ -13,7 +13,7 @@ type PropsBodyDisponibility = {
     date: string;
     available: boolean;
   }[];
-  hours: PropsAvailableHours[] | undefined;
+  hours: PropsAvailableHours[];
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   setDays: React.Dispatch<
     React.SetStateAction<
@@ -23,9 +23,7 @@ type PropsBodyDisponibility = {
       }[]
     >
   >;
-  setHours: React.Dispatch<
-    React.SetStateAction<PropsAvailableHours[] | undefined>
-  >;
+  setHours: React.Dispatch<React.SetStateAction<PropsAvailableHours[]>>;
   selectedHour: string[];
   getHour: React.Dispatch<React.SetStateAction<string[]>>;
 };
