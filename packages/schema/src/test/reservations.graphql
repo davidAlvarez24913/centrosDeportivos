@@ -28,8 +28,9 @@ query ListUserReservations($userId: ID!) {
       date
       rangeHour
     }
-    userName
     serviceName
+    sportCenterName
+    sportCenterId
   }
 }
 
@@ -65,5 +66,18 @@ mutation CreateReservationUser($input: CreateReservationInput!) {
     image
     date
     rangeHour
+  }
+}
+mutation DeleteReservation($reservationId: ID!) {
+  deleteReservation(reservationId: $reservationId) {
+    status
+    message
+  }
+}
+
+mutation SetPaid($reservationId: ID!) {
+  setPaid(reservationId: $reservationId) {
+    status
+    message
   }
 }

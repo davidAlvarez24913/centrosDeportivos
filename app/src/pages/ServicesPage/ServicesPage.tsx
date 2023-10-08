@@ -9,7 +9,6 @@ import {
   Loading,
 } from "src/components/atomos";
 import { ServiceCard } from "src/components/moleculas";
-import { services } from "src/data";
 const ServicesPage = () => {
   const { sport } = useParams<{ sport: string }>();
 

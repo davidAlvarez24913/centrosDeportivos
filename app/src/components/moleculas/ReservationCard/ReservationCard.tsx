@@ -1,20 +1,29 @@
 import React from "react";
 import { MainCard } from "src/components/atomos";
 import FullReservation from "./FullReservation";
+import { covertDateToStringEs } from "src/utils";
 
 type ReservationProps = {
   reservationId: string;
   serviceName: string;
   sportCenterName: string;
+  sportCenterId: string;
   rangeHour: string[];
-  reservationPrice: string;
+  reservationPrice: number;
   state: boolean;
   date: string;
   paymentId: string;
+  refetch: () => void;
 };
 const ReservationCard = (reservation: ReservationProps) => {
-  const { reservationId, sportCenterName, serviceName, rangeHour, state } =
-    reservation;
+  const {
+    reservationId,
+    sportCenterName,
+    serviceName,
+    rangeHour,
+    date,
+    state,
+  } = reservation;
   return (
     <MainCard>
       <div
@@ -31,6 +40,16 @@ const ReservationCard = (reservation: ReservationProps) => {
               className="w-5 rounded-r-2xl"
             />
             <p className="font-light text-xs leading-4 ">{rangeHour}</p>
+          </div>
+          <div className="flex flex-row items-center gap-2 pt-2">
+            <img
+              src="assets/icon/schedule.svg"
+              alt="sportIcon"
+              className="w-5 rounded-r-2xl"
+            />
+            <p className="font-light text-xs leading-4 ">
+              {covertDateToStringEs(date)}
+            </p>
           </div>
         </div>
         <div className="w-1/3">

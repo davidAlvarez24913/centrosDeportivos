@@ -1,6 +1,8 @@
 import React from "react";
 import { InformationSection, MainCard } from "src/components/atomos";
 import StarRank from "../StarRank";
+import { Review } from "schema";
+import NoDataCard from "src/components/atomos/NoDataCard";
 
 type SportCenterInformationProps = {
   schedule: string;
@@ -8,8 +10,7 @@ type SportCenterInformationProps = {
   description: string;
   phone: string;
   image: string;
-  ranking: number;
-  reviews: string[];
+  reviews: Review[];
 };
 const SportCenterInformation = ({
   schedule,
@@ -17,9 +18,11 @@ const SportCenterInformation = ({
   description,
   image,
   phone,
-  ranking,
   reviews,
 }: SportCenterInformationProps) => {
+  const sum = reviews.reduce((sum, review) => sum + review.ranking, 0);
+  const avg = sum / reviews.length || 0;
+
   return (
     <div>
       <div className="flex flex-col gap-3 mt-5">
@@ -27,7 +30,7 @@ const SportCenterInformation = ({
           src={image === "" ? "assets/default-image.jpg" : image}
           alt="service image"
         />
-        <StarRank stars={ranking} setStars={() => {}}></StarRank>
+        <StarRank stars={avg} setStars={() => {}}></StarRank>
         <p className="text-sm font-normal">{description}</p>
         <InformationSection
           phone={phone}
@@ -35,13 +38,19 @@ const SportCenterInformation = ({
           schedule={schedule}
         />
         <h2 className="text-xl font-bold">Reseñas</h2>
-        {reviews.map((review, index) => {
-          return (
-            <MainCard key={index}>
-              <p className="py-2 px-3 text-justify font-light">{review}</p>
-            </MainCard>
-          );
-        })}
+        {reviews.length > 0 ? (
+          reviews.map((review) => {
+            return (
+              <MainCard key={review.reviewId}>
+                <p className="py-2 px-3 text-justify font-light">
+                  {review.review}
+                </p>
+              </MainCard>
+            );
+          })
+        ) : (
+          <NoDataCard>No tiene reseñas por el momento</NoDataCard>
+        )}
       </div>
     </div>
   );

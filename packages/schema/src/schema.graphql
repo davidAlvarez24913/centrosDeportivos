@@ -59,7 +59,6 @@ type SportCenter {
   schedule: String! # Hours attention
   services: [Service]
   image: String!
-  ranking: Int!
   access: Boolean!
 }
 
@@ -96,12 +95,13 @@ type Reservation {
   rangeHour: [String!]!
 }
 
-type Comment {
-  commentId: ID!
-  sportCenterId: ID
-  serviceId: ID
+type Review {
+  reviewId: ID!
+  reservationId: ID!
+  sportCenterId: ID!
   userId: ID!
-  comment: String!
+  review: String!
+  ranking: Int!
 }
 
 input CreateUserInput {
@@ -112,11 +112,12 @@ input CreateUserInput {
   phone: String!
   email: String!
 }
-input CreateCommentInput {
+input CreateReviewInput {
   sportCenterId: ID!
-  serviceId: ID
+  reservationId: ID!
   userId: ID!
-  comment: String!
+  review: String!
+  ranking: Int!
 }
 
 input CreateSportCenterInput {
@@ -128,7 +129,6 @@ input CreateSportCenterInput {
   ubication: String!
   schedule: String
   image: String!
-  ranking: Int
   access: Boolean!
 }
 
@@ -220,6 +220,8 @@ type ServiceWithSportCenter {
 type ReservationNames {
   reservation: Reservation
   serviceName: String
+  sportCenterName: String
+  sportCenterId: String
   userName: String
 }
 type AvailableHour{
@@ -251,10 +253,9 @@ type Query {
   listUserReservations(userId: ID!): [ReservationNames]
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 
-  #comments
-  listCommentsByService(sportCenterId: ID!, serviceId: ID!): [Comment!]
-  listCommentsBySportCenter(sportCenterId: ID!): [Comment!]
-  allComments: [Comment!]
+  #reviews
+  listReviewsBySportCenter(sportCenterId: ID!): [Review!]
+  reservationReviewed(reservationId: ID!): Boolean!
 
   # disponibility will be query get all reservationsByServiceByDate and schedule
   # Create resolver get Service By Id
@@ -285,16 +286,9 @@ type Mutation {
   #reservations
   createReservationSC(input: CreateReservationInput!): Reservation
   createReservationUser(input: CreateReservationInput!): Reservation
-  deleteReservation(id: ID!): OperationResponse
+  deleteReservation(reservationId: ID!): OperationResponse
+  setPaid(reservationId: ID!): OperationResponse
 
-  #comments
-  createComment(input: CreateCommentInput!): Comment
-  updateComment(id: ID!): Comment
-  deleteComment(id: ID!): OperationResponse
-
-  # TODO
-  # mutation to plus and less like
-  # query filter by sport all sportcenter
-  # add description in sportcenter
-  # Add query Myreservations with : nameSportCenter , nameService, rangeHour stateReservation
+  #reviews
+  createReview(input: CreateReviewInput!): Review
 }

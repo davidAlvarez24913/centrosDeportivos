@@ -45,7 +45,7 @@ export const reservationResolvers = {
         (await listReservations()) as FireStoreReservation[];
       const reservationsSQL = await Reservation.find({
         where: { user: { userId: userId } },
-        relations: { user: true, service: true },
+        relations: { user: true, service: { sportCenter: true } },
       });
       const mergedReservations = mergeReservations(
         reservationsSQL,
@@ -59,6 +59,8 @@ export const reservationResolvers = {
             serviceId: reservation.service.serviceId,
           },
           serviceName: reservation.service.name,
+          sportCenterName: reservation.service.sportCenter.name,
+          sportCenterId: reservation.service.sportCenter.sportCenterId,
         };
       });
       return result;
@@ -155,16 +157,13 @@ export const reservationResolvers = {
       const userApp = await User.findOneBy({
         userId: userId,
       });
-      const userSC = await SportCenter.findOneBy({
-        sportCenterId: userId,
-      });
 
       const service = await Service.findOneBy({
         serviceId: serviceId,
       });
-      if (userApp && userSC && service) {
+      if (userApp && service) {
         const reservationSQL = await Reservation.insert({
-          state: true,
+          state: false,
           date,
           paymentId,
           reservationPrice,
@@ -218,6 +217,39 @@ export const reservationResolvers = {
         return {
           status: "Failed",
           message: `No se puede eliminar: ${JSON.stringify(error)}`,
+        };
+      }
+    },
+    setPaid: async (
+      root: any,
+      { reservationId }: { reservationId: string }
+    ) => {
+      try {
+        const existsId = await Reservation.findOne({
+          where: { reservationId: Number(reservationId) },
+        });
+        if (existsId) {
+          await Reservation.update(
+            {
+              reservationId: Number(reservationId),
+            },
+            {
+              state: true,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo con acceso",
+          };
+        }
+        return {
+          status: "Failed",
+          message: `No existe la reservacion con el id ${reservationId}`,
+        };
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede dar acceso" + JSON.stringify(error),
         };
       }
     },

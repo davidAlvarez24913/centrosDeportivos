@@ -2,7 +2,7 @@ import { userResolvers } from "./User/userResolvers";
 import { serviceResolvers } from "./Service/serviceResolvers";
 import { sportCenterResolvers } from "./SportCenter/sportCenterResolvers";
 import { reservationResolvers } from "./Reservation/reservationResolver";
-import { commentResolvers } from "./Comment/CommentResolver";
+import { reviewResolvers } from "./Review/ReviewResolver";
 import { bankAccountResolvers } from "./BankAccount/BankAccountResolvers";
 import { disponibilityResolvers } from "./Disponibility/DisponibilityResolver";
 
@@ -12,7 +12,7 @@ const resolvers = {
     ...serviceResolvers.Query,
     ...sportCenterResolvers.Query,
     ...reservationResolvers.Query,
-    ...commentResolvers.Query,
+    ...reviewResolvers.Query,
     ...bankAccountResolvers.Query,
     ...disponibilityResolvers.Query,
   },
@@ -21,7 +21,7 @@ const resolvers = {
     ...serviceResolvers.Mutation,
     ...sportCenterResolvers.Mutation,
     ...reservationResolvers.Mutation,
-    ...commentResolvers.Mutation,
+    ...reviewResolvers.Mutation,
     ...bankAccountResolvers.Mutation,
   },
 };

@@ -34,15 +34,6 @@ export type BankAccount = {
   sportCenterId: Scalars['ID']['output'];
 };
 
-export type Comment = {
-  __typename?: 'Comment';
-  comment: Scalars['String']['output'];
-  commentId: Scalars['ID']['output'];
-  serviceId?: Maybe<Scalars['ID']['output']>;
-  sportCenterId?: Maybe<Scalars['ID']['output']>;
-  userId: Scalars['ID']['output'];
-};
-
 export type CreateBankAccountInput = {
   accountNumber: Scalars['String']['input'];
   accountType: Scalars['String']['input'];
@@ -52,13 +43,6 @@ export type CreateBankAccountInput = {
   sportCenterId: Scalars['ID']['input'];
 };
 
-export type CreateCommentInput = {
-  comment: Scalars['String']['input'];
-  serviceId?: InputMaybe<Scalars['ID']['input']>;
-  sportCenterId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
-};
-
 export type CreateReservationInput = {
   date: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
@@ -66,6 +50,14 @@ export type CreateReservationInput = {
   rangeHour?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   reservationPrice: Scalars['Float']['input'];
   serviceId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+export type CreateReviewInput = {
+  ranking: Scalars['Int']['input'];
+  reservationId: Scalars['ID']['input'];
+  review: Scalars['String']['input'];
+  sportCenterId: Scalars['ID']['input'];
   userId: Scalars['ID']['input'];
 };
 
@@ -91,7 +83,6 @@ export type CreateSportCenterInput = {
   image: Scalars['String']['input'];
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
-  ranking?: InputMaybe<Scalars['Int']['input']>;
   schedule?: InputMaybe<Scalars['String']['input']>;
   sportCenterId: Scalars['ID']['input'];
   ubication: Scalars['String']['input'];
@@ -120,21 +111,20 @@ export type Disponibility = {
 export type Mutation = {
   __typename?: 'Mutation';
   createBankAccount?: Maybe<BankAccount>;
-  createComment?: Maybe<Comment>;
   createReservationSC?: Maybe<Reservation>;
   createReservationUser?: Maybe<Reservation>;
+  createReview?: Maybe<Review>;
   createService?: Maybe<Service>;
   createSportCenter?: Maybe<SportCenter>;
   createUser?: Maybe<User>;
   deleteBankAccount?: Maybe<OperationResponse>;
-  deleteComment?: Maybe<OperationResponse>;
   deleteReservation?: Maybe<OperationResponse>;
   deleteService?: Maybe<OperationResponse>;
   deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<OperationResponse>;
   giveAccess?: Maybe<OperationResponse>;
+  setPaid?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
-  updateComment?: Maybe<Comment>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
   updateUser?: Maybe<OperationResponse>;
@@ -146,11 +136,6 @@ export type MutationCreateBankAccountArgs = {
 };
 
 
-export type MutationCreateCommentArgs = {
-  input: CreateCommentInput;
-};
-
-
 export type MutationCreateReservationScArgs = {
   input: CreateReservationInput;
 };
@@ -158,6 +143,11 @@ export type MutationCreateReservationScArgs = {
 
 export type MutationCreateReservationUserArgs = {
   input: CreateReservationInput;
+};
+
+
+export type MutationCreateReviewArgs = {
+  input: CreateReviewInput;
 };
 
 
@@ -181,13 +171,8 @@ export type MutationDeleteBankAccountArgs = {
 };
 
 
-export type MutationDeleteCommentArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationDeleteReservationArgs = {
-  id: Scalars['ID']['input'];
+  reservationId: Scalars['ID']['input'];
 };
 
 
@@ -211,13 +196,13 @@ export type MutationGiveAccessArgs = {
 };
 
 
-export type MutationUpdateBankAccountArgs = {
-  input: UpdateBankAccountInput;
+export type MutationSetPaidArgs = {
+  reservationId: Scalars['ID']['input'];
 };
 
 
-export type MutationUpdateCommentArgs = {
-  id: Scalars['ID']['input'];
+export type MutationUpdateBankAccountArgs = {
+  input: UpdateBankAccountInput;
 };
 
 
@@ -243,7 +228,6 @@ export type OperationResponse = {
 
 export type Query = {
   __typename?: 'Query';
-  allComments?: Maybe<Array<Comment>>;
   allUsers?: Maybe<Array<Maybe<User>>>;
   findUser?: Maybe<User>;
   getAccess: Scalars['Boolean']['output'];
@@ -252,14 +236,14 @@ export type Query = {
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
-  listCommentsByService?: Maybe<Array<Comment>>;
-  listCommentsBySportCenter?: Maybe<Array<Comment>>;
+  listReviewsBySportCenter?: Maybe<Array<Review>>;
   listSCReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   listServicesBySport?: Maybe<Array<Maybe<ServiceWithSportCenter>>>;
   listServicesBySportCenterId?: Maybe<Array<Maybe<Service>>>;
   listSportCenters?: Maybe<Array<SportCenter>>;
   listUserReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   reservationCount: Scalars['Int']['output'];
+  reservationReviewed: Scalars['Boolean']['output'];
 };
 
 
@@ -300,13 +284,7 @@ export type QueryListBankAccountsBySportCenterIdArgs = {
 };
 
 
-export type QueryListCommentsByServiceArgs = {
-  serviceId: Scalars['ID']['input'];
-  sportCenterId: Scalars['ID']['input'];
-};
-
-
-export type QueryListCommentsBySportCenterArgs = {
+export type QueryListReviewsBySportCenterArgs = {
   sportCenterId: Scalars['ID']['input'];
 };
 
@@ -328,6 +306,11 @@ export type QueryListServicesBySportCenterIdArgs = {
 
 export type QueryListUserReservationsArgs = {
   userId: Scalars['ID']['input'];
+};
+
+
+export type QueryReservationReviewedArgs = {
+  reservationId: Scalars['ID']['input'];
 };
 
 export type RangeHour = {
@@ -354,7 +337,19 @@ export type ReservationNames = {
   __typename?: 'ReservationNames';
   reservation?: Maybe<Reservation>;
   serviceName?: Maybe<Scalars['String']['output']>;
+  sportCenterId?: Maybe<Scalars['String']['output']>;
+  sportCenterName?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
+};
+
+export type Review = {
+  __typename?: 'Review';
+  ranking: Scalars['Int']['output'];
+  reservationId: Scalars['ID']['output'];
+  review: Scalars['String']['output'];
+  reviewId: Scalars['ID']['output'];
+  sportCenterId: Scalars['ID']['output'];
+  userId: Scalars['ID']['output'];
 };
 
 export type Service = {
@@ -390,7 +385,6 @@ export type SportCenter = {
   image: Scalars['String']['output'];
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
-  ranking: Scalars['Int']['output'];
   schedule: Scalars['String']['output'];
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
@@ -525,7 +519,7 @@ export type ListUserReservationsQueryVariables = Exact<{
 }>;
 
 
-export type ListUserReservationsQuery = { __typename?: 'Query', listUserReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
+export type ListUserReservationsQuery = { __typename?: 'Query', listUserReservations?: Array<{ __typename?: 'ReservationNames', serviceName?: string | null, sportCenterName?: string | null, sportCenterId?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
 
 export type GetReservationsByDateQueryVariables = Exact<{
   date: Scalars['String']['input'];
@@ -548,6 +542,41 @@ export type CreateReservationUserMutationVariables = Exact<{
 
 
 export type CreateReservationUserMutation = { __typename?: 'Mutation', createReservationUser?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null };
+
+export type DeleteReservationMutationVariables = Exact<{
+  reservationId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteReservationMutation = { __typename?: 'Mutation', deleteReservation?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type SetPaidMutationVariables = Exact<{
+  reservationId: Scalars['ID']['input'];
+}>;
+
+
+export type SetPaidMutation = { __typename?: 'Mutation', setPaid?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type ListReviewsBySportCenterQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type ListReviewsBySportCenterQuery = { __typename?: 'Query', listReviewsBySportCenter?: Array<{ __typename?: 'Review', reviewId: string, sportCenterId: string, reservationId: string, userId: string, review: string, ranking: number }> | null };
+
+export type ReservationReviewedQueryVariables = Exact<{
+  reservationId: Scalars['ID']['input'];
+}>;
+
+
+export type ReservationReviewedQuery = { __typename?: 'Query', reservationReviewed: boolean };
+
+export type CreateReviewMutationVariables = Exact<{
+  input: CreateReviewInput;
+}>;
+
+
+export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', reviewId: string } | null };
 
 export type ListServicesBySportCenterIdQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -601,7 +630,7 @@ export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, image: string, ranking: number }> | null };
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, image: string }> | null };
 
 export type GetNameSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -615,14 +644,14 @@ export type GetSportCenterQueryVariables = Exact<{
 }>;
 
 
-export type GetSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, ranking: number, image: string } | null };
+export type GetSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, image: string } | null };
 
 export type GetSportCenterWithServicesQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
 }>;
 
 
-export type GetSportCenterWithServicesQuery = { __typename?: 'Query', getSportCenterWithServices?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, ranking: number, image: string, services?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null } | null };
+export type GetSportCenterWithServicesQuery = { __typename?: 'Query', getSportCenterWithServices?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, image: string, services?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null } | null };
 
 export type CreateSportCenterMutationVariables = Exact<{
   input: CreateSportCenterInput;
@@ -904,8 +933,9 @@ export const ListUserReservationsDocument = gql`
       date
       rangeHour
     }
-    userName
     serviceName
+    sportCenterName
+    sportCenterId
   }
 }
     `;
@@ -1056,6 +1086,180 @@ export function useCreateReservationUserMutation(baseOptions?: Apollo.MutationHo
 export type CreateReservationUserMutationHookResult = ReturnType<typeof useCreateReservationUserMutation>;
 export type CreateReservationUserMutationResult = Apollo.MutationResult<CreateReservationUserMutation>;
 export type CreateReservationUserMutationOptions = Apollo.BaseMutationOptions<CreateReservationUserMutation, CreateReservationUserMutationVariables>;
+export const DeleteReservationDocument = gql`
+    mutation DeleteReservation($reservationId: ID!) {
+  deleteReservation(reservationId: $reservationId) {
+    status
+    message
+  }
+}
+    `;
+export type DeleteReservationMutationFn = Apollo.MutationFunction<DeleteReservationMutation, DeleteReservationMutationVariables>;
+
+/**
+ * __useDeleteReservationMutation__
+ *
+ * To run a mutation, you first call `useDeleteReservationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteReservationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteReservationMutation, { data, loading, error }] = useDeleteReservationMutation({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useDeleteReservationMutation(baseOptions?: Apollo.MutationHookOptions<DeleteReservationMutation, DeleteReservationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteReservationMutation, DeleteReservationMutationVariables>(DeleteReservationDocument, options);
+      }
+export type DeleteReservationMutationHookResult = ReturnType<typeof useDeleteReservationMutation>;
+export type DeleteReservationMutationResult = Apollo.MutationResult<DeleteReservationMutation>;
+export type DeleteReservationMutationOptions = Apollo.BaseMutationOptions<DeleteReservationMutation, DeleteReservationMutationVariables>;
+export const SetPaidDocument = gql`
+    mutation SetPaid($reservationId: ID!) {
+  setPaid(reservationId: $reservationId) {
+    status
+    message
+  }
+}
+    `;
+export type SetPaidMutationFn = Apollo.MutationFunction<SetPaidMutation, SetPaidMutationVariables>;
+
+/**
+ * __useSetPaidMutation__
+ *
+ * To run a mutation, you first call `useSetPaidMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetPaidMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setPaidMutation, { data, loading, error }] = useSetPaidMutation({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useSetPaidMutation(baseOptions?: Apollo.MutationHookOptions<SetPaidMutation, SetPaidMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetPaidMutation, SetPaidMutationVariables>(SetPaidDocument, options);
+      }
+export type SetPaidMutationHookResult = ReturnType<typeof useSetPaidMutation>;
+export type SetPaidMutationResult = Apollo.MutationResult<SetPaidMutation>;
+export type SetPaidMutationOptions = Apollo.BaseMutationOptions<SetPaidMutation, SetPaidMutationVariables>;
+export const ListReviewsBySportCenterDocument = gql`
+    query ListReviewsBySportCenter($sportCenterId: ID!) {
+  listReviewsBySportCenter(sportCenterId: $sportCenterId) {
+    reviewId
+    sportCenterId
+    reservationId
+    userId
+    review
+    ranking
+  }
+}
+    `;
+
+/**
+ * __useListReviewsBySportCenterQuery__
+ *
+ * To run a query within a React component, call `useListReviewsBySportCenterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListReviewsBySportCenterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListReviewsBySportCenterQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useListReviewsBySportCenterQuery(baseOptions: Apollo.QueryHookOptions<ListReviewsBySportCenterQuery, ListReviewsBySportCenterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListReviewsBySportCenterQuery, ListReviewsBySportCenterQueryVariables>(ListReviewsBySportCenterDocument, options);
+      }
+export function useListReviewsBySportCenterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListReviewsBySportCenterQuery, ListReviewsBySportCenterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListReviewsBySportCenterQuery, ListReviewsBySportCenterQueryVariables>(ListReviewsBySportCenterDocument, options);
+        }
+export type ListReviewsBySportCenterQueryHookResult = ReturnType<typeof useListReviewsBySportCenterQuery>;
+export type ListReviewsBySportCenterLazyQueryHookResult = ReturnType<typeof useListReviewsBySportCenterLazyQuery>;
+export type ListReviewsBySportCenterQueryResult = Apollo.QueryResult<ListReviewsBySportCenterQuery, ListReviewsBySportCenterQueryVariables>;
+export const ReservationReviewedDocument = gql`
+    query ReservationReviewed($reservationId: ID!) {
+  reservationReviewed(reservationId: $reservationId)
+}
+    `;
+
+/**
+ * __useReservationReviewedQuery__
+ *
+ * To run a query within a React component, call `useReservationReviewedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReservationReviewedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReservationReviewedQuery({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useReservationReviewedQuery(baseOptions: Apollo.QueryHookOptions<ReservationReviewedQuery, ReservationReviewedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReservationReviewedQuery, ReservationReviewedQueryVariables>(ReservationReviewedDocument, options);
+      }
+export function useReservationReviewedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReservationReviewedQuery, ReservationReviewedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReservationReviewedQuery, ReservationReviewedQueryVariables>(ReservationReviewedDocument, options);
+        }
+export type ReservationReviewedQueryHookResult = ReturnType<typeof useReservationReviewedQuery>;
+export type ReservationReviewedLazyQueryHookResult = ReturnType<typeof useReservationReviewedLazyQuery>;
+export type ReservationReviewedQueryResult = Apollo.QueryResult<ReservationReviewedQuery, ReservationReviewedQueryVariables>;
+export const CreateReviewDocument = gql`
+    mutation CreateReview($input: CreateReviewInput!) {
+  createReview(input: $input) {
+    reviewId
+  }
+}
+    `;
+export type CreateReviewMutationFn = Apollo.MutationFunction<CreateReviewMutation, CreateReviewMutationVariables>;
+
+/**
+ * __useCreateReviewMutation__
+ *
+ * To run a mutation, you first call `useCreateReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createReviewMutation, { data, loading, error }] = useCreateReviewMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateReviewMutation(baseOptions?: Apollo.MutationHookOptions<CreateReviewMutation, CreateReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateReviewMutation, CreateReviewMutationVariables>(CreateReviewDocument, options);
+      }
+export type CreateReviewMutationHookResult = ReturnType<typeof useCreateReviewMutation>;
+export type CreateReviewMutationResult = Apollo.MutationResult<CreateReviewMutation>;
+export type CreateReviewMutationOptions = Apollo.BaseMutationOptions<CreateReviewMutation, CreateReviewMutationVariables>;
 export const ListServicesBySportCenterIdDocument = gql`
     query ListServicesBySportCenterId($sportCenterId: ID!) {
   listServicesBySportCenterId(sportCenterId: $sportCenterId) {
@@ -1367,7 +1571,6 @@ export const ListSportCentersDocument = gql`
     ubication
     schedule
     image
-    ranking
   }
 }
     `;
@@ -1442,7 +1645,6 @@ export const GetSportCenterDocument = gql`
     phone
     ubication
     schedule
-    ranking
     image
   }
 }
@@ -1484,7 +1686,6 @@ export const GetSportCenterWithServicesDocument = gql`
     phone
     ubication
     schedule
-    ranking
     image
     services {
       serviceId

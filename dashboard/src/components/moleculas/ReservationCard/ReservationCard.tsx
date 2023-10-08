@@ -1,5 +1,6 @@
 import React from "react";
 import { CustomButton } from "../../atomos";
+import { useDeleteReservationMutation, useSetPaidMutation } from "schema";
 
 type ReservationCardProps = {
   reservationId: string;
@@ -22,6 +23,8 @@ const ReservationCard = ({
   date,
   paymentId,
 }: ReservationCardProps) => {
+  const [deleteReservation] = useDeleteReservationMutation();
+  const [setPaid] = useSetPaidMutation();
   return (
     <div>
       <div className="flex flex-row justify-between py-4">
@@ -54,8 +57,32 @@ const ReservationCard = ({
       </div>
       {!state && (
         <div className="flex flex-row  gap-4">
-          <CustomButton color="cancel" title="Cancelar" type="button" />
-          <CustomButton color="sucessfull" title="Pagada" type="button" />
+          <CustomButton
+            color="cancel"
+            title="Eliminar"
+            type="button"
+            onClick={() => {
+              deleteReservation({
+                variables: { reservationId: reservationId },
+              }).then(() => {
+                alert("Reserva Eliminada");
+              });
+            }}
+          />
+          <CustomButton
+            color="sucessfull"
+            title="Pagada"
+            type="button"
+            onClick={() => {
+              setPaid({
+                variables: {
+                  reservationId: reservationId,
+                },
+              }).then(() => {
+                alert("Reserva Pagada");
+              });
+            }}
+          />
         </div>
       )}
     </div>
