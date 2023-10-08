@@ -8,7 +8,6 @@ import {
   CreateReservationInput,
   useCreateReservationUserMutation,
   useGetDisponibilityQuery,
-  useGetReservationsByDateQuery,
 } from "schema";
 import { daysDisponibility } from "src/utils";
 import useUser from "src/Hooks/useUser";
@@ -50,15 +49,8 @@ const DisponibilityPage = () => {
   const [hours, setHours] = useState<PropsAvailableHours[]>(auxHours);
 
   useEffect(() => {
-    const auxHours = disponibility.data?.getDisponibility?.map((element) => {
-      return {
-        rangeHour: element?.rangeHour,
-        available: false,
-        price: element?.price,
-      };
-    }) as PropsAvailableHours[];
-    setHours(auxHours);
-  }, [day]);
+    !disponibility.loading && setHours(auxHours);
+  }, [day, disponibility.loading]);
   //mutation create reservation
   const [createReservationInputMutation, { data, loading }] =
     useCreateReservationUserMutation();
@@ -125,9 +117,9 @@ const DisponibilityPage = () => {
               hours={hours as PropsAvailableHours[]}
               setDays={setDays}
               setHours={setHours}
-              setPrice={setPrice}
               selectedHour={selectedHours}
               getHour={setSelectedHours}
+              loading={disponibility.loading}
             ></BodyDisponibility>
           </div>
           <CustomButton

@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from "react";
-import { DayCard, TagHour } from "src/components/atomos";
+import React, { memo } from "react";
+import { DayCard, Loading, TagHour } from "src/components/atomos";
 
 type PropsAvailableHours = {
   rangeHour: string;
@@ -14,7 +14,6 @@ type PropsBodyDisponibility = {
     available: boolean;
   }[];
   hours: PropsAvailableHours[];
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
   setDays: React.Dispatch<
     React.SetStateAction<
       {
@@ -26,17 +25,18 @@ type PropsBodyDisponibility = {
   setHours: React.Dispatch<React.SetStateAction<PropsAvailableHours[]>>;
   selectedHour: string[];
   getHour: React.Dispatch<React.SetStateAction<string[]>>;
+  loading: boolean;
 };
 
 const BodyDisponibility = ({
   days,
   hours,
-  setPrice,
   setHours,
   setDays,
   setDay,
   getHour,
   selectedHour,
+  loading,
 }: PropsBodyDisponibility) => {
   const onSelectDay = (date: string, index: number) => {
     setDay(date);
@@ -71,6 +71,7 @@ const BodyDisponibility = ({
       setHours(aux);
     }
   };
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-8 py-4 overflow-scroll">
@@ -90,11 +91,13 @@ const BodyDisponibility = ({
       </div>
       <h1>Seleccionar Horario</h1>
       <div className=" flex gap-4 flex-wrap">
-        {(hours === undefined || hours.length < 1) && (
+        {loading && <Loading />}
+        {!loading && (hours === undefined || hours.length < 1) && (
           <p>Horarios no disponibles</p>
         )}
 
-        {hours &&
+        {!loading &&
+          hours &&
           hours?.map((hour, index) => {
             return (
               <TagHour
