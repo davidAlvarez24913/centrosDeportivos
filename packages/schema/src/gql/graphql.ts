@@ -117,6 +117,7 @@ export type Mutation = {
   deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<OperationResponse>;
   giveAccess?: Maybe<OperationResponse>;
+  setPaid?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
@@ -186,6 +187,11 @@ export type MutationDeleteUserArgs = {
 
 export type MutationGiveAccessArgs = {
   sportCenterId: Scalars['String']['input'];
+};
+
+
+export type MutationSetPaidArgs = {
+  reservationId: Scalars['ID']['input'];
 };
 
 
@@ -528,6 +534,13 @@ export type DeleteReservationMutationVariables = Exact<{
 
 
 export type DeleteReservationMutation = { __typename?: 'Mutation', deleteReservation?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type SetPaidMutationVariables = Exact<{
+  reservationId: Scalars['ID']['input'];
+}>;
+
+
+export type SetPaidMutation = { __typename?: 'Mutation', setPaid?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type ListReviewsBySportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -1062,6 +1075,40 @@ export function useDeleteReservationMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteReservationMutationHookResult = ReturnType<typeof useDeleteReservationMutation>;
 export type DeleteReservationMutationResult = Apollo.MutationResult<DeleteReservationMutation>;
 export type DeleteReservationMutationOptions = Apollo.BaseMutationOptions<DeleteReservationMutation, DeleteReservationMutationVariables>;
+export const SetPaidDocument = gql`
+    mutation SetPaid($reservationId: ID!) {
+  setPaid(reservationId: $reservationId) {
+    status
+    message
+  }
+}
+    `;
+export type SetPaidMutationFn = Apollo.MutationFunction<SetPaidMutation, SetPaidMutationVariables>;
+
+/**
+ * __useSetPaidMutation__
+ *
+ * To run a mutation, you first call `useSetPaidMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetPaidMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setPaidMutation, { data, loading, error }] = useSetPaidMutation({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useSetPaidMutation(baseOptions?: Apollo.MutationHookOptions<SetPaidMutation, SetPaidMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetPaidMutation, SetPaidMutationVariables>(SetPaidDocument, options);
+      }
+export type SetPaidMutationHookResult = ReturnType<typeof useSetPaidMutation>;
+export type SetPaidMutationResult = Apollo.MutationResult<SetPaidMutation>;
+export type SetPaidMutationOptions = Apollo.BaseMutationOptions<SetPaidMutation, SetPaidMutationVariables>;
 export const ListReviewsBySportCenterDocument = gql`
     query ListReviewsBySportCenter($sportCenterId: ID!) {
   listReviewsBySportCenter(sportCenterId: $sportCenterId) {

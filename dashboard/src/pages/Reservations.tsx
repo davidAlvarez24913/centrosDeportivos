@@ -69,7 +69,15 @@ const ReservationsPage = () => {
         <div>
           <h2 className="text-xl font-bold">Por Pagar</h2>
           <Table
-            headers={["ID", "servicios", "horario", "precio", "ver mas"]}
+            headers={[
+              "ID",
+              "servicios",
+              "usuario",
+              "fecha",
+              "horario",
+              "precio",
+              "ver mas",
+            ]}
             data={rows!}
           />
           <h2 className="text-xl font-bold">Pagadas</h2>

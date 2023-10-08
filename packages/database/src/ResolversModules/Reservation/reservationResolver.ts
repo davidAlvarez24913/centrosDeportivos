@@ -220,5 +220,38 @@ export const reservationResolvers = {
         };
       }
     },
+    setPaid: async (
+      root: any,
+      { reservationId }: { reservationId: string }
+    ) => {
+      try {
+        const existsId = await Reservation.findOne({
+          where: { reservationId: Number(reservationId) },
+        });
+        if (existsId) {
+          await Reservation.update(
+            {
+              reservationId: Number(reservationId),
+            },
+            {
+              state: true,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo con acceso",
+          };
+        }
+        return {
+          status: "Failed",
+          message: `No existe la reservacion con el id ${reservationId}`,
+        };
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede dar acceso" + JSON.stringify(error),
+        };
+      }
+    },
   },
 };

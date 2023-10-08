@@ -74,3 +74,10 @@ mutation DeleteReservation($reservationId: ID!) {
     message
   }
 }
+
+mutation SetPaid($reservationId: ID!) {
+  setPaid(reservationId: $reservationId) {
+    status
+    message
+  }
+}

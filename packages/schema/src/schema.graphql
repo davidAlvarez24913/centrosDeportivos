@@ -283,6 +283,7 @@ type Mutation {
   createReservationSC(input: CreateReservationInput!): Reservation
   createReservationUser(input: CreateReservationInput!): Reservation
   deleteReservation(reservationId: ID!): OperationResponse
+  setPaid(reservationId: ID!): OperationResponse
 
   #reviews
   createReview(input: CreateReviewInput!): Review
