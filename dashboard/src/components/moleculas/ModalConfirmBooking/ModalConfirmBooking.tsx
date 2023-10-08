@@ -1,5 +1,3 @@
-import { useCreateReservationScMutation } from "schema";
-import useUser from "../../../Hooks/useUser";
 import { CustomButton } from "../../atomos";
 import { covertDateToStringEs } from "../../../utils";
 
@@ -9,7 +7,7 @@ type ModalConfirmBookingProps = {
   price: number;
   date: string;
   serviceId: string;
-  onRefetch: () => void;
+  onCreateRervation: () => void;
 };
 const ModalConfirmBooking = ({
   onClose,
@@ -17,34 +15,8 @@ const ModalConfirmBooking = ({
   price,
   date,
   serviceId,
-  onRefetch,
+  onCreateRervation,
 }: ModalConfirmBookingProps) => {
-  const userId = useUser().user?.uid;
-  const [createReservationMutation] = useCreateReservationScMutation();
-
-  const onCreateRervation = () => {
-    const auxInput = {
-      reservationPrice: price,
-      rangeHour: hours,
-      date: new Date(date).toDateString(),
-      serviceId: serviceId,
-      userId: userId!,
-      paymentId: "",
-      image: "",
-    };
-    createReservationMutation({
-      variables: { input: auxInput },
-      onCompleted: (data) => {
-        alert("Reserva creada exitosamente");
-        onRefetch();
-        onClose();
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  };
-
   return (
     <div>
       <div className="my-2">

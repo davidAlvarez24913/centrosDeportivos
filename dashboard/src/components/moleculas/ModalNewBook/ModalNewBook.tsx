@@ -4,19 +4,15 @@ import BodyDisponibility from "../../organismos/BodyDisponibility";
 import Modal from "../Modal/Modal";
 import ModalConfirmBooking from "../ModalConfirmBooking";
 import {
-  Disponibility,
-  RangeHour,
-  Weekday,
-  useGetReservationsByDateLazyQuery,
-  useGetReservationsByDateQuery,
+  useCreateReservationScMutation,
+  useGetDisponibilityQuery,
 } from "schema";
-import { daysDisponibility, getDayString } from "../../../utils";
+import { daysDisponibility } from "../../../utils";
+import useUser from "../../../Hooks/useUser";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
   nameService: string;
-  disponibility: Disponibility;
-  loadDisponibility: boolean;
 };
 
 type PropsAvailableHours = {
@@ -25,68 +21,58 @@ type PropsAvailableHours = {
   price: number;
 };
 
-const ModalNewBook = ({
-  onClose,
-  serviceId,
-  nameService,
-  disponibility,
-  loadDisponibility,
-}: NewBookProps) => {
+const ModalNewBook = ({ onClose, serviceId, nameService }: NewBookProps) => {
   //hooks ui
   const [modalConfirm, setModalConfirm] = useState(false);
   const [days, setDays] = useState(daysDisponibility()); // days to show
-  const [hours, setHours] = useState<PropsAvailableHours[]>();
 
   //hooks data
   const [price, setPrice] = useState(0.0);
   const [day, setDay] = useState<string>(new Date().toDateString());
   const [selectedHours, setSelectedHours] = useState<string[]>([]);
+  const userId = useUser().user?.uid;
 
-  //hook get reservations
-  const status = useGetReservationsByDateQuery({
-    variables: { date: new Date(day).toDateString(), serviceId: serviceId },
+  //hook get disponibility
+  const disponibility = useGetDisponibilityQuery({
+    variables: { serviceId: serviceId, date: new Date(day).toDateString() },
   });
+  const [createReservationMutation] = useCreateReservationScMutation();
+  const auxHours = disponibility.data?.getDisponibility?.map((element) => {
+    return {
+      rangeHour: element?.rangeHour,
+      available: false,
+      price: element?.price,
+    };
+  }) as PropsAvailableHours[];
 
-  const getDisponibility = (day: string) => {
-    // map hours by date
-    const dayString = getDayString(day);
-
-    const { __typename, ...rest } = !loadDisponibility
-      ? disponibility
-      : ([] as Disponibility);
-
-    const dispByDay = rest[Weekday[dayString as Weekday]];
-
-    const result = dispByDay?.map((hour) => {
-      //map to clean typename
-      const { __typename, ...rest } = hour as RangeHour;
-      return {
-        rangeHour: rest.startHour + " - " + rest.endHour,
-        available: false,
-        price: rest.price,
-      };
-    });
-    return result;
-  };
-
-  const reservationsRangeHour: string[] = [];
+  const [hours, setHours] = useState<PropsAvailableHours[]>(auxHours);
 
   useEffect(() => {
-    if (!status.loading) {
-      status.data?.getReservationsByDate?.forEach((reservation) => {
-        if (reservation?.state) {
-          reservation.rangeHour?.forEach((h) => {
-            reservationsRangeHour.push(h as string);
-          });
-        }
-      });
-    }
+    !disponibility.loading && setHours(auxHours);
+  }, [day, disponibility.loading]);
 
-    const availableHoursFiltered = getDisponibility(day as string)?.filter(
-      (h) => !reservationsRangeHour.includes(h.rangeHour)
-    );
-    setHours(availableHoursFiltered);
-  }, [day, status.loading]);
+  const onCreateRervation = () => {
+    const auxInput = {
+      reservationPrice: price,
+      rangeHour: selectedHours,
+      date: new Date(day).toDateString(),
+      serviceId: serviceId,
+      userId: userId!,
+      paymentId: "",
+      image: "",
+    };
+    createReservationMutation({
+      variables: { input: auxInput },
+      onCompleted: () => {
+        disponibility.refetch();
+        alert("Reserva creada exitosamente");
+        setModalConfirm(false);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  };
 
   return (
     <div>
@@ -102,6 +88,7 @@ const ModalNewBook = ({
           setPrice={setPrice}
           selectedHour={selectedHours}
           getHour={setSelectedHours}
+          loading={disponibility.loading}
         ></BodyDisponibility>
       </div>
       <div className="flex content-end mt-20">
@@ -126,9 +113,7 @@ const ModalNewBook = ({
           serviceId={serviceId}
           date={day}
           hours={selectedHours}
-          onRefetch={() => {
-            status.refetch();
-          }}
+          onCreateRervation={onCreateRervation}
           onClose={() => {
             setModalConfirm(false);
           }}

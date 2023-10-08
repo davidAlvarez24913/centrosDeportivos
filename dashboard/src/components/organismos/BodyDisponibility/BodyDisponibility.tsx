@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import DayCard from "../../moleculas/DayCard";
-import { TagHour } from "../../atomos";
+import { Loading, TagHour } from "../../atomos";
 
 type PropsAvailableHours = {
   rangeHour: string;
@@ -14,7 +14,7 @@ type PropsBodyDisponibility = {
     date: string;
     available: boolean;
   }[];
-  hours: PropsAvailableHours[] | undefined;
+  hours: PropsAvailableHours[];
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   setDays: React.Dispatch<
     React.SetStateAction<
@@ -24,11 +24,10 @@ type PropsBodyDisponibility = {
       }[]
     >
   >;
-  setHours: React.Dispatch<
-    React.SetStateAction<PropsAvailableHours[] | undefined>
-  >;
+  setHours: React.Dispatch<React.SetStateAction<PropsAvailableHours[]>>;
   selectedHour: string[];
   getHour: React.Dispatch<React.SetStateAction<string[]>>;
+  loading: boolean;
 };
 
 const BodyDisponibility = ({
@@ -40,6 +39,7 @@ const BodyDisponibility = ({
   setDay,
   getHour,
   selectedHour,
+  loading,
 }: PropsBodyDisponibility) => {
   useEffect(() => {
     const prices = hours
@@ -102,11 +102,17 @@ const BodyDisponibility = ({
       </div>
       <h2 className="font-semibold">Seleccionar Horario</h2>
       <div className=" flex gap-4 flex-wrap">
-        {(hours?.length! < 1 || hours === undefined) && (
+        {loading && (
+          <div className=" flex flex-row mx-auto ">
+            <Loading />
+          </div>
+        )}
+        {!loading && (hours?.length! < 1 || hours === undefined) && (
           <p>Horarios no disponibles</p>
         )}
 
-        {hours &&
+        {!loading &&
+          hours &&
           hours?.map((hour, index) => {
             return (
               <TagHour
