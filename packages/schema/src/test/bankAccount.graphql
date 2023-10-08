@@ -8,6 +8,16 @@ query ListBankAccountsBySportCenterId($sportCenterId: ID!) {
     email
   }
 }
+query ListBankAccountsBySportCenterName($sportCenterName: String!) {
+  listBankAccountsBySportCenterName(sportCenterName: $sportCenterName) {
+    bankAccountId
+    name
+    id
+    accountType
+    accountNumber
+    email
+  }
+}
 mutation CreateBankAccount($input: CreateBankAccountInput!) {
   createBankAccount(input: $input) {
     sportCenterId

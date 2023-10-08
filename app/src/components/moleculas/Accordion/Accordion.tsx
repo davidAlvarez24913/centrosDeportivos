@@ -1,19 +1,21 @@
 import { IonAccordion, IonAccordionGroup, IonItem } from "@ionic/react";
 import React from "react";
 
-type AccordionProps = {
-  accounts: {
-    bankName: string;
-    id: string;
-    accountType: string;
-    accountNumber: string;
-    email: string;
-  }[];
+export type AccordionProps = {
+  accounts:
+    | {
+        bankName: string;
+        id: string;
+        accountType: string;
+        accountNumber: string;
+        email: string;
+      }[]
+    | undefined;
 };
 const Accordion = ({ accounts }: AccordionProps) => {
   return (
     <IonAccordionGroup className="flex flex-col gap-3">
-      {accounts.map((account) => {
+      {accounts?.map((account) => {
         return (
           <IonAccordion key={account.accountNumber}>
             <IonItem slot="header">

@@ -73,8 +73,9 @@ const ModalInfoBooking = ({
                   title="Realizar pago"
                   type="button"
                   onClick={() => {
-                    const data = { sportce: price, hours: hours, date: date };
-                    router.push(`/payment/${JSON.stringify(data)}`);
+                    router.push(
+                      `/payment/${serviceId}/${data?.createReservationUser?.reservationId}/${sportCenter}`
+                    );
                   }}
                 />
                 <CustomButton

@@ -14,6 +14,21 @@ export const bankAccountResolvers = {
       });
       return result;
     },
+    listBankAccountsBySportCenterName: async (
+      root: any,
+      { sportCenterName }: any
+    ) => {
+      const bankAccounts = await BankAccount.find({
+        where: { sportCenter: { name: sportCenterName } },
+      });
+      const result = bankAccounts.map((bankAccount) => {
+        return {
+          ...bankAccount,
+          sportCenterId: bankAccount.sportCenter.sportCenterId,
+        };
+      });
+      return result;
+    },
   },
   Mutation: {
     createBankAccount: async (root: any, { input }: any) => {

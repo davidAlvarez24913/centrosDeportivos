@@ -236,6 +236,7 @@ export type Query = {
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
+  listBankAccountsBySportCenterName?: Maybe<Array<Maybe<BankAccount>>>;
   listReviewsBySportCenter?: Maybe<Array<Review>>;
   listSCReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   listServicesBySport?: Maybe<Array<Maybe<ServiceWithSportCenter>>>;
@@ -281,6 +282,11 @@ export type QueryGetSportCenterWithServicesArgs = {
 
 export type QueryListBankAccountsBySportCenterIdArgs = {
   sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryListBankAccountsBySportCenterNameArgs = {
+  sportCenterName: Scalars['String']['input'];
 };
 
 
@@ -477,6 +483,13 @@ export type ListBankAccountsBySportCenterIdQueryVariables = Exact<{
 
 
 export type ListBankAccountsBySportCenterIdQuery = { __typename?: 'Query', listBankAccountsBySportCenterId?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string } | null> | null };
+
+export type ListBankAccountsBySportCenterNameQueryVariables = Exact<{
+  sportCenterName: Scalars['String']['input'];
+}>;
+
+
+export type ListBankAccountsBySportCenterNameQuery = { __typename?: 'Query', listBankAccountsBySportCenterName?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string } | null> | null };
 
 export type CreateBankAccountMutationVariables = Exact<{
   input: CreateBankAccountInput;
@@ -734,6 +747,46 @@ export function useListBankAccountsBySportCenterIdLazyQuery(baseOptions?: Apollo
 export type ListBankAccountsBySportCenterIdQueryHookResult = ReturnType<typeof useListBankAccountsBySportCenterIdQuery>;
 export type ListBankAccountsBySportCenterIdLazyQueryHookResult = ReturnType<typeof useListBankAccountsBySportCenterIdLazyQuery>;
 export type ListBankAccountsBySportCenterIdQueryResult = Apollo.QueryResult<ListBankAccountsBySportCenterIdQuery, ListBankAccountsBySportCenterIdQueryVariables>;
+export const ListBankAccountsBySportCenterNameDocument = gql`
+    query ListBankAccountsBySportCenterName($sportCenterName: String!) {
+  listBankAccountsBySportCenterName(sportCenterName: $sportCenterName) {
+    bankAccountId
+    name
+    id
+    accountType
+    accountNumber
+    email
+  }
+}
+    `;
+
+/**
+ * __useListBankAccountsBySportCenterNameQuery__
+ *
+ * To run a query within a React component, call `useListBankAccountsBySportCenterNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListBankAccountsBySportCenterNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListBankAccountsBySportCenterNameQuery({
+ *   variables: {
+ *      sportCenterName: // value for 'sportCenterName'
+ *   },
+ * });
+ */
+export function useListBankAccountsBySportCenterNameQuery(baseOptions: Apollo.QueryHookOptions<ListBankAccountsBySportCenterNameQuery, ListBankAccountsBySportCenterNameQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListBankAccountsBySportCenterNameQuery, ListBankAccountsBySportCenterNameQueryVariables>(ListBankAccountsBySportCenterNameDocument, options);
+      }
+export function useListBankAccountsBySportCenterNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListBankAccountsBySportCenterNameQuery, ListBankAccountsBySportCenterNameQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListBankAccountsBySportCenterNameQuery, ListBankAccountsBySportCenterNameQueryVariables>(ListBankAccountsBySportCenterNameDocument, options);
+        }
+export type ListBankAccountsBySportCenterNameQueryHookResult = ReturnType<typeof useListBankAccountsBySportCenterNameQuery>;
+export type ListBankAccountsBySportCenterNameLazyQueryHookResult = ReturnType<typeof useListBankAccountsBySportCenterNameLazyQuery>;
+export type ListBankAccountsBySportCenterNameQueryResult = Apollo.QueryResult<ListBankAccountsBySportCenterNameQuery, ListBankAccountsBySportCenterNameQueryVariables>;
 export const CreateBankAccountDocument = gql`
     mutation CreateBankAccount($input: CreateBankAccountInput!) {
   createBankAccount(input: $input) {

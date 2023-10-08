@@ -246,6 +246,7 @@ type Query {
 
   #bankAccounts
   listBankAccountsBySportCenterId(sportCenterId: ID!): [BankAccount]
+  listBankAccountsBySportCenterName(sportCenterName: String!): [BankAccount]
 
   #reservations
   reservationCount: Int!
