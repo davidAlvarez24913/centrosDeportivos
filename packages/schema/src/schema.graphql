@@ -164,6 +164,12 @@ input CreateReservationInput {
   image: String
 }
 
+input UpdateReservationInput{
+  reservationId: ID!
+  image: String!
+  paymentId: String!
+}
+
 input UpdateUserInput {
   userId: ID!
   name: String!
@@ -289,6 +295,7 @@ type Mutation {
   createReservationUser(input: CreateReservationInput!): Reservation
   deleteReservation(reservationId: ID!): OperationResponse
   setPaid(reservationId: ID!): OperationResponse
+  updateReservation(input: UpdateReservationInput!): OperationResponse
 
   #reviews
   createReview(input: CreateReviewInput!): Review

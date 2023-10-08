@@ -81,3 +81,10 @@ mutation SetPaid($reservationId: ID!) {
     message
   }
 }
+
+mutation UpdateReservation ($input: UpdateReservationInput!){
+  updateReservation(input: $input){
+    status
+    message
+  }
+}

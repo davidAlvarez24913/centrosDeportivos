@@ -8,10 +8,14 @@ import {
   FireStoreReservation,
   createFirestoreReservation,
   deleteFirestoreReservation,
+  findReservation,
   listReservations,
+  updateFirestoreReservation,
 } from "../../db/Firebase/Firestore/Reservation";
 import { mergeReservations } from "../utils";
 import { GraphQLError } from "graphql";
+import { where } from "firebase/firestore/lite";
+import { uploadFile } from "../../db/Firebase/Bucket";
 
 export const reservationResolvers = {
   Query: {
@@ -251,6 +255,49 @@ export const reservationResolvers = {
           status: "Failed",
           message: "No se puede dar acceso" + JSON.stringify(error),
         };
+      }
+    },
+    updateReservation: async (root: any, { input }: any) => {
+      const auxNameImage = "reservationspay/" + input.reservationId + "#";
+      let imageUrl = "";
+      const { reservationId, image, paymentId } = input;
+      try {
+        const nosql = (await findReservation(
+          reservationId
+        )) as FireStoreReservation;
+        imageUrl = await uploadFile(input.image, auxNameImage);
+        if (imageUrl) {
+          await Reservation.update(
+            {
+              reservationId: reservationId,
+            },
+            {
+              paymentId: paymentId,
+            }
+          );
+
+          await updateFirestoreReservation({
+            reservationId: reservationId,
+            image: image,
+            rangeHour: nosql.rangeHour,
+          });
+          return {
+            status: "Ok",
+            message: "Comprobante de pago subido exitosamente",
+          };
+        } else {
+          await Reservation.update(
+            {
+              reservationId: reservationId,
+            },
+            {
+              paymentId: paymentId,
+            }
+          );
+          throw new Error(" not update firestore");
+        }
+      } catch (error) {
+        throw new Error(error as string);
       }
     },
   },

@@ -125,6 +125,7 @@ export type Mutation = {
   giveAccess?: Maybe<OperationResponse>;
   setPaid?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
+  updateReservation?: Maybe<OperationResponse>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
   updateUser?: Maybe<OperationResponse>;
@@ -203,6 +204,11 @@ export type MutationSetPaidArgs = {
 
 export type MutationUpdateBankAccountArgs = {
   input: UpdateBankAccountInput;
+};
+
+
+export type MutationUpdateReservationArgs = {
+  input: UpdateReservationInput;
 };
 
 
@@ -427,6 +433,12 @@ export type UpdateRangeHourInput = {
   startHour: Scalars['String']['input'];
 };
 
+export type UpdateReservationInput = {
+  image: Scalars['String']['input'];
+  paymentId: Scalars['String']['input'];
+  reservationId: Scalars['ID']['input'];
+};
+
 export type UpdateServiceInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   disponibility?: InputMaybe<UpdateDisponibilityInput>;
@@ -569,6 +581,13 @@ export type SetPaidMutationVariables = Exact<{
 
 
 export type SetPaidMutation = { __typename?: 'Mutation', setPaid?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type UpdateReservationMutationVariables = Exact<{
+  input: UpdateReservationInput;
+}>;
+
+
+export type UpdateReservationMutation = { __typename?: 'Mutation', updateReservation?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type ListReviewsBySportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -1207,6 +1226,40 @@ export function useSetPaidMutation(baseOptions?: Apollo.MutationHookOptions<SetP
 export type SetPaidMutationHookResult = ReturnType<typeof useSetPaidMutation>;
 export type SetPaidMutationResult = Apollo.MutationResult<SetPaidMutation>;
 export type SetPaidMutationOptions = Apollo.BaseMutationOptions<SetPaidMutation, SetPaidMutationVariables>;
+export const UpdateReservationDocument = gql`
+    mutation UpdateReservation($input: UpdateReservationInput!) {
+  updateReservation(input: $input) {
+    status
+    message
+  }
+}
+    `;
+export type UpdateReservationMutationFn = Apollo.MutationFunction<UpdateReservationMutation, UpdateReservationMutationVariables>;
+
+/**
+ * __useUpdateReservationMutation__
+ *
+ * To run a mutation, you first call `useUpdateReservationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateReservationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateReservationMutation, { data, loading, error }] = useUpdateReservationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateReservationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateReservationMutation, UpdateReservationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateReservationMutation, UpdateReservationMutationVariables>(UpdateReservationDocument, options);
+      }
+export type UpdateReservationMutationHookResult = ReturnType<typeof useUpdateReservationMutation>;
+export type UpdateReservationMutationResult = Apollo.MutationResult<UpdateReservationMutation>;
+export type UpdateReservationMutationOptions = Apollo.BaseMutationOptions<UpdateReservationMutation, UpdateReservationMutationVariables>;
 export const ListReviewsBySportCenterDocument = gql`
     query ListReviewsBySportCenter($sportCenterId: ID!) {
   listReviewsBySportCenter(sportCenterId: $sportCenterId) {
