@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { IonAlert, IonContent, IonModal, useIonRouter } from "@ionic/react";
 import {
@@ -11,7 +11,6 @@ import ReviewModal from "./ReviewModal";
 import { covertDateToStringEs } from "src/utils";
 import {
   useDeleteReservationMutation,
-  useReservationReviewedLazyQuery,
   useReservationReviewedQuery,
 } from "schema";
 import useUser from "src/Hooks/useUser";
@@ -46,7 +45,6 @@ const FullReservation = ({
   useReservationReviewedQuery({
     variables: { reservationId: reservationId },
     onCompleted: (res) => {
-      console.log("alsdkjfasldfjk", res.reservationReviewed);
       setIsReviewed(res.reservationReviewed);
     },
   });
@@ -65,13 +63,10 @@ const FullReservation = ({
             <CommonTag title="Centro Deportivo:" data={sportCenterName} />
             <CommonTag title="Servicio:" data={serviceName} />
             <CommonTag title="Fecha:" data={covertDateToStringEs(date)} />
-            {rangeHour.map((hour, index) => {
+            {rangeHour?.map((hour, index) => {
               return <CommonTag title="Horario" data={hour} key={index} />;
             })}
-            <CommonTag
-              title="Precio:"
-              data={`$ ${reservationPrice.toString()}`}
-            />
+            <CommonTag title="Precio:" data={`$ ${reservationPrice}`} />
             <CommonTag
               title="Estado de Pago"
               data={state ? "Pagado" : "Pendiente"}
