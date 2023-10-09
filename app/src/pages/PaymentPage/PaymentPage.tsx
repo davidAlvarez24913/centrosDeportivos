@@ -20,7 +20,7 @@ const PaymentPage = () => {
   const [present] = useIonToast();
   const router = useIonRouter();
 
-  const { serviceId, reservationId, sportCenterName } = useParams<{
+  const { reservationId, sportCenterName } = useParams<{
     serviceId: string;
     reservationId: string;
     sportCenterName: string;

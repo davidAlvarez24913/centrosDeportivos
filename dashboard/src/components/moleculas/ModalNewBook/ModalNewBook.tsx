@@ -49,7 +49,7 @@ const ModalNewBook = ({ onClose, serviceId, nameService }: NewBookProps) => {
 
   useEffect(() => {
     !disponibility.loading && setHours(auxHours);
-  }, [day, disponibility.loading]);
+  }, [day, disponibility.loading, disponibility.data?.getDisponibility]);
 
   const onCreateRervation = () => {
     const auxInput = {
