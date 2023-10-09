@@ -66,7 +66,7 @@ const SportCenterPage = () => {
           ) : (
             <>
               {segment === "servicios" ? (
-                services.length > 1 ? (
+                services.length >= 1 ? (
                   <div className="flex flex-col gap-3 mt-5 justify-center">
                     {services.map((service) => {
                       return (
