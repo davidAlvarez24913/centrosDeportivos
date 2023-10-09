@@ -34,10 +34,10 @@ const MyReservationsPage = () => {
               {loading ? (
                 <Loading />
               ) : reservations.length > 0 ? (
-                reservations.map((reservation) => {
+                reservations.map((reservation, index) => {
                   return (
                     <ReservationCard
-                      key={reservation.reservation?.reservationId}
+                      key={index}
                       {...reservation.reservation!}
                       sportCenterName={reservation.sportCenterName || ""}
                       sportCenterId={reservation.sportCenterId || ""}
