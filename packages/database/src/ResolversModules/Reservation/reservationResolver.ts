@@ -278,7 +278,7 @@ export const reservationResolvers = {
 
           await updateFirestoreReservation({
             reservationId: reservationId,
-            image: image,
+            image: auxNameImage + imageUrl,
             rangeHour: nosql.rangeHour,
           });
           return {
