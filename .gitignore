@@ -5,3 +5,4 @@ package-lock.json
 yarn.lock
 bun.lockb
 package.json
+app/android
