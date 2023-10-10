@@ -56,36 +56,47 @@ const DisponibilityPage = () => {
     useCreateReservationUserMutation();
 
   const onCreateBooking = () => {
-    const input = {
-      date: new Date(day).toDateString(),
-      paymentId: "",
-      image: "",
-      rangeHour: selectedHours,
-      reservationPrice: price,
-      serviceId: serviceId,
-      userId: userId,
-    } as CreateReservationInput;
-    // verify type to send mutation
-    createReservationInputMutation({
-      variables: { input },
-      onCompleted: () => {
-        disponibility.refetch();
-        present({
-          message: "Reservacion realizada exitosamente",
-          duration: 1500,
-          color: "success",
-          position: "top",
-        });
-      },
-      onError: (error) => {
-        present({
-          message: "No se pudo realizar la reservacion " + error.message,
-          duration: 1500,
-          color: "danger",
-          position: "top",
-        });
-      },
-    });
+    if (userId) {
+      const input = {
+        date: new Date(day).toDateString(),
+        paymentId: "",
+        image: "",
+        rangeHour: selectedHours,
+        reservationPrice: price,
+        serviceId: serviceId,
+        userId: userId,
+      } as CreateReservationInput;
+      // verify type to send mutation
+      createReservationInputMutation({
+        variables: { input },
+        onCompleted: () => {
+          disponibility.refetch();
+          present({
+            message: "Reservacion realizada exitosamente",
+            duration: 1500,
+            color: "success",
+            position: "top",
+          });
+        },
+        onError: (error) => {
+          present({
+            message: "No se pudo realizar la reservacion " + error.message,
+            duration: 1500,
+            color: "danger",
+            position: "top",
+          });
+        },
+      });
+    } else {
+      present({
+        message:
+          "Debe ingresar sus credenciales para poder reazliar una reservacion ",
+        duration: 1500,
+        color: "danger",
+        position: "top",
+      });
+      router.push("/login");
+    }
   };
 
   useEffect(() => {
