@@ -20,6 +20,7 @@ type FullServiceProps = {
   sportCenterName: string;
   sportCenterId: string;
   rangeHour: string[];
+  image: string;
   reservationPrice: number;
   state: boolean;
   date: string;
@@ -34,6 +35,7 @@ const FullReservation = ({
   rangeHour,
   state,
   date,
+  image,
   reservationPrice,
   refetch,
 }: FullServiceProps) => {
@@ -71,6 +73,7 @@ const FullReservation = ({
               title="Estado de Pago"
               data={state ? "Pagado" : "Pendiente"}
             />
+            {image !== "" && <img src={image} alt="Comprobante de Pago" />}
             <div className="flex flex-col gap-4">
               {state ? (
                 !isReviewed && (
