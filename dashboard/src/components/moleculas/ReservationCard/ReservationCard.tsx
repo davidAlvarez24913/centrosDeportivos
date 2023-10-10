@@ -6,6 +6,7 @@ type ReservationCardProps = {
   reservationId: string;
   serviceName: string;
   userName: string;
+  image: string;
   rangeHour: string[];
   reservationPrice: string;
   state: boolean;
@@ -18,6 +19,7 @@ const ReservationCard = ({
   serviceName,
   userName,
   rangeHour,
+  image,
   reservationPrice,
   state,
   date,
@@ -26,8 +28,8 @@ const ReservationCard = ({
   const [deleteReservation] = useDeleteReservationMutation();
   const [setPaid] = useSetPaidMutation();
   return (
-    <div>
-      <div className="flex flex-row justify-between py-4">
+    <>
+      <th className="flex flex-row justify-between py-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold">Servicio:</h2>
           <p className="text-base">{serviceName}</p>
@@ -54,7 +56,10 @@ const ReservationCard = ({
           <h2 className="text-lg font-bold">Precio:</h2>
           <p className="text-base">$ {reservationPrice}</p>
         </div>
-      </div>
+      </th>
+      {image !== "" && (
+        <img src={image} alt="comprobante transferencia" className="pb-3" />
+      )}
       {!state && (
         <div className="flex flex-row  gap-4">
           <CustomButton
@@ -85,7 +90,7 @@ const ReservationCard = ({
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

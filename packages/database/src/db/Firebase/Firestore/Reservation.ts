@@ -18,7 +18,14 @@ const document = "reservations";
 
 export const listReservations = async () => {
   const reservationSnapShot = await getDocs(collection(db, document));
-  return reservationSnapShot.docs.map((reservation) => reservation.data());
+  return reservationSnapShot.docs
+    .map((reservation) => reservation.data())
+    .map((item) => {
+      return {
+        ...item,
+        image: item?.image !== "" ? item?.image!.split("#")[1] : item.image,
+      };
+    });
 };
 export const findReservation = async (reservationId: string) => {
   const docRef = doc(db, document, reservationId);

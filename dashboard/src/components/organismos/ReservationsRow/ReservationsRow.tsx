@@ -6,6 +6,7 @@ type ReservationsRowProps = {
   reservationId: string;
   serviceName: string;
   userName: string;
+  image: string;
   rangeHour: string[];
   reservationPrice: string;
   state: boolean;
