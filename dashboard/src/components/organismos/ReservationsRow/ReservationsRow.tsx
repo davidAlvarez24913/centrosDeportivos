@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../../moleculas/Modal";
 import { ReservationCard } from "../../moleculas";
+import { covertDateToStringEs } from "../../../utils";
 
 type ReservationsRowProps = {
   reservationId: string;
@@ -33,7 +34,9 @@ const ReservationsRow = (reservation: ReservationsRowProps) => {
           <p className="text-center text-sm font-normal">{serviceName}</p>
         </th>
         <th className="py-5">
-          <p className="text-center text-sm font-normal">{date}</p>
+          <p className="text-center text-sm font-normal">
+            {covertDateToStringEs(date)}
+          </p>
         </th>
         <th className="py-5">
           <p className="text-center text-sm font-normal">{userName}</p>

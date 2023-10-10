@@ -1,6 +1,7 @@
 import React from "react";
 import { CustomButton } from "../../atomos";
 import { useDeleteReservationMutation, useSetPaidMutation } from "schema";
+import { covertDateToStringEs } from "../../../utils";
 
 type ReservationCardProps = {
   reservationId: string;
@@ -32,29 +33,29 @@ const ReservationCard = ({
       <th className="flex flex-row justify-between py-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold">Servicio:</h2>
-          <p className="text-base">{serviceName}</p>
+          <p className="text-base font-normal">{serviceName}</p>
           <h2 className="text-lg font-bold">Fecha:</h2>
-          <p className="text-base">{date}</p>
+          <p className="text-base font-normal">{covertDateToStringEs(date)}</p>
           <h2 className="text-lg font-bold">Servicio</h2>
-          <ul className="list-disc text-base ml-5">
+          <ul className="list-disc text-base font-normal ml-5">
             {rangeHour.map((hour) => {
               return <li>{hour}</li>;
             })}
           </ul>
           <h2 className="text-lg font-bold">ID Transferencia:</h2>
-          <p className="text-base">{paymentId}</p>
+          <p className="text-base font-normal">{paymentId}</p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold">Usuario:</h2>
-          <p className="text-base">{userName}</p>
+          <p className="text-base font-normal">{userName}</p>
           <h2 className="text-lg font-bold">Estado del pago:</h2>
           {state ? (
-            <p className="text-base">Pagado</p>
+            <p className="text-base font-normal">Pagado</p>
           ) : (
-            <p className="text-base">Pendiente</p>
+            <p className="text-base font-normal">Pendiente</p>
           )}
           <h2 className="text-lg font-bold">Precio:</h2>
-          <p className="text-base">$ {reservationPrice}</p>
+          <p className="text-base font-normal">$ {reservationPrice}</p>
         </div>
       </th>
       {image !== "" && (
