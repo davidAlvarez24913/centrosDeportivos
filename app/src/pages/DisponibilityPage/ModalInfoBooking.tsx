@@ -74,7 +74,7 @@ const ModalInfoBooking = ({
                   type="button"
                   onClick={() => {
                     router.push(
-                      `/payment/${serviceId}/${data?.createReservationUser?.reservationId}/${sportCenter}`
+                      `/payment/${data?.createReservationUser?.reservationId}/${sportCenter}`
                     );
                   }}
                 />

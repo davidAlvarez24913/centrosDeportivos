@@ -3,7 +3,6 @@ import { CustomButton, CustomInput, CustomTextarea } from "../../atomos";
 import { ImageInput, Modal } from "../../moleculas";
 import { UpdateSportCenterInput } from "schema";
 import { ProfileProps } from "../../moleculas/Profile/Profile";
-import { getStringUrl } from "../../../utils";
 
 type EditSportCenterButtonProps = {
   updateSportCenter: (input: UpdateSportCenterInput) => void;
@@ -16,6 +15,7 @@ const EditSportCenterButton = ({
   description,
   email,
   phone,
+  schedule,
   ubication,
   image,
   updateSportCenter,
@@ -28,11 +28,13 @@ const EditSportCenterButton = ({
     description,
     email,
     phone,
+    schedule,
     ubication,
     image,
   });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(sportCenter);
     updateSportCenter({ ...sportCenter, image: newImage });
     alert("Datos de centro deportivo actualizados correctamente");
   };
@@ -95,11 +97,11 @@ const EditSportCenterButton = ({
             onChange={handleChange}
           />
           <CustomInput
-            type="email"
+            type="schedule"
             color="blue"
-            name="email"
-            label="Correo Electrónico"
-            defaultValue={email}
+            name="schedule"
+            label="Horario de atención"
+            defaultValue={schedule}
             onChange={handleChange}
           />
           <CustomButton

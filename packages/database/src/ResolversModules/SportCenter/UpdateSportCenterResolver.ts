@@ -14,45 +14,19 @@ const UpdateSportCenterResolver = async (root: any, { input }: any) => {
     const currentSportCenterNoSQL = await findSportCenter(input.sportCenterId);
     const auxNameImage = "sportscenter/" + input.sportCenterId + "#";
     let imageUrl = "";
-
+    console.log(input);
     if (input.image === "") {
       currentSportCenterNoSQL?.image && (await deleteImage(auxNameImage));
       await updateFirestoreSportCenter({
         sportCenterId: input.sportCenterId,
         image: input.image,
       });
-      await SportCenter.update(
-        {
-          sportCenterId: input.sportCenterId,
-        },
-        {
-          name: input.name,
-          phone: input.phone,
-          email: input.email,
-          description: input.description,
-          ubication: input.ubication,
-          schedule: input.schedule,
-        }
-      );
     } else {
-      if (auxNameImage + input.image === currentSportCenterNoSQL?.image) {
+      if (input.image === currentSportCenterNoSQL?.image) {
         await updateFirestoreSportCenter({
           sportCenterId: input.sportCenterId,
           image: auxNameImage + input.image,
         });
-        await SportCenter.update(
-          {
-            sportCenterId: input.sportCenterId,
-          },
-          {
-            name: input.name,
-            phone: input.phone,
-            email: input.email,
-            description: input.description,
-            ubication: input.ubication,
-            schedule: input.schedule,
-          }
-        );
       } else {
         imageUrl = await uploadFile(input.image, auxNameImage);
         if (imageUrl) {
@@ -60,23 +34,23 @@ const UpdateSportCenterResolver = async (root: any, { input }: any) => {
             sportCenterId: input.sportCenterId,
             image: auxNameImage + imageUrl,
           });
-          await SportCenter.update(
-            {
-              sportCenterId: input.sportCenterId,
-            },
-            {
-              name: input.name,
-              phone: input.phone,
-              email: input.email,
-              description: input.description,
-              ubication: input.ubication,
-              schedule: input.schedule,
-            }
-          );
         }
       }
     }
 
+    await SportCenter.update(
+      {
+        sportCenterId: input.sportCenterId,
+      },
+      {
+        name: input.name,
+        phone: input.phone,
+        email: input.email,
+        description: input.description,
+        ubication: input.ubication,
+        schedule: input.schedule,
+      }
+    );
     return {
       status: "Ok",
       message: "Centro deportivo se actualizo exitosamente",

@@ -40,7 +40,10 @@ const FullService = ({
         <Background>
           <div className="flex flex-col gap-3 mt-5">
             <h2 className="text-2xl font-bold ">{name}</h2>
-            <img src={image} alt="service image" />
+            <img
+              src={image === "" ? "/assets/default-image.jpg" : image}
+              alt="service image"
+            />
             <p className="text-sm font-normal">{description}</p>
             <div className="flex flex-row items-center gap-2 ">
               <img

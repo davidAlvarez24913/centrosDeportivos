@@ -21,7 +21,6 @@ const PaymentPage = () => {
   const router = useIonRouter();
 
   const { reservationId, sportCenterName } = useParams<{
-    serviceId: string;
     reservationId: string;
     sportCenterName: string;
   }>();

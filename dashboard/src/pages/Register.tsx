@@ -75,7 +75,6 @@ const Register = () => {
           phone: "",
           ubication: "",
           schedule: "",
-          ranking: 0,
         };
         createSportCenterMutation({
           variables: { input: sportCenter },

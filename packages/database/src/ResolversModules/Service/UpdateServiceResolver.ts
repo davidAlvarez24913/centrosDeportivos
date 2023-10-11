@@ -25,19 +25,8 @@ const UpdateServiceResolver = async (root: any, { input }: any) => {
         image: input.image,
         disponibility: { ...(input.disponibility as Disponibility) },
       });
-      await Service.update(
-        {
-          serviceId: input.serviceId,
-        },
-        {
-          name: input.name,
-          description: input.description,
-          sport: input.sport,
-        }
-      );
     } else {
       const imageAux = auxNameImage + "#" + input.image;
-
       if (imageAux === currenImage) {
         // update other fields, image bucke no change
         await updateFirestoreService({
@@ -45,16 +34,6 @@ const UpdateServiceResolver = async (root: any, { input }: any) => {
           image: auxNameImage + "#" + input.image,
           disponibility: { ...(input.disponibility as Disponibility) },
         });
-        await Service.update(
-          {
-            serviceId: input.serviceId,
-          },
-          {
-            name: input.name,
-            description: input.description,
-            sport: input.sport,
-          }
-        );
       } else {
         //create image and save
         imageUrl = await uploadFile(input.image, auxNameImage);
@@ -64,20 +43,19 @@ const UpdateServiceResolver = async (root: any, { input }: any) => {
             image: auxNameImage + "#" + imageUrl,
             disponibility: { ...input.disponibility },
           });
-          await Service.update(
-            {
-              serviceId: input.serviceId,
-            },
-            {
-              name: input.name,
-              description: input.description,
-              sport: input.sport,
-            }
-          );
         }
       }
     }
-
+    await Service.update(
+      {
+        serviceId: input.serviceId,
+      },
+      {
+        name: input.name,
+        description: input.description,
+        sport: input.sport,
+      }
+    );
     return {
       status: "Ok",
       message: "Servicio se actualizo exitosamente",

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { IonAlert, IonContent, IonPage } from "@ionic/react";
+import {
+  IonAlert,
+  IonContent,
+  IonPage,
+  useIonRouter,
+  useIonToast,
+} from "@ionic/react";
 import {
   Background,
   CustomButton,
@@ -10,8 +16,9 @@ import {
 import { useCreateUserMutation } from "schema";
 import useUser from "src/Hooks/useUser";
 const RegisterPage = () => {
-  const [alert, setAlert] = useState({ state: true, msg: "" });
   const { handleCreateUser, handleDeleteUser } = useUser();
+  const [present] = useIonToast();
+  const router = useIonRouter();
   const [createUserMutation] = useCreateUserMutation();
   const [registData, setRegistData] = useState({
     name: "",
@@ -24,7 +31,6 @@ const RegisterPage = () => {
   });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(registData);
     handleCreateUser(registData.email, registData.password)
       .then((userCredential) => {
         const userId = userCredential?.user.uid;
@@ -41,7 +47,14 @@ const RegisterPage = () => {
         })
           .then(() => {
             console.log("Usuario creado correctamente");
-            setAlert({ state: true, msg: "Usuario creado correctamente" });
+            present({
+              message: "Reservacion realizada exitosamente",
+              duration: 1500,
+              color: "success",
+              position: "top",
+            }).then(() => {
+              router.push("/login");
+            });
           })
           .catch((error) => {
             console.log(error);
@@ -51,7 +64,12 @@ const RegisterPage = () => {
       .catch((error) => {
         console.log(error.code);
         error.code === "auth/email-already-in-use" &&
-          setAlert({ state: true, msg: "Correo electronico ya registrado" });
+          present({
+            message: "Correo electronico ya registrado",
+            duration: 1500,
+            color: "warning",
+            position: "top",
+          });
       });
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,15 +151,6 @@ const RegisterPage = () => {
               type="submit"
               disable={flag || flag2}
             />
-            {alert && (
-              <IonAlert
-                header="Error"
-                subHeader="Error al registrarse"
-                message={alert.msg}
-                buttons={["OK"]}
-                onDidDismiss={() => setAlert({ state: false, msg: "" })}
-              ></IonAlert>
-            )}
           </form>
         </Background>
       </IonContent>

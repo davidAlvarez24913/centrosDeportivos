@@ -91,7 +91,9 @@ const FullReservation = ({
                     title="Realizar pago"
                     type="button"
                     onClick={() => {
-                      ionRouter.push("payment/aquiponerdatos");
+                      ionRouter.push(
+                        `/payment/${reservationId}/${sportCenterName}`
+                      );
                     }}
                   />
                   <CustomButton

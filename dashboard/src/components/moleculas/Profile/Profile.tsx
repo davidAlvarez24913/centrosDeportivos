@@ -1,11 +1,11 @@
 import React from "react";
-import { getStringUrl } from "../../../utils";
 
 export type ProfileProps = {
   name: string;
   description: string;
   ubication: string;
   phone: string;
+  schedule: string;
   email: string;
   image: string;
 };
@@ -15,6 +15,7 @@ const Profile = ({
   ubication,
   phone,
   email,
+  schedule,
   image,
 }: ProfileProps) => {
   return (
@@ -34,6 +35,8 @@ const Profile = ({
       <p className="text-base">{phone}</p>
       <h2 className="text-lg font-bold">Correo Electrónico:</h2>
       <p className="text-base">{email}</p>
+      <h2 className="text-lg font-bold">Horario de Atención:</h2>
+      <p className="text-base">{schedule}</p>
     </div>
   );
 };

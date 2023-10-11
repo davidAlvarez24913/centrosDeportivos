@@ -72,8 +72,8 @@ const ReservationsPage = () => {
             headers={[
               "ID",
               "servicios",
-              "usuario",
               "fecha",
+              "usuario",
               "horario",
               "precio",
               "ver mas",
@@ -85,8 +85,8 @@ const ReservationsPage = () => {
             headers={[
               "ID",
               "servicios",
-              "usuario",
               "fecha",
+              "usuario",
               "horario",
               "precio",
               "ver mas",

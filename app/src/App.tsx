@@ -64,7 +64,7 @@ const App: React.FC = () => (
             />
             <Route
               exact
-              path="/payment/:serviceId/:reservationId/:sportCenterName"
+              path="/payment/:reservationId/:sportCenterName"
               component={PaymentPage}
             />
             <Route exact path="/register" component={RegisterPage} />
