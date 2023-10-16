@@ -1,7 +1,8 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import { useEffect, useState } from "react";
 import { useGetAccessLazyQuery } from "schema";
+import Loading from "./Loading";
 
 type PropsProtectedRoute = {
   children?: React.ReactNode;
@@ -15,8 +16,6 @@ const ProtectedRoute = ({
   const [access, setAccess] = useState(false);
   const [getAccess] = useGetAccessLazyQuery();
   const { user, loadingUser } = useUser();
-  const pathname = useLocation().pathname;
-  const protectedRoutes = ["/", "perfil", "/servicios"];
 
   const verifyAccess = () => {
     !loadingUser &&
@@ -36,15 +35,15 @@ const ProtectedRoute = ({
     verifyAccess();
   }, []);
 
-  if (loadingUser && user === undefined && !access) {
-    return <Navigate to={redirectTo} replace />;
+  if (loadingUser) {
+    return <Loading />;
+  } else {
+    if (!access) {
+      return children ? <>{children}</> : <Outlet />;
+    } else {
+      return <Navigate to={redirectTo} replace />;
+    }
   }
-  // TODO control refresh to redirect
-  // if (protectedRoutes.includes(pathname)) {
-  //   return <Navigate to={pathname} replace />;
-  // }
-
-  return children ? <>{children}</> : <Outlet />;
 };
 
 export default ProtectedRoute;
