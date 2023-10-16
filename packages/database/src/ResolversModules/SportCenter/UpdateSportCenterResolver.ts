@@ -14,7 +14,7 @@ const UpdateSportCenterResolver = async (root: any, { input }: any) => {
     const currentSportCenterNoSQL = await findSportCenter(input.sportCenterId);
     const auxNameImage = "sportscenter/" + input.sportCenterId + "#";
     let imageUrl = "";
-    console.log(input);
+
     if (input.image === "") {
       currentSportCenterNoSQL?.image && (await deleteImage(auxNameImage));
       await updateFirestoreSportCenter({
