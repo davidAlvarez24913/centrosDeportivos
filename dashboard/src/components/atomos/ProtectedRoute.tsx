@@ -38,10 +38,10 @@ const ProtectedRoute = ({
   if (loadingUser) {
     return <Loading />;
   } else {
-    if (!access) {
-      return children ? <>{children}</> : <Outlet />;
-    } else {
+    if (user === undefined && !access) {
       return <Navigate to={redirectTo} replace />;
+    } else {
+      return children ? <>{children}</> : <Outlet />;
     }
   }
 };
