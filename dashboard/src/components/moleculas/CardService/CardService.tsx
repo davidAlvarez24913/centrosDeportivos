@@ -9,6 +9,7 @@ import {
 } from "schema";
 import ModalEditService from "../ModalEditService";
 import ModalNewBook from "../ModalNewBook";
+import { toast } from "react-toastify";
 
 type PropsCardService = {
   onRefetch: () => void;
@@ -31,32 +32,64 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
       variables: { input },
       onCompleted: () => {
         onRefetch();
-        alert("se actualizo el servicio exitosamente");
+        toast.success("Se actualizo el servicio exitosamente", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setModalEdit(false);
       },
       onError: (err) => {
-        alert(
-          "No se pudo actualizar el servicio: " + JSON.stringify(err as Error)
-        );
+        console.log(err);
+        toast.error("No se pudo actualizar el servicio: ", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       },
     });
   };
 
   const onDelete = () => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm("Esta seguro de eliminar el servicio")) {
-      deleteServiceMutation({
-        variables: { serviceId: service.serviceId },
-        onCompleted: () => {
-          onRefetch();
-          setModal(false);
-          console.log("servico eliminado");
-        },
-        onError: (err) => {
-          console.error("Error servicio no eliminado: " + err);
-        },
-      });
-    }
+    deleteServiceMutation({
+      variables: { serviceId: service.serviceId },
+      onCompleted: () => {
+        onRefetch();
+        setModal(false);
+        toast.success("Servicio eliminado correctamente!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+      onError: () => {
+        toast.error("No se pudo eliminar el serivio, intentalo mas tarde", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+    });
   };
 
   useEffect(() => {

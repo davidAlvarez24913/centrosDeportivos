@@ -9,6 +9,7 @@ import {
 } from "schema";
 import { daysDisponibility } from "../../../utils";
 import useUser from "../../../Hooks/useUser";
+import { toast } from "react-toastify";
 type NewBookProps = {
   onClose: () => void;
   serviceId: string;
@@ -65,11 +66,29 @@ const ModalNewBook = ({ onClose, serviceId, nameService }: NewBookProps) => {
       variables: { input: auxInput },
       onCompleted: () => {
         disponibility.refetch();
-        alert("Reserva creada exitosamente");
+        toast.success("Reserva creada exitosamente!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setModalConfirm(false);
       },
-      onError: (error) => {
-        alert(error);
+      onError: () => {
+        toast.error("No se pudo crear la reservación, intentalo mas tarde", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       },
     });
   };

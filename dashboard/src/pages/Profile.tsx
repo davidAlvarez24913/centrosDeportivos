@@ -17,6 +17,7 @@ import {
   useUpdateSportCenterMutation,
 } from "schema";
 import { Loading } from "../components/atomos";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const sportCenterId = useUser().user?.uid!;
@@ -35,24 +36,99 @@ const ProfilePage = () => {
     updateSportCenterMutation({ variables: { input } }).then(() => refetch());
   };
   const onCreateBankAccount = (input: CreateBankAccountInput) => {
-    createBankAccountMutation({ variables: { input } }).then(() => {
-      bankAccountsData.refetch();
-      alert("Cuenta Bancaria creada correctamente");
-    });
+    createBankAccountMutation({ variables: { input } })
+      .then(() => {
+        bankAccountsData.refetch();
+        toast.success("Cuenta Bancaria creada correctamente!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("No se pudo crear la cuenta bancaria intentalo mas tarde", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
   };
   const onUpdateBankAccount = (input: UpdateBankAccountInput) => {
-    updateBankAccountMutation({ variables: { input } }).then(() => {
-      bankAccountsData.refetch();
-      alert("Cuenta Bancaria Editada correctamente");
-    });
+    updateBankAccountMutation({ variables: { input } })
+      .then(() => {
+        bankAccountsData.refetch();
+        toast.success("Cuenta Bancaria Editada correctamente", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(
+          "No se pudo editar la cuenta bancaria, intentalo mas tarde",
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+      });
   };
   const onDeleleteBackAccount = (bankAccountId: string) => {
     deleteBankAccountMutation({
       variables: { bankAccountId: bankAccountId },
-    }).then(() => {
-      bankAccountsData.refetch();
-      alert("Cuenta Bancaria Eliminada correctamente");
-    });
+    })
+      .then(() => {
+        bankAccountsData.refetch();
+        toast.success("Cuenta Bancaria Eliminada correctamente", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(
+          "No se pudo eliminar la cuenta bancaria, intentalo mas tarde",
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+      });
   };
 
   const sportCenter = data?.getSportCenter;

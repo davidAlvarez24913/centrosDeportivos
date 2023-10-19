@@ -8,7 +8,7 @@ import {
 import { CreateServiceInput, Sport, useCreateServiceMutation } from "schema";
 import ImageInput from "../ImageInput";
 import useUser from "../../../Hooks/useUser";
-
+import { toast } from "react-toastify";
 type ServiceFormProps = {
   onSubmit: () => void;
 };
@@ -35,11 +35,30 @@ const ServiceForm = ({ onSubmit }: ServiceFormProps) => {
       createServiceMutation({
         variables: { input: inputAux },
         onCompleted: () => {
-          alert("servicio creado");
+          toast.success("Servicio creado!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
           onSubmit();
         },
         onError: (err) => {
-          alert("Error al crear servicio" + err);
+          console.log(err);
+          toast.error("Error al crear servicio!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         },
       });
   };
