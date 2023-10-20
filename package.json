@@ -11,6 +11,5 @@
     "app":"yarn workspace app start",
     "db":"cd packages/database && yarn prod",
     "dashboard":"yarn workspace dashboard start"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }
