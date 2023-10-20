@@ -8,6 +8,7 @@ import { FirebaseError } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
 import { useGetAccessLazyQuery } from "schema";
 import useUser from "../Hooks/useUser";
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginPage = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
@@ -27,7 +28,16 @@ const LoginPage = () => {
           navigate("/");
         },
         onError: (error) => {
-          alert("No eres admin" + JSON.stringify(error));
+          toast.error("No eres admin", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         },
       });
   };
@@ -62,11 +72,29 @@ const LoginPage = () => {
               navigate("/");
             } else {
               handleSignOut();
-              alert("No eres admin" + JSON.stringify(data));
+              toast.error("No eres admin", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
             }
           },
           onError: (error) => {
-            alert(error);
+            toast.error(error.message, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           },
         });
       })
@@ -131,6 +159,7 @@ const LoginPage = () => {
           Registrarse
         </a>
       </form>
+      <ToastContainer />
     </div>
   );
 };

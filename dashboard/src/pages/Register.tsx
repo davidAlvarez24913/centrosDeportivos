@@ -8,6 +8,7 @@ import { useCreateSportCenterMutation, useGetAccessLazyQuery } from "schema";
 import useUser from "../Hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "@firebase/util";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   const [createSportCenterMutation] = useCreateSportCenterMutation();
@@ -38,6 +39,16 @@ const Register = () => {
           navigate("/");
         },
         onError: (error) => {
+          toast.error("No eres admin", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
           alert("No eres admin" + JSON.stringify(error));
         },
       });
@@ -86,7 +97,16 @@ const Register = () => {
             });
           })
           .catch((error) => {
-            alert(error);
+            toast.error(error, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             handleDeleteUser();
           });
       })
@@ -174,6 +194,7 @@ const Register = () => {
           </a>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
