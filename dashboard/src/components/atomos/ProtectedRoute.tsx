@@ -3,6 +3,7 @@ import useUser from "../../Hooks/useUser";
 import { useEffect, useState } from "react";
 import { useGetAccessLazyQuery } from "schema";
 import Loading from "./Loading";
+import LinkLogo from "./LinkLogo";
 
 type PropsProtectedRoute = {
   children?: React.ReactNode;
@@ -36,7 +37,20 @@ const ProtectedRoute = ({
   }, []);
 
   if (loadingUser) {
-    return <Loading />;
+    return (
+      <div className="w-screen h-screen p-auto bg-background">
+        <div className="flex flex-col items-center  w-screen h-screen">
+          <div className="flex flex-1 items-center justify-around">
+            <h3 className="text-2xl font-medium text-primary">Cargando</h3>
+            <img
+              src={`/icons/loading-green.svg`}
+              alt="loading"
+              className="w-8 h-8"
+            />
+          </div>
+        </div>
+      </div>
+    );
   } else {
     if (user === undefined && !access) {
       return <Navigate to={redirectTo} replace />;
