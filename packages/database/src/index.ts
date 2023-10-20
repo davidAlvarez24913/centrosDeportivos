@@ -13,10 +13,11 @@ dataSource
   .catch((error) => console.log(error));
 
 apolloServer
-  .listen({ url: `http:// ${ip_local}/graphql`, port: 4000 })
+  .listen({ url: `https://${ip_local}/graphql`, port: 4000 })
   .then(({ url }) => {
-    console.log(`Server ready alt ${url}graphql`);
+    console.log(
+      `Server ready alt ${url}graphql -- https://${ip_local}/graphql `
+    );
   });
 
 console.log(`Conexión con ${app.options.projectId} establecida`);
-console.log(ip_local);
