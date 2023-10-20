@@ -19,3 +19,4 @@ apolloServer
   });
 
 console.log(`Conexión con ${app.options.projectId} establecida`);
+console.log(ip_local);
