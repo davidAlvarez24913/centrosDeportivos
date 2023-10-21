@@ -2,10 +2,9 @@ import { dataSource } from "./db/TypeOrm/config";
 import { app } from "./db/Firebase/config";
 import { apolloServer } from "./app";
 import "reflect-metadata";
-import ip from "ip";
-import { Console } from "console";
+// import ip from "ip";
 
-const ip_local = ip.address();
+// const ip_local = ip.address();
 
 dataSource
   .initialize()
@@ -13,11 +12,9 @@ dataSource
   .catch((error) => console.log(error));
 
 apolloServer
-  .listen({ url: `https://${ip_local}/graphql`, port: 4000 })
+  .listen({ url: `https://localhost/graphql`, port: 4000 })
   .then(({ url }) => {
-    console.log(
-      `Server ready alt ${url}graphql -- https://${ip_local}/graphql `
-    );
+    console.log(`Server ready alt ${url}graphql`);
   });
 
 console.log(`Conexión con ${app.options.projectId} establecida`);
