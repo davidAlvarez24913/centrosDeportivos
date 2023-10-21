@@ -14,7 +14,7 @@ export const dataSource = new DataSource({
   username: process.env.DATABASE_SQL_USER,
   password: process.env.DATABASE_SQL_PASS,
   port: Number(process.env.PORT),
-  host: process.env.IP_ADDRESS,
+  host: process.env.IP_ADDRESS_MYSQL,
   database: "sportscenter",
   entities: [User, SportCenter, Service, BankAccount, Reservation],
   synchronize: true,
