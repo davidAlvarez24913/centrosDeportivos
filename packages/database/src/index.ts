@@ -12,7 +12,7 @@ dataSource
   .catch((error) => console.log(error));
 
 apolloServer
-  .listen({ url: `https://localhost/graphql`, port: 4000 })
+  .listen({ host: "64.227.3.57", port: 4000 })
   .then(({ url }) => {
     console.log(`Server ready alt ${url}graphql`);
   });
