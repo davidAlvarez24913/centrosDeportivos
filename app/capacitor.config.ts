@@ -1,12 +1,12 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.example.app",
+  appId: "io.ionic.starter",
   appName: "ReservasTasTas",
   webDir: "build",
-  bundledWebRuntime: false,
   server: {
     androidScheme: "https",
+    allowNavigation: ["http://64.227.3.57:4000/graphql"],
   },
 };
 

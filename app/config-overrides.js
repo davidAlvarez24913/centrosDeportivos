@@ -12,6 +12,7 @@ module.exports = function (config, env) {
         /* transpile (converting to es5) code in src/ and shared component library */
         path.resolve("src"),
         path.resolve("../packages/schema"),
+        path.resolve("./node_modules/schema"),
       ]),
     )(config, env)
   );
