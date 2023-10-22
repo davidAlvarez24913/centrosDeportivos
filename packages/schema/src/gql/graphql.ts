@@ -400,6 +400,7 @@ export type SportCenter = {
   schedule: Scalars['String']['output'];
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
+  superUser?: Maybe<Scalars['Boolean']['output']>;
   ubication: Scalars['String']['output'];
 };
 
@@ -698,6 +699,13 @@ export type UpdateSportCenterMutationVariables = Exact<{
 
 
 export type UpdateSportCenterMutation = { __typename?: 'Mutation', updateSportCenter?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type GetPermissionSportCenterQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+}>;
+
+
+export type GetPermissionSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', superUser?: boolean | null } | null };
 
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1898,6 +1906,41 @@ export function useUpdateSportCenterMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateSportCenterMutationHookResult = ReturnType<typeof useUpdateSportCenterMutation>;
 export type UpdateSportCenterMutationResult = Apollo.MutationResult<UpdateSportCenterMutation>;
 export type UpdateSportCenterMutationOptions = Apollo.BaseMutationOptions<UpdateSportCenterMutation, UpdateSportCenterMutationVariables>;
+export const GetPermissionSportCenterDocument = gql`
+    query GetPermissionSportCenter($sportCenterId: ID!) {
+  getSportCenter(sportCenterId: $sportCenterId) {
+    superUser
+  }
+}
+    `;
+
+/**
+ * __useGetPermissionSportCenterQuery__
+ *
+ * To run a query within a React component, call `useGetPermissionSportCenterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPermissionSportCenterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPermissionSportCenterQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useGetPermissionSportCenterQuery(baseOptions: Apollo.QueryHookOptions<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>(GetPermissionSportCenterDocument, options);
+      }
+export function useGetPermissionSportCenterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>(GetPermissionSportCenterDocument, options);
+        }
+export type GetPermissionSportCenterQueryHookResult = ReturnType<typeof useGetPermissionSportCenterQuery>;
+export type GetPermissionSportCenterLazyQueryHookResult = ReturnType<typeof useGetPermissionSportCenterLazyQuery>;
+export type GetPermissionSportCenterQueryResult = Apollo.QueryResult<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {

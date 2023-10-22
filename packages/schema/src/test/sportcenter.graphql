@@ -57,3 +57,8 @@ mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
     message
   }
 }
+query GetPermissionSportCenter($sportCenterId: ID!) {
+  getSportCenter(sportCenterId: $sportCenterId) {
+    superUser
+  }
+}
