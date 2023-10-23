@@ -65,7 +65,7 @@ const RegisterPage = () => {
         console.log(error.code);
         error.code === "auth/email-already-in-use" &&
           present({
-            message: "Correo electronico ya registrado",
+            message: "Correo electrónico ya registrado",
             duration: 1500,
             color: "warning",
             position: "top",
@@ -92,10 +92,10 @@ const RegisterPage = () => {
               required
             />
             <CustomInput
-              label="Cedula/Pasaporte"
+              label="Cédula/Pasaporte"
               type="text"
               name="id"
-              placeholder="Cedula/Pasaporte"
+              placeholder="Cédula/Pasaporte"
               onChange={handleChange}
               required
             />
@@ -107,19 +107,19 @@ const RegisterPage = () => {
               required
             />
             <CustomInput
-              label="Telefono"
+              label="Teléfono"
               type="text"
               name="phone"
-              placeholder="Telefono"
+              placeholder="Teléfono"
               maxLength={10}
               onChange={handleChange}
               required
             />
             <CustomInput
-              label="Correo electronico"
+              label="Correo electrónico"
               type="email"
               name="email"
-              placeholder="Correo electronico"
+              placeholder="Correo electrónico"
               onChange={handleChange}
               required
             />
@@ -132,7 +132,7 @@ const RegisterPage = () => {
               onChange={handleChange}
               required
               errorMessage={
-                flag2 ? "La contraseña debe tener minimo 6 caracteres" : ""
+                flag2 ? "La contraseña debe tener mínimo 6 caracteres" : ""
               }
             />
             <CustomInputWithIcon

@@ -46,7 +46,7 @@ const SportCenterPage = () => {
       };
     }) || [];
 
-  const [segment, setSegment] = useState<"servicios" | "informacion">(
+  const [segment, setSegment] = useState<"servicios" | "información">(
     "servicios"
   );
   return (
@@ -54,9 +54,9 @@ const SportCenterPage = () => {
       <Header title={sportCenter?.name || ""} path="/sportsCenters" />
       <Segment
         segment={segment}
-        segmentList={["servicios", "informacion"]}
+        segmentList={["servicios", "información"]}
         setSegment={(value: string) => {
-          setSegment(value as "servicios" | "informacion");
+          setSegment(value as "servicios" | "información");
         }}
       />
       <IonContent>

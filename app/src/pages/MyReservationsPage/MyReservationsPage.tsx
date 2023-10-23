@@ -25,7 +25,7 @@ const MyReservationsPage = () => {
 
   return (
     <IonPage>
-      <Header title="Reservaciones" path="/"></Header>
+      <Header title="Mis Reservaciones" path="/"></Header>
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 mt-5 justify-center">

@@ -20,10 +20,10 @@ const ProfileInfo = ({
   return (
     <div className="flex flex-col gap-3 p-5">
       <CommonTag data={name} title="Nombre: " />
-      <CommonTag data={id} title="Cedula: " />
+      <CommonTag data={id} title="Cédula/Pasaporte: " />
       <CommonTag data={birthDate} title="Fecha de nacimiento: " />
-      <CommonTag data={phone} title="Telefono: " />
-      <CommonTag data={email} title="Correo Electronico: " />
+      <CommonTag data={phone} title="Teléfono: " />
+      <CommonTag data={email} title="Correo Electrónico: " />
       <CustomButton
         title="Editar"
         color="sucessfull"

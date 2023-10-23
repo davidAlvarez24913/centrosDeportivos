@@ -28,7 +28,7 @@ const HomePage = () => {
                 }}
               ></MenuCard>
               <MenuCard
-                title="Centro Deportivo"
+                title="Centros Deportivos"
                 description="Reserva según tu centro deportivo favorito"
                 iconPath="assets/icon/round-place.svg"
                 onClick={() => {
@@ -38,7 +38,7 @@ const HomePage = () => {
               {loggedIn ? (
                 <>
                   <MenuCard
-                    title="Reservaciones"
+                    title="Mis Reservaciones"
                     description="Mira tus reservaciones"
                     iconPath="assets/icon/register-book.svg"
                     onClick={() => {
@@ -47,7 +47,7 @@ const HomePage = () => {
                   ></MenuCard>
                   <MenuCard
                     title="Perfil"
-                    description="Informacion personal"
+                    description="Información personal"
                     iconPath="assets/icon/profile.svg"
                     onClick={() => {
                       ionRouter.push("/profile");
