@@ -9,7 +9,7 @@ const CustomInput = ({ errorMessage, label, ...rest }: PropsCustomInput) => {
     <div className="flex flex-col gap-2">
       {label && (
         <label
-          className={`text-base font-light px-1`}
+          className={`text-base font-light text-customText px-1`}
           htmlFor={label?.replaceAll(" ", "_")}
         >
           {label}
