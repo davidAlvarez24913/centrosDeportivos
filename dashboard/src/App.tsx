@@ -10,6 +10,7 @@ import LoginPage from "./pages/Login";
 import { UserContextProvider } from "./context/UserContext";
 import { ProtectedRoute } from "./components/atomos";
 import Register from "./pages/Register";
+import AccessPage from "./pages/Access";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route index path="/" element={<ReservationsPage />} />
               <Route path="/perfil" element={<ProfilePage />} />
               <Route path="/servicios" element={<ServicesPage />} />
+              <Route path="/access" element={<AccessPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />

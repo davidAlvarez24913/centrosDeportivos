@@ -1,13 +1,25 @@
 import { LinkLogo, LogoutButton, MenuBar } from "../../atomos";
 import { memo, useEffect, useState } from "react";
 import LinkNav from "../LinkNav";
+import { useGetPermissionSportCenterQuery } from "schema";
+import useUser from "../../../Hooks/useUser";
 
 type PropsNavbar = {
   nameSportCenter: string;
 };
 const Navbar = ({ nameSportCenter }: PropsNavbar) => {
+  const { user, loadingUser } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [width, setWidth] = useState(0);
+  const { data, loading } = useGetPermissionSportCenterQuery({
+    variables: { sportCenterId: user?.uid as string },
+  });
+  const flag =
+    !loadingUser &&
+    !loading &&
+    data?.getSportCenter?.superUser !== null &&
+    data?.getSportCenter?.superUser;
+
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
@@ -70,6 +82,13 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
                   iconPath="/icons/profile"
                   label="Perfil"
                 />
+                {flag && (
+                  <LinkNav
+                    href="/access"
+                    iconPath="/icons/profile"
+                    label="Autorizar"
+                  />
+                )}
               </nav>
             </div>
           </div>

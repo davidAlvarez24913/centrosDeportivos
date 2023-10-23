@@ -60,6 +60,7 @@ type SportCenter {
   services: [Service]
   image: String!
   access: Boolean!
+  superUser: Boolean
 }
 
 type Service {
