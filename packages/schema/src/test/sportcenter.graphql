@@ -5,10 +5,12 @@ query ListSportCenters {
   listSportCenters {
     sportCenterId
     name
+    email
     phone
     ubication
     schedule
     image
+    access
   }
 }
 query GetNameSportCenter($sportCenterId: ID!) {
@@ -60,5 +62,18 @@ mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
 query GetPermissionSportCenter($sportCenterId: ID!) {
   getSportCenter(sportCenterId: $sportCenterId) {
     superUser
+  }
+}
+mutation GiveAccess($sportCenterId: String!){
+  giveAccess(sportCenterId: $sportCenterId){
+    status
+    message
+  }
+}
+
+mutation RemoveAccess($sportCenterId: String!){
+  removeAccess(sportCenterId: $sportCenterId){
+    status
+    message
   }
 }
