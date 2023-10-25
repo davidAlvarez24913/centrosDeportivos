@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   return (
     <IonPage>
-      <Header title={"Informacion de Perfil"} path="/" />
+      <Header title={"Información de Perfil"} path="/" />
       <IonContent>
         <Background>
           {loading ? <Loading /> : <ProfileInfo {...userData!} />}

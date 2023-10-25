@@ -69,7 +69,7 @@ const PaymentPage = () => {
   };
   return (
     <IonPage>
-      <Header title="Forma de Pago" path="/home"></Header>
+      <Header title="Forma de Pago" path="/myreservations"></Header>
       <IonContent>
         <Background>
           <div className="flex flex-col gap-3 mt-5">

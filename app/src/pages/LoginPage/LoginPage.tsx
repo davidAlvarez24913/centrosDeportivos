@@ -30,22 +30,22 @@ const LoginPage = () => {
   };
   return (
     <IonPage>
-      <Header title="Iniciar Sesion" path="/" />
+      <Header title="Iniciar Sesión" path="/" />
       <IonContent>
         <Background>
           <form className="flex flex-col gap-3 py-5" onSubmit={handleSubmit}>
             <CustomInput
-              label="Correo Electronico"
+              label="Correo Electrónico"
               type="email"
               name="email"
-              placeholder="Correo Electronico"
+              placeholder="Correo Electrónico"
               onChange={handleChange}
               required
               errorMessage={
                 error === "auth/user-not-found"
                   ? "Usuario incorrecto, intenta de nuevo!"
                   : error === "auth/invalid-email"
-                  ? "Email invalido"
+                  ? "Correo Electrónico no válido"
                   : ""
               }
             />
@@ -65,17 +65,17 @@ const LoginPage = () => {
             />
             <CustomButton
               color="sucessfull"
-              title="INICIAR SESION"
+              title="INICIAR SESIÓN"
               type="submit"
             />
             <CustomButton
               color="outline"
-              title="REGISTRARSE"
+              title="REGISTRARME"
               type="button"
               onClick={() => ionRouter.push("/register")}
             />
             <a href="/" className="text-center underline">
-              Olvide mi contraseña
+              Olvidé mi contraseña
             </a>
           </form>
         </Background>

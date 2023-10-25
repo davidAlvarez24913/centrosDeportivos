@@ -6,7 +6,7 @@ type NoDataCardProps = {
 const NoDataCard = ({ children }: NoDataCardProps) => {
   return (
     <div
-      className={`w-full border border-primary rounded-2xl p-4 text-center font-bold text-xl mt-5`}
+      className={`w-full border text-customText border-primary rounded-2xl p-4 text-center font-bold text-xl mt-5`}
     >
       {children}
     </div>
