@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { LayoutPage, Table } from "../components/moleculas";
-import { ReservationsRow } from "../components/organismos";
+import { ReservationsRow, ReviewsRow } from "../components/organismos";
 import useUser from "../Hooks/useUser";
 import {
   ReservationNames,
   useGetNameSportCenterQuery,
+  useListReviewsBySportCenterQuery,
   useListScReservationsQuery,
 } from "schema";
 import { Loading } from "../components/atomos";
@@ -18,6 +19,10 @@ const ReservationsPage = () => {
   const { loading, data, refetch } = useListScReservationsQuery({
     variables: { sportCenterId: sportCenterId },
   });
+  const statusReviews = useListReviewsBySportCenterQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
+
   const auxReservations =
     data?.listSCReservations?.map((result) => {
       return result!;
@@ -63,6 +68,11 @@ const ReservationsPage = () => {
       />
     );
   });
+  const reviews = statusReviews.data?.listReviewsBySportCenter?.map(
+    (review, index) => {
+      return <ReviewsRow index={index} review={review.review} key={index} />;
+    }
+  );
 
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
@@ -96,6 +106,9 @@ const ReservationsPage = () => {
             ]}
             data={paidRows!}
           />
+          <h2 className="text-xl font-bold">Comentarios</h2>
+
+          <Table headers={["#", "Comentario"]} data={reviews!} />
         </div>
       )}
     </LayoutPage>
