@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { LayoutPage, Table } from "../components/moleculas";
-import { ReservationsRow } from "../components/organismos";
+import { ReservationsRow, ReviewsRow } from "../components/organismos";
 import useUser from "../Hooks/useUser";
 import {
   ReservationNames,
   useGetNameSportCenterQuery,
-  useListScReservationsLazyQuery,
+  useListReviewsBySportCenterQuery,
+  useListScReservationsQuery,
 } from "schema";
 import { Loading } from "../components/atomos";
 
@@ -15,20 +16,27 @@ const ReservationsPage = () => {
   const status = useGetNameSportCenterQuery({
     variables: { sportCenterId: sportCenterId },
   });
-  const [listReservations, { loading }] = useListScReservationsLazyQuery();
+  const { loading, data, refetch } = useListScReservationsQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
+  const statusReviews = useListReviewsBySportCenterQuery({
+    variables: { sportCenterId: sportCenterId },
+  });
 
-  const [reservations, setReservations] = useState<ReservationNames[]>([]);
+  const auxReservations =
+    data?.listSCReservations?.map((result) => {
+      return result!;
+    }) || [];
+  const [reservations, setReservations] =
+    useState<ReservationNames[]>(auxReservations);
   useEffect(() => {
-    listReservations({ variables: { sportCenterId: sportCenterId } }).then(
-      (reservations) => {
-        const result =
-          reservations.data?.listSCReservations?.map((result) => {
-            return result!;
-          }) || [];
-        setReservations(result);
-      }
-    );
-  }, []);
+    refetch();
+    const auxReservations =
+      data?.listSCReservations?.map((result) => {
+        return result!;
+      }) || [];
+    setReservations(auxReservations);
+  }, [data?.listSCReservations, refetch]);
 
   const paidReservations = reservations.filter(
     (result) => result.reservation?.state! === true
@@ -36,7 +44,7 @@ const ReservationsPage = () => {
   const unPaidReservations = reservations?.filter(
     (result) => result.reservation?.state! === false
   );
-  const paidRows = paidReservations?.map((result) => {
+  const paidRows = paidReservations?.map((result, index) => {
     const reservation = result?.reservation!;
     return (
       <ReservationsRow
@@ -44,7 +52,7 @@ const ReservationsPage = () => {
         reservationPrice={reservation?.reservationPrice.toString()}
         serviceName={result?.serviceName || ""}
         userName={result?.userName || ""}
-        key={reservation?.reservationId}
+        key={index}
       />
     );
   });
@@ -60,6 +68,11 @@ const ReservationsPage = () => {
       />
     );
   });
+  const reviews = statusReviews.data?.listReviewsBySportCenter?.map(
+    (review, index) => {
+      return <ReviewsRow index={index} review={review.review} key={index} />;
+    }
+  );
 
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
@@ -93,6 +106,9 @@ const ReservationsPage = () => {
             ]}
             data={paidRows!}
           />
+          <h2 className="text-xl font-bold">Comentarios</h2>
+
+          <Table headers={["#", "Comentario"]} data={reviews!} />
         </div>
       )}
     </LayoutPage>

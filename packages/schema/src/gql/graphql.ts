@@ -123,6 +123,7 @@ export type Mutation = {
   deleteSportCenter?: Maybe<OperationResponse>;
   deleteUser?: Maybe<OperationResponse>;
   giveAccess?: Maybe<OperationResponse>;
+  removeAccess?: Maybe<OperationResponse>;
   setPaid?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
   updateReservation?: Maybe<OperationResponse>;
@@ -193,6 +194,11 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationGiveAccessArgs = {
+  sportCenterId: Scalars['String']['input'];
+};
+
+
+export type MutationRemoveAccessArgs = {
   sportCenterId: Scalars['String']['input'];
 };
 
@@ -663,7 +669,7 @@ export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, image: string }> | null };
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean }> | null };
 
 export type GetNameSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -706,6 +712,20 @@ export type GetPermissionSportCenterQueryVariables = Exact<{
 
 
 export type GetPermissionSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', superUser?: boolean | null } | null };
+
+export type GiveAccessMutationVariables = Exact<{
+  sportCenterId: Scalars['String']['input'];
+}>;
+
+
+export type GiveAccessMutation = { __typename?: 'Mutation', giveAccess?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type RemoveAccessMutationVariables = Exact<{
+  sportCenterId: Scalars['String']['input'];
+}>;
+
+
+export type RemoveAccessMutation = { __typename?: 'Mutation', removeAccess?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1681,10 +1701,12 @@ export const ListSportCentersDocument = gql`
   listSportCenters {
     sportCenterId
     name
+    email
     phone
     ubication
     schedule
     image
+    access
   }
 }
     `;
@@ -1941,6 +1963,74 @@ export function useGetPermissionSportCenterLazyQuery(baseOptions?: Apollo.LazyQu
 export type GetPermissionSportCenterQueryHookResult = ReturnType<typeof useGetPermissionSportCenterQuery>;
 export type GetPermissionSportCenterLazyQueryHookResult = ReturnType<typeof useGetPermissionSportCenterLazyQuery>;
 export type GetPermissionSportCenterQueryResult = Apollo.QueryResult<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>;
+export const GiveAccessDocument = gql`
+    mutation GiveAccess($sportCenterId: String!) {
+  giveAccess(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+    `;
+export type GiveAccessMutationFn = Apollo.MutationFunction<GiveAccessMutation, GiveAccessMutationVariables>;
+
+/**
+ * __useGiveAccessMutation__
+ *
+ * To run a mutation, you first call `useGiveAccessMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGiveAccessMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [giveAccessMutation, { data, loading, error }] = useGiveAccessMutation({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useGiveAccessMutation(baseOptions?: Apollo.MutationHookOptions<GiveAccessMutation, GiveAccessMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GiveAccessMutation, GiveAccessMutationVariables>(GiveAccessDocument, options);
+      }
+export type GiveAccessMutationHookResult = ReturnType<typeof useGiveAccessMutation>;
+export type GiveAccessMutationResult = Apollo.MutationResult<GiveAccessMutation>;
+export type GiveAccessMutationOptions = Apollo.BaseMutationOptions<GiveAccessMutation, GiveAccessMutationVariables>;
+export const RemoveAccessDocument = gql`
+    mutation RemoveAccess($sportCenterId: String!) {
+  removeAccess(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+    `;
+export type RemoveAccessMutationFn = Apollo.MutationFunction<RemoveAccessMutation, RemoveAccessMutationVariables>;
+
+/**
+ * __useRemoveAccessMutation__
+ *
+ * To run a mutation, you first call `useRemoveAccessMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveAccessMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeAccessMutation, { data, loading, error }] = useRemoveAccessMutation({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useRemoveAccessMutation(baseOptions?: Apollo.MutationHookOptions<RemoveAccessMutation, RemoveAccessMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveAccessMutation, RemoveAccessMutationVariables>(RemoveAccessDocument, options);
+      }
+export type RemoveAccessMutationHookResult = ReturnType<typeof useRemoveAccessMutation>;
+export type RemoveAccessMutationResult = Apollo.MutationResult<RemoveAccessMutation>;
+export type RemoveAccessMutationOptions = Apollo.BaseMutationOptions<RemoveAccessMutation, RemoveAccessMutationVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {

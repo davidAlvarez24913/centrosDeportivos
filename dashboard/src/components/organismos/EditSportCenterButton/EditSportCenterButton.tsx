@@ -3,6 +3,7 @@ import { CustomButton, CustomInput, CustomTextarea } from "../../atomos";
 import { ImageInput, Modal } from "../../moleculas";
 import { UpdateSportCenterInput } from "schema";
 import { ProfileProps } from "../../moleculas/Profile/Profile";
+import { toast } from "react-toastify";
 
 type EditSportCenterButtonProps = {
   updateSportCenter: (input: UpdateSportCenterInput) => void;
@@ -36,7 +37,16 @@ const EditSportCenterButton = ({
     event.preventDefault();
     console.log(sportCenter);
     updateSportCenter({ ...sportCenter, image: newImage });
-    alert("Datos de centro deportivo actualizados correctamente");
+    toast.success("Datos de centro deportivo actualizados correctamente", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
   const handleChange = (
     event:

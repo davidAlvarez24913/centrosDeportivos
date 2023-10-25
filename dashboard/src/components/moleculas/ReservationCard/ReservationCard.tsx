@@ -2,6 +2,7 @@ import React from "react";
 import { CustomButton } from "../../atomos";
 import { useDeleteReservationMutation, useSetPaidMutation } from "schema";
 import { covertDateToStringEs } from "../../../utils";
+import { toast } from "react-toastify";
 
 type ReservationCardProps = {
   reservationId: string;
@@ -70,8 +71,30 @@ const ReservationCard = ({
             onClick={() => {
               deleteReservation({
                 variables: { reservationId: reservationId },
-              }).then(() => {
-                alert("Reserva Eliminada");
+                onCompleted() {
+                  toast.success("Reserva elimida", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                },
+                onError(error) {
+                  toast.error(error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                },
               });
             }}
           />
@@ -84,8 +107,30 @@ const ReservationCard = ({
                 variables: {
                   reservationId: reservationId,
                 },
-              }).then(() => {
-                alert("Reserva Pagada");
+                onCompleted() {
+                  toast.success("Reserva Pagada", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                },
+                onError(error) {
+                  toast.error(error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                },
               });
             }}
           />

@@ -280,6 +280,7 @@ type Mutation {
   updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
   deleteSportCenter(sportCenterId: ID!): OperationResponse
   giveAccess(sportCenterId: String!): OperationResponse
+  removeAccess(sportCenterId: String!): OperationResponse
 
   #services
   createService(input: CreateServiceInput!): Service

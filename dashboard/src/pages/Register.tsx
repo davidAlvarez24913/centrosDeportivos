@@ -49,7 +49,6 @@ const Register = () => {
             progress: undefined,
             theme: "light",
           });
-          alert("No eres admin" + JSON.stringify(error));
         },
       });
   };
@@ -89,9 +88,32 @@ const Register = () => {
         };
         createSportCenterMutation({
           variables: { input: sportCenter },
+          onCompleted() {
+            toast.success("Centro deportivo creado correctamente", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          },
+          onError(error) {
+            toast.error(error.message, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          },
         })
           .then(() => {
-            alert("Centro deportivo creado correctamente");
             handleSignOut().then(() => {
               navigate("/login");
             });
