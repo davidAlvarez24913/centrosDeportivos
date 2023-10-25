@@ -2,8 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import { useEffect, useState } from "react";
 import { useGetAccessLazyQuery } from "schema";
-import Loading from "./Loading";
-import LinkLogo from "./LinkLogo";
+import { toast } from "react-toastify";
 
 type PropsProtectedRoute = {
   children?: React.ReactNode;
@@ -28,7 +27,16 @@ const ProtectedRoute = ({
           setAccess(data.getAccess);
         },
         onError: (error) => {
-          alert("No eres admin" + JSON.stringify(error));
+          toast.error("No eres admin" + error.message, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         },
       });
   };
