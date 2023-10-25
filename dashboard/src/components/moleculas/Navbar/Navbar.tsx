@@ -85,7 +85,7 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
                 {flag && (
                   <LinkNav
                     href="/access"
-                    iconPath="/icons/profile"
+                    iconPath="/icons/admin"
                     label="Autorizar"
                   />
                 )}

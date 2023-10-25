@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { CustomLink } from "../../atomos";
+import { memo } from "react";
 
 type LinkNavProps = {
   label: string;
@@ -21,4 +22,4 @@ const LinkNav = ({ label, href, iconPath }: LinkNavProps) => {
   );
 };
 
-export default LinkNav;
+export default memo(LinkNav);
