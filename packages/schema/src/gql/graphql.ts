@@ -508,7 +508,7 @@ export type ListBankAccountsBySportCenterNameQueryVariables = Exact<{
 }>;
 
 
-export type ListBankAccountsBySportCenterNameQuery = { __typename?: 'Query', listBankAccountsBySportCenterName?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string } | null> | null };
+export type ListBankAccountsBySportCenterNameQuery = { __typename?: 'Query', listBankAccountsBySportCenterName?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string, sportCenterId: string } | null> | null };
 
 export type CreateBankAccountMutationVariables = Exact<{
   input: CreateBankAccountInput;
@@ -803,6 +803,7 @@ export const ListBankAccountsBySportCenterNameDocument = gql`
     accountType
     accountNumber
     email
+    sportCenterId
   }
 }
     `;

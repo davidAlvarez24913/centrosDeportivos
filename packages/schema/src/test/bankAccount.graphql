@@ -16,6 +16,7 @@ query ListBankAccountsBySportCenterName($sportCenterName: String!) {
     accountType
     accountNumber
     email
+    sportCenterId
   }
 }
 mutation CreateBankAccount($input: CreateBankAccountInput!) {
