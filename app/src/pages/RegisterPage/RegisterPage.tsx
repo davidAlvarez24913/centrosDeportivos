@@ -46,9 +46,8 @@ const RegisterPage = () => {
           variables: { input: user },
         })
           .then(() => {
-            console.log("Usuario creado correctamente");
             present({
-              message: "Reservacion realizada exitosamente",
+              message: "Usuario creado correctamente",
               duration: 1500,
               color: "success",
               position: "top",
@@ -58,6 +57,12 @@ const RegisterPage = () => {
           })
           .catch((error) => {
             console.log(error);
+            present({
+              message: "No se pudo crear usuario, intentalo más tarde",
+              duration: 1500,
+              color: "danger",
+              position: "top",
+            });
             handleDeleteUser();
           });
       })

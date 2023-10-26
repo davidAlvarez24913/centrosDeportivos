@@ -13,7 +13,6 @@ type PropsmModaInfoBooking = {
   hours: string[];
   price: number;
   date: string;
-  serviceId: string;
   onCreateBooking: () => void;
   loading: boolean;
   data: CreateReservationUserMutation | null | undefined;
@@ -25,7 +24,6 @@ const ModalInfoBooking = ({
   hours,
   price,
   date,
-  serviceId,
   onCreateBooking,
   data,
   loading,
