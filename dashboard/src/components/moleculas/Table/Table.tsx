@@ -25,11 +25,19 @@ const Table = ({ headers, data }: TableProps) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => {
-            // this line is temporarily because index is same
-            // return item;
-            return { ...item, key: item.key?.toString() + index.toString() };
-          })}
+          {data?.length >= 1 ? (
+            data?.map((item, index) => {
+              // this line is temporarily because index is same
+              // return item;
+              return { ...item, key: item.key?.toString() + index.toString() };
+            })
+          ) : (
+            <tr>
+              <td>
+                <span className="text-xl text-center">No existen datos</span>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

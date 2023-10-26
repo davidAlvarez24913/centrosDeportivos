@@ -1,12 +1,12 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.example.app",
+  appId: "io.reservas.start",
   appName: "ReservasTasTas",
   webDir: "build",
-  bundledWebRuntime: false,
   server: {
-    androidScheme: "https",
+    androidScheme: "http",
+    cleartext: true,
   },
 };
 

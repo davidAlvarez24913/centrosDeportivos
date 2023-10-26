@@ -508,7 +508,7 @@ export type ListBankAccountsBySportCenterNameQueryVariables = Exact<{
 }>;
 
 
-export type ListBankAccountsBySportCenterNameQuery = { __typename?: 'Query', listBankAccountsBySportCenterName?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string } | null> | null };
+export type ListBankAccountsBySportCenterNameQuery = { __typename?: 'Query', listBankAccountsBySportCenterName?: Array<{ __typename?: 'BankAccount', bankAccountId: string, name: string, id: string, accountType: string, accountNumber: string, email: string, sportCenterId: string } | null> | null };
 
 export type CreateBankAccountMutationVariables = Exact<{
   input: CreateBankAccountInput;
@@ -669,7 +669,7 @@ export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean }> | null };
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean, superUser?: boolean | null }> | null };
 
 export type GetNameSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -803,6 +803,7 @@ export const ListBankAccountsBySportCenterNameDocument = gql`
     accountType
     accountNumber
     email
+    sportCenterId
   }
 }
     `;
@@ -1707,6 +1708,7 @@ export const ListSportCentersDocument = gql`
     schedule
     image
     access
+    superUser
   }
 }
     `;

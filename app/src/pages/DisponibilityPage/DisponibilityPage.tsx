@@ -90,7 +90,7 @@ const DisponibilityPage = () => {
     } else {
       present({
         message:
-          "Debe ingresar sus credenciales para poder reazliar una reservacion ",
+          "Debe ingresar sus credenciales para poder reazliar una reservación ",
         duration: 1500,
         color: "danger",
         position: "top",
@@ -150,7 +150,6 @@ const DisponibilityPage = () => {
         price={price}
         sportCenter={sportCenter}
         nameService={nameService}
-        serviceId={serviceId}
         key={serviceId}
         onCreateBooking={onCreateBooking}
       />

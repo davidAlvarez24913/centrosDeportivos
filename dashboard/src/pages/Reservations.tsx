@@ -56,7 +56,7 @@ const ReservationsPage = () => {
       />
     );
   });
-  const rows = unPaidReservations?.map((result) => {
+  const rows = unPaidReservations?.map((result, index) => {
     const reservation = result?.reservation!;
     return (
       <ReservationsRow
@@ -64,7 +64,7 @@ const ReservationsPage = () => {
         reservationPrice={reservation?.reservationPrice.toString()}
         serviceName={result?.serviceName || ""}
         userName={result?.userName || ""}
-        key={reservation?.reservationId}
+        key={index}
       />
     );
   });

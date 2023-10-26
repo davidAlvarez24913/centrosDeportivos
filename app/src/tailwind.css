@@ -17,6 +17,7 @@ select {
   p,
   a,
   li,
+  label,
   button {
     @apply text-customText;
   }

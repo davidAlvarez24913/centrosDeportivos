@@ -11,6 +11,7 @@ query ListSportCenters {
     schedule
     image
     access
+    superUser
   }
 }
 query GetNameSportCenter($sportCenterId: ID!) {

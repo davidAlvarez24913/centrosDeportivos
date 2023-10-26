@@ -116,7 +116,7 @@ const ProfilePage = () => {
       .catch((err) => {
         console.log(err);
         toast.error(
-          "No se pudo eliminar la cuenta bancaria, intentalo mas tarde",
+          "No se pudo eliminar la cuenta bancaria, intentalo más tarde",
           {
             position: "top-center",
             autoClose: 3000,
