@@ -35,7 +35,6 @@ export const bankAccountResolvers = {
           sportCenterId: bankAccount.sportCenter.sportCenterId,
         };
       });
-      console.log(result);
       return result;
     },
   },
