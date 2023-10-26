@@ -25,7 +25,7 @@ const Table = ({ headers, data }: TableProps) => {
           </tr>
         </thead>
         <tbody>
-          {data.length >= 1 ? (
+          {data?.length >= 1 ? (
             data?.map((item, index) => {
               // this line is temporarily because index is same
               // return item;
