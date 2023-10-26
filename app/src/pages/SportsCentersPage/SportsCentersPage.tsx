@@ -12,9 +12,17 @@ const SportsCentersPage = () => {
   const { data, loading } = useListSportCentersQuery();
 
   const sportsCenters =
-    data?.listSportCenters?.map((sportCenter) => {
-      return { ...sportCenter! };
-    }) || [];
+    data?.listSportCenters
+      ?.filter((sp, index) => {
+        const flagAccess = sp.access === true;
+        const flagSuperUser = sp.superUser !== true;
+        if (flagAccess && flagSuperUser) {
+          return sp;
+        }
+      })
+      .map((sportCenter) => {
+        return { ...sportCenter! };
+      }) || [];
   return (
     <IonPage>
       <Header title={`Centros Deportivos`} path="/home" />
