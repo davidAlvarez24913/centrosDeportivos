@@ -20,13 +20,22 @@ export const bankAccountResolvers = {
     ) => {
       const bankAccounts = await BankAccount.find({
         where: { sportCenter: { name: sportCenterName } },
+        relations: { sportCenter: true },
       });
       const result = bankAccounts.map((bankAccount) => {
+        const { bankAccountId, name, id, accountNumber, accountType, email } =
+          bankAccount;
         return {
-          ...bankAccount,
+          bankAccountId,
+          name,
+          id,
+          accountNumber,
+          accountType,
+          email,
           sportCenterId: bankAccount.sportCenter.sportCenterId,
         };
       });
+      console.log(result);
       return result;
     },
   },
