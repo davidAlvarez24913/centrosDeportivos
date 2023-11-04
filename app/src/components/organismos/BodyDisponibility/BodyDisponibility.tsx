@@ -74,7 +74,7 @@ const BodyDisponibility = ({
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex gap-8 py-4 overflow-scroll">
+      <div className="flex gap-8 py-4 overflow-x-scroll">
         {days.map((day, index) => {
           return (
             <DayCard
