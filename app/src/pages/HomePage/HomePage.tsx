@@ -38,7 +38,7 @@ const HomePage = () => {
               <MenuCard
                 title="Centros Deportivos"
                 description="Reserva según tu centro deportivo favorito"
-                iconPath="assets/icon/round-place.svg"
+                iconPath="assets/icon/stadium.svg"
                 onClick={() => {
                   ionRouter.push("/sportsCenters");
                 }}
