@@ -1,5 +1,11 @@
-import React from "react";
-import { IonContent, IonPage } from "@ionic/react";
+import React, { useEffect } from "react";
+import {
+  IonContent,
+  IonPage,
+  IonRefresher,
+  IonRefresherContent,
+  RefresherEventDetail,
+} from "@ionic/react";
 import { useListSportCentersQuery } from "schema";
 import {
   Background,
@@ -9,7 +15,7 @@ import {
 } from "src/components/atomos";
 import { SportCenterCard } from "src/components/moleculas";
 const SportsCentersPage = () => {
-  const { data, loading } = useListSportCentersQuery();
+  const { data, loading, refetch } = useListSportCentersQuery();
 
   const sportsCenters =
     data?.listSportCenters
@@ -23,10 +29,22 @@ const SportsCentersPage = () => {
       .map((sportCenter) => {
         return { ...sportCenter! };
       }) || [];
+  useEffect(() => {
+    refetch();
+  }, []);
+  const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+    setTimeout(() => {
+      refetch();
+      event.detail.complete();
+    }, 2000);
+  };
   return (
     <IonPage>
       <Header title={`Centros Deportivos`} path="/home" />
       <IonContent>
+        <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         <Background>
           {loading ? (
             <Loading />
