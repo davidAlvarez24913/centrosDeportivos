@@ -1,12 +1,17 @@
 import { IonContent, IonPage, useIonRouter } from "@ionic/react";
 import React from "react";
+import { useGetUserQuery } from "schema";
 import useUser from "src/Hooks/useUser";
 import { Background, CustomButton } from "src/components/atomos";
 import { MenuCard } from "src/components/moleculas";
 
 const HomePage = () => {
   const user = useUser();
+
   const ionRouter = useIonRouter();
+  const { data } = useGetUserQuery({
+    variables: { userId: user?.user?.uid || "" },
+  });
   const loggedIn = user.user ? true : false;
   return (
     <IonPage>
@@ -19,6 +24,9 @@ const HomePage = () => {
               className="w-32 m-auto"
             />
             <div className="flex flex-col gap-2">
+              <h2 className="font-bold text-xl text-center p-3">
+                Bienvendio {data?.findUser?.name}
+              </h2>
               <MenuCard
                 title="Deportes"
                 description="Reserva según el deporte que prefieras"
