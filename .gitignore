@@ -6,3 +6,4 @@ yarn.lock
 bun.lockb
 package.json
 app/android
+nohup.out
