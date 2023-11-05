@@ -2,9 +2,14 @@ import { useState } from "react";
 
 type PropsMoreOptions = {
   onEdit: () => void;
+  onCustomSchedule: () => void;
   onDelete: () => void;
 };
-const MoreOptions = ({ onEdit, onDelete }: PropsMoreOptions) => {
+const MoreOptions = ({
+  onEdit,
+  onDelete,
+  onCustomSchedule,
+}: PropsMoreOptions) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col relative ">
@@ -12,7 +17,7 @@ const MoreOptions = ({ onEdit, onDelete }: PropsMoreOptions) => {
         <img src="/icons/more.svg" alt="More options icon" width={28} />
       </button>
       <div
-        className={`mt-7 ml-2 bg-background p-2 z-30 absolute bg-opacity-80 flex flex-col gap-2 rounded-md ${
+        className={`mt-7 -ml-5 bg-background p-2 z-30 absolute bg-opacity-80 flex flex-col gap-2 rounded-md ${
           open ? "" : "hidden"
         }`}
       >
@@ -21,6 +26,12 @@ const MoreOptions = ({ onEdit, onDelete }: PropsMoreOptions) => {
           className="text-white text-start hover:bg-background hover:text-lg"
         >
           Editar
+        </button>
+        <button
+          onClick={onCustomSchedule}
+          className="text-white text-start hover:bg-background hover:text-lg"
+        >
+          Horario Personalizado
         </button>
         <button
           onClick={onDelete}

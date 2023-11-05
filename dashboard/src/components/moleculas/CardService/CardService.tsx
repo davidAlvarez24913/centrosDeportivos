@@ -10,6 +10,7 @@ import {
 import ModalEditService from "../ModalEditService";
 import ModalNewBook from "../ModalNewBook";
 import { toast } from "react-toastify";
+import ModalCUstomSchedule from "../ModalCustomSchedule";
 
 type PropsCardService = {
   onRefetch: () => void;
@@ -22,6 +23,7 @@ type PropsCardService = {
 const CardService = ({ service, onRefetch }: PropsCardService) => {
   const [modal, setModal] = useState(false);
   const [modalReservation, setModalReservation] = useState(false);
+  const [customSchedule, setCustomSchedule] = useState(false);
 
   const [modalEdit, setModalEdit] = useState(false);
   const [updateServiceMutation, { loading }] = useUpdateServiceMutation();
@@ -124,6 +126,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           setModalEdit(true);
         }}
         onDelete={onDelete}
+        onCustomSchedule={() => setCustomSchedule(true)}
         closeModal={() => {
           setModal(false);
         }}
@@ -166,6 +169,15 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           />
         </Modal>
       </>
+      <Modal
+        title="Horario Personalizado"
+        closeModal={() => {
+          setCustomSchedule(false);
+        }}
+        modalState={customSchedule}
+      >
+        <ModalCUstomSchedule onClose={() => setCustomSchedule(false)} />
+      </Modal>
     </div>
   );
 };

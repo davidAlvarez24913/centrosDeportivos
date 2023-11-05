@@ -8,6 +8,7 @@ type ModalPorps = {
   cantClose?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
+  onCustomSchedule?: () => void;
   moreOptions?: boolean;
 } & PropsWithChildren;
 
@@ -19,6 +20,7 @@ const Modal = ({
   children,
   onEdit,
   onDelete,
+  onCustomSchedule,
   moreOptions = false,
 }: ModalPorps) => {
   return (
@@ -30,7 +32,11 @@ const Modal = ({
               <h2 className="text-xl font-bold">{title}</h2>
               <div className="flex flex-row gap-3">
                 {moreOptions && (
-                  <MoreOptions onDelete={onDelete!} onEdit={onEdit!} />
+                  <MoreOptions
+                    onDelete={onDelete!}
+                    onEdit={onEdit!}
+                    onCustomSchedule={onCustomSchedule!}
+                  />
                 )}
                 <button
                   type="button"
