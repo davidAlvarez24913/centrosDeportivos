@@ -29,6 +29,26 @@ ion-content {
   --keyboard-offset: 0 !important;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #12111F;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #98CE00;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #98CE00;
+}
 /* offset for iOS status Bar*/
 .toolbar-ios {
   padding-top: env(safe-area-inset-top);

@@ -1,5 +1,11 @@
-import { IonContent, IonPage } from "@ionic/react";
-import React, { useState } from "react";
+import {
+  IonContent,
+  IonPage,
+  IonRefresher,
+  IonRefresherContent,
+  RefresherEventDetail,
+} from "@ionic/react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import {
   useGetSportCenterQuery,
@@ -49,6 +55,21 @@ const SportCenterPage = () => {
   const [segment, setSegment] = useState<"servicios" | "información">(
     "servicios"
   );
+  useEffect(() => {
+    sportCenterData.refetch();
+    reviewsData.refetch();
+    servicesData.refetch();
+    sportCenterData.refetch();
+  }, []);
+  const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+    setTimeout(() => {
+      sportCenterData.refetch();
+      reviewsData.refetch();
+      servicesData.refetch();
+      sportCenterData.refetch();
+      event.detail.complete();
+    }, 2000);
+  };
   return (
     <IonPage>
       <Header title={sportCenter?.name || ""} path="/sportsCenters" />
@@ -60,6 +81,9 @@ const SportCenterPage = () => {
         }}
       />
       <IonContent>
+        <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         <Background>
           {sportCenterData.loading && servicesData.loading ? (
             <Loading />

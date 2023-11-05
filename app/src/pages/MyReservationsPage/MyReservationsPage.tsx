@@ -1,4 +1,10 @@
-import { IonPage, IonContent } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  RefresherEventDetail,
+  IonRefresher,
+  IonRefresherContent,
+} from "@ionic/react";
 import React, { useEffect } from "react";
 import { useListUserReservationsQuery } from "schema";
 import useUser from "src/Hooks/useUser";
@@ -23,10 +29,19 @@ const MyReservationsPage = () => {
     refetch();
   }, []);
 
+  const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+    setTimeout(() => {
+      refetch();
+      event.detail.complete();
+    }, 2000);
+  };
   return (
     <IonPage>
       <Header title="Mis Reservaciones" path="/"></Header>
       <IonContent>
+        <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         <Background>
           <div className="flex flex-col gap-3 mt-5 justify-center">
             <CustomInput type="text" placeholder="Buscar"></CustomInput>

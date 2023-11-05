@@ -51,6 +51,12 @@ const DisponibilityPage = () => {
   useEffect(() => {
     !disponibility.loading && setHours(auxHours);
   }, [day, disponibility.loading]);
+
+  useEffect(() => {
+    console.log(disponibility.loading);
+    disponibility.refetch();
+  }, [day]);
+
   //mutation create reservation
   const [createReservationInputMutation, { data, loading }] =
     useCreateReservationUserMutation();
