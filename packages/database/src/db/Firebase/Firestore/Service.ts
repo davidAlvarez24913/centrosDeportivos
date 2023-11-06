@@ -62,3 +62,13 @@ export const updateFirestoreService = async (service: FireStoreService) => {
 
 export const deleteFirestoreService = async (serviceId: string) =>
   await deleteDoc(doc(db, document, serviceId));
+
+export const UpdateDisponilityFirestore = async (
+  serviceId: string,
+  disponibility: Disponibility
+) => {
+  const docRef = doc(db, document, serviceId);
+  await updateDoc(docRef, {
+    disponibility: disponibility,
+  });
+};

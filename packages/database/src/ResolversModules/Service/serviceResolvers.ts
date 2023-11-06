@@ -10,6 +10,7 @@ import { mergeServices, mergeServicesWithSportCenter } from "../utils";
 import CreateServiceResolver from "./CreateServiceResolver";
 import UpdateServiceResolver from "./UpdateServiceResolver";
 import DeleteServiceResolver from "./DeleteServiceResolver";
+import UpdateOnlyDisponility from "./UpdateOnlyDisponibility";
 
 export const serviceResolvers = {
   Query: {
@@ -46,5 +47,6 @@ export const serviceResolvers = {
     createService: CreateServiceResolver,
     updateService: UpdateServiceResolver,
     deleteService: DeleteServiceResolver,
+    updateOnlyDisponibility: UpdateOnlyDisponility,
   },
 };

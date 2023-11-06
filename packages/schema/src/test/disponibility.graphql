@@ -4,3 +4,9 @@ query GetDisponibility($serviceId: ID!, $date: String!) {
       price
   }
 }
+mutation UpdateOnlyDisponibility($input: UpdateOnlyDisponibilityInput){
+  updateOnlyDisponibility(input: $input){
+    status
+    message
+}
+}

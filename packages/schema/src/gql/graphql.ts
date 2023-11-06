@@ -126,6 +126,7 @@ export type Mutation = {
   removeAccess?: Maybe<OperationResponse>;
   setPaid?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
+  updateOnlyDisponibility?: Maybe<OperationResponse>;
   updateReservation?: Maybe<OperationResponse>;
   updateService?: Maybe<OperationResponse>;
   updateSportCenter?: Maybe<OperationResponse>;
@@ -210,6 +211,11 @@ export type MutationSetPaidArgs = {
 
 export type MutationUpdateBankAccountArgs = {
   input: UpdateBankAccountInput;
+};
+
+
+export type MutationUpdateOnlyDisponibilityArgs = {
+  input?: InputMaybe<UpdateOnlyDisponibilityInput>;
 };
 
 
@@ -434,6 +440,20 @@ export type UpdateDisponibilityInput = {
   Wednesday?: InputMaybe<Array<UpdateRangeHourInput>>;
 };
 
+export type UpdateOnlyDisponibilityInput = {
+  Friday: Scalars['Boolean']['input'];
+  Monday: Scalars['Boolean']['input'];
+  Saturday: Scalars['Boolean']['input'];
+  Sunday: Scalars['Boolean']['input'];
+  Thursday: Scalars['Boolean']['input'];
+  Tuesday: Scalars['Boolean']['input'];
+  Wednesday: Scalars['Boolean']['input'];
+  endHour: Scalars['String']['input'];
+  price: Scalars['Float']['input'];
+  serviceId: Scalars['String']['input'];
+  startHour: Scalars['String']['input'];
+};
+
 export type UpdateRangeHourInput = {
   endHour: Scalars['String']['input'];
   price: Scalars['Float']['input'];
@@ -538,6 +558,13 @@ export type GetDisponibilityQueryVariables = Exact<{
 
 
 export type GetDisponibilityQuery = { __typename?: 'Query', getDisponibility?: Array<{ __typename?: 'AvailableHour', rangeHour: string, price: number }> | null };
+
+export type UpdateOnlyDisponibilityMutationVariables = Exact<{
+  input?: InputMaybe<UpdateOnlyDisponibilityInput>;
+}>;
+
+
+export type UpdateOnlyDisponibilityMutation = { __typename?: 'Mutation', updateOnlyDisponibility?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type ListScReservationsQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -973,6 +1000,40 @@ export function useGetDisponibilityLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetDisponibilityQueryHookResult = ReturnType<typeof useGetDisponibilityQuery>;
 export type GetDisponibilityLazyQueryHookResult = ReturnType<typeof useGetDisponibilityLazyQuery>;
 export type GetDisponibilityQueryResult = Apollo.QueryResult<GetDisponibilityQuery, GetDisponibilityQueryVariables>;
+export const UpdateOnlyDisponibilityDocument = gql`
+    mutation UpdateOnlyDisponibility($input: UpdateOnlyDisponibilityInput) {
+  updateOnlyDisponibility(input: $input) {
+    status
+    message
+  }
+}
+    `;
+export type UpdateOnlyDisponibilityMutationFn = Apollo.MutationFunction<UpdateOnlyDisponibilityMutation, UpdateOnlyDisponibilityMutationVariables>;
+
+/**
+ * __useUpdateOnlyDisponibilityMutation__
+ *
+ * To run a mutation, you first call `useUpdateOnlyDisponibilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOnlyDisponibilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOnlyDisponibilityMutation, { data, loading, error }] = useUpdateOnlyDisponibilityMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOnlyDisponibilityMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOnlyDisponibilityMutation, UpdateOnlyDisponibilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOnlyDisponibilityMutation, UpdateOnlyDisponibilityMutationVariables>(UpdateOnlyDisponibilityDocument, options);
+      }
+export type UpdateOnlyDisponibilityMutationHookResult = ReturnType<typeof useUpdateOnlyDisponibilityMutation>;
+export type UpdateOnlyDisponibilityMutationResult = Apollo.MutationResult<UpdateOnlyDisponibilityMutation>;
+export type UpdateOnlyDisponibilityMutationOptions = Apollo.BaseMutationOptions<UpdateOnlyDisponibilityMutation, UpdateOnlyDisponibilityMutationVariables>;
 export const ListScReservationsDocument = gql`
     query ListSCReservations($sportCenterId: ID!) {
   listSCReservations(sportCenterId: $sportCenterId) {

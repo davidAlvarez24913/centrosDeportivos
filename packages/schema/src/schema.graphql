@@ -235,6 +235,19 @@ type AvailableHour{
   rangeHour: String!
   price: Float!
 }
+input UpdateOnlyDisponibilityInput{
+  serviceId: String!
+  startHour: String!
+  endHour: String!
+  price: Float!
+  Monday: Boolean!
+  Tuesday: Boolean!
+  Wednesday: Boolean!
+  Thursday: Boolean!
+  Friday: Boolean!
+  Saturday: Boolean!
+  Sunday: Boolean!
+}
 type Query {
   #users
   allUsers: [User]
@@ -286,6 +299,7 @@ type Mutation {
   createService(input: CreateServiceInput!): Service
   updateService(input: UpdateServiceInput): OperationResponse
   deleteService(serviceId: ID!): OperationResponse
+  updateOnlyDisponibility(input: UpdateOnlyDisponibilityInput): OperationResponse
 
   #bankAccounts
   createBankAccount(input: CreateBankAccountInput!): BankAccount
