@@ -43,7 +43,7 @@ const UpdateOnlyDisponility = async (root: any, { input }: any) => {
         if (value) {
           disp = {
             ...disp,
-            [key]: { startHour: startHour, endHour: endHour, price: price },
+            [key]: [{ startHour: startHour, endHour: endHour, price: price }],
           };
         }
       });
