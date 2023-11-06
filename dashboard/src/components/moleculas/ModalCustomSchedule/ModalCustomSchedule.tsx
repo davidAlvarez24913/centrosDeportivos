@@ -1,9 +1,12 @@
-import { RangeHour } from "schema";
+import { RangeHour, useUpdateOnlyDisponibilityMutation } from "schema";
 import { CustomButton, CustomInput } from "../../atomos";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type CustomScheduleProps = {
   onClose: () => void;
+  serviceId: string;
+  onRefetch: () => void;
 };
 type days = {
   Monday: boolean;
@@ -14,7 +17,13 @@ type days = {
   Saturday: boolean;
   Sunday: boolean;
 };
-const ModalCustomSchedule = ({ onClose }: CustomScheduleProps) => {
+const ModalCustomSchedule = ({
+  onClose,
+  serviceId,
+  onRefetch,
+}: CustomScheduleProps) => {
+  const [updateOnlyDisponibilityMutation] =
+    useUpdateOnlyDisponibilityMutation();
   const [rangeHourAux, setRangeHourAux] = useState<RangeHour>({
     startHour: "",
     endHour: "",
@@ -46,6 +55,41 @@ const ModalCustomSchedule = ({ onClose }: CustomScheduleProps) => {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    updateOnlyDisponibilityMutation({
+      variables: {
+        input: {
+          serviceId: serviceId,
+          ...rangeHourAux,
+          ...selectedDays,
+        },
+      },
+      onCompleted: (data) => {
+        toast.success(data.updateOnlyDisponibility?.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        onClose();
+      },
+      onError: (error) => {
+        toast.error(error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+    });
     console.log({ ...rangeHourAux, ...selectedDays });
   };
 

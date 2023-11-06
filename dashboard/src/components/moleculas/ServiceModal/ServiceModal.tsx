@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RangeHour, Service, UpdateServiceInput } from "schema";
 import { CustomButton } from "../../atomos";
 import ScheduleContent from "../ScheduleContent";
@@ -25,6 +25,9 @@ const ServiceModal = ({
   setModalReservation,
   flagDispopinibility,
 }: ServiceFormProps) => {
+  useEffect(() => {
+    onRefetch();
+  });
   return (
     <div>
       <div className="py-2">

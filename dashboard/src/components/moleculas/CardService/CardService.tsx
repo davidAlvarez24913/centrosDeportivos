@@ -176,7 +176,11 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
         }}
         modalState={customSchedule}
       >
-        <ModalCUstomSchedule onClose={() => setCustomSchedule(false)} />
+        <ModalCUstomSchedule
+          onClose={() => setCustomSchedule(false)}
+          serviceId={service.serviceId}
+          onRefetch={onRefetch}
+        />
       </Modal>
     </div>
   );
