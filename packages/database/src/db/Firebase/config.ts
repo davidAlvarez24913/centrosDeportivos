@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
 import { getStorage } from "firebase/storage";
+import GenerateHoursDisponibility from "../../GenerateDisponibility";
 
 const firebaseConfig = {
   apiKey: process.env.APIKEY,
@@ -13,3 +14,9 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+try {
+  GenerateHoursDisponibility();
+} catch (error) {
+  console.log(error);
+}
