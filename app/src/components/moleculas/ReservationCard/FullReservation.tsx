@@ -37,6 +37,7 @@ const FullReservation = ({
   date,
   image,
   reservationPrice,
+  paymentId,
   refetch,
 }: FullServiceProps) => {
   const { user } = useUser();
@@ -71,11 +72,20 @@ const FullReservation = ({
             <CommonTag title="Precio:" data={`$ ${reservationPrice}`} />
             <CommonTag
               title="Estado de Pago"
-              data={state ? "Pagado" : "Pendiente"}
+              data={
+                state
+                  ? "Pagado"
+                  : image !== "" || paymentId !== ""
+                  ? "Pendiente Confirmación"
+                  : "Pendiente Pago"
+              }
             />
+            {paymentId !== "" && (
+              <CommonTag title="Identificador de pago" data={paymentId} />
+            )}
             {image !== "" && <img src={image} alt="Comprobante de Pago" />}
             <div className="flex flex-col gap-4">
-              {state ? (
+              {state || image !== "" || paymentId !== "" ? (
                 !isReviewed && (
                   <CustomButton
                     color="sucessfull"

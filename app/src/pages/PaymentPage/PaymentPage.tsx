@@ -75,12 +75,11 @@ const PaymentPage = () => {
           <div className="flex flex-col gap-3 mt-5">
             <h2 className="font-bold text-xl">Cuentas Bancarias</h2>
             <h2 className="font-bold text-xl">{sportCenterName}</h2>
-            {/* {loading ? (
+            {loading ? (
               <Loading />
             ) : (
               <Accordion accounts={accounts}></Accordion>
-            )} */}
-            <Accordion accounts={accounts}></Accordion>
+            )}
 
             <p>Agrega el comprobante o el identificador de la transacción.</p>
             <h3 className="font-bold text-lg">

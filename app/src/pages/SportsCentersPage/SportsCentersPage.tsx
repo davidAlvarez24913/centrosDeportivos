@@ -50,7 +50,7 @@ const SportsCentersPage = () => {
             <Loading />
           ) : (
             <div className="flex flex-col gap-3 mt-5 justify-center">
-              <CustomInput type="text" placeholder="Buscar" />
+              {/* <CustomInput type="text" placeholder="Buscar" /> */}
               <div className="flex flex-col gap-3">
                 {sportsCenters.map((sportCenter) => {
                   return (

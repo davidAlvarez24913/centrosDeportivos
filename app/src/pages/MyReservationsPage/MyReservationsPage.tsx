@@ -44,7 +44,7 @@ const MyReservationsPage = () => {
         </IonRefresher>
         <Background>
           <div className="flex flex-col gap-3 mt-5 justify-center">
-            <CustomInput type="text" placeholder="Buscar"></CustomInput>
+            {/* <CustomInput type="text" placeholder="Buscar"></CustomInput> */}
             <div className="flex flex-col gap-3">
               {loading ? (
                 <Loading />

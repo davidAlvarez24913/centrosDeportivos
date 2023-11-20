@@ -24,6 +24,8 @@ const ReservationCard = (reservation: ReservationProps) => {
     rangeHour,
     date,
     state,
+    image,
+    paymentId,
   } = reservation;
   return (
     <MainCard>
@@ -57,8 +59,14 @@ const ReservationCard = (reservation: ReservationProps) => {
           <h2 className="text-xl font-bold">Pago</h2>
           {state ? (
             <h3 className="text-base font-semibold text-primary">Pagado</h3>
+          ) : image !== "" || paymentId !== "" ? (
+            <h3 className="text-base font-semibold text-orange-400">
+              Pendiente Confirmación
+            </h3>
           ) : (
-            <h3 className="text-base font-semibold text-error">Pendiente</h3>
+            <h3 className="text-base font-semibold text-error">
+              Pendiente Pago
+            </h3>
           )}
         </div>
       </div>
