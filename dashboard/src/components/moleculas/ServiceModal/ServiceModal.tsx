@@ -7,6 +7,7 @@ type ServiceFormProps = {
   onClose: () => void;
   onRefetch: () => void;
   onUpdate: (input: UpdateServiceInput) => void;
+  onCustomSchedule: () => void;
   loading: boolean;
   flagDispopinibility: boolean;
   service: Omit<
@@ -24,6 +25,7 @@ const ServiceModal = ({
   loading,
   setModalReservation,
   flagDispopinibility,
+  onCustomSchedule,
 }: ServiceFormProps) => {
   useEffect(() => {
     onRefetch();
@@ -43,7 +45,16 @@ const ServiceModal = ({
         <p className="font-semibold">Categoria - Deporte:</p>
         <p>{service.sport}</p>
       </div>
-      <p className="font-semibold">Horarios</p>
+      <div className="flex justify-between mt-1 ">
+        <p className="font-semibold p-1">Horarios</p>
+        <button
+          type="button"
+          className="bg-primary py-1 px-2 cursor-pointer rounded-md font-semibold"
+          onClick={onCustomSchedule}
+        >
+          Agregar horario personalizado
+        </button>
+      </div>
       <ScheduleContent
         service={service as Service}
         rangeHourList={

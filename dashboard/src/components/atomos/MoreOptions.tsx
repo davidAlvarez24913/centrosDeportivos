@@ -2,14 +2,9 @@ import { useState } from "react";
 
 type PropsMoreOptions = {
   onEdit: () => void;
-  onCustomSchedule: () => void;
   onDelete: () => void;
 };
-const MoreOptions = ({
-  onEdit,
-  onDelete,
-  onCustomSchedule,
-}: PropsMoreOptions) => {
+const MoreOptions = ({ onEdit, onDelete }: PropsMoreOptions) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col relative ">
@@ -27,12 +22,7 @@ const MoreOptions = ({
         >
           Editar
         </button>
-        <button
-          onClick={onCustomSchedule}
-          className="text-white text-start hover:bg-background hover:text-lg"
-        >
-          Horario Personalizado
-        </button>
+
         <button
           onClick={onDelete}
           className="text-white text-start hover:bg-background hover:text-lg"

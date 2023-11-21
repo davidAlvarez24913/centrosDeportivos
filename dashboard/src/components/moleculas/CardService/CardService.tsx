@@ -126,7 +126,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           setModalEdit(true);
         }}
         onDelete={onDelete}
-        onCustomSchedule={() => setCustomSchedule(true)}
+        // onCustomSchedule={() => setCustomSchedule(true)}
         closeModal={() => {
           setModal(false);
         }}
@@ -139,6 +139,7 @@ const CardService = ({ service, onRefetch }: PropsCardService) => {
           onRefetch={onRefetch}
           onUpdate={onUpdate}
           loading={loading}
+          onCustomSchedule={() => setCustomSchedule(true)}
           flagDispopinibility={service.disponibility === null}
           setModalReservation={setModalReservation}
         />
