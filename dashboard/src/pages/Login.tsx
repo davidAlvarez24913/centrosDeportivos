@@ -28,16 +28,7 @@ const LoginPage = () => {
           navigate("/");
         },
         onError: (error) => {
-          toast.error("No eres admin", {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          console.log(error);
         },
       });
   };
@@ -72,20 +63,10 @@ const LoginPage = () => {
               navigate("/");
             } else {
               handleSignOut();
-              toast.error("No eres admin", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
             }
           },
-          onError: (error) => {
-            toast.error(error.message, {
+          onError: () => {
+            toast.error("Tu cuenta aun no ha sido verificada", {
               position: "top-center",
               autoClose: 3000,
               hideProgressBar: false,
