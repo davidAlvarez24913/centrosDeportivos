@@ -11,7 +11,6 @@ query ListSportCenters {
     schedule
     image
     access
-    superUser
   }
 }
 query GetNameSportCenter($sportCenterId: ID!) {
@@ -60,11 +59,7 @@ mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
     message
   }
 }
-query GetPermissionSportCenter($sportCenterId: ID!) {
-  getSportCenter(sportCenterId: $sportCenterId) {
-    superUser
-  }
-}
+
 mutation GiveAccess($sportCenterId: String!){
   giveAccess(sportCenterId: $sportCenterId){
     status

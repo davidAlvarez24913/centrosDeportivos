@@ -60,9 +60,11 @@ type SportCenter {
   services: [Service]
   image: String!
   access: Boolean!
-  superUser: Boolean
 }
-
+type Admin{
+  adminId: ID!
+  email: String!
+}
 type Service {
   serviceId: ID!
   name: String!
@@ -278,8 +280,8 @@ type Query {
   listReviewsBySportCenter(sportCenterId: ID!): [Review!]
   reservationReviewed(reservationId: ID!): Boolean!
 
-  # disponibility will be query get all reservationsByServiceByDate and schedule
-  # Create resolver get Service By Id
+  #admin
+  isAdmin(adminId: ID!): Boolean!
 }
 
 type Mutation {

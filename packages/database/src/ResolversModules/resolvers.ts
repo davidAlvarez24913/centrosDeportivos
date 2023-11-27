@@ -5,6 +5,7 @@ import { reservationResolvers } from "./Reservation/reservationResolver";
 import { reviewResolvers } from "./Review/ReviewResolver";
 import { bankAccountResolvers } from "./BankAccount/BankAccountResolvers";
 import { disponibilityResolvers } from "./Disponibility/DisponibilityResolver";
+import { adminResolvers } from "./Admin/adminResolvers";
 
 const resolvers = {
   Query: {
@@ -15,6 +16,7 @@ const resolvers = {
     ...reviewResolvers.Query,
     ...bankAccountResolvers.Query,
     ...disponibilityResolvers.Query,
+    ...adminResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,

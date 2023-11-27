@@ -17,6 +17,12 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Admin = {
+  __typename?: 'Admin';
+  adminId: Scalars['ID']['output'];
+  email: Scalars['String']['output'];
+};
+
 export type AvailableHour = {
   __typename?: 'AvailableHour';
   price: Scalars['Float']['output'];
@@ -253,6 +259,7 @@ export type Query = {
   getReservationsByDate?: Maybe<Array<Maybe<Reservation>>>;
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
+  isAdmin: Scalars['Boolean']['output'];
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
   listBankAccountsBySportCenterName?: Maybe<Array<Maybe<BankAccount>>>;
   listReviewsBySportCenter?: Maybe<Array<Review>>;
@@ -295,6 +302,11 @@ export type QueryGetSportCenterArgs = {
 
 export type QueryGetSportCenterWithServicesArgs = {
   sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryIsAdminArgs = {
+  adminId: Scalars['ID']['input'];
 };
 
 
@@ -412,7 +424,6 @@ export type SportCenter = {
   schedule: Scalars['String']['output'];
   services?: Maybe<Array<Maybe<Service>>>;
   sportCenterId: Scalars['ID']['output'];
-  superUser?: Maybe<Scalars['Boolean']['output']>;
   ubication: Scalars['String']['output'];
 };
 
@@ -515,6 +526,13 @@ export enum Weekday {
   Tuesday = 'Tuesday',
   Wednesday = 'Wednesday'
 }
+
+export type IsAdminQueryVariables = Exact<{
+  adminId: Scalars['ID']['input'];
+}>;
+
+
+export type IsAdminQuery = { __typename?: 'Query', isAdmin: boolean };
 
 export type ListBankAccountsBySportCenterIdQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -696,7 +714,7 @@ export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean, superUser?: boolean | null }> | null };
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean }> | null };
 
 export type GetNameSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -732,13 +750,6 @@ export type UpdateSportCenterMutationVariables = Exact<{
 
 
 export type UpdateSportCenterMutation = { __typename?: 'Mutation', updateSportCenter?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
-
-export type GetPermissionSportCenterQueryVariables = Exact<{
-  sportCenterId: Scalars['ID']['input'];
-}>;
-
-
-export type GetPermissionSportCenterQuery = { __typename?: 'Query', getSportCenter?: { __typename?: 'SportCenter', superUser?: boolean | null } | null };
 
 export type GiveAccessMutationVariables = Exact<{
   sportCenterId: Scalars['String']['input'];
@@ -781,6 +792,39 @@ export type UpdateUserMutationVariables = Exact<{
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 
+export const IsAdminDocument = gql`
+    query IsAdmin($adminId: ID!) {
+  isAdmin(adminId: $adminId)
+}
+    `;
+
+/**
+ * __useIsAdminQuery__
+ *
+ * To run a query within a React component, call `useIsAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsAdminQuery({
+ *   variables: {
+ *      adminId: // value for 'adminId'
+ *   },
+ * });
+ */
+export function useIsAdminQuery(baseOptions: Apollo.QueryHookOptions<IsAdminQuery, IsAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IsAdminQuery, IsAdminQueryVariables>(IsAdminDocument, options);
+      }
+export function useIsAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsAdminQuery, IsAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IsAdminQuery, IsAdminQueryVariables>(IsAdminDocument, options);
+        }
+export type IsAdminQueryHookResult = ReturnType<typeof useIsAdminQuery>;
+export type IsAdminLazyQueryHookResult = ReturnType<typeof useIsAdminLazyQuery>;
+export type IsAdminQueryResult = Apollo.QueryResult<IsAdminQuery, IsAdminQueryVariables>;
 export const ListBankAccountsBySportCenterIdDocument = gql`
     query ListBankAccountsBySportCenterId($sportCenterId: ID!) {
   listBankAccountsBySportCenterId(sportCenterId: $sportCenterId) {
@@ -1769,7 +1813,6 @@ export const ListSportCentersDocument = gql`
     schedule
     image
     access
-    superUser
   }
 }
     `;
@@ -1991,41 +2034,6 @@ export function useUpdateSportCenterMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateSportCenterMutationHookResult = ReturnType<typeof useUpdateSportCenterMutation>;
 export type UpdateSportCenterMutationResult = Apollo.MutationResult<UpdateSportCenterMutation>;
 export type UpdateSportCenterMutationOptions = Apollo.BaseMutationOptions<UpdateSportCenterMutation, UpdateSportCenterMutationVariables>;
-export const GetPermissionSportCenterDocument = gql`
-    query GetPermissionSportCenter($sportCenterId: ID!) {
-  getSportCenter(sportCenterId: $sportCenterId) {
-    superUser
-  }
-}
-    `;
-
-/**
- * __useGetPermissionSportCenterQuery__
- *
- * To run a query within a React component, call `useGetPermissionSportCenterQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPermissionSportCenterQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPermissionSportCenterQuery({
- *   variables: {
- *      sportCenterId: // value for 'sportCenterId'
- *   },
- * });
- */
-export function useGetPermissionSportCenterQuery(baseOptions: Apollo.QueryHookOptions<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>(GetPermissionSportCenterDocument, options);
-      }
-export function useGetPermissionSportCenterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>(GetPermissionSportCenterDocument, options);
-        }
-export type GetPermissionSportCenterQueryHookResult = ReturnType<typeof useGetPermissionSportCenterQuery>;
-export type GetPermissionSportCenterLazyQueryHookResult = ReturnType<typeof useGetPermissionSportCenterLazyQuery>;
-export type GetPermissionSportCenterQueryResult = Apollo.QueryResult<GetPermissionSportCenterQuery, GetPermissionSportCenterQueryVariables>;
 export const GiveAccessDocument = gql`
     mutation GiveAccess($sportCenterId: String!) {
   giveAccess(sportCenterId: $sportCenterId) {
