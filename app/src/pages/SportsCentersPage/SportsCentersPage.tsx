@@ -21,8 +21,8 @@ const SportsCentersPage = () => {
     data?.listSportCenters
       ?.filter((sp, index) => {
         const flagAccess = sp.access === true;
-        const flagSuperUser = sp.superUser !== true;
-        if (flagAccess && flagSuperUser) {
+        // const flagSuperUser = sp.superUser !== true;
+        if (flagAccess) {
           return sp;
         }
       })
