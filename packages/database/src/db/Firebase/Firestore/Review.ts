@@ -21,7 +21,13 @@ export const createReview = async (review: Review) => {
   const snapReview = await addDoc(collection(db, document), review);
   return { ...review, reviewId: snapReview.id };
 };
-
+export const getReviewsByUserId = async (userId: string) => {
+  const q = query(collection(db, document), where("userId", "==", userId));
+  const snapReviews = await getDocs(q);
+  return snapReviews.docs.map((review) => {
+    return { ...review.data(), reviewId: review.id };
+  });
+};
 export const getReviewsBySportCenter = async (sportCenterId: string) => {
   const q = query(
     collection(db, document),

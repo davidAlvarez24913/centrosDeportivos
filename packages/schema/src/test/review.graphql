@@ -1,3 +1,13 @@
+query ListReviewsByUserId($userId: ID!) {
+  listReviewsByUserId(userId: $userId) {
+    reviewId
+    sportCenterId
+    reservationId
+    userId
+    review
+    ranking
+  }
+}
 query ListReviewsBySportCenter($sportCenterId: ID!) {
   listReviewsBySportCenter(sportCenterId: $sportCenterId) {
     reviewId

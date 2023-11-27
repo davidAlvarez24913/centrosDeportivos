@@ -47,10 +47,18 @@ const HomePage = () => {
                 <>
                   <MenuCard
                     title="Mis Reservaciones"
-                    description="Mira tus reservaciones"
+                    description="Observa tus reservaciones"
                     iconPath="assets/icon/register-book.svg"
                     onClick={() => {
                       ionRouter.push("/myreservations");
+                    }}
+                  ></MenuCard>
+                  <MenuCard
+                    title="Mis Reseñas"
+                    description="Observa tus reseñas"
+                    iconPath="assets/icon/reviews.svg"
+                    onClick={() => {
+                      ionRouter.push("/myreviews");
                     }}
                   ></MenuCard>
                   <MenuCard
