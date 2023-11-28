@@ -167,7 +167,7 @@ input CreateReservationInput {
   image: String
 }
 
-input UpdateReservationInput{
+input UpdateReservationInput {
   reservationId: ID!
   image: String!
   paymentId: String!
@@ -233,11 +233,11 @@ type ReservationNames {
   sportCenterId: String
   userName: String
 }
-type AvailableHour{
+type AvailableHour {
   rangeHour: String!
   price: Float!
 }
-input UpdateOnlyDisponibilityInput{
+input UpdateOnlyDisponibilityInput {
   serviceId: String!
   startHour: String!
   endHour: String!
@@ -277,6 +277,7 @@ type Query {
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
 
   #reviews
+  listReviewsByUserId(userId: ID!): [Review!]
   listReviewsBySportCenter(sportCenterId: ID!): [Review!]
   reservationReviewed(reservationId: ID!): Boolean!
 
@@ -301,7 +302,9 @@ type Mutation {
   createService(input: CreateServiceInput!): Service
   updateService(input: UpdateServiceInput): OperationResponse
   deleteService(serviceId: ID!): OperationResponse
-  updateOnlyDisponibility(input: UpdateOnlyDisponibilityInput): OperationResponse
+  updateOnlyDisponibility(
+    input: UpdateOnlyDisponibilityInput
+  ): OperationResponse
 
   #bankAccounts
   createBankAccount(input: CreateBankAccountInput!): BankAccount

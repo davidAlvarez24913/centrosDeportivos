@@ -1,5 +1,3 @@
 query IsAdmin($adminId: ID!){
-    isAdmin(adminId: $adminId){
-        
-    }
+    isAdmin(adminId: $adminId)
 }

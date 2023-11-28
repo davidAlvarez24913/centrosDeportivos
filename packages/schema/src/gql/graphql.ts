@@ -263,6 +263,7 @@ export type Query = {
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
   listBankAccountsBySportCenterName?: Maybe<Array<Maybe<BankAccount>>>;
   listReviewsBySportCenter?: Maybe<Array<Review>>;
+  listReviewsByUserId?: Maybe<Array<Review>>;
   listSCReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   listServicesBySport?: Maybe<Array<Maybe<ServiceWithSportCenter>>>;
   listServicesBySportCenterId?: Maybe<Array<Maybe<Service>>>;
@@ -322,6 +323,11 @@ export type QueryListBankAccountsBySportCenterNameArgs = {
 
 export type QueryListReviewsBySportCenterArgs = {
   sportCenterId: Scalars['ID']['input'];
+};
+
+
+export type QueryListReviewsByUserIdArgs = {
+  userId: Scalars['ID']['input'];
 };
 
 
@@ -640,6 +646,13 @@ export type UpdateReservationMutationVariables = Exact<{
 
 
 export type UpdateReservationMutation = { __typename?: 'Mutation', updateReservation?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type ListReviewsByUserIdQueryVariables = Exact<{
+  userId: Scalars['ID']['input'];
+}>;
+
+
+export type ListReviewsByUserIdQuery = { __typename?: 'Query', listReviewsByUserId?: Array<{ __typename?: 'Review', reviewId: string, sportCenterId: string, reservationId: string, userId: string, review: string, ranking: number }> | null };
 
 export type ListReviewsBySportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -1394,6 +1407,46 @@ export function useUpdateReservationMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateReservationMutationHookResult = ReturnType<typeof useUpdateReservationMutation>;
 export type UpdateReservationMutationResult = Apollo.MutationResult<UpdateReservationMutation>;
 export type UpdateReservationMutationOptions = Apollo.BaseMutationOptions<UpdateReservationMutation, UpdateReservationMutationVariables>;
+export const ListReviewsByUserIdDocument = gql`
+    query ListReviewsByUserId($userId: ID!) {
+  listReviewsByUserId(userId: $userId) {
+    reviewId
+    sportCenterId
+    reservationId
+    userId
+    review
+    ranking
+  }
+}
+    `;
+
+/**
+ * __useListReviewsByUserIdQuery__
+ *
+ * To run a query within a React component, call `useListReviewsByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListReviewsByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListReviewsByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useListReviewsByUserIdQuery(baseOptions: Apollo.QueryHookOptions<ListReviewsByUserIdQuery, ListReviewsByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListReviewsByUserIdQuery, ListReviewsByUserIdQueryVariables>(ListReviewsByUserIdDocument, options);
+      }
+export function useListReviewsByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListReviewsByUserIdQuery, ListReviewsByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListReviewsByUserIdQuery, ListReviewsByUserIdQueryVariables>(ListReviewsByUserIdDocument, options);
+        }
+export type ListReviewsByUserIdQueryHookResult = ReturnType<typeof useListReviewsByUserIdQuery>;
+export type ListReviewsByUserIdLazyQueryHookResult = ReturnType<typeof useListReviewsByUserIdLazyQuery>;
+export type ListReviewsByUserIdQueryResult = Apollo.QueryResult<ListReviewsByUserIdQuery, ListReviewsByUserIdQueryVariables>;
 export const ListReviewsBySportCenterDocument = gql`
     query ListReviewsBySportCenter($sportCenterId: ID!) {
   listReviewsBySportCenter(sportCenterId: $sportCenterId) {

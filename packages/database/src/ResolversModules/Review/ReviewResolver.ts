@@ -4,11 +4,16 @@ import {
   Review,
   createReview,
   getReviewsBySportCenter,
+  getReviewsByUserId,
   reservationReviewed,
 } from "../../db/Firebase/Firestore/Review";
 
 export const reviewResolvers = {
   Query: {
+    listReviewsByUserId: async (root: any, { userId }: { userId: string }) => {
+      const review = await getReviewsByUserId(userId);
+      return review;
+    },
     listReviewsBySportCenter: async (
       root: any,
       { sportCenterId }: { sportCenterId: string }

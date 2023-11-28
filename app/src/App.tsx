@@ -36,6 +36,7 @@ import DisponibilityPage from "./pages/DisponibilityPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import { UserContextProvider } from "./context/UserContext";
 import EditProfile from "./pages/EditProfile";
+import MyReviews from "./pages/MyReviews";
 
 setupIonicReact();
 
@@ -76,6 +77,7 @@ const App: React.FC = () => (
             />
             <Route exact path="/profile" component={ProfilePage} />
             <Route exact path="/editProfile" component={EditProfile} />
+            <Route exact path="/myreviews" component={MyReviews} />
           </ApolloProvider>
         </UserContextProvider>
       </IonRouterOutlet>
