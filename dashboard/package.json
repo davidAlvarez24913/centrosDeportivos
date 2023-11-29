@@ -19,7 +19,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "HTTPS=true && HOST=159.89.85.206 react-app-rewired start",
+    "start": "HTTPS=true && HOST=159.65.176.238 react-app-rewired start",
     "start-local": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
