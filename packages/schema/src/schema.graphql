@@ -275,6 +275,7 @@ type Query {
   listSCReservations(sportCenterId: ID!): [ReservationNames]
   listUserReservations(userId: ID!): [ReservationNames]
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
+  exitsReservations(sportCenterId: ID!, serviceId: ID!, rangeHour: String!): Boolean!
 
   #reviews
   listReviewsByUserId(userId: ID!): [Review!]

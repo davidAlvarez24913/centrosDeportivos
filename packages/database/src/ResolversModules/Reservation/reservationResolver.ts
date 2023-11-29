@@ -44,6 +44,40 @@ export const reservationResolvers = {
       });
       return result;
     },
+    exitsReservations: async (
+      root: any,
+      { sportCenterId, serviceId, rangeHour }: any
+    ) => {
+      const reservationsNoSQL =
+        (await listReservations()) as FireStoreReservation[];
+      const reservationsSQL = await Reservation.find({
+        where: {
+          service: {
+            sportCenter: { sportCenterId: sportCenterId },
+            serviceId: serviceId,
+          },
+        },
+        relations: { user: true, service: true },
+      });
+      const mergedReservations = mergeReservations(
+        reservationsSQL,
+        reservationsNoSQL
+      );
+      const result = mergedReservations
+        .map((reservation) => {
+          return {
+            reservation: {
+              ...reservation,
+              userId: reservation.user.userId,
+              serviceId: reservation.service.serviceId,
+            },
+            serviceName: reservation.service.name,
+            userName: reservation.user.name,
+          };
+        })
+        .filter((boooking) => boooking.reservation.rangeHour === rangeHour);
+      return reservationsSQL === undefined;
+    },
     listUserReservations: async (root: any, { userId }: any) => {
       const reservationsNoSQL =
         (await listReservations()) as FireStoreReservation[];

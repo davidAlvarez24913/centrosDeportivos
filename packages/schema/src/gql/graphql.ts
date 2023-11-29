@@ -253,6 +253,7 @@ export type OperationResponse = {
 export type Query = {
   __typename?: 'Query';
   allUsers?: Maybe<Array<Maybe<User>>>;
+  exitsReservations: Scalars['Boolean']['output'];
   findUser?: Maybe<User>;
   getAccess: Scalars['Boolean']['output'];
   getDisponibility?: Maybe<Array<AvailableHour>>;
@@ -271,6 +272,13 @@ export type Query = {
   listUserReservations?: Maybe<Array<Maybe<ReservationNames>>>;
   reservationCount: Scalars['Int']['output'];
   reservationReviewed: Scalars['Boolean']['output'];
+};
+
+
+export type QueryExitsReservationsArgs = {
+  rangeHour: Scalars['String']['input'];
+  serviceId: Scalars['ID']['input'];
+  sportCenterId: Scalars['ID']['input'];
 };
 
 
@@ -589,6 +597,15 @@ export type UpdateOnlyDisponibilityMutationVariables = Exact<{
 
 
 export type UpdateOnlyDisponibilityMutation = { __typename?: 'Mutation', updateOnlyDisponibility?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type ExitsReservationsQueryVariables = Exact<{
+  sportCenterId: Scalars['ID']['input'];
+  serviceId: Scalars['ID']['input'];
+  rangeHour: Scalars['String']['input'];
+}>;
+
+
+export type ExitsReservationsQuery = { __typename?: 'Query', exitsReservations: boolean };
 
 export type ListScReservationsQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -1091,6 +1108,45 @@ export function useUpdateOnlyDisponibilityMutation(baseOptions?: Apollo.Mutation
 export type UpdateOnlyDisponibilityMutationHookResult = ReturnType<typeof useUpdateOnlyDisponibilityMutation>;
 export type UpdateOnlyDisponibilityMutationResult = Apollo.MutationResult<UpdateOnlyDisponibilityMutation>;
 export type UpdateOnlyDisponibilityMutationOptions = Apollo.BaseMutationOptions<UpdateOnlyDisponibilityMutation, UpdateOnlyDisponibilityMutationVariables>;
+export const ExitsReservationsDocument = gql`
+    query ExitsReservations($sportCenterId: ID!, $serviceId: ID!, $rangeHour: String!) {
+  exitsReservations(
+    sportCenterId: $sportCenterId
+    serviceId: $serviceId
+    rangeHour: $rangeHour
+  )
+}
+    `;
+
+/**
+ * __useExitsReservationsQuery__
+ *
+ * To run a query within a React component, call `useExitsReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExitsReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExitsReservationsQuery({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *      serviceId: // value for 'serviceId'
+ *      rangeHour: // value for 'rangeHour'
+ *   },
+ * });
+ */
+export function useExitsReservationsQuery(baseOptions: Apollo.QueryHookOptions<ExitsReservationsQuery, ExitsReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExitsReservationsQuery, ExitsReservationsQueryVariables>(ExitsReservationsDocument, options);
+      }
+export function useExitsReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExitsReservationsQuery, ExitsReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExitsReservationsQuery, ExitsReservationsQueryVariables>(ExitsReservationsDocument, options);
+        }
+export type ExitsReservationsQueryHookResult = ReturnType<typeof useExitsReservationsQuery>;
+export type ExitsReservationsLazyQueryHookResult = ReturnType<typeof useExitsReservationsLazyQuery>;
+export type ExitsReservationsQueryResult = Apollo.QueryResult<ExitsReservationsQuery, ExitsReservationsQueryVariables>;
 export const ListScReservationsDocument = gql`
     query ListSCReservations($sportCenterId: ID!) {
   listSCReservations(sportCenterId: $sportCenterId) {
