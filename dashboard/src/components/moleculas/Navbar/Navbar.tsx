@@ -69,25 +69,25 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
             <div className="flex flex-col">
               <nav className="flex flex-col px-3 gap-4 pt-8">
                 {!flag && (
-                  <LinkNav
-                    href="/"
-                    iconPath="/icons/book"
-                    label="Reservaciones"
-                  />
-                )}
-                {!flag && (
-                  <LinkNav
-                    href="/servicios"
-                    iconPath="/icons/service_icon"
-                    label="Servicios"
-                  />
-                )}
-                {!flag && (
-                  <LinkNav
-                    href="/perfil"
-                    iconPath="/icons/profile"
-                    label="Perfil"
-                  />
+                  <div>
+                    <LinkNav
+                      href="/"
+                      iconPath="/icons/book"
+                      label="Reservaciones"
+                    />
+
+                    <LinkNav
+                      href="/servicios"
+                      iconPath="/icons/service_icon"
+                      label="Servicios"
+                    />
+
+                    <LinkNav
+                      href="/perfil"
+                      iconPath="/icons/profile"
+                      label="Perfil"
+                    />
+                  </div>
                 )}
                 {flag && (
                   <LinkNav
