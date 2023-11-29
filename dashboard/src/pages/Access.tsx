@@ -29,14 +29,16 @@ const AccessPage = () => {
     });
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
-      <h2 className="tex-2xl font-semibold">Funciones de super usuario</h2>
       {loading ? (
         <Loading />
       ) : (
-        <Table
-          headers={["ID", "Nombre", "Correo Electrónico", "Acceso"]}
-          data={sportsCenterRows!}
-        />
+        <div>
+          <h2 className="tex-2xl font-semibold">Funciones de super usuario</h2>
+          <Table
+            headers={["ID", "Nombre", "Correo Electrónico", "Acceso"]}
+            data={sportsCenterRows!}
+          />
+        </div>
       )}
     </LayoutPage>
   );
