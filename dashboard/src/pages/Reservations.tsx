@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { LayoutPage, Table } from "../components/moleculas";
-import { ReservationsRow, ReviewsRow } from "../components/organismos";
+import {
+  AllReviews,
+  ReservationsRow,
+  ReviewsRow,
+} from "../components/organismos";
 import useUser from "../Hooks/useUser";
 import {
   ReservationNames,
@@ -68,47 +72,45 @@ const ReservationsPage = () => {
       />
     );
   });
-  const reviews = statusReviews.data?.listReviewsBySportCenter?.map(
-    (review, index) => {
-      return <ReviewsRow index={index} review={review.review} key={index} />;
-    }
-  );
+  const reviews = statusReviews.data?.listReviewsBySportCenter;
 
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       {loading ? (
         <Loading />
       ) : (
-        <div>
-          <h2 className="text-xl font-bold">Por Pagar</h2>
-          <Table
-            headers={[
-              "ID",
-              "servicios",
-              "fecha",
-              "usuario",
-              "horario",
-              "precio",
-              "ver mas",
-            ]}
-            data={rows!}
-          />
-          <h2 className="text-xl font-bold">Pagadas</h2>
-          <Table
-            headers={[
-              "ID",
-              "servicios",
-              "fecha",
-              "usuario",
-              "horario",
-              "precio",
-              "ver mas",
-            ]}
-            data={paidRows!}
-          />
-          <h2 className="text-xl font-bold">Comentarios</h2>
-
-          <Table headers={["#", "Comentario"]} data={reviews!} />
+        <div className="flex flex-row justify-between ">
+          <div className="w-2/3">
+            <h2 className="text-xl font-bold">Por Pagar</h2>
+            <Table
+              headers={[
+                "ID",
+                "servicios",
+                "fecha",
+                "usuario",
+                "horario",
+                "precio",
+                "ver mas",
+              ]}
+              data={rows!}
+            />
+            <h2 className="text-xl font-bold">Pagadas</h2>
+            <Table
+              headers={[
+                "ID",
+                "servicios",
+                "fecha",
+                "usuario",
+                "horario",
+                "precio",
+                "ver mas",
+              ]}
+              data={paidRows!}
+            />
+          </div>
+          <div className="1/3">
+            <AllReviews reviews={reviews || []} />
+          </div>
         </div>
       )}
     </LayoutPage>

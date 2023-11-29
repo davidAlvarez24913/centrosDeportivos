@@ -19,3 +19,4 @@ export { default as DayCard } from "./DayCard";
 export { default as LinkNav } from "./LinkNav";
 export { default as ModalEditService } from "./ModalEditService";
 export { default as EditSchedule } from "./EditSchedule";
+export { default as Review } from "./Review";

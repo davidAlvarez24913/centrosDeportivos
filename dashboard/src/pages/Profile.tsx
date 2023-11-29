@@ -159,7 +159,7 @@ const ProfilePage = () => {
             />
             <Profile {...sportCenter!} />
           </div>
-          <div className="w-1/3">
+          <div className="w-1/5">
             <AccountSection
               accounts={bankAccounts}
               onCreate={onCreateBankAccount}

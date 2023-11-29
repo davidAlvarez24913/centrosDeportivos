@@ -6,3 +6,4 @@ export { default as EditSportCenterButton } from "./EditSportCenterButton";
 export { default as BodyDisponibility } from "./BodyDisponibility";
 export { default as SportCenterRow } from "./SportCenterRow";
 export { default as ReviewsRow } from "./ReviewsRow";
+export { default as AllReviews } from "./AllReviews";
