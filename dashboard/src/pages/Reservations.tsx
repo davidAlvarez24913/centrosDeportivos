@@ -108,9 +108,7 @@ const ReservationsPage = () => {
               data={paidRows!}
             />
           </div>
-          <div className="1/3">
-            <AllReviews reviews={reviews || []} />
-          </div>
+          <AllReviews reviews={reviews || []} />
         </div>
       )}
     </LayoutPage>
