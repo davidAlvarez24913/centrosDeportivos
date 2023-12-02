@@ -14,7 +14,7 @@ const PhotoPicker = ({ photo, setPhoto }: PropsPhotPicker) => {
   const takePicture = async () => {
     const image = await Camera.getPhoto({
       quality: 90,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.DataUrl,
     });
 
@@ -22,11 +22,7 @@ const PhotoPicker = ({ photo, setPhoto }: PropsPhotPicker) => {
   };
 
   return (
-    <div
-      // type="button"
-      className="w-full border-[1px] rounded-md border-slate-500 bg-background h-48 flex justify-evenly"
-      // fill="clear"
-    >
+    <div className="w-full border-[1px] rounded-md border-slate-500 bg-background h-48 flex justify-evenly">
       {photo !== undefined ? (
         <div className="flex justify-evenly">
           <button
