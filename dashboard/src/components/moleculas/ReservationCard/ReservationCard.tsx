@@ -14,6 +14,7 @@ type ReservationCardProps = {
   state: boolean;
   date: string;
   paymentId: string;
+  refetch: () => void;
 };
 
 const ReservationCard = ({
@@ -26,6 +27,7 @@ const ReservationCard = ({
   state,
   date,
   paymentId,
+  refetch,
 }: ReservationCardProps) => {
   const [deleteReservation] = useDeleteReservationMutation();
   const [setPaid] = useSetPaidMutation();
@@ -103,6 +105,7 @@ const ReservationCard = ({
             title="Pagada"
             type="button"
             onClick={() => {
+              refetch();
               setPaid({
                 variables: {
                   reservationId: reservationId,

@@ -1,5 +1,13 @@
-query ExitsReservations($sportCenterId: ID!, $serviceId: ID!, $rangeHour: String!){
-     exitsReservations(sportCenterId: $sportCenterId, serviceId: $serviceId, rangeHour: $rangeHour)
+query ExitsReservations(
+  $sportCenterId: ID!
+  $serviceId: ID!
+  $rangeHour: String!
+) {
+  exitsReservations(
+    sportCenterId: $sportCenterId
+    serviceId: $serviceId
+    rangeHour: $rangeHour
+  )
 }
 query ListSCReservations($sportCenterId: ID!) {
   listSCReservations(sportCenterId: $sportCenterId) {
@@ -14,6 +22,7 @@ query ListSCReservations($sportCenterId: ID!) {
       date
       rangeHour
     }
+    birthDate
     userName
     serviceName
   }
@@ -85,8 +94,8 @@ mutation SetPaid($reservationId: ID!) {
   }
 }
 
-mutation UpdateReservation ($input: UpdateReservationInput!){
-  updateReservation(input: $input){
+mutation UpdateReservation($input: UpdateReservationInput!) {
+  updateReservation(input: $input) {
     status
     message
   }

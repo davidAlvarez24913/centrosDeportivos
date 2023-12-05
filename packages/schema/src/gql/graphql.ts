@@ -286,7 +286,6 @@ export type Query = {
   getReservationsByDate?: Maybe<Array<Maybe<Reservation>>>;
   getSportCenter?: Maybe<SportCenter>;
   getSportCenterWithServices?: Maybe<SportCenter>;
-  haveAccess?: Maybe<Scalars['Boolean']['output']>;
   isAdmin: Scalars['Boolean']['output'];
   listBankAccountsBySportCenterId?: Maybe<Array<Maybe<BankAccount>>>;
   listBankAccountsBySportCenterName?: Maybe<Array<Maybe<BankAccount>>>;
@@ -338,11 +337,6 @@ export type QueryGetSportCenterArgs = {
 
 export type QueryGetSportCenterWithServicesArgs = {
   sportCenterId: Scalars['ID']['input'];
-};
-
-
-export type QueryHaveAccessArgs = {
-  userId: Scalars['ID']['input'];
 };
 
 
@@ -417,6 +411,7 @@ export type Reservation = {
 
 export type ReservationNames = {
   __typename?: 'ReservationNames';
+  birthDate?: Maybe<Scalars['String']['output']>;
   reservation?: Maybe<Reservation>;
   serviceName?: Maybe<Scalars['String']['output']>;
   sportCenterId?: Maybe<Scalars['String']['output']>;
@@ -648,7 +643,7 @@ export type ListScReservationsQueryVariables = Exact<{
 }>;
 
 
-export type ListScReservationsQuery = { __typename?: 'Query', listSCReservations?: Array<{ __typename?: 'ReservationNames', userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
+export type ListScReservationsQuery = { __typename?: 'Query', listSCReservations?: Array<{ __typename?: 'ReservationNames', birthDate?: string | null, userName?: string | null, serviceName?: string | null, reservation?: { __typename?: 'Reservation', reservationId: string, state: boolean, paymentId: string, reservationPrice: number, userId: string, serviceId: string, image: string, date: string, rangeHour: Array<string> } | null } | null> | null };
 
 export type ListUserReservationsQueryVariables = Exact<{
   userId: Scalars['ID']['input'];
@@ -856,13 +851,6 @@ export type GetUserQueryVariables = Exact<{
 
 
 export type GetUserQuery = { __typename?: 'Query', findUser?: { __typename?: 'User', userId: string, name: string, id: string, birthDate: string, email: string, phone: string, access: boolean } | null };
-
-export type HaveAccessQueryVariables = Exact<{
-  userId: Scalars['ID']['input'];
-}>;
-
-
-export type HaveAccessQuery = { __typename?: 'Query', haveAccess?: boolean | null };
 
 export type CreateUserMutationVariables = Exact<{
   input: CreateUserInput;
@@ -1232,6 +1220,7 @@ export const ListScReservationsDocument = gql`
       date
       rangeHour
     }
+    birthDate
     userName
     serviceName
   }
@@ -2431,39 +2420,6 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
-export const HaveAccessDocument = gql`
-    query HaveAccess($userId: ID!) {
-  haveAccess(userId: $userId)
-}
-    `;
-
-/**
- * __useHaveAccessQuery__
- *
- * To run a query within a React component, call `useHaveAccessQuery` and pass it any options that fit your needs.
- * When your component renders, `useHaveAccessQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHaveAccessQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useHaveAccessQuery(baseOptions: Apollo.QueryHookOptions<HaveAccessQuery, HaveAccessQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HaveAccessQuery, HaveAccessQueryVariables>(HaveAccessDocument, options);
-      }
-export function useHaveAccessLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HaveAccessQuery, HaveAccessQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HaveAccessQuery, HaveAccessQueryVariables>(HaveAccessDocument, options);
-        }
-export type HaveAccessQueryHookResult = ReturnType<typeof useHaveAccessQuery>;
-export type HaveAccessLazyQueryHookResult = ReturnType<typeof useHaveAccessLazyQuery>;
-export type HaveAccessQueryResult = Apollo.QueryResult<HaveAccessQuery, HaveAccessQueryVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {

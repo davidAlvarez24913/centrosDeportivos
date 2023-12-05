@@ -13,6 +13,7 @@ type ReservationsRowProps = {
   state: boolean;
   date: string;
   paymentId: string;
+  refetch: () => void;
 };
 const ReservationsRow = (reservation: ReservationsRowProps) => {
   const [modal, setModal] = useState(false);

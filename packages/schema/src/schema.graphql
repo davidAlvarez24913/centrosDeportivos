@@ -238,6 +238,7 @@ type ReservationNames {
   sportCenterName: String
   sportCenterId: String
   userName: String
+  birthDate: String
 }
 type AvailableHour {
   rangeHour: String!

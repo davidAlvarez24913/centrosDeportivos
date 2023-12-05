@@ -14,7 +14,6 @@ import {
 } from "../../db/Firebase/Firestore/Reservation";
 import { mergeReservations } from "../utils";
 import { GraphQLError } from "graphql";
-import { where } from "firebase/firestore/lite";
 import { uploadFile } from "../../db/Firebase/Bucket";
 
 export const reservationResolvers = {
@@ -38,6 +37,7 @@ export const reservationResolvers = {
             userId: reservation.user.userId,
             serviceId: reservation.service.serviceId,
           },
+          birthDate: reservation.user.birthDate,
           serviceName: reservation.service.name,
           userName: reservation.user.name,
         };
