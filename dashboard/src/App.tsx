@@ -11,6 +11,7 @@ import { UserContextProvider } from "./context/UserContext";
 import { ProtectedRoute } from "./components/atomos";
 import Register from "./pages/Register";
 import AccessPage from "./pages/Access";
+import UsersPage from "./pages/Users";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/perfil" element={<ProfilePage />} />
               <Route path="/servicios" element={<ServicesPage />} />
               <Route path="/access" element={<AccessPage />} />
+              <Route path="/users" element={<UsersPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />

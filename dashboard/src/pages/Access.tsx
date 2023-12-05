@@ -1,35 +1,27 @@
-import { useGetNameSportCenterQuery, useListSportCentersQuery } from "schema";
+import { useListSportCentersQuery } from "schema";
 import { LayoutPage, Table } from "../components/moleculas";
 import { SportCenterRow } from "../components/organismos";
 import { Loading } from "../components/atomos";
-import useUser from "../Hooks/useUser";
 
-const SportsCenterAdmin = () => {
-  const { user } = useUser();
-  const sportCenterId = user?.uid!;
-  const status = useGetNameSportCenterQuery({
-    variables: { sportCenterId: sportCenterId },
-  });
+const Access = () => {
   const { data, loading, refetch } = useListSportCentersQuery();
 
-  const sportsCenterRows = data?.listSportCenters
-    ?.filter((sp) => sp.sportCenterId !== sportCenterId)
-    .map((sp, index) => {
-      return (
-        <SportCenterRow
-          name={sp.name}
-          email={sp.email}
-          access={sp.access}
-          isSuscribed={sp.isSuscribed}
-          sportCenterId={sp.sportCenterId}
-          key={index}
-          index={index + 1}
-          refetch={refetch}
-        />
-      );
-    });
+  const sportsCenterRows = data?.listSportCenters?.map((sp, index) => {
+    return (
+      <SportCenterRow
+        name={sp.name}
+        email={sp.email}
+        access={sp.access}
+        isSuscribed={sp.isSuscribed}
+        sportCenterId={sp.sportCenterId}
+        key={index}
+        index={index + 1}
+        refetch={refetch}
+      />
+    );
+  });
   return (
-    <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
+    <LayoutPage nameSportCenter={"Admin"}>
       {loading ? (
         <Loading />
       ) : (
@@ -51,4 +43,4 @@ const SportsCenterAdmin = () => {
   );
 };
 
-export default SportsCenterAdmin;
+export default Access;

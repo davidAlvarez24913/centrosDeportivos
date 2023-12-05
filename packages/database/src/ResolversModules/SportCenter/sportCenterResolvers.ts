@@ -52,7 +52,6 @@ export const sportCenterResolvers = {
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
       const { images, ...dataSQL } = input;
-      console.log(input);
       let sportCenterId;
       try {
         const result = await SportCenter.insert(dataSQL);

@@ -258,7 +258,7 @@ input UpdateOnlyDisponibilityInput {
 }
 type Query {
   #users
-  allUsers: [User]
+  allUsers: [User!]
   findUser(userId: ID!): User
 
   #sportcenters
@@ -301,6 +301,8 @@ type Mutation {
   createUser(input: CreateUserInput!): User
   deleteUser(userId: ID!): OperationResponse
   updateUser(input: UpdateUserInput!): OperationResponse
+  giveUserAccess(userId: String!): OperationResponse
+  removeUserAccess(userId: String!): OperationResponse
 
   #sportcenters
   createSportCenter(input: CreateSportCenterInput!): SportCenter

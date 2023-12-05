@@ -47,5 +47,67 @@ export const userResolvers = {
         message: "No se pudo actualizar",
       };
     },
+    giveUserAccess: async (root: any, { userId }: { userId: string }) => {
+      try {
+        const existsId = await User.findOne({
+          where: { userId: userId },
+        });
+        if (existsId) {
+          await User.update(
+            {
+              userId: userId,
+            },
+            {
+              access: true,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo con acceso",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe el centro deportivo con el id ${userId}`,
+          };
+        }
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede dar acceso" + JSON.stringify(error),
+        };
+      }
+    },
+    removeUserAccess: async (root: any, { userId }: { userId: string }) => {
+      try {
+        const existsId = await User.findOne({
+          where: { userId: userId },
+        });
+        if (existsId) {
+          await User.update(
+            {
+              userId: userId,
+            },
+            {
+              access: false,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo sin acceso",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe el centro deportivo con el id ${userId}`,
+          };
+        }
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede dar acceso" + JSON.stringify(error),
+        };
+      }
+    },
   },
 };

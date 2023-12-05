@@ -1,6 +1,9 @@
 query AllUSers {
   allUsers {
+    userId
+    name
     email
+    access
   }
 }
 query GetUser($userId: ID!) {
@@ -11,8 +14,10 @@ query GetUser($userId: ID!) {
     birthDate
     email
     phone
+    access
   }
 }
+
 mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     userId
@@ -20,6 +25,19 @@ mutation CreateUser($input: CreateUserInput!) {
 }
 mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
+    status
+    message
+  }
+}
+mutation GiveUserAccess($userId: String!) {
+  giveUserAccess(userId: $userId) {
+    status
+    message
+  }
+}
+
+mutation RemoveUserAccess($userId: String!) {
+  removeUserAccess(userId: $userId) {
     status
     message
   }
