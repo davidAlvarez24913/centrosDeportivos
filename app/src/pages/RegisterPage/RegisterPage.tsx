@@ -41,6 +41,7 @@ const RegisterPage = () => {
           birthDate: registData.birthDate,
           phone: registData.phone,
           email: registData.email,
+          access: true,
         };
         createUserMutation({
           variables: { input: user },

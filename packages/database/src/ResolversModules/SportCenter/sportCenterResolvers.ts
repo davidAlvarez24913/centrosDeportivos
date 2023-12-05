@@ -5,6 +5,7 @@ import {
   createFirestoreSportCenter,
   deleteFirestoreSportCenter,
   findSportCenter,
+  getAdmins,
   listSportCenters,
   updateFirestoreSportCenter,
 } from "../../db/Firebase/Firestore/SportCenter";
@@ -51,6 +52,7 @@ export const sportCenterResolvers = {
   Mutation: {
     createSportCenter: async (root: any, { input }: any) => {
       const { images, ...dataSQL } = input;
+      console.log(input);
       let sportCenterId;
       try {
         const result = await SportCenter.insert(dataSQL);
@@ -62,6 +64,7 @@ export const sportCenterResolvers = {
           birthDate: "",
           phone: "",
           email: input.email,
+          access: true,
         });
         await createFirestoreSportCenter({
           sportCenterId: sportCenterId,

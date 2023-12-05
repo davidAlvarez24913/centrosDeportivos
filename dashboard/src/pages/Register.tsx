@@ -81,6 +81,7 @@ const Register = () => {
           email: registData.email,
           description: "",
           access: false,
+          isSuscribed: false,
           image: "",
           phone: "",
           ubication: "",

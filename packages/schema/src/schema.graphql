@@ -31,6 +31,7 @@ type User {
   name: String!
   phone: String!
   email: String!
+  access: Boolean!
 }
 
 type RangeHour {
@@ -60,8 +61,9 @@ type SportCenter {
   services: [Service]
   image: String!
   access: Boolean!
+  isSuscribed: Boolean!
 }
-type Admin{
+type Admin {
   adminId: ID!
   email: String!
 }
@@ -114,6 +116,7 @@ input CreateUserInput {
   birthDate: String!
   phone: String!
   email: String!
+  access: Boolean!
 }
 input CreateReviewInput {
   sportCenterId: ID!
@@ -133,6 +136,7 @@ input CreateSportCenterInput {
   schedule: String
   image: String!
   access: Boolean!
+  isSuscribed: Boolean!
 }
 
 input CreateServiceInput {
@@ -175,11 +179,12 @@ input UpdateReservationInput {
 
 input UpdateUserInput {
   userId: ID!
-  name: String!
-  id: String!
-  birthDate: String!
-  phone: String!
-  email: String!
+  name: String
+  id: String
+  birthDate: String
+  phone: String
+  email: String
+  access: Boolean
 }
 input UpdateSportCenterInput {
   sportCenterId: ID!
@@ -190,6 +195,7 @@ input UpdateSportCenterInput {
   ubication: String
   image: String
   schedule: String
+  isSuscribed: Boolean
 }
 input UpdateServiceInput {
   serviceId: ID!
@@ -275,7 +281,11 @@ type Query {
   listSCReservations(sportCenterId: ID!): [ReservationNames]
   listUserReservations(userId: ID!): [ReservationNames]
   getReservationsByDate(date: String!, serviceId: String!): [Reservation]
-  exitsReservations(sportCenterId: ID!, serviceId: ID!, rangeHour: String!): Boolean!
+  exitsReservations(
+    sportCenterId: ID!
+    serviceId: ID!
+    rangeHour: String!
+  ): Boolean!
 
   #reviews
   listReviewsByUserId(userId: ID!): [Review!]

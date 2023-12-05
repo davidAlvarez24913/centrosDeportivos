@@ -6,7 +6,7 @@ import {
 } from "../components/atomos";
 import { FirebaseError } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
-import { useGetAccessLazyQuery } from "schema";
+import { useGetAccessLazyQuery, useIsAdminLazyQuery } from "schema";
 import useUser from "../Hooks/useUser";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const [isAdmin] = useIsAdminLazyQuery();
   const { handleSignOut, handleSignIn, user, loadingUser } = useUser();
   const [getAccess, { ...status }] = useGetAccessLazyQuery();
 
@@ -55,27 +55,46 @@ const LoginPage = () => {
     event.preventDefault();
     handleSignIn(userInput.email, userInput.password)
       .then((newUser) => {
-        getAccess({
-          variables: { sportCenterId: newUser?.user.uid! },
-          nextFetchPolicy: "no-cache",
-          onCompleted: (data) => {
-            if (data.getAccess) {
-              navigate("/");
+        isAdmin({
+          variables: { adminId: newUser?.user.uid! },
+          onCompleted: (status) => {
+            if (status.isAdmin) {
+              navigate("/access");
             } else {
-              handleSignOut();
+              getAccess({
+                variables: { sportCenterId: newUser?.user.uid! },
+                nextFetchPolicy: "no-cache",
+                onCompleted: (data) => {
+                  if (data.getAccess) {
+                    navigate("/");
+                  } else {
+                    toast.error("Tu cuenta aun no ha sido verificada", {
+                      position: "top-center",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                    });
+                    handleSignOut();
+                  }
+                },
+                onError: () => {
+                  toast.error("Tu cuenta aun no ha sido verificada", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                },
+              });
             }
-          },
-          onError: () => {
-            toast.error("Tu cuenta aun no ha sido verificada", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
           },
         });
       })

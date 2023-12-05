@@ -16,6 +16,10 @@ export type FireStoreSportCenter = {
 };
 const document = "sportscenter";
 
+export const getAdmins = async () => {
+  const admins = await getDocs(collection(db, "admins"));
+  return admins;
+};
 export const listSportCenters = async () => {
   const sportCenterSnapShot = await getDocs(collection(db, document));
   const result = sportCenterSnapShot.docs

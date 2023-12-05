@@ -21,6 +21,9 @@ class User extends BaseEntity {
   @Column()
   email: string;
 
+  @Column()
+  access: boolean;
+
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }

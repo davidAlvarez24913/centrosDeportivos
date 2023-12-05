@@ -36,6 +36,9 @@ class SportCenter extends BaseEntity {
   @Column()
   access: boolean;
 
+  @Column()
+  isSuscribed: boolean;
+
   @OneToMany(() => Service, (service) => service.sportCenter, {
     onDelete: "CASCADE",
   })

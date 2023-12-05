@@ -87,6 +87,7 @@ export type CreateSportCenterInput = {
   description: Scalars['String']['input'];
   email: Scalars['String']['input'];
   image: Scalars['String']['input'];
+  isSuscribed: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
   phone: Scalars['String']['input'];
   schedule?: InputMaybe<Scalars['String']['input']>;
@@ -95,6 +96,7 @@ export type CreateSportCenterInput = {
 };
 
 export type CreateUserInput = {
+  access: Scalars['Boolean']['input'];
   birthDate: Scalars['String']['input'];
   email: Scalars['String']['input'];
   id: Scalars['String']['input'];
@@ -433,6 +435,7 @@ export type SportCenter = {
   description: Scalars['String']['output'];
   email: Scalars['String']['output'];
   image: Scalars['String']['output'];
+  isSuscribed: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
   schedule: Scalars['String']['output'];
@@ -505,6 +508,7 @@ export type UpdateSportCenterInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isSuscribed?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   schedule?: InputMaybe<Scalars['String']['input']>;
@@ -513,16 +517,18 @@ export type UpdateSportCenterInput = {
 };
 
 export type UpdateUserInput = {
-  birthDate: Scalars['String']['input'];
-  email: Scalars['String']['input'];
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  phone: Scalars['String']['input'];
+  access?: InputMaybe<Scalars['Boolean']['input']>;
+  birthDate?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
   userId: Scalars['ID']['input'];
 };
 
 export type User = {
   __typename?: 'User';
+  access: Scalars['Boolean']['output'];
   birthDate: Scalars['String']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
