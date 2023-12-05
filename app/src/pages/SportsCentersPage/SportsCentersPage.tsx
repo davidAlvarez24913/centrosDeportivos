@@ -14,17 +14,14 @@ import {
   Loading,
 } from "src/components/atomos";
 import { SportCenterCard } from "src/components/moleculas";
+import NoDataCard from "src/components/atomos/NoDataCard";
 const SportsCentersPage = () => {
   const { data, loading, refetch } = useListSportCentersQuery();
 
   const sportsCenters =
     data?.listSportCenters
       ?.filter((sp, index) => {
-        const flagAccess = sp.access === true;
-        // const flagSuperUser = sp.superUser !== true;
-        if (flagAccess) {
-          return sp;
-        }
+        if (sp.isSuscribed === true) return sp;
       })
       .map((sportCenter) => {
         return { ...sportCenter! };
@@ -48,7 +45,7 @@ const SportsCentersPage = () => {
         <Background>
           {loading ? (
             <Loading />
-          ) : (
+          ) : sportsCenters.length > 0 ? (
             <div className="flex flex-col gap-3 mt-5 justify-center">
               {/* <CustomInput type="text" placeholder="Buscar" /> */}
               <div className="flex flex-col gap-3">
@@ -62,6 +59,8 @@ const SportsCentersPage = () => {
                 })}
               </div>
             </div>
+          ) : (
+            <NoDataCard>No hay centros deportivos</NoDataCard>
           )}
         </Background>
       </IonContent>

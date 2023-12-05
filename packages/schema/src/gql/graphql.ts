@@ -710,7 +710,7 @@ export type ListServicesBySportQueryVariables = Exact<{
 }>;
 
 
-export type ListServicesBySportQuery = { __typename?: 'Query', listServicesBySport?: Array<{ __typename?: 'ServiceWithSportCenter', service?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null, sportCenter?: { __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string } | null } | null> | null };
+export type ListServicesBySportQuery = { __typename?: 'Query', listServicesBySport?: Array<{ __typename?: 'ServiceWithSportCenter', service?: { __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null, sportCenter?: { __typename?: 'SportCenter', sportCenterId: string, name: string, phone: string, ubication: string, schedule: string, isSuscribed: boolean } | null } | null> | null };
 
 export type CreateServiceMutationVariables = Exact<{
   input: CreateServiceInput;
@@ -750,7 +750,7 @@ export type GetAccessQuery = { __typename?: 'Query', getAccess: boolean };
 export type ListSportCentersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean }> | null };
+export type ListSportCentersQuery = { __typename?: 'Query', listSportCenters?: Array<{ __typename?: 'SportCenter', sportCenterId: string, name: string, email: string, phone: string, ubication: string, schedule: string, image: string, access: boolean, isSuscribed: boolean }> | null };
 
 export type GetNameSportCenterQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
@@ -771,7 +771,7 @@ export type GetSportCenterWithServicesQueryVariables = Exact<{
 }>;
 
 
-export type GetSportCenterWithServicesQuery = { __typename?: 'Query', getSportCenterWithServices?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, image: string, services?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null } | null };
+export type GetSportCenterWithServicesQuery = { __typename?: 'Query', getSportCenterWithServices?: { __typename?: 'SportCenter', name: string, email: string, description: string, phone: string, ubication: string, schedule: string, image: string, isSuscribed: boolean, services?: Array<{ __typename?: 'Service', serviceId: string, name: string, sport: Sport, description: string, image: string } | null> | null } | null };
 
 export type CreateSportCenterMutationVariables = Exact<{
   input: CreateSportCenterInput;
@@ -1670,6 +1670,7 @@ export const ListServicesBySportDocument = gql`
       phone
       ubication
       schedule
+      isSuscribed
     }
   }
 }
@@ -1928,6 +1929,7 @@ export const ListSportCentersDocument = gql`
     schedule
     image
     access
+    isSuscribed
   }
 }
     `;
@@ -2044,6 +2046,7 @@ export const GetSportCenterWithServicesDocument = gql`
     ubication
     schedule
     image
+    isSuscribed
     services {
       serviceId
       name

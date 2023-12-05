@@ -14,6 +14,7 @@ import {
   Header,
   Loading,
 } from "src/components/atomos";
+import NoDataCard from "src/components/atomos/NoDataCard";
 import { ServiceCard } from "src/components/moleculas";
 const ServicesPage = () => {
   const { sport } = useParams<{ sport: string }>();
@@ -21,9 +22,16 @@ const ServicesPage = () => {
   const { data, loading, refetch } = useListServicesBySportQuery({
     variables: { sport: sport as Sport },
   });
-  const services = data?.listServicesBySport?.map((services) => {
-    return { ...services! };
-  });
+  const services =
+    data?.listServicesBySport
+      ?.filter((services) => {
+        if (services?.sportCenter?.isSuscribed === true)
+          return { ...services! };
+      })
+      .map((services) => {
+        return { ...services! };
+      }) || [];
+
   useEffect(() => {
     refetch();
   }, []);
@@ -43,7 +51,7 @@ const ServicesPage = () => {
         <Background>
           {loading ? (
             <Loading />
-          ) : (
+          ) : services?.length > 0 ? (
             <div className="flex flex-col gap-3 mt-5 justify-center">
               <CustomInput type="text" placeholder="Buscar" />
               <div className="flex flex-col gap-3">
@@ -64,6 +72,8 @@ const ServicesPage = () => {
                 })}
               </div>
             </div>
+          ) : (
+            <NoDataCard>No hay servicios por el momento</NoDataCard>
           )}
         </Background>
       </IonContent>

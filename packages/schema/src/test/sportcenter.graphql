@@ -11,6 +11,7 @@ query ListSportCenters {
     schedule
     image
     access
+    isSuscribed
   }
 }
 query GetNameSportCenter($sportCenterId: ID!) {
@@ -38,6 +39,7 @@ query GetSportCenterWithServices($sportCenterId: ID!) {
     ubication
     schedule
     image
+    isSuscribed
     services {
       serviceId
       name
@@ -60,15 +62,15 @@ mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
   }
 }
 
-mutation GiveAccess($sportCenterId: String!){
-  giveAccess(sportCenterId: $sportCenterId){
+mutation GiveAccess($sportCenterId: String!) {
+  giveAccess(sportCenterId: $sportCenterId) {
     status
     message
   }
 }
 
-mutation RemoveAccess($sportCenterId: String!){
-  removeAccess(sportCenterId: $sportCenterId){
+mutation RemoveAccess($sportCenterId: String!) {
+  removeAccess(sportCenterId: $sportCenterId) {
     status
     message
   }
