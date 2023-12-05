@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import { useEffect, useState } from "react";
-import { useGetAccessLazyQuery } from "schema";
+import { useGetAccessLazyQuery, useIsAdminLazyQuery } from "schema";
 import { toast } from "react-toastify";
 
 type PropsProtectedRoute = {
@@ -14,29 +14,40 @@ const ProtectedRoute = ({
   redirectTo = "/login",
 }: PropsProtectedRoute) => {
   const [access, setAccess] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [getAccess] = useGetAccessLazyQuery();
   const { user, loadingUser } = useUser();
+  const [isAdminQuery] = useIsAdminLazyQuery();
 
   const verifyAccess = () => {
     !loadingUser &&
       user &&
-      getAccess({
-        variables: { sportCenterId: user.uid },
-        nextFetchPolicy: "no-cache",
-        onCompleted: (data) => {
-          setAccess(data.getAccess);
-        },
-        onError: (error) => {
-          toast.error("No eres admin" + error.message, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+      isAdminQuery({
+        variables: { adminId: user.uid! },
+        onCompleted: (status) => {
+          if (status.isAdmin) {
+            setIsAdmin(true);
+          } else {
+            getAccess({
+              variables: { sportCenterId: user.uid },
+              nextFetchPolicy: "no-cache",
+              onCompleted: (data) => {
+                setAccess(data.getAccess);
+              },
+              onError: (error) => {
+                toast.error("No eres admin" + error.message, {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+              },
+            });
+          }
         },
       });
   };
@@ -60,10 +71,14 @@ const ProtectedRoute = ({
       </div>
     );
   } else {
-    if (user === undefined && !access) {
-      return <Navigate to={redirectTo} replace />;
-    } else {
+    if (isAdmin) {
       return children ? <>{children}</> : <Outlet />;
+    } else {
+      if (user === undefined && !access) {
+        return <Navigate to={redirectTo} replace />;
+      } else {
+        return children ? <>{children}</> : <Outlet />;
+      }
     }
   }
 };

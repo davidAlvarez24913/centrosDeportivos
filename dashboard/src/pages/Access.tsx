@@ -1,11 +1,13 @@
-import { useListSportCentersQuery } from "schema";
+import { useIsAdminQuery, useListSportCentersQuery } from "schema";
 import { LayoutPage, Table } from "../components/moleculas";
 import { SportCenterRow } from "../components/organismos";
 import { Loading } from "../components/atomos";
+import useUser from "../Hooks/useUser";
 
 const Access = () => {
+  const userId = useUser().user?.uid;
   const { data, loading, refetch } = useListSportCentersQuery();
-
+  const isAdmin = useIsAdminQuery({ variables: { adminId: userId || "" } });
   const sportsCenterRows = data?.listSportCenters?.map((sp, index) => {
     return (
       <SportCenterRow
@@ -24,7 +26,7 @@ const Access = () => {
     <LayoutPage nameSportCenter={"Admin"}>
       {loading ? (
         <Loading />
-      ) : (
+      ) : isAdmin?.data?.isAdmin ? (
         <div>
           <h2 className="tex-2xl font-semibold">Funciones de super usuario</h2>
           <Table
@@ -38,6 +40,8 @@ const Access = () => {
             data={sportsCenterRows!}
           />
         </div>
+      ) : (
+        <h2>No tiene acceso a estas funciones</h2>
       )}
     </LayoutPage>
   );
