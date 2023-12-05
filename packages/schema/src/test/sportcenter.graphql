@@ -75,3 +75,16 @@ mutation RemoveAccess($sportCenterId: String!) {
     message
   }
 }
+
+mutation Suscribed($sportCenterId: String!) {
+  suscribed(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+mutation UnSuscribed($sportCenterId: String!) {
+  unSuscribed(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}

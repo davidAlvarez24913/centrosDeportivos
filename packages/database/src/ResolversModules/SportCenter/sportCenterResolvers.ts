@@ -178,5 +178,73 @@ export const sportCenterResolvers = {
         };
       }
     },
+    suscribed: async (
+      root: any,
+      { sportCenterId }: { sportCenterId: string }
+    ) => {
+      try {
+        const existsId = await SportCenter.findOne({
+          where: { sportCenterId: sportCenterId },
+        });
+        if (existsId) {
+          await SportCenter.update(
+            {
+              sportCenterId: sportCenterId,
+            },
+            {
+              isSuscribed: true,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo suscrito",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe el centro deportivo con el id ${sportCenterId}`,
+          };
+        }
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede suscribir" + JSON.stringify(error),
+        };
+      }
+    },
+    unSuscribed: async (
+      root: any,
+      { sportCenterId }: { sportCenterId: string }
+    ) => {
+      try {
+        const existsId = await SportCenter.findOne({
+          where: { sportCenterId: sportCenterId },
+        });
+        if (existsId) {
+          await SportCenter.update(
+            {
+              sportCenterId: sportCenterId,
+            },
+            {
+              isSuscribed: false,
+            }
+          );
+          return {
+            status: "Ok",
+            message: "Centro deportivo sin acceso",
+          };
+        } else {
+          return {
+            status: "Failed",
+            message: `No existe el centro deportivo con el id ${sportCenterId}`,
+          };
+        }
+      } catch (error) {
+        return {
+          status: "Failed",
+          message: "No se puede dar acceso" + JSON.stringify(error),
+        };
+      }
+    },
   },
 };

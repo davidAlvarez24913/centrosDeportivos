@@ -308,6 +308,8 @@ type Mutation {
   deleteSportCenter(sportCenterId: ID!): OperationResponse
   giveAccess(sportCenterId: String!): OperationResponse
   removeAccess(sportCenterId: String!): OperationResponse
+  suscribed(sportCenterId: String!): OperationResponse
+  unSuscribed(sportCenterId: String!): OperationResponse
 
   #services
   createService(input: CreateServiceInput!): Service

@@ -4,7 +4,7 @@ import { SportCenterRow } from "../components/organismos";
 import { Loading } from "../components/atomos";
 import useUser from "../Hooks/useUser";
 
-const AccessPage = () => {
+const SportsCenterAdmin = () => {
   const { user } = useUser();
   const sportCenterId = user?.uid!;
   const status = useGetNameSportCenterQuery({
@@ -20,6 +20,7 @@ const AccessPage = () => {
           name={sp.name}
           email={sp.email}
           access={sp.access}
+          isSuscribed={sp.isSuscribed}
           sportCenterId={sp.sportCenterId}
           key={index}
           index={index + 1}
@@ -35,7 +36,13 @@ const AccessPage = () => {
         <div>
           <h2 className="tex-2xl font-semibold">Funciones de super usuario</h2>
           <Table
-            headers={["ID", "Nombre", "Correo Electrónico", "Acceso"]}
+            headers={[
+              "ID",
+              "Nombre",
+              "Correo Electrónico",
+              "Acceso",
+              "Suscrición",
+            ]}
             data={sportsCenterRows!}
           />
         </div>
@@ -44,4 +51,4 @@ const AccessPage = () => {
   );
 };
 
-export default AccessPage;
+export default SportsCenterAdmin;

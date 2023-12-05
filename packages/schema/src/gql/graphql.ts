@@ -133,6 +133,8 @@ export type Mutation = {
   giveAccess?: Maybe<OperationResponse>;
   removeAccess?: Maybe<OperationResponse>;
   setPaid?: Maybe<OperationResponse>;
+  suscribed?: Maybe<OperationResponse>;
+  unSuscribed?: Maybe<OperationResponse>;
   updateBankAccount?: Maybe<OperationResponse>;
   updateOnlyDisponibility?: Maybe<OperationResponse>;
   updateReservation?: Maybe<OperationResponse>;
@@ -214,6 +216,16 @@ export type MutationRemoveAccessArgs = {
 
 export type MutationSetPaidArgs = {
   reservationId: Scalars['ID']['input'];
+};
+
+
+export type MutationSuscribedArgs = {
+  sportCenterId: Scalars['String']['input'];
+};
+
+
+export type MutationUnSuscribedArgs = {
+  sportCenterId: Scalars['String']['input'];
 };
 
 
@@ -800,6 +812,20 @@ export type RemoveAccessMutationVariables = Exact<{
 
 
 export type RemoveAccessMutation = { __typename?: 'Mutation', removeAccess?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type SuscribedMutationVariables = Exact<{
+  sportCenterId: Scalars['String']['input'];
+}>;
+
+
+export type SuscribedMutation = { __typename?: 'Mutation', suscribed?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
+
+export type UnSuscribedMutationVariables = Exact<{
+  sportCenterId: Scalars['String']['input'];
+}>;
+
+
+export type UnSuscribedMutation = { __typename?: 'Mutation', unSuscribed?: { __typename?: 'OperationResponse', status: Status, message: string } | null };
 
 export type AllUSersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2220,6 +2246,74 @@ export function useRemoveAccessMutation(baseOptions?: Apollo.MutationHookOptions
 export type RemoveAccessMutationHookResult = ReturnType<typeof useRemoveAccessMutation>;
 export type RemoveAccessMutationResult = Apollo.MutationResult<RemoveAccessMutation>;
 export type RemoveAccessMutationOptions = Apollo.BaseMutationOptions<RemoveAccessMutation, RemoveAccessMutationVariables>;
+export const SuscribedDocument = gql`
+    mutation Suscribed($sportCenterId: String!) {
+  suscribed(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+    `;
+export type SuscribedMutationFn = Apollo.MutationFunction<SuscribedMutation, SuscribedMutationVariables>;
+
+/**
+ * __useSuscribedMutation__
+ *
+ * To run a mutation, you first call `useSuscribedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSuscribedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [suscribedMutation, { data, loading, error }] = useSuscribedMutation({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useSuscribedMutation(baseOptions?: Apollo.MutationHookOptions<SuscribedMutation, SuscribedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SuscribedMutation, SuscribedMutationVariables>(SuscribedDocument, options);
+      }
+export type SuscribedMutationHookResult = ReturnType<typeof useSuscribedMutation>;
+export type SuscribedMutationResult = Apollo.MutationResult<SuscribedMutation>;
+export type SuscribedMutationOptions = Apollo.BaseMutationOptions<SuscribedMutation, SuscribedMutationVariables>;
+export const UnSuscribedDocument = gql`
+    mutation UnSuscribed($sportCenterId: String!) {
+  unSuscribed(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+    `;
+export type UnSuscribedMutationFn = Apollo.MutationFunction<UnSuscribedMutation, UnSuscribedMutationVariables>;
+
+/**
+ * __useUnSuscribedMutation__
+ *
+ * To run a mutation, you first call `useUnSuscribedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnSuscribedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unSuscribedMutation, { data, loading, error }] = useUnSuscribedMutation({
+ *   variables: {
+ *      sportCenterId: // value for 'sportCenterId'
+ *   },
+ * });
+ */
+export function useUnSuscribedMutation(baseOptions?: Apollo.MutationHookOptions<UnSuscribedMutation, UnSuscribedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnSuscribedMutation, UnSuscribedMutationVariables>(UnSuscribedDocument, options);
+      }
+export type UnSuscribedMutationHookResult = ReturnType<typeof useUnSuscribedMutation>;
+export type UnSuscribedMutationResult = Apollo.MutationResult<UnSuscribedMutation>;
+export type UnSuscribedMutationOptions = Apollo.BaseMutationOptions<UnSuscribedMutation, UnSuscribedMutationVariables>;
 export const AllUSersDocument = gql`
     query AllUSers {
   allUsers {

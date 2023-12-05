@@ -90,11 +90,18 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
                   </div>
                 )}
                 {flag && (
-                  <LinkNav
-                    href="/access"
-                    iconPath="/icons/admin"
-                    label="Autorizar"
-                  />
+                  <div>
+                    <LinkNav
+                      href="/access"
+                      iconPath="/icons/admin"
+                      label="Autorizar Centros deportivos"
+                    />
+                    <LinkNav
+                      href="/users"
+                      iconPath="/icons/admin"
+                      label="Autorizar Usuarios"
+                    />
+                  </div>
                 )}
               </nav>
             </div>
