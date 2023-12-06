@@ -33,22 +33,60 @@ const NewSchedule = ({
       <div className="flex justify-between gap-5">
         <CustomInput
           color="blue"
-          type="time"
+          list="hours-list-start"
           label="Hora inicio"
+          placeholder="Seleccionar horario"
           required
           onChange={(e) => {
             rangeHourAux = { startHour: e.target.value, endHour: "", price: 0 };
           }}
         />
+        <datalist id="hours-list-start">
+          <option value="8:00"></option>
+          <option value="9:00"></option>
+          <option value="10:00"></option>
+          <option value="11:00"></option>
+          <option value="12:00"></option>
+          <option value="13:00"></option>
+          <option value="14:00"></option>
+          <option value="15:00"></option>
+          <option value="16:00"></option>
+          <option value="17:00"></option>
+          <option value="18:00"></option>
+          <option value="19:00"></option>
+          <option value="20:00"></option>
+          <option value="21:00"></option>
+          <option value="22:00"></option>
+          <option value="23:00"></option>
+        </datalist>
         <CustomInput
           color="blue"
-          type="time"
+          list="hours-list-start"
           label="Hora fin"
+          placeholder="Seleccionar horario"
           required
           onChange={(e) => {
             rangeHourAux = { ...rangeHourAux, endHour: e.target.value };
           }}
         />
+        <datalist id="hours-list-start">
+          <option value="8:00"></option>
+          <option value="9:00"></option>
+          <option value="10:00"></option>
+          <option value="11:00"></option>
+          <option value="12:00"></option>
+          <option value="13:00"></option>
+          <option value="14:00"></option>
+          <option value="15:00"></option>
+          <option value="16:00"></option>
+          <option value="17:00"></option>
+          <option value="18:00"></option>
+          <option value="19:00"></option>
+          <option value="20:00"></option>
+          <option value="21:00"></option>
+          <option value="22:00"></option>
+          <option value="23:00"></option>
+        </datalist>
       </div>
       <div className="flex w-1/2 pr-2">
         <CustomInput

@@ -115,6 +115,7 @@ const ReservationsPage = () => {
   );
   const income = aux.reduce((a, b) => a + b, 0);
   const ageMean = edades.reduce((a, b) => a + b, 0) / edades.length;
+  console.log(ageMean);
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       {loading ? (
@@ -133,7 +134,7 @@ const ReservationsPage = () => {
               </div>
               <div className="shadow-lg bg-background p-3 w-[200px] rounded-lg">
                 <h2 className="font-bold">Media de Edad</h2>
-                <span>{ageMean}</span>
+                <span>{edades.length === 0 ? 0 : ageMean}</span>
               </div>
             </div>
             <h2 className="text-xl font-bold">

@@ -35,7 +35,7 @@ const Access = () => {
               "Nombre",
               "Correo Electrónico",
               "Acceso",
-              "Suscrición",
+              "Suscripción",
             ]}
             data={sportsCenterRows!}
           />

@@ -44,6 +44,7 @@ export const reservationResolvers = {
       });
       return result;
     },
+
     exitsReservations: async (
       root: any,
       { sportCenterId, serviceId, rangeHour }: any
@@ -63,21 +64,15 @@ export const reservationResolvers = {
         reservationsSQL,
         reservationsNoSQL
       );
-      const result = mergedReservations
-        .map((reservation) => {
-          return {
-            reservation: {
-              ...reservation,
-              userId: reservation.user.userId,
-              serviceId: reservation.service.serviceId,
-            },
-            serviceName: reservation.service.name,
-            userName: reservation.user.name,
-          };
-        })
-        .filter((boooking) => boooking.reservation.rangeHour === rangeHour);
-      return reservationsSQL === undefined;
+      // filtart que la reservas sean mayores al dia actual
+      // verificar condicion de retorno
+      const result = mergedReservations.filter(
+        (reservation) => reservation.rangeHour![0] === rangeHour
+      );
+
+      return result.length !== 0;
     },
+
     listUserReservations: async (root: any, { userId }: any) => {
       const reservationsNoSQL =
         (await listReservations()) as FireStoreReservation[];
