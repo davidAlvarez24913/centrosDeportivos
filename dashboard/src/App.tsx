@@ -12,6 +12,7 @@ import { ProtectedRoute } from "./components/atomos";
 import Register from "./pages/Register";
 import AccessPage from "./pages/Access";
 import UsersPage from "./pages/Users";
+import CreateAdmins from "./pages/CreateAdmins";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/servicios" element={<ServicesPage />} />
               <Route path="/access" element={<AccessPage />} />
               <Route path="/users" element={<UsersPage />} />
+              <Route path="/createadmins" element={<CreateAdmins />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />

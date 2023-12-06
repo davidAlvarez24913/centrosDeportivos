@@ -336,4 +336,7 @@ type Mutation {
 
   #reviews
   createReview(input: CreateReviewInput!): Review
+
+  #admin
+  createAdmin(userId: ID!): Boolean!
 }

@@ -25,6 +25,7 @@ const resolvers = {
     ...reservationResolvers.Mutation,
     ...reviewResolvers.Mutation,
     ...bankAccountResolvers.Mutation,
+    ...adminResolvers.Mutation,
   },
 };
 export default resolvers;

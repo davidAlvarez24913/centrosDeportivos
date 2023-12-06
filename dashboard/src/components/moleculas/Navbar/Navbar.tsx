@@ -101,6 +101,11 @@ const Navbar = ({ nameSportCenter }: PropsNavbar) => {
                       iconPath="/icons/admin"
                       label="Autorizar Usuarios"
                     />
+                    <LinkNav
+                      href="/createadmins"
+                      iconPath="/icons/admin"
+                      label="Crear Administradores"
+                    />
                   </div>
                 )}
               </nav>
