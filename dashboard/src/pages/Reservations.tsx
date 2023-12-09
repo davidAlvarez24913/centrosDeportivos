@@ -109,13 +109,11 @@ const ReservationsPage = () => {
   }
   const edades = auxReservations.map((item) => getAge(item.birthDate!));
 
-  console.log(edades);
   const aux = paidReservations.map(
     (item) => item.reservation?.reservationPrice!
   );
   const income = aux.reduce((a, b) => a + b, 0);
   const ageMean = edades.reduce((a, b) => a + b, 0) / edades.length;
-  console.log(ageMean);
   return (
     <LayoutPage nameSportCenter={status.data?.getSportCenter?.name || ""}>
       {loading ? (
