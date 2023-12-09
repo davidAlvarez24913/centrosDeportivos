@@ -36,7 +36,6 @@ const RowRangeHour = ({
   const [modalEditSchedule, setModalEditSchedule] = useState(false);
   const [query, status] = useExitsReservationsLazyQuery();
   const user = useUser().user;
-  const [present] = useIonToast();
   const [Error, setError] = useState("");
 
   const onDelete = () => {
@@ -57,15 +56,34 @@ const RowRangeHour = ({
     };
     mutationSchedule(input as UpdateServiceInput);
   };
-  useEffect(() => {
-    console.log(status.data);
-  }, [status.loading]);
+
+  const handleEdit = () => {
+    query({
+      variables: {
+        rangeHour: rangeHour.startHour + " - " + rangeHour.endHour,
+        sportCenterId: user?.uid as string,
+        serviceId: service.serviceId,
+        date: new Date().toDateString(),
+      },
+      onCompleted(data) {
+        if (data.exitsReservations.valueOf()) {
+          setError("No es posbile ediar horario, existen reservas activas!");
+        } else {
+          setModalEditSchedule(true);
+        }
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      },
+    });
+  };
+
   return (
     <div>
       <p className="flex w-full">
         {Error !== "" && (
           <span className="text-yellow-500  text-center font-medium w-full border rounded border-yellow-500 p-1 shadow shadow-yellow-500">
-            No es posbile ediar horario, existen reservas activas!
+            {Error}
           </span>
         )}
       </p>
@@ -74,32 +92,7 @@ const RowRangeHour = ({
         <p className="font-light">$ {rangeHour.price}</p>
         <p
           className="font-normal text-green-600 cursor-pointer"
-          onClick={() => {
-            query({
-              variables: {
-                rangeHour: rangeHour.startHour + " - " + rangeHour.endHour,
-                sportCenterId: user?.uid as string,
-                serviceId: service.serviceId,
-              },
-            });
-            // mutation to edit range hour
-            if (!status.loading) {
-              if (!status.data?.exitsReservations.valueOf()) {
-                setError(
-                  "No es posbile ediar horario, existen reservas activas!"
-                );
-                present({
-                  message:
-                    "No es posbile ediar horario, existen reservas activas!",
-                  duration: 1500,
-                  color: "danger",
-                  position: "top",
-                });
-              } else {
-                setModalEditSchedule(true);
-              }
-            }
-          }}
+          onClick={handleEdit}
         >
           {status.loading ? "Cargando ..." : "Editar"}
           {/* Editar */}

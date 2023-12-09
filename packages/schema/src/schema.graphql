@@ -286,6 +286,7 @@ type Query {
     sportCenterId: ID!
     serviceId: ID!
     rangeHour: String!
+    date: String!
   ): Boolean!
 
   #reviews

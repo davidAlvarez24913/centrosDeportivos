@@ -308,6 +308,7 @@ export type Query = {
 
 
 export type QueryExitsReservationsArgs = {
+  date: Scalars['String']['input'];
   rangeHour: Scalars['String']['input'];
   serviceId: Scalars['ID']['input'];
   sportCenterId: Scalars['ID']['input'];
@@ -646,6 +647,7 @@ export type ExitsReservationsQueryVariables = Exact<{
   sportCenterId: Scalars['ID']['input'];
   serviceId: Scalars['ID']['input'];
   rangeHour: Scalars['String']['input'];
+  date: Scalars['String']['input'];
 }>;
 
 
@@ -1212,11 +1214,12 @@ export type UpdateOnlyDisponibilityMutationHookResult = ReturnType<typeof useUpd
 export type UpdateOnlyDisponibilityMutationResult = Apollo.MutationResult<UpdateOnlyDisponibilityMutation>;
 export type UpdateOnlyDisponibilityMutationOptions = Apollo.BaseMutationOptions<UpdateOnlyDisponibilityMutation, UpdateOnlyDisponibilityMutationVariables>;
 export const ExitsReservationsDocument = gql`
-    query ExitsReservations($sportCenterId: ID!, $serviceId: ID!, $rangeHour: String!) {
+    query ExitsReservations($sportCenterId: ID!, $serviceId: ID!, $rangeHour: String!, $date: String!) {
   exitsReservations(
     sportCenterId: $sportCenterId
     serviceId: $serviceId
     rangeHour: $rangeHour
+    date: $date
   )
 }
     `;
@@ -1236,6 +1239,7 @@ export const ExitsReservationsDocument = gql`
  *      sportCenterId: // value for 'sportCenterId'
  *      serviceId: // value for 'serviceId'
  *      rangeHour: // value for 'rangeHour'
+ *      date: // value for 'date'
  *   },
  * });
  */

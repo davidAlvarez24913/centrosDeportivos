@@ -2,11 +2,13 @@ query ExitsReservations(
   $sportCenterId: ID!
   $serviceId: ID!
   $rangeHour: String!
+  $date: String!
 ) {
   exitsReservations(
     sportCenterId: $sportCenterId
     serviceId: $serviceId
     rangeHour: $rangeHour
+    date: $date
   )
 }
 query ListSCReservations($sportCenterId: ID!) {

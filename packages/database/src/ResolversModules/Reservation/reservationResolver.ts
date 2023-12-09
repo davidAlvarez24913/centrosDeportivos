@@ -47,8 +47,9 @@ export const reservationResolvers = {
 
     exitsReservations: async (
       root: any,
-      { sportCenterId, serviceId, rangeHour }: any
+      { sportCenterId, serviceId, rangeHour, date }: any
     ) => {
+      const auxDay = new Date(date);
       const reservationsNoSQL =
         (await listReservations()) as FireStoreReservation[];
       const reservationsSQL = await Reservation.find({
@@ -64,12 +65,16 @@ export const reservationResolvers = {
         reservationsSQL,
         reservationsNoSQL
       );
-      // filtart que la reservas sean mayores al dia actual
-      // verificar condicion de retorno
-      const result = mergedReservations.filter(
-        (reservation) => reservation.rangeHour![0] === rangeHour
-      );
 
+      const result = mergedReservations.filter((reservation) => {
+        const aux_date = new Date(reservation.date);
+
+        const flagFilter =
+          auxDay.getDay() === aux_date.getDay() &&
+          reservation.rangeHour![0] === rangeHour &&
+          aux_date.getTime() >= auxDay.getTime();
+        return flagFilter;
+      });
       return result.length !== 0;
     },
 
