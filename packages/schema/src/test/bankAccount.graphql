@@ -1,0 +1,38 @@
+query ListBankAccountsBySportCenterId($sportCenterId: ID!) {
+  listBankAccountsBySportCenterId(sportCenterId: $sportCenterId) {
+    bankAccountId
+    name
+    id
+    accountType
+    accountNumber
+    email
+  }
+}
+query ListBankAccountsBySportCenterName($sportCenterName: String!) {
+  listBankAccountsBySportCenterName(sportCenterName: $sportCenterName) {
+    bankAccountId
+    name
+    id
+    accountType
+    accountNumber
+    email
+    sportCenterId
+  }
+}
+mutation CreateBankAccount($input: CreateBankAccountInput!) {
+  createBankAccount(input: $input) {
+    sportCenterId
+  }
+}
+mutation UpdateBankAccount($input: UpdateBankAccountInput!) {
+  updateBankAccount(input: $input) {
+    status
+    message
+  }
+}
+mutation DeleteBankAccount($bankAccountId: ID!) {
+  deleteBankAccount(bankAccountId: $bankAccountId) {
+    status
+    message
+  }
+}

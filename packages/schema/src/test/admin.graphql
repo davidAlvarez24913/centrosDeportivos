@@ -1,0 +1,7 @@
+query IsAdmin($adminId: ID!) {
+  isAdmin(adminId: $adminId)
+}
+
+mutation CreateAdmin($userId: ID!) {
+  createAdmin(userId: $userId)
+}

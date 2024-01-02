@@ -1,0 +1,104 @@
+query ExitsReservations(
+  $sportCenterId: ID!
+  $serviceId: ID!
+  $rangeHour: String!
+  $date: String!
+) {
+  exitsReservations(
+    sportCenterId: $sportCenterId
+    serviceId: $serviceId
+    rangeHour: $rangeHour
+    date: $date
+  )
+}
+query ListSCReservations($sportCenterId: ID!) {
+  listSCReservations(sportCenterId: $sportCenterId) {
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    birthDate
+    userName
+    serviceName
+  }
+}
+query ListUserReservations($userId: ID!) {
+  listUserReservations(userId: $userId) {
+    reservation {
+      reservationId
+      state
+      paymentId
+      reservationPrice
+      userId
+      serviceId
+      image
+      date
+      rangeHour
+    }
+    serviceName
+    sportCenterName
+    sportCenterId
+  }
+}
+
+query GetReservationsByDate($date: String!, $serviceId: String!) {
+  getReservationsByDate(date: $date, serviceId: $serviceId) {
+    state
+    rangeHour
+  }
+}
+
+mutation CreateReservationSC($input: CreateReservationInput!) {
+  createReservationSC(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+
+mutation CreateReservationUser($input: CreateReservationInput!) {
+  createReservationUser(input: $input) {
+    reservationId
+    state
+    paymentId
+    reservationPrice
+    userId
+    serviceId
+    image
+    date
+    rangeHour
+  }
+}
+mutation DeleteReservation($reservationId: ID!) {
+  deleteReservation(reservationId: $reservationId) {
+    status
+    message
+  }
+}
+
+mutation SetPaid($reservationId: ID!) {
+  setPaid(reservationId: $reservationId) {
+    status
+    message
+  }
+}
+
+mutation UpdateReservation($input: UpdateReservationInput!) {
+  updateReservation(input: $input) {
+    status
+    message
+  }
+}

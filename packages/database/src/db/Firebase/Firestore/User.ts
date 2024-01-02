@@ -10,8 +10,8 @@ import {
 import { db } from "../config";
 
 export type FireStoreUser = {
-  userId: number;
-  avatarUrl: string;
+  userId: string;
+  image: string;
 };
 const document = "users";
 
@@ -25,7 +25,7 @@ export const findUser = async (userId: string) => {
   return docSnap.data();
 };
 export const createUser = async (user: FireStoreUser) =>
-  await setDoc(doc(db, document, `${user.userId}`), user);
+  await setDoc(doc(db, document, `${user.userId}`), { image: user.image });
 
 export const updateUser = async (user: FireStoreUser) => {
   const docRef = doc(db, document, `${user.userId}`);

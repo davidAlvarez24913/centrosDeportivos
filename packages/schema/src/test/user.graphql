@@ -1,5 +1,44 @@
-query AllUSers{
-    allUsers{
-        email
-    }
+query AllUSers {
+  allUsers {
+    userId
+    name
+    email
+    access
+  }
+}
+query GetUser($userId: ID!) {
+  findUser(userId: $userId) {
+    userId
+    name
+    id
+    birthDate
+    email
+    phone
+    access
+  }
+}
+
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    userId
+  }
+}
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    status
+    message
+  }
+}
+mutation GiveUserAccess($userId: String!) {
+  giveUserAccess(userId: $userId) {
+    status
+    message
+  }
+}
+
+mutation RemoveUserAccess($userId: String!) {
+  removeUserAccess(userId: $userId) {
+    status
+    message
+  }
 }

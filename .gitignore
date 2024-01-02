@@ -3,3 +3,7 @@ node_modules/
 package-lock.json
 .env
 yarn.lock
+bun.lockb
+package.json
+app/android
+nohup.out

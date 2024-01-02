@@ -36,16 +36,16 @@ ion-searchbar input {
 }
 
 ion-segment-button {
-  --indicator-color: #f79328;
+  --indicator-color: #98CE00;
 }
 ion-segment-button.md {
   --color: #fff;
-  --color-checked: #f79328;
+  --color-checked: #98CE00;
   --border-radius: 4px;
 }
 ion-segment-button.ios {
-  --color: #f79328;
-  --color-checked: #fff;
+  --color: #98CE00;
+  --color-checked: #12111F;
   --border-radius: 20px;
 }
 ion-radio {
@@ -62,4 +62,33 @@ ion-radio.ios::part(container) {
 }
 .radio-checked.ios::part(container) {
   border-color: #f79328;
+}
+
+ion-header {
+  border-bottom: 1px solid #98CE00;
+}
+ion-accordion.accordion-collapsing ion-item[slot='header'],
+ion-accordion.accordion-collapsed ion-item[slot='header'] {
+  --background: #12111F;
+  border-radius: 16px;
+  border: 1px solid #98CE00;
+}
+
+ion-accordion.accordion-expanding ion-item[slot='header'],
+ion-accordion.accordion-expanded ion-item[slot='header'] {
+  --background: #12111F;
+  border: 1px solid #98CE00;
+  border-bottom: none;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+
+div[slot='content'] {
+  background: #12111F;
+  padding: 16px;
+  border: solid 1px #98CE00;
+  border-top: none;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }

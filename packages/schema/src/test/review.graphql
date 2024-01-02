@@ -1,0 +1,28 @@
+query ListReviewsByUserId($userId: ID!) {
+  listReviewsByUserId(userId: $userId) {
+    reviewId
+    sportCenterId
+    reservationId
+    userId
+    review
+    ranking
+  }
+}
+query ListReviewsBySportCenter($sportCenterId: ID!) {
+  listReviewsBySportCenter(sportCenterId: $sportCenterId) {
+    reviewId
+    sportCenterId
+    reservationId
+    userId
+    review
+    ranking
+  }
+}
+query ReservationReviewed($reservationId: ID!) {
+  reservationReviewed(reservationId: $reservationId)
+}
+mutation CreateReview($input: CreateReviewInput!) {
+  createReview(input: $input) {
+    reviewId
+  }
+}

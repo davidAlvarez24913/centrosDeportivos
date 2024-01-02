@@ -1,0 +1,90 @@
+query GetAccess($sportCenterId: ID!) {
+  getAccess(sportCenterId: $sportCenterId)
+}
+query ListSportCenters {
+  listSportCenters {
+    sportCenterId
+    name
+    email
+    phone
+    ubication
+    schedule
+    image
+    access
+    isSuscribed
+  }
+}
+query GetNameSportCenter($sportCenterId: ID!) {
+  getSportCenter(sportCenterId: $sportCenterId) {
+    name
+  }
+}
+query GetSportCenter($sportCenterId: ID!) {
+  getSportCenter(sportCenterId: $sportCenterId) {
+    name
+    email
+    description
+    phone
+    ubication
+    schedule
+    image
+  }
+}
+query GetSportCenterWithServices($sportCenterId: ID!) {
+  getSportCenterWithServices(sportCenterId: $sportCenterId) {
+    name
+    email
+    description
+    phone
+    ubication
+    schedule
+    image
+    isSuscribed
+    services {
+      serviceId
+      name
+      sport
+      description
+      image
+    }
+  }
+}
+
+mutation CreateSportCenter($input: CreateSportCenterInput!) {
+  createSportCenter(input: $input) {
+    sportCenterId
+  }
+}
+mutation UpdateSportCenter($input: UpdateSportCenterInput!) {
+  updateSportCenter(input: $input) {
+    status
+    message
+  }
+}
+
+mutation GiveAccess($sportCenterId: String!) {
+  giveAccess(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+
+mutation RemoveAccess($sportCenterId: String!) {
+  removeAccess(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+
+mutation Suscribed($sportCenterId: String!) {
+  suscribed(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}
+mutation UnSuscribed($sportCenterId: String!) {
+  unSuscribed(sportCenterId: $sportCenterId) {
+    status
+    message
+  }
+}

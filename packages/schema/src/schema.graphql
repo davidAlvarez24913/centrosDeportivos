@@ -1,218 +1,343 @@
 enum Sport {
-    Futbol
-    Voley
-  }
-enum Status{
-    Ok
-    Failed
+  Futbol
+  Voley
+  Baloncesto
+  Tenis
 }
-enum Weekday{
-    Monday
-    Tuesday
-    Wednesday
-    Thursday
-    Friday
-    Saturday
-    Sunday
+enum Status {
+  Ok
+  Failed
 }
-type OperationResponse{
-    status: Status!
-    message: String!
-}
-type User {
-    userId: ID!
-    name: String!
-    age: Int!
-    phone: String!
-    email: String!
-    avatarUrl: String
+enum Weekday {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
 }
 
-type RangeHour{
-    startHour: String!
-    endHour:String!
-    price: Float!
+scalar String
+
+type OperationResponse {
+  status: Status!
+  message: String!
+}
+type User {
+  userId: ID!
+  id: String!
+  birthDate: String!
+  name: String!
+  phone: String!
+  email: String!
+  access: Boolean!
+}
+
+type RangeHour {
+  startHour: String!
+  endHour: String!
+  price: Float!
 }
 
 type Disponibility {
-    Sunday:[RangeHour!]
-    Monday:[RangeHour!]
-    Tuesday: [RangeHour!]
-    Wednesday: [RangeHour!]
-    Thursday: [RangeHour!]
-    Friday: [RangeHour!]
-    Saturday: [RangeHour!]
+  Sunday: [RangeHour]
+  Monday: [RangeHour]
+  Tuesday: [RangeHour]
+  Wednesday: [RangeHour]
+  Thursday: [RangeHour]
+  Friday: [RangeHour]
+  Saturday: [RangeHour]
 }
 
 type SportCenter {
-    sportCenterId: ID!
-    name: String!
-    phone: String!
-    ubication: String!
-    services: [Service]
-    images: [String!]
-    calification: Int # will be likes
+  sportCenterId: ID!
+  name: String!
+  description: String!
+  email: String!
+  phone: String!
+  ubication: String!
+  schedule: String! # Hours attention
+  services: [Service]
+  image: String!
+  access: Boolean!
+  isSuscribed: Boolean!
+}
+type Admin {
+  adminId: ID!
+  email: String!
+}
+type Service {
+  serviceId: ID!
+  name: String!
+  sport: Sport!
+  description: String!
+  image: String!
+  sportCenterId: ID
+  disponibility: Disponibility
+  reservations: [Reservation!]
 }
 
-type Service {
-    serviceId: ID!
-    name: String!
-    sport: String!
-    description: String!
-    image: String
-    calification: Int # will be likes
-    sportCenterId: ID!
-    disponibility: Disponibility
-    reservations: [Reservation!]
+type BankAccount {
+  bankAccountId: ID!
+  name: String!
+  id: String!
+  accountType: String!
+  accountNumber: String!
+  email: String!
+  sportCenterId: ID!
 }
 
 type Reservation {
-    reservationId: ID!
-    state: Boolean!
-    paymentId: String
-    reservationPrice: Float!
-    userId: ID!
-    serviceId: ID!
-    paymentPhoto: String # Should optional?
-    date: String!
-    rangeHour: String!
+  reservationId: ID!
+  state: Boolean!
+  paymentId: String!
+  reservationPrice: Float!
+  userId: ID!
+  serviceId: ID!
+  image: String!
+  date: String!
+  rangeHour: [String!]!
 }
 
-type Comment{
-    commentId: ID!
-    sportCenterId: ID
-    serviceId: ID
-    userId: ID!
-    comment: String!
+type Review {
+  reviewId: ID!
+  reservationId: ID!
+  sportCenterId: ID!
+  userId: ID!
+  review: String!
+  ranking: Int!
 }
 
 input CreateUserInput {
-    name: String!
-    age: Int!
-    phone: String!
-    email: String!
-    avatarUrl: String
+  userId: ID!
+  name: String!
+  id: String!
+  birthDate: String!
+  phone: String!
+  email: String!
+  access: Boolean!
 }
-input CreateCommentInput{
-    sportCenterId: ID!
-    serviceId: ID
-    userId: ID!
-    comment: String!
+input CreateReviewInput {
+  sportCenterId: ID!
+  reservationId: ID!
+  userId: ID!
+  review: String!
+  ranking: Int!
 }
 
 input CreateSportCenterInput {
-    name: String!
-    phone: String!
-    ubication: String!
-    images: [String!]
-    calification: Int
+  sportCenterId: ID!
+  name: String!
+  email: String!
+  description: String!
+  phone: String!
+  ubication: String!
+  schedule: String
+  image: String!
+  access: Boolean!
+  isSuscribed: Boolean!
 }
 
 input CreateServiceInput {
-    name: String!
-    sport: Sport! #Enum
-    price: Float!
-    description: String!
-    sportCenterId: ID!
-    image:String
-    calification: Int
-    disponibility: [CreateScheduleInput!]
+  name: String!
+  sport: Sport! #Enum
+  description: String!
+  sportCenterId: ID!
+  image: String
 }
-input CreateScheduleInput{
-    startHour: String!
-    endHour: String!
-    weekday: Weekday!
-    price: Float!
+input CreateBankAccountInput {
+  name: String!
+  id: String!
+  accountType: String!
+  accountNumber: String!
+  email: String!
+  sportCenterId: ID!
+}
+input CreateScheduleInput {
+  startHour: String!
+  endHour: String!
+  weekday: Weekday!
+  price: Float!
 }
 
 input CreateReservationInput {
-    state: Boolean!
-    date: String!
-    paymentId: String!
-    reservationPrice: Float!
-    userId: ID!
-    serviceId: ID!
-    paymentPhoto: String
-    rangeHour: String!
+  serviceId: ID!
+  userId: ID!
+  date: String!
+  reservationPrice: Float!
+  rangeHour: [String]
+  paymentId: String
+  image: String
+}
+
+input UpdateReservationInput {
+  reservationId: ID!
+  image: String!
+  paymentId: String!
 }
 
 input UpdateUserInput {
-    userId: ID!
-    name: String!
-    age: Int!
-    phone: String!
-    email: String!
-    avatarUrl: String
+  userId: ID!
+  name: String
+  id: String
+  birthDate: String
+  phone: String
+  email: String
+  access: Boolean
 }
-input UpdateSportCenterInput{
-    sportCenterId: ID!
-    name: String
-    phone: String
-    ubication: String
-    images: [String!]
-    calification: Int # will be likes
+input UpdateSportCenterInput {
+  sportCenterId: ID!
+  name: String
+  email: String
+  description: String
+  phone: String
+  ubication: String
+  image: String
+  schedule: String
+  isSuscribed: Boolean
 }
-input UpdateServiceInput{
-    serviceId: ID!
-    name: String
-    description: String
-    sport: Sport
-    image: String
-    calification: Int # will be likes
-    disponibility: UpdateDisponibilityInput
+input UpdateServiceInput {
+  serviceId: ID!
+  sportCenterId: ID!
+  name: String
+  description: String
+  sport: Sport
+  image: String
+  disponibility: UpdateDisponibilityInput
 }
-input UpdateRangeHourInput{
-    startHour: String!
-    endHour:String!
-    price: Float!
+input UpdateBankAccountInput {
+  bankAccountId: ID!
+  name: String
+  id: String
+  accountType: String
+  accountNumber: String
+  email: String
 }
-input UpdateDisponibilityInput{
-    Sunday:[UpdateRangeHourInput!]
-    Monday:[UpdateRangeHourInput!]
-    Tuesday: [UpdateRangeHourInput!]
-    Wednesday: [UpdateRangeHourInput!]
-    Thursday: [UpdateRangeHourInput!]
-    Friday: [UpdateRangeHourInput!]
-    Saturday: [UpdateRangeHourInput!]
+input UpdateRangeHourInput {
+  startHour: String!
+  endHour: String!
+  price: Float!
 }
-
+input UpdateDisponibilityInput {
+  Sunday: [UpdateRangeHourInput!]
+  Monday: [UpdateRangeHourInput!]
+  Tuesday: [UpdateRangeHourInput!]
+  Wednesday: [UpdateRangeHourInput!]
+  Thursday: [UpdateRangeHourInput!]
+  Friday: [UpdateRangeHourInput!]
+  Saturday: [UpdateRangeHourInput!]
+}
+type ServiceWithSportCenter {
+  service: Service
+  sportCenter: SportCenter
+}
+type ReservationNames {
+  reservation: Reservation
+  serviceName: String
+  sportCenterName: String
+  sportCenterId: String
+  userName: String
+  birthDate: String
+}
+type AvailableHour {
+  rangeHour: String!
+  price: Float!
+}
+input UpdateOnlyDisponibilityInput {
+  serviceId: String!
+  startHour: String!
+  endHour: String!
+  price: Float!
+  Monday: Boolean!
+  Tuesday: Boolean!
+  Wednesday: Boolean!
+  Thursday: Boolean!
+  Friday: Boolean!
+  Saturday: Boolean!
+  Sunday: Boolean!
+}
 type Query {
-    usersCount: Int!
-    allUsers: [User]
-    findUser(userId: ID!): User
-    listSportCenters: [SportCenter!]
-    listServices: [Service]
-    listServicesBySportCenterId(sportCenterId: ID!): [Service]
-    reservationCount: Int!
-    allReservations: [Reservation!]
-    findReservation(id: ID!): Reservation
-    findSportCenter(sportCenterId: ID! ): SportCenter
-    
-    listCommentsByService(sportCenterId:ID!,serviceId:ID!): [Comment!]
-    listCommentsBySportCenter(sportCenterId:ID!): [Comment!]
-    allComments: [Comment!]
-    # disponibility will be query get all reservationsByServiceByDate and schedule
+  #users
+  allUsers: [User!]
+  findUser(userId: ID!): User
+
+  #sportcenters
+  listSportCenters: [SportCenter!]
+  getSportCenter(sportCenterId: ID!): SportCenter
+
+  #services
+  listServicesBySportCenterId(sportCenterId: ID!): [Service]
+  listServicesBySport(sport: Sport!): [ServiceWithSportCenter]
+  getAccess(sportCenterId: ID!): Boolean!
+  getSportCenterWithServices(sportCenterId: ID!): SportCenter
+  getDisponibility(serviceId: ID!, date: String!): [AvailableHour!]
+
+  #bankAccounts
+  listBankAccountsBySportCenterId(sportCenterId: ID!): [BankAccount]
+  listBankAccountsBySportCenterName(sportCenterName: String!): [BankAccount]
+
+  #reservations
+  reservationCount: Int!
+  listSCReservations(sportCenterId: ID!): [ReservationNames]
+  listUserReservations(userId: ID!): [ReservationNames]
+  getReservationsByDate(date: String!, serviceId: String!): [Reservation]
+  exitsReservations(
+    sportCenterId: ID!
+    serviceId: ID!
+    rangeHour: String!
+    date: String!
+  ): Boolean!
+
+  #reviews
+  listReviewsByUserId(userId: ID!): [Review!]
+  listReviewsBySportCenter(sportCenterId: ID!): [Review!]
+  reservationReviewed(reservationId: ID!): Boolean!
+
+  #admin
+  isAdmin(adminId: ID!): Boolean!
 }
 
 type Mutation {
-    createUser(input: CreateUserInput!): User
-    deleteUser(userId: ID!): Boolean
-    updateUser(input: UpdateUserInput!): User
-    
-    createSportCenter(input: CreateSportCenterInput!): SportCenter
-    updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
-    deleteSportCenter(sportCenterId: ID! ): OperationResponse
-    
-    createService(input: CreateServiceInput!): Service
-    updateService(input: UpdateServiceInput!):OperationResponse
-    deleteService(serviceId: ID!):OperationResponse
+  #users
+  createUser(input: CreateUserInput!): User
+  deleteUser(userId: ID!): OperationResponse
+  updateUser(input: UpdateUserInput!): OperationResponse
+  giveUserAccess(userId: String!): OperationResponse
+  removeUserAccess(userId: String!): OperationResponse
 
-    createReservation(input: CreateReservationInput!): Reservation
-    deleteReservation(id: ID!): OperationResponse
+  #sportcenters
+  createSportCenter(input: CreateSportCenterInput!): SportCenter
+  updateSportCenter(input: UpdateSportCenterInput!): OperationResponse
+  deleteSportCenter(sportCenterId: ID!): OperationResponse
+  giveAccess(sportCenterId: String!): OperationResponse
+  removeAccess(sportCenterId: String!): OperationResponse
+  suscribed(sportCenterId: String!): OperationResponse
+  unSuscribed(sportCenterId: String!): OperationResponse
 
-    createComment(input: CreateCommentInput!): Comment
-    updateComment(id: ID!): Comment
-    deleteComment(id: ID!): OperationResponse
+  #services
+  createService(input: CreateServiceInput!): Service
+  updateService(input: UpdateServiceInput): OperationResponse
+  deleteService(serviceId: ID!): OperationResponse
+  updateOnlyDisponibility(
+    input: UpdateOnlyDisponibilityInput
+  ): OperationResponse
 
-    # TODO mutation to plus and less like
+  #bankAccounts
+  createBankAccount(input: CreateBankAccountInput!): BankAccount
+  updateBankAccount(input: UpdateBankAccountInput!): OperationResponse
+  deleteBankAccount(bankAccountId: ID!): OperationResponse
+
+  #reservations
+  createReservationSC(input: CreateReservationInput!): Reservation
+  createReservationUser(input: CreateReservationInput!): Reservation
+  deleteReservation(reservationId: ID!): OperationResponse
+  setPaid(reservationId: ID!): OperationResponse
+  updateReservation(input: UpdateReservationInput!): OperationResponse
+
+  #reviews
+  createReview(input: CreateReviewInput!): Review
+
+  #admin
+  createAdmin(userId: ID!): Boolean!
 }
