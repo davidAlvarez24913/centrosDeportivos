@@ -1,0 +1,67 @@
+A continuación, encontrarás una lista de oportunidades para mejorar la accesibilidad de ReservasTasTas. Cada elemento corresponde a un área descrita en la captura de pantalla adjunta.
+
+Elemento táctil
+[4,71][114,151]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+El tamaño de este elemento táctil es 55dp x 40dp. Puedes aumentarlo hasta, al menos, el tamaño mínimo modificado de 60dp x 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[4,71][114,151]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+El tamaño de este elemento táctil es 55dp x 40dp. Puedes aumentarlo hasta, al menos, el tamaño mínimo modificado de 60dp x 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,247][650,295]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 24dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,419][650,467]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 24dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,591][650,635]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 22dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,759][650,807]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 24dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,931][650,979]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 24dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,1103][602,1151]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 24dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[602,1103][650,1151]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+El tamaño de este elemento táctil es 24dp x 24dp. Puedes aumentarlo hasta, al menos, el tamaño mínimo modificado de 60dp x 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[50,1275][602,1323]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 24dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[602,1275][650,1323]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+El tamaño de este elemento táctil es 24dp x 24dp. Puedes aumentarlo hasta, al menos, el tamaño mínimo modificado de 60dp x 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+undefined
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 42dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[36,1373][672,1457]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 42dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+

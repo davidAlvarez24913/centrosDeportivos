@@ -1,0 +1,12 @@
+A continuación, encontrarás una lista de oportunidades para mejorar la accesibilidad de ReservasTasTas. Cada elemento corresponde a un área descrita en la captura de pantalla adjunta.
+
+Elemento táctil
+[32,1300][240,1386]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 43dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp.
+
+Elemento táctil
+[32,1386][240,1472]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+La altura de este elemento táctil es 43dp. Puedes aumentarla hasta, al menos, la altura mínima modificada de 60dp.
+

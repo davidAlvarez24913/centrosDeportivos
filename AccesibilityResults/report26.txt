@@ -1,0 +1,12 @@
+A continuación, encontrarás una lista de oportunidades para mejorar la accesibilidad de ReservasTasTas. Cada elemento corresponde a un área descrita en la captura de pantalla adjunta.
+
+Elemento táctil
+[4,71][114,151]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+El tamaño de este elemento táctil es 55dp x 40dp. Puedes aumentarlo hasta, al menos, el tamaño mínimo modificado de 60dp x 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
+Elemento táctil
+[4,71][114,151]
+¿Por qué no agrandas este elemento en el que se puede hacer clic?
+El tamaño de este elemento táctil es 55dp x 40dp. Puedes aumentarlo hasta, al menos, el tamaño mínimo modificado de 60dp x 60dp. Este elemento procede de contenido web, por lo que te recomendamos que realices una verificación adicional del tamaño del área táctil.
+
